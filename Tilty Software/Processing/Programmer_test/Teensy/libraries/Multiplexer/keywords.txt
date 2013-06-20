@@ -1,0 +1,28 @@
+#######################################
+# Syntax Coloring Map Multiplexer
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Multiplexer	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+digitalWriteMux	KEYWORD2
+digitalReadMux	KEYWORD2
+analogWriteMux	KEYWORD2
+analogReadMux	KEYWORD2
+pinModeMux	KEYWORD2
+readAllMux	KEYWORD2
+writeAllMux	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+DIGITAL_IN	LITERAL1
+DIGITAL_OUT	LITERAL1
+ANALOG_IN	LITERAL1
+ANALOG_OUT	LITERAL1

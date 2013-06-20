@@ -1,0 +1,10 @@
+1.06 (released 06.06.11):
+- Fixed some bugs, I uploaded the wrong 1.05 files..
+
+1.05 (released 19.05.11):
+- Changed the way data is written
+- Fixed a bug in the toggle pixel function
+
+1.03 to 1.04 (released 15.05.11):
+- Made this changelog
+- Changed the drawData function, it now calculates the length of the array by using the width and height of the bitmap.

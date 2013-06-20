@@ -1,0 +1,45 @@
+#######################################
+# Syntax Coloring Map For Test
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+serialGLCD	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+serialGLCD	KEYWORD2
+clearLCD	KEYWORD2
+setDebug	KEYWORD2
+backLight	KEYWORD2
+drawCircle	KEYWORD2
+toggleCRLF	KEYWORD2
+eraseBlock	KEYWORD2
+resetLCD	KEYWORD2
+changeBaud	KEYWORD2
+toggleFont	KEYWORD2
+setFontMode	KEYWORD2
+drawSprite	KEYWORD2
+drawLine	KEYWORD2
+uploadSprite	KEYWORD2
+drawBox	KEYWORD2
+togglePixel	KEYWORD2
+drawFilledBox	KEYWORD2
+reverseColor	KEYWORD2
+toggleSplash	KEYWORD2
+drawData	KEYWORD2
+gotoPosition	KEYWORD2
+gotoLine	KEYWORD2
+
+######################################
+# Instances (KEYWORD2)
+#######################################
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################

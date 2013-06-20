@@ -1,0 +1,9 @@
+$Id: changelog.txt 82 2010-04-21 19:00:46Z bhagman@roguerobotics.com $
+
+SoftPWM Library
+
+Version Modified By Date     Comments
+------- ----------- -------- --------
+0001    B Hagman    10/03/14 Initial coding (Pi Day!)
+0002    B Hagman    10/03/21 License updates, minor fixes
+0003    B Hagman    10/04/21 Added hardset control for syncing to matrix scan lines

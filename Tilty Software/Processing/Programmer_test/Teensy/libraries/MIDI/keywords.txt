@@ -1,0 +1,68 @@
+#######################################
+# Syntax Coloring Map For Test
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+MIDI	KEYWORD1
+MIDI.h	KEYWORD1
+MIDI_Class	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+send	KEYWORD2
+sendNoteOn	KEYWORD2
+sendNoteOff	KEYWORD2
+sendProgramChange	KEYWORD2
+sendControlChange	KEYWORD2
+sendPitchBend	KEYWORD2
+sendPolyPressure	KEYWORD2
+sendAfterTouch	KEYWORD2
+sendSysEx	KEYWORD2
+begin	KEYWORD2
+read	KEYWORD2
+getType	KEYWORD2
+getChannel	KEYWORD2
+getData1	KEYWORD2
+getData2	KEYWORD2
+getSysExArray	KEYWORD2
+check	KEYWORD2
+delMsg	KEYWORD2
+delSysEx	KEYWORD2
+setInputChannel	KEYWORD2
+setFilter	KEYWORD2
+setStatus	KEYWORD2
+setDeviceID	KEYWORD2
+turnThruOn	KEYWORD2
+turnThruOff	KEYWORD2
+turnThru	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+AfterTouchChannel	LITERAL1
+AfterTouchPoly	LITERAL1
+ControlChange	LITERAL1
+ProgramChange	LITERAL1
+NoteOn	LITERAL1
+NoteOff	LITERAL1
+PitchBend	LITERAL1
+SystemExclusive	LITERAL1
+MIDI_CHANNEL_OMNI	LITERAL1
+MIDI_CHANNEL_OFF	LITERAL1
+MIDI_THRU_ON	LITERAL1
+MIDI_OPTO_EXT	LITERAL1
+MIDI_OPTO_ON	LITERAL1
+MIDI_FILTER_OFF	LITERAL1
+MIDI_FILTER_FULL	LITERAL1
+MIDI_FILTER_CANAL	LITERAL1
+MIDI_FILTER_ANTICANAL	LITERAL1

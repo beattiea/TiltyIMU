@@ -1,0 +1,7 @@
+/* Generated automatically. */
+static const char configuration_arguments[] = "/Users/paul/arm/workdir/gcc-4.7-2012.09/configure --prefix=/usr/local --target=arm-none-eabi --build=x86_64-apple-darwin11.4.2 --host=x86_64-apple-darwin11.4.2 --enable-threads --disable-libmudflap --disable-libssp --disable-libstdcxx-pch --enable-extra-sgxxlite-multilibs --with-gnu-as --with-gnu-ld --with-specs='%{save-temps: -fverbose-asm} %{O2:%{!fno-remove-local-statics: -fremove-local-statics}} %{O*:%{O|O0|O1|O2|Os:;:%{!fno-remove-local-statics: -fremove-local-statics}}}' --enable-languages=c,c++ --disable-shared --enable-lto --with-newlib --with-pkgversion='PJRC Build of GNU Toolchain from CodeSourcery' --with-bugurl=http://forum.pjrc.com/ --disable-nls --with-headers=yes --with-sysroot=/usr/local/arm-none-eabi --with-build-sysroot=/Users/paul/arm/arm-none-eabi/arm-none-eabi --with-gmp=/Users/paul/arm/staticlib --with-mpfr=/Users/paul/arm/staticlib --with-mpc=/Users/paul/arm/staticlib --with-ppl=/Users/paul/arm/staticlib --with-host-libstdcxx=-lstdc++ --with-cloog=/Users/paul/arm/staticlib --with-libelf=/Users/paul/arm/staticlib --disable-libgomp --disable-libitm --enable-poison-system-directories --with-build-time-tools=/Users/paul/arm/arm-none-eabi/arm-none-eabi/bin";
+static const char thread_model[] = "single";
+
+static const struct {
+  const char *name, *value;
+} configure_default_options[] = { { NULL, NULL} };
