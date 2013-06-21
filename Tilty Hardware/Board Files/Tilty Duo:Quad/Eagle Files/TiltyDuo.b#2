@@ -2831,11 +2831,9 @@ Please make sure your boards conform to these design rules.</description>
 <polygon width="0.508" layer="1" isolate="0.127">
 <vertex x="0" y="50.8"/>
 <vertex x="38.1" y="50.8"/>
-<vertex x="38.1" y="0"/>
-<vertex x="0" y="0"/>
+<vertex x="38.1" y="15.113"/>
+<vertex x="0" y="15.113"/>
 </polygon>
-<wire x1="20.3" y1="10.371" x2="21.586" y2="10.41" width="0.508" layer="1"/>
-<wire x1="21.586" y1="10.41" x2="22.86" y2="11.684" width="0.508" layer="1"/>
 <wire x1="35.56" y1="13.843" x2="30.637" y2="13.843" width="0.254" layer="16"/>
 <wire x1="30.637" y1="13.843" x2="30.36" y2="14.12" width="0.254" layer="16"/>
 <wire x1="30.36" y1="1.12" x2="31.6" y2="1.12" width="0.254" layer="16"/>
@@ -2913,9 +2911,23 @@ Please make sure your boards conform to these design rules.</description>
 <via x="29.972" y="28.575" extent="1-16" drill="0.3302"/>
 <wire x1="28.772" y1="28.1205" x2="29.5175" y2="28.1205" width="0.1524" layer="16"/>
 <wire x1="29.5175" y1="28.1205" x2="29.972" y2="28.575" width="0.1524" layer="16"/>
-<wire x1="22.86" y1="11.684" x2="22.86" y2="13.081" width="0.508" layer="1"/>
 <wire x1="22.86" y1="13.081" x2="23.622" y2="13.843" width="0.508" layer="1"/>
 <wire x1="23.622" y1="13.843" x2="35.56" y2="13.843" width="0.508" layer="1"/>
+<polygon width="0.1524" layer="16">
+<vertex x="11.938" y="13.335"/>
+<vertex x="31.496" y="13.335"/>
+<vertex x="31.496" y="2.032"/>
+<vertex x="11.938" y="2.032"/>
+</polygon>
+<via x="20.193" y="3.683" extent="1-16" drill="0.3302"/>
+<via x="13.462" y="10.795" extent="1-16" drill="0.3302"/>
+<polygon width="0.1524" layer="1">
+<vertex x="11.938" y="13.462"/>
+<vertex x="31.496" y="13.462"/>
+<vertex x="31.496" y="1.778"/>
+<vertex x="11.938" y="1.778"/>
+</polygon>
+<via x="14.986" y="10.795" extent="1-16" drill="0.3302"/>
 </signal>
 <signal name="SCL" class="4">
 <contactref element="U5" pad="23"/>
@@ -3389,10 +3401,12 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="13.081" y1="44.323" x2="13.335" y2="44.069" width="0.254" layer="1"/>
 <wire x1="13.335" y1="44.069" x2="13.335" y2="43.053" width="0.254" layer="1"/>
 <contactref element="JP9" pad="1"/>
-<wire x1="26.416" y1="4.2545" x2="19.4945" y2="4.2545" width="0.1524" layer="16"/>
-<wire x1="19.4945" y1="4.2545" x2="14.224" y2="9.525" width="0.1524" layer="16"/>
+<wire x1="26.416" y1="4.2545" x2="18.7325" y2="4.2545" width="0.1524" layer="16"/>
 <wire x1="14.224" y1="9.525" x2="14.224" y2="13.756" width="0.1524" layer="16"/>
 <wire x1="14.224" y1="13.756" x2="13.86" y2="14.12" width="0.1524" layer="16"/>
+<wire x1="14.224" y1="9.525" x2="16.383" y2="7.366" width="0.1524" layer="16"/>
+<wire x1="16.383" y1="7.366" x2="16.383" y2="6.604" width="0.1524" layer="16"/>
+<wire x1="16.383" y1="6.604" x2="18.7325" y2="4.2545" width="0.1524" layer="16"/>
 </signal>
 <signal name="N$4">
 <polygon width="0.1524" layer="1" pour="cutout">
@@ -3432,14 +3446,6 @@ Please make sure your boards conform to these design rules.</description>
 <vertex x="22.225" y="38.989"/>
 <vertex x="22.225" y="34.163"/>
 <vertex x="15.875" y="34.163"/>
-</polygon>
-</signal>
-<signal name="N$25">
-<polygon width="0.1524" layer="1" pour="cutout">
-<vertex x="0" y="15.113"/>
-<vertex x="38.1" y="15.113"/>
-<vertex x="38.1" y="0"/>
-<vertex x="0" y="0"/>
 </polygon>
 </signal>
 <signal name="N$22">
@@ -3505,13 +3511,6 @@ Please make sure your boards conform to these design rules.</description>
 </polygon>
 </signal>
 </signals>
-<errors>
-<approved hash="19,1,fd7e01400765fb5b"/>
-<approved hash="19,1,7fba03843d71414f"/>
-<approved hash="19,1,1e00003e0dfe13c0"/>
-<approved hash="19,1,81ba39840762bf5c"/>
-<approved hash="19,1,037e3b403d760548"/>
-</errors>
 </board>
 </drawing>
 </eagle>

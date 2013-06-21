@@ -7101,7 +7101,8 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <wire x1="86.36" y1="1.905" x2="86.36" y2="76.2" width="0.635" layer="94"/>
 <text x="175.26" y="128.905" size="3.81" layer="91" ratio="14">Power</text>
 <text x="175.26" y="124.46" size="3.81" layer="91" ratio="14">Connection</text>
-<wire x1="172.72" y1="134.62" x2="212.725" y2="134.62" width="0.635" layer="94"/>
+<wire x1="172.72" y1="134.62" x2="182.88" y2="134.62" width="0.635" layer="94"/>
+<wire x1="182.88" y1="134.62" x2="212.725" y2="134.62" width="0.635" layer="94"/>
 <wire x1="212.725" y1="134.62" x2="212.725" y2="76.2" width="0.635" layer="94"/>
 <wire x1="212.725" y1="76.2" x2="172.72" y2="76.2" width="0.635" layer="94"/>
 <wire x1="212.725" y1="134.62" x2="252.095" y2="134.62" width="0.635" layer="94"/>
@@ -7109,9 +7110,13 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <wire x1="252.095" y1="76.2" x2="212.725" y2="76.2" width="0.635" layer="94"/>
 <text x="213.36" y="129.54" size="3.175" layer="91" ratio="14">I/O Connectors</text>
 <wire x1="1.27" y1="134.62" x2="1.27" y2="193.04" width="0.635" layer="94"/>
-<wire x1="1.27" y1="193.04" x2="111.76" y2="193.04" width="0.635" layer="94"/>
+<wire x1="1.27" y1="193.04" x2="110.49" y2="193.04" width="0.635" layer="94"/>
+<wire x1="110.49" y1="193.04" x2="111.76" y2="193.04" width="0.635" layer="94"/>
 <wire x1="111.76" y1="193.04" x2="111.76" y2="134.62" width="0.635" layer="94"/>
 <text x="12.7" y="184.15" size="6.35" layer="91" ratio="14">Compass Circuitry</text>
+<wire x1="182.88" y1="193.04" x2="182.88" y2="134.62" width="0.635" layer="94"/>
+<wire x1="111.76" y1="193.04" x2="182.88" y2="193.04" width="0.635" layer="94"/>
+<text x="119.38" y="185.42" size="5.08" layer="91" ratio="14">Altimeter</text>
 </plain>
 <instances>
 <instance part="U5" gate="G$1" x="48.26" y="104.14"/>

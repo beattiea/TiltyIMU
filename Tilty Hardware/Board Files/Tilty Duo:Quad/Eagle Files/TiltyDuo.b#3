@@ -2916,6 +2916,24 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="22.86" y1="11.684" x2="22.86" y2="13.081" width="0.508" layer="1"/>
 <wire x1="22.86" y1="13.081" x2="23.622" y2="13.843" width="0.508" layer="1"/>
 <wire x1="23.622" y1="13.843" x2="35.56" y2="13.843" width="0.508" layer="1"/>
+<polygon width="0.1524" layer="16">
+<vertex x="11.938" y="14.732"/>
+<vertex x="31.496" y="14.732"/>
+<vertex x="31.496" y="0.508"/>
+<vertex x="11.938" y="0.508"/>
+</polygon>
+<via x="20.193" y="3.683" extent="1-16" drill="0.3302"/>
+<via x="20.193" y="5.08" extent="1-16" drill="0.3302"/>
+<wire x1="20.193" y1="5.08" x2="20.193" y2="3.683" width="0.3302" layer="1"/>
+<via x="13.589" y="10.795" extent="1-16" drill="0.3302"/>
+<via x="14.986" y="10.795" extent="1-16" drill="0.3302"/>
+<wire x1="13.589" y1="10.795" x2="14.986" y2="10.795" width="0.3302" layer="1"/>
+<polygon width="0.1524" layer="1">
+<vertex x="11.938" y="14.732"/>
+<vertex x="31.496" y="14.732"/>
+<vertex x="31.496" y="0.508"/>
+<vertex x="11.938" y="0.508"/>
+</polygon>
 </signal>
 <signal name="SCL" class="4">
 <contactref element="U5" pad="23"/>
@@ -2988,9 +3006,9 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="19.431" y1="16.129" x2="19.812" y2="16.51" width="0.1524" layer="16"/>
 <via x="21.209" y="16.51" extent="1-16" drill="0.3302"/>
 <wire x1="19.812" y1="16.51" x2="21.209" y2="16.51" width="0.1524" layer="16"/>
-<wire x1="21.209" y1="16.51" x2="24.638" y2="16.51" width="0.1524" layer="1"/>
-<wire x1="24.638" y1="16.51" x2="25.908" y2="15.24" width="0.1524" layer="1"/>
-<wire x1="25.908" y1="15.24" x2="35.306" y2="15.24" width="0.1524" layer="1"/>
+<wire x1="21.209" y1="16.51" x2="24.13" y2="16.51" width="0.1524" layer="1"/>
+<wire x1="24.13" y1="16.51" x2="25.4" y2="15.24" width="0.1524" layer="1"/>
+<wire x1="25.4" y1="15.24" x2="35.306" y2="15.24" width="0.1524" layer="1"/>
 <wire x1="35.306" y1="15.24" x2="35.56" y2="15.494" width="0.1524" layer="1"/>
 <wire x1="35.56" y1="15.494" x2="35.56" y2="16.383" width="0.1524" layer="1"/>
 </signal>

@@ -143,8 +143,8 @@
 <text x="29.464" y="39.243" size="1.143" layer="26" ratio="10" rot="MR0" align="center-left">21</text>
 <text x="29.464" y="41.783" size="1.143" layer="26" ratio="10" rot="MR0" align="center-left">22</text>
 <text x="29.464" y="44.323" size="1.143" layer="26" ratio="10" rot="MR0" align="center-left">23</text>
-<text x="34.036" y="46.863" size="0.889" layer="26" ratio="15" rot="MR0" align="center-left">GND</text>
-<text x="33.655" y="49.403" size="1.143" layer="26" ratio="10" rot="MR0" align="center-left">5V</text>
+<text x="28.6385" y="48.1965" size="0.889" layer="26" ratio="15" rot="MR270" align="center-left">GND</text>
+<text x="27.305" y="49.403" size="1.143" layer="26" ratio="10" rot="MR180" align="center-left">5V</text>
 <text x="34.671" y="5.6515" size="1.143" layer="25" ratio="12" rot="R90" align="center-left">CMD</text>
 <text x="35.179" y="9.398" size="1.016" layer="26" ratio="10" rot="MR45" align="center-left">VIN</text>
 <text x="34.036" y="12.573" size="1.016" layer="26" ratio="10" rot="MR90" align="center-left">GND</text>
@@ -2799,7 +2799,6 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U1" pad="11"/>
 <contactref element="C8" pad="2"/>
 <contactref element="C6" pad="2"/>
-<wire x1="11.43" y1="49.403" x2="7.62" y2="49.403" width="0.381" layer="1"/>
 <wire x1="22.86" y1="20.589" x2="22.86" y2="21.082" width="0.254" layer="16"/>
 <wire x1="22.86" y1="21.082" x2="22.606" y2="21.336" width="0.254" layer="16"/>
 <wire x1="22.606" y1="21.336" x2="19.954" y2="21.336" width="0.254" layer="16"/>
@@ -2847,12 +2846,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="15.352" y1="29.718" x2="15.352" y2="28.433" width="0.1524" layer="16"/>
 <wire x1="15.352" y1="28.433" x2="14.859" y2="27.94" width="0.1524" layer="16"/>
 <wire x1="14.859" y1="27.94" x2="14.859" y2="27.447" width="0.1524" layer="16"/>
-<wire x1="1.397" y1="36.703" x2="3.937" y2="36.703" width="0.381" layer="1"/>
-<wire x1="34.163" y1="36.703" x2="32.385" y2="36.703" width="0.381" layer="1"/>
-<wire x1="32.385" y1="36.703" x2="31.115" y2="35.433" width="0.381" layer="1"/>
-<wire x1="31.115" y1="35.433" x2="29.845" y2="35.433" width="0.381" layer="1"/>
-<wire x1="29.845" y1="35.433" x2="27.178" y2="33.02" width="0.381" layer="1"/>
-<wire x1="27.178" y1="33.02" x2="25.654" y2="33.02" width="0.381" layer="1"/>
 <contactref element="D2" pad="C"/>
 <wire x1="36.703" y1="36.703" x2="36.703" y2="34.393" width="0.254" layer="1"/>
 <wire x1="36.703" y1="34.393" x2="37.06" y2="34.036" width="0.254" layer="1"/>
