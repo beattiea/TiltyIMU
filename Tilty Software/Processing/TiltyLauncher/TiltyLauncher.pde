@@ -35,6 +35,8 @@ void draw() {
 
 void newTiltyWay(int theValue) {
   println("Open a new 2D project");
+  open(sketchPath("data/") + "New_2D_Setup.app");
+  exit();
 }
 
 //  Rotates and displays the Tilty Logo
