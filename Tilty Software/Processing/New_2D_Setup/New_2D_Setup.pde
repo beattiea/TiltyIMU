@@ -28,8 +28,8 @@ void setup() {
   size(x_size, y_size, P3D);
   noStroke();
   smooth(4);
-  fill(149,2,135);
-  /*
+  
+  /*//  3D Model code, but the model needs work
   TiltyIMU = new OBJModel(this, "Tilty.obj", "absolute", TRIANGLES);
   TiltyIMU.scale(5);
   TiltyIMU.translateToCenter();
@@ -62,12 +62,20 @@ float yaw;
 float pitch;
 float roll;
 
+float batt_voltage = 13.2;
+float min_batt = 5.3;
+float max_batt = 24;
+
 void draw() {
   background(10);
   
   //yaw = map(mouseX, 0, width, 0, 360) - 180;
   //pitch = map(mouseY, 0, height, 0, 360) + - 180;
   //if (mousePressed) {  roll = map(mouseX, 0, width, 0, 360) - 180;}
+  drawTelemetry();
+  drawSystem();
+  
+  checkConn();
   
   pushMatrix();
   translate(width/2, height/2);
@@ -75,13 +83,11 @@ void draw() {
   rotateX(radians(pitch));
   rotateZ(radians(roll));
   lights();
+  fill(149,2,135);
   box(height / 5, height / 16, height / 3);
   //TiltyIMU.draw();
   popMatrix();
   noLights();
-  
-  drawTelemetry();
-  drawSystem();
   
   if (width != x_size || height != y_size) {
     resizeGUI();
