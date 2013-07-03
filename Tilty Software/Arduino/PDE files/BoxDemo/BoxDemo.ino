@@ -1,7 +1,10 @@
-#define pitch 'P'//  Read pitch angle
-#define roll 'R'//  Read roll angle
-#define yaw 'Y'//  Read yaw angle
-#define batt 'B'//  Read battery voltage
+#define PITCH_ 'P'//  Read pitch angle
+#define ROLL_ 'R'//  Read roll angle
+#define YAW_ 'Y'//  Read yaw angle
+#define BATT_ 'B'//  Read battery voltage
+#define ALT_ 'A'//  Read altitude
+#define TEMP_ 'T'//  Read temperature
+#define ZERO_ 'Z'//  Zero IMU gyro
 
 #include <Wire.h>
 #include <SPI.h>
@@ -11,36 +14,47 @@
 #include "FreeIMU.h"
 #include <I2Cdev.h>
 #include <MPU60X0.h>
+#include <HMC58X3.h>
 
 FreeIMU IMU = FreeIMU();
 float ypr[3];
+float altitude, temperature;
 
 void setup() {
   Serial.begin(115200);
   Wire.begin();
   delay(10);
-  IMU.init(true);
-  while(!Serial) {  IMU.zeroGyro();}
+  //IMU.init(true);
+  Serial.println("IMU intialized");
+  //while(!Serial) {  IMU.zeroGyro();}
+  sensorConfig();
+  
+  if(IIC_Read(0x0C) == 196); //checks who_am_i bit for basic I2C handshake test
+  else Serial.println("i2c bad");
 }
 
 float yaw_offset = 0;
 float pitch_offset = 0;
 float roll_offset = 0;
+float alt_offset = 0;
 
 void loop() {
-  IMU.getYawPitchRoll(ypr);
-  Serial.print(roll); Serial.println(ypr[1] - roll_offset, 2);
-  Serial.print(pitch); Serial.println(ypr[2] - pitch_offset, 2);
-  Serial.print(yaw); Serial.println(-ypr[0] - yaw_offset, 2);
-  Serial.print(batt); Serial.println(analogRead(14) * 0.003223, 1);
+  //IMU.getYawPitchRoll(ypr);
+  sensorReadData();
+  Serial.print(ROLL_); Serial.println(ypr[2] - roll_offset, 2);
+  Serial.print(PITCH_); Serial.println(ypr[1] - pitch_offset, 2);
+  Serial.print(YAW_); Serial.println(-ypr[0] - yaw_offset, 2);
+  Serial.print(BATT_); Serial.println(analogRead(14) * 0.003223, 1);
+  Serial.print(ALT_); Serial.println(altitude - alt_offset, 2);
+  Serial.print(TEMP_); Serial.println(temperature, 2);
   
   if (Serial.available()) {
     char data = Serial.read();
-    if (data == 'y') {  yaw_offset = ypr[0];}
-    if (data == 'p') {  pitch_offset = ypr[2];}
-    if (data == 'r') {  roll_offset = ypr[1];}
-    if (data == 'z') {  IMU.zeroGyro();}
-    if (data == '|') {  Serial.println('|');}
+    if (data == YAW_) {  yaw_offset = ypr[0];}
+    if (data == PITCH_) {  pitch_offset = ypr[1];}
+    if (data == ROLL_) {  roll_offset = ypr[2];}
+    if (data == ALT_) {  alt_offset = altitude;}
+    if (data == ZERO_) {}  //IMU.zeroGyro();}
   }
 }
 

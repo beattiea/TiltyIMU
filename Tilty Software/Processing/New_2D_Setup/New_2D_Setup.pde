@@ -58,9 +58,7 @@ void setup() {
 }
 
 float t = 0;
-float yaw;
-float pitch;
-float roll;
+float yaw, pitch, roll, altitude, temperature;
 
 float batt_voltage = 13.2;
 float min_batt = 5.3;
@@ -92,6 +90,8 @@ void draw() {
   if (width != x_size || height != y_size) {
     resizeGUI();
   }
+  
+  println(frameRate);
 }
 
 

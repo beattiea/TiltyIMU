@@ -1,4 +1,4 @@
-Textlabel yaw_label, pitch_label, roll_label, batt_label;
+Textlabel yaw_label, pitch_label, roll_label, batt_label, alt_label, temp_label;
 DropdownList serial_conn;
 
 void setupTelemetryTab() {
@@ -49,7 +49,21 @@ void setupTelemetryTab() {
                  .setColor(255)
                  .setFont(tabFont);
                  ;
+  
+  alt_label = gui.addTextlabel("altLabel")
+                 .setText("Altitude: " + str(altitude))
+                 .setPosition(width/2 - int(16*scale), int(165*scale))
+                 .setColor(255)
+                 .setFont(tabFont);
+                 ;
                  
+  temp_label = gui.addTextlabel("tempLabel")
+                 .setText("Temperature: " + str(temperature))
+                 .setPosition(width/2 - int(16*scale), int(170*scale))
+                 .setColor(255)
+                 .setFont(tabFont);
+                 ;
+  
   batt_label = gui.addTextlabel("battLabel")
                   .setText("Voltage: " + str(batt_voltage))
                   .setPosition(width - int(30*scale), int(2*scale))
@@ -58,7 +72,7 @@ void setupTelemetryTab() {
                   ;
                   
   gui.addButton("zero", 1)
-     .setPosition(width/2 - 43, int(166*scale))
+     .setPosition(width/2 - 43, int(176*scale))
      ;
 }
 
@@ -69,6 +83,8 @@ void drawTelemetry() {
     pitch_label.setText("Pitch: " + str(pitch) + "°");
     roll_label.setText("Roll: " + str(roll) + "°");
     batt_label.setText("Voltage:\n" + str(batt_voltage) + "v");
+    alt_label.setText("Altitude: " + str(altitude) + " m");
+    temp_label.setText("Temperature: " + str(temperature) + "°C");
     
     //  Battery voltage Meter 
     pushMatrix();
@@ -86,9 +102,10 @@ void drawTelemetry() {
 
 void zero(int value) {
   if (myPort != null) {
-    myPort.write('z');
-    myPort.write('y');
-    myPort.write('p');
-    myPort.write('r');
+    myPort.write('Z');
+    myPort.write('Y');
+    myPort.write('P');
+    myPort.write('Z');
+    myPort.write('A');
   }
 }
