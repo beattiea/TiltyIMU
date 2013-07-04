@@ -15,8 +15,11 @@
 #include <I2Cdev.h>
 #include <MPU60X0.h>
 #include <HMC58X3.h>
+#include <MPL3115A2.h>
 
 FreeIMU IMU = FreeIMU();
+MPL3115A2 altimeter;
+
 float ypr[3];
 float altitude, temperature;
 
@@ -24,13 +27,11 @@ void setup() {
   Serial.begin(115200);
   Wire.begin();
   delay(10);
+  altimeter.init();
   //IMU.init(true);
   Serial.println("IMU intialized");
   //while(!Serial) {  IMU.zeroGyro();}
-  sensorConfig();
   
-  if(IIC_Read(0x0C) == 196); //checks who_am_i bit for basic I2C handshake test
-  else Serial.println("i2c bad");
 }
 
 float yaw_offset = 0;
@@ -40,7 +41,10 @@ float alt_offset = 0;
 
 void loop() {
   //IMU.getYawPitchRoll(ypr);
-  if (check_new()) {  sensorReadData();}
+  if (altimeter.checkData()) {
+    altitude = altimeter.readAltitudeM();
+    temperature = altimeter.readTempC();
+  }
   Serial.print(ROLL_); Serial.println(ypr[2] - roll_offset, 2);
   Serial.print(PITCH_); Serial.println(ypr[1] - pitch_offset, 2);
   Serial.print(YAW_); Serial.println(-ypr[0] - yaw_offset, 2);

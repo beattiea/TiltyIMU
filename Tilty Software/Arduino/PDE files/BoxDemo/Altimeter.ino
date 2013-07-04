@@ -115,9 +115,6 @@ void sensorReadData()
   // here is where we calculate the altitude and temperature
   altitude = (float)((m_altitude << 8)|c_altitude) + l_altitude;
   temperature = (float)(m_temp + l_temp);
-  
-  // wait here for new data
-  while(check_new() == false);
 }
 
 // These are the two I2C functions in this sketch.

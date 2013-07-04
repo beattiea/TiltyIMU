@@ -479,11 +479,9 @@
 <rectangle x1="20.9911125" y1="48.842171875" x2="22.0579125" y2="48.867571875" layer="26" rot="R213"/>
 <rectangle x1="19.67938125" y1="48.039809375" x2="20.89858125" y2="48.065209375" layer="26" rot="R213"/>
 <rectangle x1="18.33405625" y1="47.265115625" x2="19.85805625" y2="47.290515625" layer="26" rot="R213"/>
-<rectangle x1="22.946934375" y1="49.845678125" x2="23.099334375" y2="49.871078125" layer="26" rot="R213"/>
 <rectangle x1="21.000628125" y1="48.870390625" x2="22.042028125" y2="48.895790625" layer="26" rot="R213"/>
 <rectangle x1="19.688896875" y1="48.068028125" x2="20.882696875" y2="48.093428125" layer="26" rot="R213"/>
 <rectangle x1="18.30096875" y1="47.265665625" x2="19.79956875" y2="47.291065625" layer="26" rot="R213"/>
-<rectangle x1="23.007253125" y1="49.873896875" x2="23.032653125" y2="49.899296875" layer="25" rot="R13"/>
 <rectangle x1="20.98474375" y1="48.898609375" x2="22.05154375" y2="48.924009375" layer="26" rot="R213"/>
 <rectangle x1="19.673015625" y1="48.096246875" x2="20.892215625" y2="48.121646875" layer="26" rot="R213"/>
 <rectangle x1="18.24248125" y1="47.26621875" x2="19.76648125" y2="47.29161875" layer="26" rot="R213"/>
@@ -969,8 +967,7 @@
 <text x="9.525" y="47.879" size="1.016" layer="25" ratio="12" rot="R90" align="center-left">GND</text>
 <text x="22.17159375" y="45.162375" size="1.2065" layer="26" ratio="12" rot="MR0" align="center-left">Duo/Quad</text>
 <text x="21.844" y="43.561" size="1.27" layer="26" ratio="12" rot="MR0" align="center-left">V0.2.2</text>
-<text x="43.2435" y="6.7945" size="1.143" layer="25" ratio="12" align="center-left">BT</text>
-<text x="41.783" y="5.08" size="1.143" layer="25" ratio="12" align="center-left">Status</text>
+<text x="28.575" y="3.429" size="1.143" layer="25" ratio="12" align="center-left">BT</text>
 <text x="4.445" y="10.16" size="1.016" layer="26" ratio="10" rot="MR75" align="center-left">GND</text>
 </plain>
 <libraries>
@@ -2911,7 +2908,13 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="17.4665" y1="18.792" x2="17.2085" y2="18.796" width="0.1524" layer="16"/>
 <wire x1="17.2085" y1="18.796" x2="16.637" y2="18.9865" width="0.1524" layer="16"/>
 <wire x1="16.637" y1="18.9865" x2="16.637" y2="16.9545" width="0.1524" layer="1"/>
-<wire x1="32.11" y1="2.37" x2="32.727" y2="3.3655" width="0" layer="19" extent="1-16"/>
+<via x="33.909" y="4.445" extent="1-16" drill="0.3302"/>
+<wire x1="33.909" y1="4.445" x2="33.9335" y2="4.445" width="0.254" layer="1"/>
+<wire x1="33.9335" y1="4.445" x2="32.727" y2="3.3655" width="0.254" layer="1"/>
+<wire x1="32.11" y1="2.37" x2="32.85" y2="2.37" width="0.254" layer="16"/>
+<wire x1="32.85" y1="2.37" x2="33.274" y2="2.794" width="0.254" layer="16"/>
+<wire x1="33.274" y1="2.794" x2="33.274" y2="3.81" width="0.254" layer="16"/>
+<wire x1="33.274" y1="3.81" x2="33.909" y2="4.445" width="0.254" layer="16"/>
 </signal>
 <signal name="SCL" class="4">
 <contactref element="U5" pad="23"/>
@@ -3525,8 +3528,8 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 </signals>
 <errors>
-<approved hash="19,1,7fba03843d71414f"/>
 <approved hash="19,1,fd7e01400765fb5b"/>
+<approved hash="19,1,7fba03843d71414f"/>
 <approved hash="19,1,1e00003e0dfe13c0"/>
 <approved hash="19,1,037e3b403d760548"/>
 <approved hash="19,1,81ba39840762bf5c"/>
