@@ -7620,9 +7620,6 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 </net>
 <net name="LED" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="PIO1"/>
-<wire x1="66.04" y1="31.75" x2="78.74" y2="31.75" width="0.1524" layer="91"/>
-<label x="73.66" y="31.75" size="1.778" layer="95"/>
 <wire x1="78.74" y1="31.75" x2="78.74" y2="30.48" width="0.1524" layer="91"/>
 <pinref part="D1" gate="G$1" pin="A"/>
 </segment>

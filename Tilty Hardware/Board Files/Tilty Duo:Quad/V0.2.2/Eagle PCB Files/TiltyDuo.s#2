@@ -7202,7 +7202,7 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <attribute name="NAME" x="80.01" y="105.6386" size="1.778" layer="95"/>
 <attribute name="VALUE" x="80.01" y="100.838" size="1.778" layer="96"/>
 </instance>
-<instance part="GND10" gate="1" x="180.34" y="71.12" rot="R180"/>
+<instance part="GND10" gate="1" x="205.74" y="71.12" rot="R180"/>
 <instance part="U2" gate="G$1" x="45.72" y="31.75"/>
 <instance part="GND11" gate="1" x="16.51" y="15.24"/>
 <instance part="GND12" gate="1" x="142.24" y="86.36"/>
@@ -7355,18 +7355,11 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <label x="181.61" y="99.695" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP1" gate="A" pin="8"/>
-<wire x1="142.24" y1="60.96" x2="147.32" y2="60.96" width="0.1524" layer="91"/>
-<wire x1="147.32" y1="60.96" x2="147.32" y2="66.04" width="0.1524" layer="91"/>
 <pinref part="GND10" gate="1" pin="GND"/>
-<wire x1="147.32" y1="66.04" x2="180.34" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="180.34" y1="66.04" x2="180.34" y2="68.58" width="0.1524" layer="91"/>
 <pinref part="U1" gate="G$1" pin="GND"/>
 <wire x1="205.74" y1="55.88" x2="203.2" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="205.74" y1="55.88" x2="205.74" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="205.74" y1="66.04" x2="180.34" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="205.74" y1="55.88" x2="205.74" y2="68.58" width="0.1524" layer="91"/>
 <junction x="205.74" y="55.88"/>
-<junction x="180.34" y="66.04"/>
 <wire x1="205.74" y1="55.88" x2="210.82" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="210.82" y1="55.88" x2="210.82" y2="58.42" width="0.1524" layer="91"/>
 <pinref part="JP5" gate="A" pin="7"/>
@@ -7724,6 +7717,11 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <wire x1="129.54" y1="160.02" x2="129.54" y2="167.64" width="0.1524" layer="91"/>
 <junction x="129.54" y="167.64"/>
 <label x="114.3" y="167.64" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP1" gate="A" pin="8"/>
+<wire x1="142.24" y1="60.96" x2="162.56" y2="60.96" width="0.1524" layer="91"/>
+<label x="147.32" y="60.96" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="5V" class="0">
