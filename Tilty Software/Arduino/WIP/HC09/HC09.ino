@@ -8,16 +8,15 @@ void setup() {
   while (!Serial) {}
   //int baud = findBaud();
   //Serial.println(baud);
-  init(findBaud());
-  setBaud(460800);
+  Serial.println(init());
 }
 
 void loop() {
   
   digitalWrite(_key, HIGH);
   delay(50);
-  Serial1.write("AT+UART?\r\n");
-  delay(20);
+  Serial1.write("AT+NAME?\r\n");
+  delay(50);
   digitalWrite(_key, LOW);
   
   if (Serial1.available()) {
@@ -29,27 +28,55 @@ void loop() {
 }
 
 
-void init() {
-  Serial1.begin(findBaud());
+
+//  Starts the bluetooth module at the buad rate it is recognized as using, this is useful if the setting isn't known
+//  Returns true if the bluetooth module is connected and false if no connection was made
+//  The bluetooth module must be in command mode for this to work!
+boolean init() 
+{
+  return init(findBaud());
 }
 
-void init(int _baud) {
-  Serial1.begin(_baud);
+//  Starts the bluetooth module at a set baud rate, this will only work if the set rate and the bluetooth module's rate match
+//  Returns true if a valid rate is used (either 1-8 or a valid baud rate) and false if the baud rate is invalid
+boolean init(int _baud) 
+{
+  if (_baud < 8 && _baud > 0)
+  {
+    Serial1.begin(_bauds[_baud - 1]);
+    return true;
+  }
+  
+  else if (_baud != -1)
+  {
+    for (int i = 0; i < sizeof(_bauds) / 4; i++)
+    {
+      if (_baud == _bauds[i])
+      {
+        Serial1.begin(_bauds[i]);
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 
 
 //  Sets the baud rate of the bluetooth module
-boolean setBaud(int _baud) {
+//  The bluetooth module must be in command mode for this to work!
+boolean setBaud(int _baud) 
+{
   digitalWrite(_key, HIGH);
   delay(50);
   Serial1.write("AT+UART=");
   Serial1.print(_baud);
   Serial1.write(",0,0\r\n");
-  delay(20);
+  delay(50);
   digitalWrite(_key, LOW);
   
-  if (Serial1.available()) {
+  if (Serial1.available())
+  {
     while (Serial1.available())//  Empty the serial buffer. It's enough to know we received data, it doesn't need to be read.
     {  Serial1.read();}
   }
@@ -63,7 +90,9 @@ boolean setBaud(int _baud) {
 
 
 //  Finds and returns the set baud rate of the bluetooth module since it will only communicate at that rate
-int findBaud() {
+//  The bluetooth module must be in command mode for this to work!
+int findBaud()
+{
   pinMode(_key, OUTPUT);
   
   for (int i = 0; i < sizeof(_bauds) / 4; i++)
@@ -84,14 +113,38 @@ int findBaud() {
     
     Serial1.end();
   }
-  return 0;
+  return -1;
 }
 
 
 
+//  Sets the name that the bluetooth module broadcasts
+//  The bluetooth module must be in command mode for this to work!
+boolean setName(char _name[])
+{
+  digitalWrite(_key, HIGH);
+  delay(50);
+  Serial1.write("AT+NAME=");
+  Serial1.print(_name);
+  Serial1.write("\r\n");
+  delay(50);
+  digitalWrite(_key, LOW);
+  
+  if (Serial1.available())
+  {
+    while (Serial1.available())//  Empty the serial buffer. It's enough to know we received data, it doesn't need to be read.
+    {  Serial1.read();}
+    
+    return true;
+  }
+}
+
+
 
 //  Resets the bluetooth module and waits for it to reconnect
-void reset() {
+//  The bluetooth module must be in command mode for this to work!
+void reset()
+{
   digitalWrite(_key, HIGH);
   delay(50);
   Serial1.write("AT+RESET\r\n");
@@ -101,14 +154,17 @@ void reset() {
 }
 
 //  Resets the bluetooth module and waits for it to reconnect, DOESN'T WORK
-void reset(boolean _wait) {
+//  The bluetooth module must be in command mode for this to work!
+void reset(boolean _wait)
+{
   digitalWrite(_key, HIGH);
   delay(50);
   Serial1.write("AT+RESET\r\n");
   delay(50);
   digitalWrite(_key, LOW);
   
-  if (Serial1.available()) {
+  if (Serial1.available())
+  {
     while (Serial1.available())
     {  Serial.print(char(Serial1.read()));}
     Serial.println();
