@@ -1,0 +1,11 @@
+Test I2C EEPROM write speed
+Develop EEPROM memory structure
+
+
+Begin implementing serial command structure to enable/disable data streaming
+
+
+Add compass and altitude indicators to Processing
+  Altimeter gauge
+	compass heading indicator
+Implement smart sensor indicator loading in Processing
