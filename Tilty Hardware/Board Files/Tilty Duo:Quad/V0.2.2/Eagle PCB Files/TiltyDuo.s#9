@@ -7284,8 +7284,12 @@ package type OT</description>
 <wire x1="111.76" y1="193.04" x2="111.76" y2="134.62" width="0.635" layer="94"/>
 <text x="12.7" y="184.15" size="6.35" layer="91" ratio="14">Compass Circuitry</text>
 <wire x1="182.88" y1="193.04" x2="182.88" y2="134.62" width="0.635" layer="94"/>
-<wire x1="111.76" y1="193.04" x2="182.88" y2="193.04" width="0.635" layer="94"/>
+<wire x1="111.76" y1="193.04" x2="181.102" y2="193.04" width="0.635" layer="94"/>
 <text x="119.38" y="185.42" size="5.08" layer="91" ratio="14">Altimeter</text>
+<wire x1="181.102" y1="193.04" x2="182.88" y2="193.04" width="0.635" layer="94"/>
+<wire x1="252.222" y1="192.786" x2="252.222" y2="134.366" width="0.635" layer="94"/>
+<wire x1="181.102" y1="193.04" x2="252.222" y2="193.04" width="0.635" layer="94"/>
+<text x="190.5" y="185.42" size="5.08" layer="91" ratio="14">EEPROM</text>
 </plain>
 <instances>
 <instance part="U5" gate="G$1" x="48.26" y="104.14"/>

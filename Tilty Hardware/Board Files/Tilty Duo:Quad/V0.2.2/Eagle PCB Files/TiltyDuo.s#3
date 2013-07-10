@@ -7433,6 +7433,7 @@ package type OT</description>
 <part name="GND23" library="SparkFun" deviceset="GND" device=""/>
 <part name="C11" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="GND24" library="supply1" deviceset="GND" device=""/>
+<part name="SJ3" library="SparkFun-Passives" deviceset="SOLDERJUMPER_2WAY" device="S"/>
 <part name="SJ2" library="SparkFun-Passives" deviceset="SOLDERJUMPER_2WAY" device="S"/>
 </parts>
 <sheets>
@@ -7514,10 +7515,10 @@ package type OT</description>
 <instance part="JP5" gate="A" x="243.84" y="53.34" rot="MR180"/>
 <instance part="JP6" gate="A" x="236.22" y="30.48" rot="MR180"/>
 <instance part="GND5" gate="1" x="154.94" y="12.7"/>
-<instance part="JP3" gate="A" x="231.14" y="106.68"/>
-<instance part="JP7" gate="A" x="231.14" y="83.82"/>
-<instance part="GND9" gate="1" x="232.41" y="119.38" rot="R180"/>
-<instance part="GND14" gate="1" x="232.41" y="96.52" rot="R180"/>
+<instance part="JP3" gate="A" x="233.68" y="109.22"/>
+<instance part="JP7" gate="A" x="233.68" y="83.82"/>
+<instance part="GND9" gate="1" x="234.95" y="121.92" rot="R180"/>
+<instance part="GND14" gate="1" x="234.95" y="96.52" rot="R180"/>
 <instance part="U6" gate="G$1" x="53.34" y="160.02"/>
 <instance part="GND6" gate="1" x="25.4" y="142.24"/>
 <instance part="GND8" gate="1" x="35.56" y="142.24"/>
@@ -7567,6 +7568,7 @@ package type OT</description>
 <instance part="GND23" gate="1" x="226.06" y="144.78"/>
 <instance part="C11" gate="G$1" x="68.58" y="116.84"/>
 <instance part="GND24" gate="1" x="68.58" y="121.92" rot="R180"/>
+<instance part="SJ3" gate="G$1" x="254" y="96.52" rot="R90"/>
 <instance part="SJ2" gate="G$1" x="254" y="121.92" rot="R90"/>
 </instances>
 <busses>
@@ -7669,27 +7671,27 @@ package type OT</description>
 </segment>
 <segment>
 <pinref part="JP3" gate="A" pin="1"/>
-<wire x1="228.6" y1="109.22" x2="220.98" y2="109.22" width="0.1524" layer="91"/>
-<wire x1="220.98" y1="109.22" x2="220.98" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="231.14" y1="111.76" x2="223.52" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="111.76" x2="223.52" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="GND9" gate="1" pin="GND"/>
-<wire x1="220.98" y1="116.84" x2="232.41" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="232.41" y1="116.84" x2="243.84" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="243.84" y1="116.84" x2="243.84" y2="109.22" width="0.1524" layer="91"/>
-<junction x="232.41" y="116.84"/>
+<wire x1="223.52" y1="119.38" x2="234.95" y2="119.38" width="0.1524" layer="91"/>
+<wire x1="234.95" y1="119.38" x2="246.38" y2="119.38" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="119.38" x2="246.38" y2="111.76" width="0.1524" layer="91"/>
+<junction x="234.95" y="119.38"/>
 <pinref part="JP3" gate="A" pin="2"/>
-<wire x1="243.84" y1="109.22" x2="236.22" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="111.76" x2="238.76" y2="111.76" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="JP7" gate="A" pin="1"/>
-<wire x1="228.6" y1="86.36" x2="220.98" y2="86.36" width="0.1524" layer="91"/>
-<wire x1="220.98" y1="86.36" x2="220.98" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="231.14" y1="86.36" x2="223.52" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="86.36" x2="223.52" y2="93.98" width="0.1524" layer="91"/>
 <pinref part="GND14" gate="1" pin="GND"/>
-<wire x1="220.98" y1="93.98" x2="232.41" y2="93.98" width="0.1524" layer="91"/>
-<wire x1="232.41" y1="93.98" x2="243.84" y2="93.98" width="0.1524" layer="91"/>
-<wire x1="243.84" y1="93.98" x2="243.84" y2="86.36" width="0.1524" layer="91"/>
-<junction x="232.41" y="93.98"/>
+<wire x1="223.52" y1="93.98" x2="234.95" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="234.95" y1="93.98" x2="246.38" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="93.98" x2="246.38" y2="86.36" width="0.1524" layer="91"/>
+<junction x="234.95" y="93.98"/>
 <pinref part="JP7" gate="A" pin="2"/>
-<wire x1="243.84" y1="86.36" x2="236.22" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="86.36" x2="238.76" y2="86.36" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="25.4" y1="144.78" x2="25.4" y2="147.32" width="0.1524" layer="91"/>
@@ -8050,6 +8052,11 @@ package type OT</description>
 <junction x="68.58" y="111.76"/>
 </segment>
 <segment>
+<pinref part="SJ3" gate="G$1" pin="3"/>
+<wire x1="259.08" y1="96.52" x2="275.336" y2="96.52" width="0.1524" layer="91"/>
+<label x="259.08" y="96.52" size="1.778" layer="95"/>
+</segment>
+<segment>
 <pinref part="SJ2" gate="G$1" pin="3"/>
 <wire x1="259.08" y1="121.92" x2="275.336" y2="121.92" width="0.1524" layer="91"/>
 <label x="259.08" y="121.92" size="1.778" layer="95"/>
@@ -8072,16 +8079,6 @@ package type OT</description>
 <label x="210.82" y="60.96" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP3" gate="A" pin="4"/>
-<wire x1="236.22" y1="106.68" x2="247.65" y2="106.68" width="0.1524" layer="91"/>
-<label x="243.84" y="106.68" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="JP3" gate="A" pin="3"/>
-<wire x1="228.6" y1="106.68" x2="217.17" y2="106.68" width="0.1524" layer="91"/>
-<label x="217.17" y="106.68" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="R4" gate="G$1" pin="1"/>
 <wire x1="99.06" y1="43.18" x2="93.98" y2="43.18" width="0.1524" layer="91"/>
 <label x="93.98" y="43.18" size="1.778" layer="95"/>
@@ -8096,6 +8093,11 @@ package type OT</description>
 <wire x1="226.06" y1="172.72" x2="226.06" y2="175.26" width="0.1524" layer="91"/>
 <wire x1="226.06" y1="175.26" x2="231.14" y2="175.26" width="0.1524" layer="91"/>
 <label x="228.6" y="175.26" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="SJ3" gate="G$1" pin="1"/>
+<wire x1="248.92" y1="96.52" x2="246.38" y2="96.52" width="0.1524" layer="91"/>
+<label x="246.38" y="96.52" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="SJ2" gate="G$1" pin="1"/>
@@ -8165,8 +8167,8 @@ package type OT</description>
 <net name="I/O1" class="0">
 <segment>
 <pinref part="JP3" gate="A" pin="6"/>
-<wire x1="236.22" y1="104.14" x2="247.65" y2="104.14" width="0.1524" layer="91"/>
-<label x="241.3" y="104.14" size="1.778" layer="95"/>
+<wire x1="238.76" y1="106.68" x2="250.19" y2="106.68" width="0.1524" layer="91"/>
+<label x="243.84" y="106.68" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="2"/>
@@ -8178,8 +8180,8 @@ package type OT</description>
 <net name="I/O2" class="0">
 <segment>
 <pinref part="JP3" gate="A" pin="5"/>
-<wire x1="228.6" y1="104.14" x2="217.17" y2="104.14" width="0.1524" layer="91"/>
-<label x="217.17" y="104.14" size="1.778" layer="95"/>
+<wire x1="231.14" y1="106.68" x2="219.71" y2="106.68" width="0.1524" layer="91"/>
+<label x="219.71" y="106.68" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="3"/>
@@ -8226,8 +8228,8 @@ package type OT</description>
 </segment>
 <segment>
 <pinref part="JP7" gate="A" pin="6"/>
-<wire x1="236.22" y1="81.28" x2="247.65" y2="81.28" width="0.1524" layer="91"/>
-<label x="241.3" y="81.28" size="1.778" layer="95"/>
+<wire x1="238.76" y1="81.28" x2="249.682" y2="81.28" width="0.1524" layer="91"/>
+<label x="243.84" y="81.28" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="I/O3" class="0">
@@ -8241,8 +8243,8 @@ package type OT</description>
 </segment>
 <segment>
 <pinref part="JP7" gate="A" pin="5"/>
-<wire x1="228.6" y1="81.28" x2="217.17" y2="81.28" width="0.1524" layer="91"/>
-<label x="217.17" y="81.28" size="1.778" layer="95"/>
+<wire x1="231.14" y1="81.28" x2="219.71" y2="81.28" width="0.1524" layer="91"/>
+<label x="219.71" y="81.28" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -8382,7 +8384,30 @@ package type OT</description>
 <pinref part="R8" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="POW_I/O" class="0">
+<net name="POW_I/O2" class="0">
+<segment>
+<pinref part="SJ3" gate="G$1" pin="2"/>
+<wire x1="254" y1="91.44" x2="254" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="254" y1="88.9" x2="266.7" y2="88.9" width="0.1524" layer="91"/>
+<label x="256.54" y="88.9" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP7" gate="A" pin="4"/>
+<wire x1="238.76" y1="83.82" x2="256.032" y2="83.82" width="0.1524" layer="91"/>
+<label x="243.84" y="83.82" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP7" gate="A" pin="3"/>
+<wire x1="231.14" y1="83.82" x2="213.614" y2="83.82" width="0.1524" layer="91"/>
+<label x="213.614" y="83.82" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="POW_I/O1" class="0">
+<segment>
+<pinref part="JP3" gate="A" pin="4"/>
+<wire x1="238.76" y1="109.22" x2="258.318" y2="109.22" width="0.1524" layer="91"/>
+<label x="246.38" y="109.22" size="1.778" layer="95"/>
+</segment>
 <segment>
 <pinref part="SJ2" gate="G$1" pin="2"/>
 <wire x1="254" y1="116.84" x2="254" y2="114.3" width="0.1524" layer="91"/>
@@ -8390,14 +8415,9 @@ package type OT</description>
 <label x="256.54" y="114.3" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP7" gate="A" pin="4"/>
-<wire x1="236.22" y1="83.82" x2="247.65" y2="83.82" width="0.1524" layer="91"/>
-<label x="243.84" y="83.82" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="JP7" gate="A" pin="3"/>
-<wire x1="228.6" y1="83.82" x2="217.17" y2="83.82" width="0.1524" layer="91"/>
-<label x="217.17" y="83.82" size="1.778" layer="95"/>
+<pinref part="JP3" gate="A" pin="3"/>
+<wire x1="231.14" y1="109.22" x2="214.63" y2="109.22" width="0.1524" layer="91"/>
+<label x="214.63" y="109.22" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

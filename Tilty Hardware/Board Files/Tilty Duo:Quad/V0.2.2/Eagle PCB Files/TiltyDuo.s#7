@@ -7228,7 +7228,7 @@ package type OT</description>
 <part name="GND16" library="supply1" deviceset="GND" device=""/>
 <part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="150"/>
 <part name="GND17" library="supply1" deviceset="GND" device=""/>
-<part name="C9" library="resistor" deviceset="C-US" device="C0603" value="0.1uF">
+<part name="C9" library="resistor" deviceset="C-US" device="C0603" value="1uF">
 <attribute name="RATED_VOLTAGE" value="2"/>
 </part>
 <part name="SJ1" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NO"/>

@@ -8081,6 +8081,12 @@ package type OT</description>
 <wire x1="259.08" y1="121.92" x2="275.336" y2="121.92" width="0.1524" layer="91"/>
 <label x="259.08" y="121.92" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U7" gate="G$1" pin="VCC"/>
+<wire x1="226.06" y1="172.72" x2="226.06" y2="175.26" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="175.26" x2="231.14" y2="175.26" width="0.1524" layer="91"/>
+<label x="228.6" y="175.26" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="5V" class="0">
 <segment>
@@ -8107,12 +8113,6 @@ package type OT</description>
 <pinref part="JP9" gate="A" pin="4"/>
 <wire x1="71.374" y1="72.644" x2="81.534" y2="72.644" width="0.1524" layer="91"/>
 <label x="76.454" y="72.644" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="U7" gate="G$1" pin="VCC"/>
-<wire x1="226.06" y1="172.72" x2="226.06" y2="175.26" width="0.1524" layer="91"/>
-<wire x1="226.06" y1="175.26" x2="231.14" y2="175.26" width="0.1524" layer="91"/>
-<label x="228.6" y="175.26" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="SJ3" gate="G$1" pin="1"/>
