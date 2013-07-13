@@ -3,7 +3,7 @@ MPL3115A2.cpp - A easy to use interface for the MPL3115A2 Altimeter from Freesca
 Copyright (C) 2013-2014 Alex Beattie <alexbeattie at tiltyimu dot com>
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the version 3 GNU General Public License as
+it under the terms of the version 2 GNU General Public License as
 published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful,
@@ -42,7 +42,7 @@ boolean MPL3115A2::init()
 		#endif
 	#endif
 	
-	if (read(0x0C))
+	if (read(0x0C))//	Reads the Who Am I register to determine if the sensor is accessible
 	{  
 		// CTRL_REG1 (0x26): enable sensor, oversampling x128, altimeter mode 
   		write(0x26, 0xB9);
