@@ -37,8 +37,8 @@ int loop_time = 5, time;
 float dT = loop_time / 1000.0;
 boolean connected = false;
 #define BUZZER 2
-#define SPEED_PIN 3//  PWM1
-#define STEERING_PIN 4//  PWM2
+#define SPEED_PIN 5//  PWM1
+#define STEERING_PIN 6//  PWM2
 #define STEERING_SENSE 14
 
 #define DEBUG
@@ -60,6 +60,8 @@ void setup()
   //while(!Serial) {}
   
   startIMU();
+  delay(5);
+  IMU.zeroGyro();
   /*
   start = millis();
   while (abs(dPitch) >= 0.005) {  
@@ -71,13 +73,14 @@ void setup()
   myPort.println(millis() - start);
   */
   
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 250; i++) {
     getAngles();
     buzzerPulse(250);
+    Serial.println("Zeroing...");
     killTime();
   }
   
-  
+  /*
   while (analogRead(STEERING_SENSE) > (settings.steeringMin + settings.steeringMax) / 2 + 10 || analogRead(STEERING_SENSE) < (settings.steeringMin + settings.steeringMax) / 2 - 10) {  
     buzzerPulse(500);
     checkSerial();
@@ -86,6 +89,7 @@ void setup()
     killTime();
   }
   buzzerOff();
+  */
   
   while (abs(pitch) > 1) {
     buzzerPulse(500);
@@ -96,6 +100,7 @@ void setup()
     getAngles();
     calcPower();
     writePower();
+    Serial.println(pitch);
     killTime();
   }
   
@@ -124,18 +129,19 @@ void loop()
     PID_old = P+I+D;
     calcPower();
     //testPIDtune();
+    if (abs(pitch) < 1 && abs(f_power - 1500) > 50) {
+      pitch_offset -= 0.0025 * (abs(f_power - 1500) / (f_power - 1500));
+    }
+    
     writePower();
   }
   else {
-    while (true) {//  If anything goes drastically wrong the segway must be rebooted but can still be read from
+    while (abs(pitch) > 1) {//  If anything goes drastically wrong the segway must be rebooted but can still be read from
       buzzerOn();
       checkSerial();
       getAngles();
       
-      if (f_power < 1500) {  f_power += 1;}
-      if (f_power > 1500) {  f_power -= 1;}
-      if (s_power < 1500) {  s_power += 1;}
-      if (s_power > 1500) {  s_power -= 1;}
+      f_power = 1500;
       
       f_signal.writeMicroseconds(f_power);
       s_signal.writeMicroseconds(s_power);

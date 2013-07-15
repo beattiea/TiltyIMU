@@ -14,7 +14,7 @@ void calcPower() {
   f_power = 1500 + P + I + D;
   
   powerCheck();
-
+  /*
   S = map(analogRead(STEERING_SENSE), settings.steeringMin, settings.steeringMax, int(-kS * 500), int(kS * 500));//  Linear power applied steering
   //S = testSteering();//  Sensor based steering (can be twitchy)
   if (abs(S) - abs(s_power - 500) <= 1) {
@@ -22,6 +22,7 @@ void calcPower() {
   }
   //s_power = 1500 + S;//int(kS * S) + 1;
   //Serial.println(s_power);
+  */
 }
 
 

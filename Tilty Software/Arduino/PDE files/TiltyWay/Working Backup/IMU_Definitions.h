@@ -17,19 +17,9 @@ void startIMU();
 
 /*  Yaw, Pitch, and Roll Array Indexes  */
 #define YAW 0
-#define PITCH 1
-#define ROLL 2
+#define PITCH 2
+#define ROLL 1
 
 /*  IMU Variable Declarations  */
 float val[9], q[4], ypr[3];// float arrays to retrieve IMU data fro freeIMU
-float yaw_offset = 1.221053012 - 0.245624384, pitch_offset, roll_offset;
-
-/*  Velocity variables  (derivatives of absolute angles)  */
-float dYaw = 0, dYaw_old = 0;
-float dPitch = 0.0075, dPitch_old;
-float dRoll = 0, dRoll_old = 0;
-
-/*  Acceleration variables (derivatives of angular velocities)  */
-float ddPitch = 0, ddPitch_old = 0;
-float ddRoll = 0, ddRoll_old = 0;
-float ddYaw = 0, ddYaw_old = 0;
+float yaw_offset, pitch_offset = -0.5, roll_offset;

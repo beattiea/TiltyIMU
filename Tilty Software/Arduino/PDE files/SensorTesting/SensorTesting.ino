@@ -28,9 +28,9 @@ void setup() {
   Wire.begin();
   delay(10);
   altimeter.init();
-  //IMU.init(true);
+  IMU.init(true);
   Serial.println("IMU intialized");
-  //while(!Serial) {  IMU.zeroGyro();}
+  while(!Serial) {  IMU.zeroGyro();}
   
 }
 
@@ -40,7 +40,7 @@ float roll_offset = 0;
 float alt_offset = 0;
 
 void loop() {
-  //IMU.getYawPitchRoll(ypr);
+  IMU.getYawPitchRoll(ypr);
   if (altimeter.checkData()) {
     altitude = altimeter.readAltitudeM();
     temperature = altimeter.readTempC();
