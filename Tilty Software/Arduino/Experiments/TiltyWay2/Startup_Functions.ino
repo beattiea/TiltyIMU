@@ -6,9 +6,9 @@ void loadSavedSettings() {
 
 void setupSettings() {
   settings.address = 0;
-  settings.kP = 10.0;//  Very stiff at 15.0
-  settings.kI = 110.0;//Very stiff at 70.0...  27.5 on baby one, works on big one
-  settings.kD = 0.20;//0.125;//(settings.kP / 6.5) * 0.125;//  0.15 on baby one
+  settings.kP = 50.0;//  Very stiff at 15.0
+  settings.kI = 110.0;//Very stiff at 110
+  settings.kD = 0.2;//0.2
   settings.kS = 0.065;//  0.075 on baby one
   settings.angleOffset = 0.0;//  2.13 works well (measured at startup and steady state
   settings.speedLimit = 375;

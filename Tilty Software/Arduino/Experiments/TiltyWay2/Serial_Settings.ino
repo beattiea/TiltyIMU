@@ -7,14 +7,17 @@ int float_precision = 5;
 
 void checkSerial() {
   if (myPort.available()) {
-    switch (myPort.read()) {
+    char data = myPort.read();
+    switch (data) {
       case (SET_COMMAND): {  setVariable(); break;}
       case (READ_COMMAND): {  readVariable(); break;}
       case (SAVE_COMMAND): {  saveVariable(); break;}
       case (LOAD_SAVED_COMMAND): {  loadVariable(); break;}
       case (STREAMING_COMMAND): {  setStreaming(); break;}
       case (PING): {  myPort.println(CONFIRM); connected = true; break;}
-    }
+      case (FORWARD): {  remoteControl(data); break;}
+      case (STEERING): {  remoteControl(data); break;}
+      }
   }
   
   if (STREAM_P) {  myPort.print(VARIABLE_P);  myPort.println(P, 5);}

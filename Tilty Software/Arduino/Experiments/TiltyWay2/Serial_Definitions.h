@@ -9,6 +9,9 @@
 #define PING ')'
 #define CONFIRM '*'
 
+#define FORWARD 'F'
+#define STEERING 'S'
+
 /*  Serial data indicators  */
 /*  These are sent from the computer to indicate what variable to act upon  */
 #define VARIABLE_kP 'p'//  Set kP value

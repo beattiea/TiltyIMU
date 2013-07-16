@@ -11,9 +11,25 @@ void calcPower() {
   I = I + kI * pitch * dT;
   D = (kD * dPitch);
   
-  f_power = 1500 + P + I + D;
+  //f_power = 1500 + P + I + D;
+  //  Experimental R/C powers
+  f_power = P + I + D;
+  s_power = RCsteering;
   
-  powerCheck();
+    //  Doesn't work very well
+  if (f_power > RCspeed / 2 && RCspeed < 0) {  pitch_offset -= 0.0002 * abs(f_power - RCspeed / 2);}
+  else if (f_power < RCspeed / 2 && RCspeed < 0) {  pitch_offset += 0.0002 * abs(f_power - RCspeed / 2);}
+  else if (f_power > RCspeed / 2 && RCspeed > 0) {  pitch_offset -= 0.0002 * abs(f_power - RCspeed / 2);}
+  else if (f_power < RCspeed / 2 && RCspeed > 0) {  pitch_offset += 0.0002 * abs(f_power - RCspeed / 2);}
+  else if (RCspeed == 0) {  
+    if (abs(pitch) < 1 && abs(f_power - 1500) > 75) {
+      pitch_offset -= 0.0025 * (abs(f_power) / f_power);
+    }
+  }
+  
+  
+  //powerCheck();
+  
   /*
   S = map(analogRead(STEERING_SENSE), settings.steeringMin, settings.steeringMax, int(-kS * 500), int(kS * 500));//  Linear power applied steering
   //S = testSteering();//  Sensor based steering (can be twitchy)
@@ -44,12 +60,12 @@ void powerCheck() {
     f_power += int(forceback);
   }
   */
-  if (abs(f_power - 1500) > speed_limit) {
-    if (f_power - 1500 < 0) {  forceback = -20 - 5 * (abs(f_power - 1500) - speed_limit);}
-    if (f_power - 1500 > 0) {  forceback = 20 + 5 * (abs(f_power - 1500) - speed_limit);}
+  if (abs(f_power) > speed_limit) {
+    if (f_power < 0) {  forceback = -20 - 5 * (abs(f_power) - speed_limit);}
+    if (f_power > 0) {  forceback = 20 + 5 * (abs(f_power) - speed_limit);}
     
-    if (forceback + f_power > 2000) {  f_power = 2000;}
-    else if (forceback + f_power < 1000) {  f_power = 1000;}
+    if (forceback + f_power > 500) {  f_power = 500;}
+    else if (forceback + f_power < 10-500) {  f_power = -500;}
     else {  f_power += forceback;}
   }
     
@@ -72,8 +88,10 @@ void setupServos() {
 }
 
 void writePower() {
-  f_signal.writeMicroseconds(f_power);
-  s_signal.writeMicroseconds(s_power);
+  //myPort.write(f_power);
+  //myPort.println(s_power);
+  f_signal.writeMicroseconds(1500 + f_power);
+  s_signal.writeMicroseconds(1500 + s_power);
 }
 
 
@@ -102,4 +120,25 @@ int testSteering() {
   //steering_P = map(analogRead(STEERING_SENSE), settings.steeringMin, settings.steeringMax, -range, range);
   //steering_I += map(analogRead(STEERING_SENSE), settings.steeringMin, settings.steeringMax, -range, range) * 0.01;
   return int(steering_P + steering_I + steering_D);
+}
+
+
+
+
+//  Experimental R/C code
+void remoteControl(char command) {
+  //myPort.print(command);
+  //myPort.print(": ");
+  if (command == FORWARD) {
+    RCspeed = myPort.read() - 127;
+    //pitch_offset = settings.angleOffset + RCspeed / 16.0;
+    //myPort.println(pitch_offset);
+    //f_power += speed;
+    //myPort.println(speed);
+  }
+  if (command == STEERING) {
+    RCsteering = myPort.read() - 127;
+    //s_power += steering;
+    //myPort.println(steering);
+  }
 }

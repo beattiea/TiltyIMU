@@ -4,6 +4,8 @@
 #include <EEPROM.h>
 #include <FastServo.h>
 
+#include <stdint.h>
+
 /*  IMU includes  */
 #include "DebugUtils.h"
 #include "CommunicationUtils.h"
@@ -26,11 +28,14 @@
 float pitch, roll, yaw;// Forward and Sideways tilt angles
 float pitch_old, roll_old, yaw_old;//  Forward and sideways tilt angles from previous reading
 
+//  Experimental R/C Control Variables
+int RCspeed, RCsteering;
+
 /*  Temporary variables (need to be moved?)  */
 float kP, kI, kD, P=0, I=0, D=0, kS, S, PID_old = 0;
 float kickback = 0.25;
 int max_speed = 500, speed_limit;
-int f_power = 1500, s_power = 1500;
+int f_power = 0, s_power = 0;
 int steering_min , steering_max;
 long start, stop, loop_start;
 int loop_time = 5, time;
@@ -93,13 +98,15 @@ void setup()
   
   while (abs(pitch) > 1) {
     buzzerPulse(500);
-    kP = 5;
-    kI = 1;
-    kD = 0.1;
+    kP = 10;
+    kI = 1.5;
+    kD = 0.2;
     checkSerial();
     getAngles();
-    calcPower();
-    writePower();
+    if (abs(pitch) < 8) {
+      calcPower();
+      writePower();
+    }
     Serial.println(pitch);
     killTime();
   }
@@ -121,27 +128,32 @@ void loop()
   
   //steeringCheck();
   
-  if (abs(pitch) < 25 && abs(roll) < 35 && abs(f_power - 1500) < max_speed) {
+  if (abs(pitch) < 25 && abs(roll) < 35 && abs(f_power) < max_speed) {
     if (abs(P+I+D) > max_speed * 0.75) {  buzzerOn();}
-    else if (abs(f_power - 1500) > speed_limit) {  buzzerPulse(50);}
+    else if (abs(f_power) > speed_limit) {  buzzerPulse(50);}
     //else if (abs(f_power - 1500) > speed_limit * 0.75 && abs(f_power - 1500) < speed_limit) {  buzzerPulse(100);}
     else {  buzzerOff();}
     PID_old = P+I+D;
     calcPower();
     //testPIDtune();
-    if (abs(pitch) < 1 && abs(f_power - 1500) > 50) {
+   /*
+    if (abs(pitch) < 1 && abs(f_power - 1500) > 75) {
       pitch_offset -= 0.0025 * (abs(f_power - 1500) / (f_power - 1500));
     }
-    
+    */
     writePower();
   }
   else {
+    myPort.println(f_power);
+    myPort.println(pitch);
+    pitch_offset = settings.angleOffset;
     while (abs(pitch) > 1) {//  If anything goes drastically wrong the segway must be rebooted but can still be read from
       buzzerOn();
       checkSerial();
       getAngles();
       
-      f_power = 1500;
+      f_power = 0;
+      s_power = 0;
       
       f_signal.writeMicroseconds(f_power);
       s_signal.writeMicroseconds(s_power);
