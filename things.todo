@@ -11,16 +11,20 @@ Processing program:
 
 Documentation:
 ==============
-	Develop EEPROM memory structure
+	Develop EEPROM memory structure (partially done)
+	Look into using Doxygen/GitHub wiki
 
 Software Library work:
 ======================
 	HMC5883L I2Cdev testing
 	I2C EEPROM library (maybe one exists, should be adaptable to work with large and small EEPROM sizes)
 
+Hardware Work
+=============
+	Dual motor driver add-on board
 
 Tyler:
-Doxygen setup
+Doxygen
 Learn to use the IMU (Free IMU library)
-GIThub work
 HMC58X3 library needs to be updated to work with 32-bit microcontrollers, force 16-bit integers
+EEPROM library
