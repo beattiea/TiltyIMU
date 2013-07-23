@@ -1,6 +1,7 @@
 Arduino code:
 =============
 	Implement smart sensor indicator loading in Processing
+	Self-test program for testing IMU, magnetometer, and altimeter
 
 Processing program:
 ===================
