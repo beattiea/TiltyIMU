@@ -28,4 +28,5 @@ Tyler:
 Doxygen
 Learn to use the IMU (Free IMU library)
 HMC58X3 library needs to be updated to work with 32-bit microcontrollers, force 16-bit integers
-EEPROM library
+Flash Library
+Kalman Filter Code
