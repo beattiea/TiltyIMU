@@ -23,6 +23,7 @@ Software Library work:
 Hardware Work
 =============
 	Dual motor driver add-on board
+	Change header footprints to use locking pattern
 
 Tyler:
 Doxygen
