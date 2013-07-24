@@ -92,14 +92,14 @@ float time;
 
 void loop() {
     
-    lastAngle = gz;
     // read raw accel/gyro measurements from device
     accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-    gz = map(gz, -32768, 32767, -250, 250) + 3;
+    //gz = map(gz, -32768, 32767, -250, 250) + 3;
     
     time = (micros() - lastRun) / 1000000.0;
     lastRun = micros();
-    angle = filter.getAngle(angle, gz, time);
+    lastAngle = angle;
+    angle = filter.getAngle(lastAngle, gz / 131.0, time);
     
     Serial.print("Kalman Filtered X Gyro ");
     Serial.println(angle);
