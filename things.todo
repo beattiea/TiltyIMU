@@ -12,13 +12,13 @@ Processing program:
 
 Documentation:
 ==============
-	Develop EEPROM memory structure (partially done)
+	Develop flash memory structure (partially done)
 	Look into using Doxygen/GitHub wiki
 
 Software Library work:
 ======================
 	HMC5883L I2Cdev testing
-	I2C EEPROM library (maybe one exists, should be adaptable to work with large and small EEPROM sizes)
+	Flash memory library (maybe one exists, should be adaptable to work with various memory sizes)
 
 Hardware Work
 =============
