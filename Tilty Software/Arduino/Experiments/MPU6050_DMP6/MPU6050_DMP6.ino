@@ -209,6 +209,9 @@ void setup() {
         Serial.print(F("DMP Initialization failed (code "));
         Serial.print(devStatus);
         Serial.println(F(")"));
+        Serial.println("Resetting and trying again...");
+        mpu.reset();
+        setup();
     }
     Serial.print("Accel Range: ");
     Serial.println(mpu.getFullScaleAccelRange());
