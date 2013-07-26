@@ -2815,7 +2815,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="JP9" library="pinhead" package="1X04" value="" x="26.416" y="8.0645" smashed="yes" rot="R90">
 <attribute name="VALUE" x="29.591" y="2.9845" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="R7" library="resistor" package="R0603" value="4.7K" x="34.671" y="6.731" smashed="yes" rot="MR270"/>
+<element name="R7" library="resistor" package="R0603" value="10K" x="34.671" y="6.731" smashed="yes" rot="MR270"/>
 <element name="U3" library="SparkFun-Sensors" package="LGA8" value="MPL3115A2LGA8" x="29.972" y="27.3685" smashed="yes" rot="MR180"/>
 <element name="C10" library="resistor" package="C0603" value="0.1uF" x="29.21" y="23.495" smashed="yes" rot="MR164.1">
 <attribute name="RATED_VOLTAGE" value="2" x="29.21" y="23.495" size="1.778" layer="28" ratio="10" rot="MR164.1" display="off"/>

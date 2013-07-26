@@ -2999,6 +2999,12 @@ Please make sure your boards conform to these design rules.</description>
 <via x="25.4" y="33.0835" extent="1-16" drill="0.3302"/>
 <via x="3.937" y="31.4325" extent="1-16" drill="0.3302"/>
 <via x="17.526" y="33.0835" extent="1-16" drill="0.3302"/>
+<polygon width="0.1524" layer="16" orphans="yes">
+<vertex x="16.129" y="21.463"/>
+<vertex x="21.971" y="21.463"/>
+<vertex x="21.971" y="15.621"/>
+<vertex x="16.129" y="15.621"/>
+</polygon>
 </signal>
 <signal name="SCL" class="4">
 <contactref element="U5" pad="23"/>
@@ -3635,6 +3641,14 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="6.096" y1="38.862" x2="5.715" y2="39.243" width="0.254" layer="1"/>
 <wire x1="5.715" y1="39.243" x2="3.937" y2="39.243" width="0.254" layer="1"/>
 <wire x1="3.937" y1="39.243" x2="1.397" y2="39.243" width="0.254" layer="1"/>
+</signal>
+<signal name="N$4">
+<polygon width="0.1524" layer="16" pour="cutout">
+<vertex x="17.526" y="20.066"/>
+<vertex x="17.526" y="17.018"/>
+<vertex x="20.574" y="17.018"/>
+<vertex x="20.574" y="20.066"/>
+</polygon>
 </signal>
 </signals>
 <errors>

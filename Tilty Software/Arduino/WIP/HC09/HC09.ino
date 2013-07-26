@@ -6,18 +6,27 @@ int _bauds[] = {9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600};
 void setup() {
   Serial.begin(115200);
   while (!Serial) {}
-  //int baud = findBaud();
-  //Serial.println(baud);
-  Serial.println(init());
+  Serial.println(findBaud());
+  Serial.println(init(115200));
+  delay(5);
+  //setBaud(115200);
 }
 
 void loop() {
   
-  digitalWrite(_key, HIGH);
-  delay(50);
-  Serial1.write("AT+NAME?\r\n");
-  delay(50);
-  digitalWrite(_key, LOW);
+  
+  //Serial1.write("AT\r\n");
+ 
+  
+  if (Serial.available()) {
+    digitalWrite(_key, HIGH);
+    delay(50);
+    while (Serial.available())
+    {  Serial1.print(char(Serial.read()));}
+    Serial1.print("\r\n");
+    delay(50);
+    digitalWrite(_key, LOW);
+  }
   
   if (Serial1.available()) {
     while (Serial1.available())

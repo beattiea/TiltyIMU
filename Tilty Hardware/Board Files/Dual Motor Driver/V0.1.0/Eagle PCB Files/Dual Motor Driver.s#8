@@ -9462,8 +9462,10 @@ Source: RS Component / Phycomp</description>
 </part>
 <part name="P+14" library="supply1" deviceset="+24V" device=""/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
-<part name="R3" library="resistor" deviceset="R-US_" device="R0603" value="PU"/>
-<part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="PU"/>
+<part name="R3" library="resistor" deviceset="R-US_" device="R0603" value="310"/>
+<part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="310"/>
+<part name="P+15" library="supply1" deviceset="+5V" device=""/>
+<part name="P+16" library="supply1" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -9583,6 +9585,8 @@ Source: RS Component / Phycomp</description>
 <attribute name="VALUE" x="191.262" y="31.75" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="R4" gate="G$1" x="187.96" y="20.32" rot="R90"/>
+<instance part="P+15" gate="1" x="187.96" y="40.64" smashed="yes"/>
+<instance part="P+16" gate="1" x="187.96" y="12.7" smashed="yes" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -9954,6 +9958,14 @@ Source: RS Component / Phycomp</description>
 <wire x1="233.68" y1="73.66" x2="233.68" y2="76.2" width="0.1524" layer="91"/>
 <junction x="233.68" y="73.66"/>
 <pinref part="U5" gate="G$1" pin="VOUT"/>
+</segment>
+<segment>
+<pinref part="R3" gate="G$1" pin="2"/>
+<pinref part="P+15" gate="1" pin="+5V"/>
+</segment>
+<segment>
+<pinref part="R4" gate="G$1" pin="1"/>
+<pinref part="P+16" gate="1" pin="+5V"/>
 </segment>
 </net>
 <net name="H-SDA" class="0">

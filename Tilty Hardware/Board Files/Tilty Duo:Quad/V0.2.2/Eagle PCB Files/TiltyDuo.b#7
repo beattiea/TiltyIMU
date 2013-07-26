@@ -2999,11 +2999,11 @@ Please make sure your boards conform to these design rules.</description>
 <via x="25.4" y="33.0835" extent="1-16" drill="0.3302"/>
 <via x="3.937" y="31.4325" extent="1-16" drill="0.3302"/>
 <via x="17.526" y="33.0835" extent="1-16" drill="0.3302"/>
-<polygon width="0.1524" layer="16" orphans="yes">
-<vertex x="16.129" y="21.463"/>
-<vertex x="21.971" y="21.463"/>
-<vertex x="21.971" y="15.621"/>
-<vertex x="16.129" y="15.621"/>
+<polygon width="0.1524" layer="16" isolate="0.2032" orphans="yes">
+<vertex x="15.494" y="22.098"/>
+<vertex x="22.606" y="22.098"/>
+<vertex x="22.606" y="14.986"/>
+<vertex x="15.494" y="14.986"/>
 </polygon>
 </signal>
 <signal name="SCL" class="4">

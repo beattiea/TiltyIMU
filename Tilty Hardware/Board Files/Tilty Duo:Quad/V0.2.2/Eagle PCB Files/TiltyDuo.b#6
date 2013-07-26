@@ -3106,8 +3106,10 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="36.83" y1="17.653" x2="36.83" y2="19.685" width="0.1524" layer="1"/>
 <wire x1="36.83" y1="19.685" x2="36.322" y2="20.193" width="0.1524" layer="1"/>
 <wire x1="36.322" y1="20.193" x2="23.114" y2="20.193" width="0.1524" layer="1"/>
-<wire x1="23.114" y1="20.193" x2="22.479" y2="20.828" width="0.1524" layer="1"/>
-<wire x1="22.479" y1="20.828" x2="19.812" y2="20.828" width="0.1524" layer="1"/>
+<wire x1="23.114" y1="20.193" x2="22.733" y2="20.574" width="0.1524" layer="1"/>
+<wire x1="22.733" y1="20.574" x2="22.733" y2="22.098" width="0.1524" layer="1"/>
+<wire x1="22.733" y1="22.098" x2="22.352" y2="22.479" width="0.1524" layer="1"/>
+<wire x1="22.352" y1="22.479" x2="19.812" y2="22.479" width="0.1524" layer="1"/>
 </signal>
 <signal name="RX3">
 <contactref element="U1" pad="P$9"/>
