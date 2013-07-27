@@ -42,8 +42,8 @@ int loop_time = 5, time;
 float dT = loop_time / 1000.0;
 boolean connected = false;
 #define BUZZER 2
-#define SPEED_PIN 3//  PWM1
-#define STEERING_PIN 4//  PWM2
+#define SPEED_PIN 2//  PWM1
+#define STEERING_PIN 3//  PWM2
 #define STEERING_SENSE 14
 
 #define DEBUG

@@ -17,8 +17,8 @@ void startIMU();
 
 /*  Yaw, Pitch, and Roll Array Indexes  */
 #define YAW 0
-#define PITCH 1
-#define ROLL 2
+#define PITCH 2
+#define ROLL 1
 
 /*  IMU Variable Declarations  */
 float val[9], q[4], ypr[3];// float arrays to retrieve IMU data fro freeIMU

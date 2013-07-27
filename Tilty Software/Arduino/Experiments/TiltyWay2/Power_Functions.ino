@@ -90,8 +90,8 @@ void setupServos() {
 void writePower() {
   //myPort.write(f_power);
   //myPort.println(s_power);
-  f_signal.writeMicroseconds(1500 + f_power);
-  s_signal.writeMicroseconds(1500 + s_power);
+  f_signal.writeMicroseconds(1500 - f_power);
+  s_signal.writeMicroseconds(1500 - s_power);
 }
 
 
