@@ -5,17 +5,24 @@ int _bauds[] = {9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600};
 
 void setup() {
   Serial.begin(115200);
+  Serial1.begin(230400);
   while (!Serial) {}
-  Serial.println(findBaud());
-  Serial.println(init(115200));
+  //int baud = findBaud();
+  Serial.println(init());
+  Serial.println("begin...");
   delay(5);
   //setBaud(115200);
 }
 
 void loop() {
-  
-  
-  //Serial1.write("AT\r\n");
+  /*
+  digitalWrite(_key, HIGH);
+  delay(50);
+  Serial.println("AT");
+  Serial1.write("AT\r\n");
+  delay(50);
+  digitalWrite(_key, LOW);
+  */
  
   
   if (Serial.available()) {
@@ -24,8 +31,8 @@ void loop() {
     while (Serial.available())
     {  Serial1.print(char(Serial.read()));}
     Serial1.print("\r\n");
-    delay(50);
-    digitalWrite(_key, LOW);
+    //delay(50);
+    //digitalWrite(_key, LOW);
   }
   
   if (Serial1.available()) {
@@ -33,7 +40,6 @@ void loop() {
     {  Serial.print(char(Serial1.read()));}
     Serial.println();
   }
-  delay(500);
 }
 
 
@@ -76,6 +82,8 @@ boolean init(int _baud)
 //  The bluetooth module must be in command mode for this to work!
 boolean setBaud(int _baud) 
 {
+  pinMode (_key, OUTPUT);
+  
   digitalWrite(_key, HIGH);
   delay(50);
   Serial1.write("AT+UART=");
@@ -107,16 +115,16 @@ int findBaud()
   for (int i = 0; i < sizeof(_bauds) / 4; i++)
   {
     digitalWrite(_key, HIGH);
-    delay(50);
     Serial1.begin(_bauds[i]);
+    delay(100);
     Serial1.write("AT\r\n");
-    delay(50);
+    delay(100);
     digitalWrite(_key, LOW);
     
     if (Serial1.available()) 
     {
       while (Serial1.available())//  Empty the serial buffer. It's enough to know we received data, it doesn't need to be read.
-      {  Serial1.read();}
+      {  Serial.print(char(Serial1.read()));}
       return _bauds[i];//  return the correct baud rate
     }
     

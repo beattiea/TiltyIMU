@@ -23,7 +23,7 @@ void setupTelemetryTab() {
                    .addItems(Serial.list())
                    .setLabel("Select Serial Port")
                    .setColorActive(0)
-                   .setColorForeground(color(200,200,0))
+                   .setColorForeground(color(200,25,25))
                    ;
   serial_conn.captionLabel().style().marginTop = serial_conn.getBarHeight() / 2 - 6;
   serial_conn.addItem("Attempt to auto-connect", -1);
@@ -82,7 +82,7 @@ void drawTelemetry() {
     yaw_label.setText("Yaw: " + str(yaw) + "°");
     pitch_label.setText("Pitch: " + str(pitch) + "°");
     roll_label.setText("Roll: " + str(roll) + "°");
-    batt_label.setText("Voltage:\n" + str(batt_voltage) + "v");
+    batt_label.setText("Voltage:\n" + nfs(batt_voltage, 1, 2) + "v");
     alt_label.setText("Altitude: " + str(altitude) + " m");
     temp_label.setText("Temperature: " + str(temperature) + "°C");
     

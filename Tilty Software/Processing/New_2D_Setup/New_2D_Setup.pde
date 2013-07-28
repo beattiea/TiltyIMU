@@ -61,10 +61,8 @@ float t = 0;
 float yaw, pitch, roll, altitude, temperature;
 
 float batt_voltage = 13.2;
-float min_batt = 5.3;
-float max_batt = 24;
-
-void draw() {
+float min_batt = 5.2;
+float max_batt = 24;void draw() {
   background(10);
   
   //yaw = map(mouseX, 0, width, 0, 360) - 180;
