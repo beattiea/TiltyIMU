@@ -52,45 +52,7 @@ MPU60X0 mpu(false, 0x68);
  * ========================================================================= */
 
 
-
-// uncomment "OUTPUT_READABLE_QUATERNION" if you want to see the actual
-// quaternion components in a [w, x, y, z] format (not best for parsing
-// on a remote host such as Processing or something though)
-//#define OUTPUT_READABLE_QUATERNION
-
-// uncomment "OUTPUT_READABLE_EULER" if you want to see Euler angles
-// (in degrees) calculated from the quaternions coming from the FIFO.
-// Note that Euler angles suffer from gimbal lock (for more info, see
-// http://en.wikipedia.org/wiki/Gimbal_lock)
-//#define OUTPUT_READABLE_EULER
-
-// uncomment "OUTPUT_READABLE_YAWPITCHROLL" if you want to see the yaw/
-// pitch/roll angles (in degrees) calculated from the quaternions coming
-// from the FIFO. Note this also requires gravity vector calculations.
-// Also note that yaw/pitch/roll angles suffer from gimbal lock (for
-// more info, see: http://en.wikipedia.org/wiki/Gimbal_lock)
-#define OUTPUT_READABLE_YAWPITCHROLL
-
-// uncomment "OUTPUT_READABLE_REALACCEL" if you want to see acceleration
-// components with gravity removed. This acceleration reference frame is
-// not compensated for orientation, so +X is always +X according to the
-// sensor, just without the effects of gravity. If you want acceleration
-// compensated for orientation, us OUTPUT_READABLE_WORLDACCEL instead.
-//#define OUTPUT_READABLE_REALACCEL
-
-// uncomment "OUTPUT_READABLE_WORLDACCEL" if you want to see acceleration
-// components with gravity removed and adjusted for the world frame of
-// reference (yaw is relative to initial orientation, since no magnetometer
-// is present in this case). Could be quite handy in some cases.
-//#define OUTPUT_READABLE_WORLDACCEL
-
-// uncomment "OUTPUT_TEAPOT" if you want output that matches the
-// format used for the InvenSense teapot demo
-//#define OUTPUT_TEAPOT
-
-
-
-#define LED_PIN 2 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
+#define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
 bool blinkState = false;
 
 // MPU control/status vars
@@ -136,7 +98,7 @@ void setup() {
     // (115200 chosen because it is required for Teapot Demo output, but it's
     // really up to you depending on your project)
     Serial.begin(115200);
-    Serial1.begin(230400);
+    Serial1.begin(115200);
     Wire.begin();
     
     #if defined(__arm__)
@@ -152,7 +114,6 @@ void setup() {
     #endif
     
     while (!Serial); // wait for Leonardo enumeration, others continue immediately
-   
 
     // NOTE: 8MHz or slower host processors, like the Teensy @ 3.3v or Ardunio
     // Pro Mini running at 3.3v, cannot handle this baud rate reliably due to
@@ -168,18 +129,16 @@ void setup() {
     mpu.setDLPFMode(MPU60X0_DLPF_BW_20);			// Low Pass filter 20hz
     mpu.setFullScaleGyroRange(MPU60X0_GYRO_FS_250);		// 250? / s
     mpu.setFullScaleAccelRange(MPU60X0_ACCEL_FS_2);		// +-2g
-	
+
     // verify connection
     Serial.println(F("Testing device connections..."));
     Serial.println(mpu.testConnection() ? F("MPU60X0 connection successful") : F("MPU60X0 connection failed"));
 
     // wait for ready
     Serial.println(F("\nSend any character to begin DMP programming and demo: "));
-    /*
-    while (Serial.available() && Serial.read()); // empty buffer
-    while (!Serial.available());                 // wait for data
-    while (Serial.available() && Serial.read()); // empty buffer again
-    */
+    //while (Serial.available() && Serial.read()); // empty buffer
+    //while (!Serial.available());                 // wait for data
+    //while (Serial.available() && Serial.read()); // empty buffer again
 
     // load and configure the DMP
     Serial.println(F("Initializing DMP..."));
@@ -230,6 +189,23 @@ void setup() {
 unsigned long start = 0;
 
 void loop() {
+  /*
+  if (Serial.available()) {
+    digitalWrite(15, HIGH);
+    delay(50);
+    while (Serial.available())
+    {  Serial1.print(char(Serial.read()));}
+    Serial1.print("\r\n");
+    //delay(50);
+    //digitalWrite(15, LOW);
+  }
+  
+  if (Serial1.available()) {
+    while (Serial1.available())
+    {  Serial.print(char(Serial1.read()));}
+    Serial.println();
+  }
+  */
     // if programming failed, don't try to do anything
     if (!dmpReady) return;
 
@@ -287,31 +263,27 @@ void loop() {
         // track FIFO count here in case there is > 1 packet available
         // (this lets us immediately read more without waiting for an interrupt)
         fifoCount -= packetSize;
-
+        
         // display Euler angles in degrees
         //tart = micros();
         mpu.dmpGetQuaternion(&q, fifoBuffer);
         mpu.dmpGetGravity(&gravity, &q);
         mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+        
+        //Serial.print("Y");
+        //Serial.println(ypr[0] * 180/M_PI);
+        Serial1.print("F");
+        Serial1.write(map(ypr[1] * 180/M_PI, -90, 90, -127, 127));
+        Serial1.print("S");
+        Serial1.write(map(ypr[2] * 180/M_PI, -90, 90, -127, 127));
         /*
-        Serial.print("Y");
-        Serial.println(ypr[0] * 180/M_PI);
-        Serial.print("P");
-        Serial.println(ypr[1] * 180/M_PI);
-        Serial.print("R");
-        Serial.println(ypr[2] * 180/M_PI);
-
         Serial.print("Loop Time: ");
         Serial.println(micros() - start);
         start = micros();
         */
-        Serial1.print("R");
-        Serial1.println(ypr[2] * 180/M_PI);
-        Serial1.print("P");
-        Serial1.println(ypr[1] * 180/M_PI);
-        
         //Serial.print("YPR Print Time: ");
         //Serial.println(micros() - start);
+        
     }
     /*
     Serial.print("Acceleration: ");
