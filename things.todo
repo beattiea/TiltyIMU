@@ -27,7 +27,6 @@ Software Library work:
 Hardware Work
 =============
 	Dual motor driver add-on board
-	Change header footprints to use locking pattern
 	Try to neaten/optimize flash memory traces
 
 Tyler:
