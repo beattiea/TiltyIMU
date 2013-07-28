@@ -6060,6 +6060,47 @@ type 0309, grid 2.5 mm</description>
 <wire x1="1.905" y1="-2.54" x2="3.175" y2="-2.54" width="0.1524" layer="23"/>
 <wire x1="3.81" y1="-1.905" x2="3.81" y2="1.905" width="0.1524" layer="23"/>
 </package>
+<package name="1X04_NO_SS_LOCKING">
+<wire x1="-4.445" y1="1.27" x2="-3.175" y2="1.27" width="0.1524" layer="23"/>
+<wire x1="-3.175" y1="1.27" x2="-2.54" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="-2.54" y1="-0.635" x2="-3.175" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="-5.08" y1="0.635" x2="-5.08" y2="-0.635" width="0.1524" layer="23"/>
+<wire x1="-4.445" y1="1.27" x2="-5.08" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="-5.08" y1="-0.635" x2="-4.445" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="-3.175" y1="-1.27" x2="-4.445" y2="-1.27" width="0.1524" layer="23"/>
+<pad name="1" x="-3.81" y="0.127" drill="1.016" rot="R90"/>
+<pad name="2" x="-1.27" y="-0.127" drill="1.016" rot="R90"/>
+<pad name="3" x="1.27" y="0.127" drill="1.016" rot="R90"/>
+<pad name="4" x="3.81" y="-0.127" drill="1.016" rot="R90"/>
+<text x="-5.1562" y="1.8288" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-5.08" y="-3.175" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="1.016" y1="-0.254" x2="1.524" y2="0.254" layer="51"/>
+<rectangle x1="-1.524" y1="-0.254" x2="-1.016" y2="0.254" layer="51"/>
+<rectangle x1="-4.064" y1="-0.254" x2="-3.556" y2="0.254" layer="51"/>
+<rectangle x1="3.556" y1="-0.254" x2="4.064" y2="0.254" layer="51"/>
+<wire x1="-1.905" y1="1.27" x2="-0.635" y2="1.27" width="0.1524" layer="23"/>
+<wire x1="-0.635" y1="1.27" x2="0" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="-2.54" y1="0.635" x2="-2.54" y2="-0.635" width="0.1524" layer="23"/>
+<wire x1="-1.905" y1="1.27" x2="-2.54" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="0.635" y1="1.27" x2="1.905" y2="1.27" width="0.1524" layer="23"/>
+<wire x1="1.905" y1="1.27" x2="2.54" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="0" y1="0.635" x2="0" y2="-0.635" width="0.1524" layer="23"/>
+<wire x1="0.635" y1="1.27" x2="0" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="3.175" y1="1.27" x2="4.445" y2="1.27" width="0.1524" layer="23"/>
+<wire x1="4.445" y1="1.27" x2="5.08" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="5.08" y1="0.635" x2="5.08" y2="-0.635" width="0.1524" layer="23"/>
+<wire x1="2.54" y1="0.635" x2="2.54" y2="-0.635" width="0.1524" layer="23"/>
+<wire x1="3.175" y1="1.27" x2="2.54" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="0" y1="-0.635" x2="-0.635" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="-2.54" y1="-0.635" x2="-1.905" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="-0.635" y1="-1.27" x2="-1.905" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="2.54" y1="-0.635" x2="1.905" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="0" y1="-0.635" x2="0.635" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="1.905" y1="-1.27" x2="0.635" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="5.08" y1="-0.635" x2="4.445" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="2.54" y1="-0.635" x2="3.175" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="4.445" y1="-1.27" x2="3.175" y2="-1.27" width="0.1524" layer="23"/>
+</package>
 </packages>
 <symbols>
 <symbol name="PINHD8">
@@ -6311,6 +6352,17 @@ type 0309, grid 2.5 mm</description>
 </technologies>
 </device>
 <device name="/90" package="1X04/90">
+<connects>
+<connect gate="A" pin="1" pad="1"/>
+<connect gate="A" pin="2" pad="2"/>
+<connect gate="A" pin="3" pad="3"/>
+<connect gate="A" pin="4" pad="4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="1X04_NO_SS_LOCKING" package="1X04_NO_SS_LOCKING">
 <connects>
 <connect gate="A" pin="1" pad="1"/>
 <connect gate="A" pin="2" pad="2"/>
@@ -7486,7 +7538,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="COST" value="0.53"/>
 </part>
 <part name="C4" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
-<part name="C5" library="resistor" deviceset="C-US" device="C0603" value="1uF"/>
+<part name="C5" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="U1" library="My Parts" deviceset="TEENSY_3.0_OUTER-PINS" device="28-DIP_SOCKET">
 <attribute name="COST" value="0.28"/>
 </part>
@@ -7518,13 +7570,13 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="GND16" library="supply1" deviceset="GND" device=""/>
 <part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="150"/>
 <part name="GND17" library="supply1" deviceset="GND" device=""/>
-<part name="C9" library="resistor" deviceset="C-US" device="C0603" value="1uF">
+<part name="C9" library="resistor" deviceset="C-US" device="C0603" value="0.1uF">
 <attribute name="RATED_VOLTAGE" value="2"/>
 </part>
 <part name="SJ1" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NO"/>
 <part name="GND18" library="supply1" deviceset="GND" device=""/>
 <part name="JP8" library="pinhead" deviceset="PINHD-1X2" device="1X02_NO_SILK"/>
-<part name="JP9" library="pinhead" deviceset="PINHD-1X4" device=""/>
+<part name="JP9" library="pinhead" deviceset="PINHD-1X4" device="1X04_NO_SS_LOCKING"/>
 <part name="GND19" library="supply1" deviceset="GND" device=""/>
 <part name="R7" library="resistor" deviceset="R-US_" device="R0603" value="10K"/>
 <part name="U3" library="SparkFun-Sensors" deviceset="MPL3115A2" device="LGA8"/>
@@ -7542,7 +7594,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="GND24" library="supply1" deviceset="GND" device=""/>
 <part name="SJ3" library="SparkFun-Passives" deviceset="SOLDERJUMPER_2WAY" device="S"/>
 <part name="SJ2" library="SparkFun-Passives" deviceset="SOLDERJUMPER_2WAY" device="S"/>
-<part name="C12" library="resistor" deviceset="C-US" device="C0603" value="1uF"/>
+<part name="C12" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="GND25" library="SparkFun" deviceset="GND" device=""/>
 <part name="U7" library="SparkFun-DigitalIC" deviceset="SPI_FLASH-X25XX" device="SMD">
 <attribute name="PART#" value="S25FL204K0TMFI011"/>
