@@ -33,6 +33,16 @@ void ping() {
 
 
 
+void readPitch() {
+  
+}
+
+void readRoll() {
+  
+}
+
+
+
 /*  Runs the function to set the specified variable  */
 void setVariable() {
   while (!myPort.available()) {}

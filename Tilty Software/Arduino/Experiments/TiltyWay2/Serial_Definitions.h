@@ -1,4 +1,4 @@
-#define myPort Serial
+#define myPort Serial1
 
 /*  Serial commands  */
 #define SET_COMMAND '|'

@@ -130,14 +130,14 @@ void remoteControl(char command) {
   //myPort.print(command);
   //myPort.print(": ");
   if (command == FORWARD) {
-    RCspeed = myPort.read() - 127;
+    RCspeed = myPort.read();
     //pitch_offset = settings.angleOffset + RCspeed / 16.0;
     //myPort.println(pitch_offset);
     //f_power += speed;
     //myPort.println(speed);
   }
   if (command == STEERING) {
-    RCsteering = myPort.read() - 127;
+    RCsteering = myPort.read();
     //s_power += steering;
     //myPort.println(steering);
   }

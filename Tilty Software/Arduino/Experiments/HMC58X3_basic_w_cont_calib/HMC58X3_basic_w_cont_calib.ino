@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 HMC58X3 magn;
 
 void setup(void) {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Wire.begin();
   
   // no delay needed as we have already a delay(5) in HMC5843::init()

@@ -54,9 +54,12 @@ Servo s_signal;//  Steering signal
 
 void setup()
 {
+  pinMode(13, OUTPUT);
+  
   setupPins();
   
   myPort.begin(115200);
+  Serial.begin(115200);
 
   loadSavedSettings();
   
@@ -121,7 +124,8 @@ void setup()
 
 void loop()
 {
- 
+  Serial.println(pitch);
+  
   checkSerial();
   
   getAngles();
@@ -129,6 +133,8 @@ void loop()
   //steeringCheck();
   
   if (abs(pitch) < 25 && abs(roll) < 35 && abs(f_power) < max_speed) {
+    digitalWrite(13, HIGH);
+    
     if (abs(P+I+D) > max_speed * 0.75) {  buzzerOn();}
     else if (abs(f_power) > speed_limit) {  buzzerPulse(50);}
     //else if (abs(f_power - 1500) > speed_limit * 0.75 && abs(f_power - 1500) < speed_limit) {  buzzerPulse(100);}
@@ -144,6 +150,8 @@ void loop()
     writePower();
   }
   else {
+    digitalWrite(13, LOW);
+    
     myPort.println(f_power);
     myPort.println(pitch);
     pitch_offset = settings.angleOffset;
