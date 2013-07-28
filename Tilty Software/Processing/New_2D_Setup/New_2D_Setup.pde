@@ -61,8 +61,9 @@ float t = 0;
 float yaw, pitch, roll, altitude, temperature;
 
 float batt_voltage = 13.2;
-float min_batt = 5.2;
-float max_batt = 24;void draw() {
+float min_batt = 5.3;//  Can't be less than 5.16 volts due to regulator drop out
+float max_batt = 24;//  Can't be more than 51.8 volts or it will damage the Teensy;void draw() {
+void draw() {
   background(10);
   
   //yaw = map(mouseX, 0, width, 0, 360) - 180;

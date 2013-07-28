@@ -88,7 +88,6 @@ void drawTelemetry() {
     
     //  Battery voltage Meter 
     pushMatrix();
-    //batt_voltage = abs(sin(frameCount * 0.025) * 24);
     stroke(255);
     fill(10);
     rect(width - 5*scale, 25*scale, 10, -24 * scale);
