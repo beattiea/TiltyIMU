@@ -29,6 +29,7 @@ Hardware Work
 	Dual motor driver add-on board
 	Try to neaten/optimize flash memory traces
 	Shuffle status LEDs around so power is green on bottom
+	Try decreasing LED currents to see if they can be dimmed a bit
 
 Tyler:
 Doxygen
