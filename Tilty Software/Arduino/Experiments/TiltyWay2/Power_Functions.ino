@@ -14,19 +14,17 @@ void calcPower() {
   //f_power = 1500 + P + I + D;
   //  Experimental R/C powers
   f_power = P + I + D;
-  s_power = RCsteering;
-  
-    //  Doesn't work very well
-  if (f_power > RCspeed / 2 && RCspeed < 0) {  pitch_offset -= 0.0002 * abs(f_power - RCspeed / 2);}
-  else if (f_power < RCspeed / 2 && RCspeed < 0) {  pitch_offset += 0.0002 * abs(f_power - RCspeed / 2);}
-  else if (f_power > RCspeed / 2 && RCspeed > 0) {  pitch_offset -= 0.0002 * abs(f_power - RCspeed / 2);}
-  else if (f_power < RCspeed / 2 && RCspeed > 0) {  pitch_offset += 0.0002 * abs(f_power - RCspeed / 2);}
-  else if (RCspeed == 0) {  
-    if (abs(pitch) < 1 && abs(f_power - 1500) > 75) {
-      pitch_offset -= 0.0025 * (abs(f_power) / f_power);
-    }
+  s_power = -RCsteering;
+  /*
+  if ((f_power < RCspeed - 10 || f_power > RCspeed + 10) && (pitch_offset > settings.angleOffset - 1.5 || pitch_offset < settings.angleOffset - 1.5)) {
+    pitch_offset += 0.00025 * RCspeed;
   }
+  else if (pitch_offset < settings.angleOffset - 1.5 || pitch_offset > settings.angleOffset - 1.5) {
+    pitch_offset -= 0.000325 * RCspeed;
+  }
+  */
   
+  pitch_offset = settings.angleOffset - RCspeed / 50.0;
   
   //powerCheck();
   
@@ -130,14 +128,15 @@ void remoteControl(char command) {
   //myPort.print(command);
   //myPort.print(": ");
   if (command == FORWARD) {
-    RCspeed = myPort.read();
+    RCspeed = int8_t(myPort.read());
     //pitch_offset = settings.angleOffset + RCspeed / 16.0;
     //myPort.println(pitch_offset);
     //f_power += speed;
     //myPort.println(speed);
   }
   if (command == STEERING) {
-    RCsteering = myPort.read();
+    RCsteering = int8_t(myPort.read());
+    Serial.println(RCsteering);
     //s_power += steering;
     //myPort.println(steering);
   }

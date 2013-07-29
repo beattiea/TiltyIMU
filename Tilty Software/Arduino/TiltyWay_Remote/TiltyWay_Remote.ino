@@ -101,6 +101,8 @@ void setup() {
     Serial1.begin(115200);
     Wire.begin();
     
+    pinMode(13, OUTPUT);
+    
     #if defined(__arm__)
       if(true) {
         #if defined(CORE_TEENSY) && F_BUS == 48000000
@@ -113,7 +115,7 @@ void setup() {
     }
     #endif
     
-    while (!Serial); // wait for Leonardo enumeration, others continue immediately
+    //while (!Serial); // wait for Leonardo enumeration, others continue immediately
 
     // NOTE: 8MHz or slower host processors, like the Teensy @ 3.3v or Ardunio
     // Pro Mini running at 3.3v, cannot handle this baud rate reliably due to
@@ -178,6 +180,7 @@ void setup() {
     }
     Serial.print("Accel Range: ");
     Serial.println(mpu.getFullScaleAccelRange());
+    digitalWrite(13, HIGH);
 }
 
 
@@ -276,6 +279,11 @@ void loop() {
         Serial1.write(map(ypr[1] * 180/M_PI, -90, 90, -127, 127));
         Serial1.print("S");
         Serial1.write(map(ypr[2] * 180/M_PI, -90, 90, -127, 127));
+        
+        Serial.print("F");
+        Serial.println(map(ypr[1] * 180/M_PI, -90, 90, -127, 127));
+        Serial.print("S");
+        Serial.println(map(ypr[2] * 180/M_PI, -90, 90, -127, 127));
         /*
         Serial.print("Loop Time: ");
         Serial.println(micros() - start);
