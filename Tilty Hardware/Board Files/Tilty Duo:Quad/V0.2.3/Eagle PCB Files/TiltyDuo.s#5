@@ -6060,6 +6060,47 @@ type 0309, grid 2.5 mm</description>
 <wire x1="1.905" y1="-2.54" x2="3.175" y2="-2.54" width="0.1524" layer="23"/>
 <wire x1="3.81" y1="-1.905" x2="3.81" y2="1.905" width="0.1524" layer="23"/>
 </package>
+<package name="1X04_NO_SS_LOCKING">
+<wire x1="-4.445" y1="1.27" x2="-3.175" y2="1.27" width="0.1524" layer="23"/>
+<wire x1="-3.175" y1="1.27" x2="-2.54" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="-2.54" y1="-0.635" x2="-3.175" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="-5.08" y1="0.635" x2="-5.08" y2="-0.635" width="0.1524" layer="23"/>
+<wire x1="-4.445" y1="1.27" x2="-5.08" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="-5.08" y1="-0.635" x2="-4.445" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="-3.175" y1="-1.27" x2="-4.445" y2="-1.27" width="0.1524" layer="23"/>
+<pad name="1" x="-3.81" y="0.127" drill="1.016" rot="R90"/>
+<pad name="2" x="-1.27" y="-0.127" drill="1.016" rot="R90"/>
+<pad name="3" x="1.27" y="0.127" drill="1.016" rot="R90"/>
+<pad name="4" x="3.81" y="-0.127" drill="1.016" rot="R90"/>
+<text x="-5.1562" y="1.8288" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-5.08" y="-3.175" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="1.016" y1="-0.254" x2="1.524" y2="0.254" layer="51"/>
+<rectangle x1="-1.524" y1="-0.254" x2="-1.016" y2="0.254" layer="51"/>
+<rectangle x1="-4.064" y1="-0.254" x2="-3.556" y2="0.254" layer="51"/>
+<rectangle x1="3.556" y1="-0.254" x2="4.064" y2="0.254" layer="51"/>
+<wire x1="-1.905" y1="1.27" x2="-0.635" y2="1.27" width="0.1524" layer="23"/>
+<wire x1="-0.635" y1="1.27" x2="0" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="-2.54" y1="0.635" x2="-2.54" y2="-0.635" width="0.1524" layer="23"/>
+<wire x1="-1.905" y1="1.27" x2="-2.54" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="0.635" y1="1.27" x2="1.905" y2="1.27" width="0.1524" layer="23"/>
+<wire x1="1.905" y1="1.27" x2="2.54" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="0" y1="0.635" x2="0" y2="-0.635" width="0.1524" layer="23"/>
+<wire x1="0.635" y1="1.27" x2="0" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="3.175" y1="1.27" x2="4.445" y2="1.27" width="0.1524" layer="23"/>
+<wire x1="4.445" y1="1.27" x2="5.08" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="5.08" y1="0.635" x2="5.08" y2="-0.635" width="0.1524" layer="23"/>
+<wire x1="2.54" y1="0.635" x2="2.54" y2="-0.635" width="0.1524" layer="23"/>
+<wire x1="3.175" y1="1.27" x2="2.54" y2="0.635" width="0.1524" layer="23"/>
+<wire x1="0" y1="-0.635" x2="-0.635" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="-2.54" y1="-0.635" x2="-1.905" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="-0.635" y1="-1.27" x2="-1.905" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="2.54" y1="-0.635" x2="1.905" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="0" y1="-0.635" x2="0.635" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="1.905" y1="-1.27" x2="0.635" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="5.08" y1="-0.635" x2="4.445" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="2.54" y1="-0.635" x2="3.175" y2="-1.27" width="0.1524" layer="23"/>
+<wire x1="4.445" y1="-1.27" x2="3.175" y2="-1.27" width="0.1524" layer="23"/>
+</package>
 </packages>
 <symbols>
 <symbol name="PINHD8">
@@ -6311,6 +6352,17 @@ type 0309, grid 2.5 mm</description>
 </technologies>
 </device>
 <device name="/90" package="1X04/90">
+<connects>
+<connect gate="A" pin="1" pad="1"/>
+<connect gate="A" pin="2" pad="2"/>
+<connect gate="A" pin="3" pad="3"/>
+<connect gate="A" pin="4" pad="4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="1X04_NO_SS_LOCKING" package="1X04_NO_SS_LOCKING">
 <connects>
 <connect gate="A" pin="1" pad="1"/>
 <connect gate="A" pin="2" pad="2"/>
@@ -7478,8 +7530,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="U2" library="csr" deviceset="HC-09_BREAKOUT" device=""/>
 <part name="GND11" library="supply1" deviceset="GND" device=""/>
 <part name="GND12" library="supply1" deviceset="GND" device=""/>
-<part name="R5" library="resistor" deviceset="R-US_" device="R0603" value="1k"/>
-<part name="R6" library="resistor" deviceset="R-US_" device="R0603" value="68"/>
+<part name="R5" library="resistor" deviceset="R-US_" device="R0603" value="10k"/>
+<part name="R6" library="resistor" deviceset="R-US_" device="R0603" value="680"/>
 <part name="GND13" library="supply1" deviceset="GND" device=""/>
 <part name="JP4" library="My Parts" deviceset="2-POS_SMD_TERM_BLOCK" device=""/>
 <part name="U4" library="on-semiconductor" deviceset="LM2931" device="">
@@ -7524,7 +7576,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="SJ1" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NO"/>
 <part name="GND18" library="supply1" deviceset="GND" device=""/>
 <part name="JP8" library="pinhead" deviceset="PINHD-1X2" device="1X02_NO_SILK"/>
-<part name="JP9" library="pinhead" deviceset="PINHD-1X4" device=""/>
 <part name="GND19" library="supply1" deviceset="GND" device=""/>
 <part name="R7" library="resistor" deviceset="R-US_" device="R0603" value="10K"/>
 <part name="U3" library="SparkFun-Sensors" deviceset="MPL3115A2" device="LGA8"/>
@@ -7551,6 +7602,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="C13" library="resistor" deviceset="C-US" device="C0603" value="0.1uF">
 <attribute name="RATED_VOLTAGE" value="2"/>
 </part>
+<part name="JP9" library="pinhead" deviceset="PINHD-1X4" device="1X04_NO_SS_LOCKING"/>
 </parts>
 <sheets>
 <sheet>
@@ -7664,7 +7716,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 </instance>
 <instance part="GND18" gate="1" x="121.92" y="20.32"/>
 <instance part="JP8" gate="G$1" x="129.54" y="7.62"/>
-<instance part="JP9" gate="A" x="68.834" y="70.104" rot="R180"/>
 <instance part="GND19" gate="1" x="83.82" y="43.18"/>
 <instance part="R7" gate="G$1" x="83.82" y="50.8" smashed="yes" rot="R90">
 <attribute name="NAME" x="87.1474" y="45.974" size="1.778" layer="95" rot="R90"/>
@@ -7697,6 +7748,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="C13" gate="G$1" x="195.58" y="175.26" rot="R90">
 <attribute name="RATED_VOLTAGE" x="195.58" y="175.26" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
+<instance part="JP9" gate="A" x="68.834" y="70.104" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -7853,9 +7905,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="GND18" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="JP9" gate="A" pin="3"/>
 <wire x1="71.374" y1="70.104" x2="81.534" y2="70.104" width="0.1524" layer="91"/>
 <label x="76.454" y="70.104" size="1.778" layer="95"/>
+<pinref part="JP9" gate="A" pin="3"/>
 </segment>
 <segment>
 <pinref part="R7" gate="G$1" pin="1"/>
@@ -8225,9 +8277,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <label x="93.98" y="43.18" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP9" gate="A" pin="4"/>
 <wire x1="71.374" y1="72.644" x2="81.534" y2="72.644" width="0.1524" layer="91"/>
 <label x="76.454" y="72.644" size="1.778" layer="95"/>
+<pinref part="JP9" gate="A" pin="4"/>
 </segment>
 <segment>
 <pinref part="SJ3" gate="G$1" pin="1"/>
@@ -8392,9 +8444,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <label x="167.64" y="58.42" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP9" gate="A" pin="2"/>
 <wire x1="71.374" y1="67.564" x2="81.534" y2="67.564" width="0.1524" layer="91"/>
 <label x="76.454" y="67.564" size="1.778" layer="95"/>
+<pinref part="JP9" gate="A" pin="2"/>
 </segment>
 </net>
 <net name="TX1" class="0">
@@ -8410,9 +8462,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <label x="167.64" y="55.88" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP9" gate="A" pin="1"/>
 <wire x1="71.374" y1="65.024" x2="81.534" y2="65.024" width="0.1524" layer="91"/>
 <label x="76.454" y="65.024" size="1.778" layer="95"/>
+<pinref part="JP9" gate="A" pin="1"/>
 </segment>
 </net>
 <net name="N$17" class="0">

@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -7389,9 +7389,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <package name="SO08">
 <description>&lt;b&gt;Small Outline Package&lt;/b&gt; Fits JEDEC packages (narrow SOIC-8)</description>
 <wire x1="-2.362" y1="-1.803" x2="2.362" y2="-1.803" width="0.1524" layer="51"/>
-<wire x1="2.362" y1="-1.803" x2="2.362" y2="1.803" width="0.1524" layer="21"/>
+<wire x1="2.362" y1="-1.803" x2="2.362" y2="1.803" width="0.1524" layer="51"/>
 <wire x1="2.362" y1="1.803" x2="-2.362" y2="1.803" width="0.1524" layer="51"/>
-<wire x1="-2.362" y1="1.803" x2="-2.362" y2="-1.803" width="0.1524" layer="21"/>
+<wire x1="-2.362" y1="1.803" x2="-2.362" y2="-1.803" width="0.1524" layer="51"/>
 <circle x="-1.8034" y="-0.9906" radius="0.1436" width="0.2032" layer="21"/>
 <smd name="1" x="-1.905" y="-2.6162" dx="0.6096" dy="2.2098" layer="1"/>
 <smd name="2" x="-0.635" y="-2.6162" dx="0.6096" dy="2.2098" layer="1"/>
@@ -7565,10 +7565,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="RATED_VOLTAGE" value="2"/>
 </part>
 <part name="MPU_INT" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NO"/>
-<part name="D1" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK" value="GREEN"/>
-<part name="D2" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK" value="RED"/>
+<part name="D1" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK" value="RED"/>
+<part name="D2" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK" value="GREEN"/>
 <part name="GND16" library="supply1" deviceset="GND" device=""/>
-<part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="150"/>
 <part name="GND17" library="supply1" deviceset="GND" device=""/>
 <part name="C9" library="resistor" deviceset="C-US" device="C0603" value="0.1uF">
 <attribute name="RATED_VOLTAGE" value="2"/>
@@ -7583,7 +7582,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="RATED_VOLTAGE" value="2"/>
 </part>
 <part name="GND20" library="SparkFun" deviceset="GND" device=""/>
-<part name="R3" library="resistor" deviceset="R-US_" device="R0603" value="68"/>
+<part name="R3" library="resistor" deviceset="R-US_" device="R0603" value="180"/>
 <part name="GND21" library="supply1" deviceset="GND" device=""/>
 <part name="D3" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK" value="YELLOW"/>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
@@ -7603,6 +7602,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="RATED_VOLTAGE" value="2"/>
 </part>
 <part name="JP9" library="pinhead" deviceset="PINHD-1X4" device="1X04_NO_SS_LOCKING"/>
+<part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="68"/>
 </parts>
 <sheets>
 <sheet>
@@ -7704,9 +7704,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="NAME" x="7.874" y="105.664" size="1.778" layer="95"/>
 </instance>
 <instance part="D1" gate="G$1" x="81.28" y="22.86"/>
-<instance part="D2" gate="G$1" x="111.76" y="43.18" rot="R90"/>
+<instance part="D2" gate="G$1" x="101.6" y="43.18" rot="R90"/>
 <instance part="GND16" gate="1" x="81.28" y="5.08"/>
-<instance part="R4" gate="G$1" x="104.14" y="43.18"/>
 <instance part="GND17" gate="1" x="119.38" y="35.56"/>
 <instance part="C9" gate="G$1" x="5.08" y="22.86">
 <attribute name="RATED_VOLTAGE" x="5.08" y="22.86" size="1.778" layer="96" display="off"/>
@@ -7749,6 +7748,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="RATED_VOLTAGE" x="195.58" y="175.26" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="JP9" gate="A" x="68.834" y="70.104" rot="R180"/>
+<instance part="R4" gate="G$1" x="114.3" y="43.18"/>
 </instances>
 <busses>
 </busses>
@@ -7893,10 +7893,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="U6" gate="G$1" pin="GND@2"/>
 </segment>
 <segment>
-<pinref part="D2" gate="G$1" pin="C"/>
-<wire x1="116.84" y1="43.18" x2="119.38" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="119.38" y1="43.18" x2="119.38" y2="38.1" width="0.1524" layer="91"/>
 <pinref part="GND17" gate="1" pin="GND"/>
+<pinref part="R4" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="SJ1" gate="1" pin="2"/>
@@ -8270,9 +8269,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <label x="210.82" y="60.96" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="R4" gate="G$1" pin="1"/>
 <wire x1="99.06" y1="43.18" x2="93.98" y2="43.18" width="0.1524" layer="91"/>
 <label x="93.98" y="43.18" size="1.778" layer="95"/>
+<pinref part="D2" gate="G$1" pin="A"/>
 </segment>
 <segment>
 <wire x1="71.374" y1="72.644" x2="81.534" y2="72.644" width="0.1524" layer="91"/>
@@ -8465,12 +8464,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="JP9" gate="A" pin="1"/>
 </segment>
 </net>
-<net name="N$17" class="0">
-<segment>
-<pinref part="D2" gate="G$1" pin="A"/>
-<pinref part="R4" gate="G$1" pin="2"/>
-</segment>
-</net>
 <net name="CHASSIS_GND" class="0">
 <segment>
 <pinref part="SJ1" gate="1" pin="1"/>
@@ -8507,7 +8500,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="R3" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="GRN_LED" class="0">
+<net name="RED_LED" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="PIO9"/>
 <wire x1="66.04" y1="52.07" x2="81.28" y2="52.07" width="0.1524" layer="91"/>
@@ -8630,6 +8623,13 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="219.71" y1="33.02" x2="219.71" y2="38.1" width="0.1524" layer="91"/>
 <pinref part="JP6" gate="A" pin="8"/>
 <wire x1="219.71" y1="38.1" x2="233.68" y2="38.1" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$13" class="0">
+<segment>
+<pinref part="D2" gate="G$1" pin="C"/>
+<pinref part="R4" gate="G$1" pin="1"/>
+<wire x1="109.22" y1="43.18" x2="106.68" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
