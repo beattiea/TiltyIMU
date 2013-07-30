@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour
+END
+ColourRule.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/ColourRule.html
+END
+package-frame.html
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/package-frame.html
+END
+package-tree.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/package-tree.html
+END
+ColourConverter.html
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/ColourConverter.html
+END
+ColourTable.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/ColourTable.html
+END
+PickerListener.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/PickerListener.html
+END
+ColourConverter.WhitePoint.html
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/ColourConverter.WhitePoint.html
+END
+package-use.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/package-use.html
+END
+package-summary.html
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/package-summary.html
+END
+CIELab.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/CIELab.html
+END
+CIELuv.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/CIELuv.html
+END
+ColourPicker.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/colour/ColourPicker.html
+END

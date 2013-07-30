@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat
+END
+AbstractChart.Side.html
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat/AbstractChart.Side.html
+END
+package-frame.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat/package-frame.html
+END
+LikertChart.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat/LikertChart.html
+END
+package-tree.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat/package-tree.html
+END
+StandardEllipse.html
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat/StandardEllipse.html
+END
+package-use.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat/package-use.html
+END
+package-summary.html
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat/package-summary.html
+END
+XYChart.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat/XYChart.html
+END
+AbstractChart.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat/AbstractChart.html
+END
+BarChart.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/102/trunk/giCentreUtils/reference/org/gicentre/utils/stat/BarChart.html
+END
