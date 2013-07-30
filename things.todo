@@ -16,12 +16,10 @@ Processing program:
 
 Documentation:
 ==============
-	Develop flash memory structure (partially done)
-	Look into using Doxygen/GitHub wiki
+	Develop flash memory structure (partially done)*
 
 Software Library work:
 ======================
-	HMC5883L I2Cdev testing
 	Flash memory library (maybe one exists, should be adaptable to work with various memory sizes)
 
 Hardware Work
@@ -32,6 +30,5 @@ Hardware Work
 Tyler:
 Doxygen
 Learn to use the IMU (Free IMU library)
-HMC58X3 library needs to be updated to work with 32-bit microcontrollers, force 16-bit integers
 Flash Library
 Kalman Filter Code
