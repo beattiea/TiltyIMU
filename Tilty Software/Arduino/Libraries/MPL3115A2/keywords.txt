@@ -6,6 +6,8 @@
 # Datatypes (KEYWORD1)
 #######################################
 
+MPL3115A2	KEYWORD2
+
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
@@ -17,14 +19,3 @@ readAltitudeM	KEYWORD2
 readAltitudeF	KEYWORD2
 readTempC	KEYWORD2
 readTempF	KEYWORD2
-
-#######################################
-# Instances (KEYWORD2)
-#######################################
-
-MPL3115A2	KEYWORD2
-
-#######################################
-# Constants (LITERAL1)
-#######################################
-
