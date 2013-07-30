@@ -27,9 +27,6 @@ Software Library work:
 Hardware Work
 =============
 	Dual motor driver add-on board
-	Try to neaten/optimize flash memory traces
-	Double check flash memory package to be sure it's the 3.9mm width one
-	Shuffle status LEDs around so power is green on bottom
 	Try decreasing LED currents to see if they can be dimmed a bit
 
 Tyler:
