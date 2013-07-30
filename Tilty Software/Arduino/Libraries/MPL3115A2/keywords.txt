@@ -1,12 +1,12 @@
 #######################################
-# Syntax Coloring Map For Wire
+# Syntax Coloring Map For MPL3115A
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
 
-MPL3115A2	KEYWORD2
+MPL3115A2	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
