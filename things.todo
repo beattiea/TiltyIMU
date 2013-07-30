@@ -11,7 +11,7 @@ Processing program:
 ===================
 	Add compass and altitude indicators to Processing
 		Altimeter gauge
-		compass heading indicator
+		compass heading indicator/gauge
 	Implement smart sensor indicator loading in Processing
 
 Documentation:
@@ -28,7 +28,4 @@ Hardware Work
 	Try decreasing LED currents to see if they can be dimmed a bit
 
 Tyler:
-Doxygen
 Learn to use the IMU (Free IMU library)
-Flash Library
-Kalman Filter Code

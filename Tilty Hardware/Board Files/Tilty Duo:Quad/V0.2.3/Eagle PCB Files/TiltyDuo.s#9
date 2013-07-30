@@ -7478,8 +7478,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="U2" library="csr" deviceset="HC-09_BREAKOUT" device=""/>
 <part name="GND11" library="supply1" deviceset="GND" device=""/>
 <part name="GND12" library="supply1" deviceset="GND" device=""/>
-<part name="R5" library="resistor" deviceset="R-US_" device="R0603" value="10k"/>
-<part name="R6" library="resistor" deviceset="R-US_" device="R0603" value="680"/>
+<part name="R5" library="resistor" deviceset="R-US_" device="R0603" value="1k"/>
+<part name="R6" library="resistor" deviceset="R-US_" device="R0603" value="68"/>
 <part name="GND13" library="supply1" deviceset="GND" device=""/>
 <part name="JP4" library="My Parts" deviceset="2-POS_SMD_TERM_BLOCK" device=""/>
 <part name="U4" library="on-semiconductor" deviceset="LM2931" device="">

@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
+<grid distance="0.01" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -18,8 +18,8 @@
 <layer number="22" name="bPlace" color="14" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="14" fill="1" visible="no" active="yes"/>
-<layer number="26" name="bNames" color="6" fill="1" visible="no" active="yes"/>
+<layer number="25" name="tNames" color="14" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
@@ -44,8 +44,8 @@
 <layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
 <layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="6" fill="1" visible="yes" active="yes"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
+<layer number="51" name="tDocu" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
 <layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
@@ -3006,6 +3006,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="8.89" y1="18.034" x2="8.89" y2="16.256" width="0.2032" layer="1"/>
 <wire x1="21.463" y1="23.114" x2="20.3" y2="23.114" width="0.1524" layer="16"/>
 <wire x1="20.3" y1="23.114" x2="20.3" y2="23.4" width="0.1524" layer="16"/>
+<via x="5.715" y="19.812" extent="1-16" drill="0.3302"/>
 </signal>
 <signal name="SCL" class="4">
 <contactref element="U5" pad="23"/>
@@ -3642,11 +3643,11 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U1" pad="P$12"/>
 <contactref element="JP2" pad="5"/>
 <wire x1="2.413" y1="21.463" x2="11.43" y2="21.463" width="0.381" layer="16"/>
-<wire x1="2.413" y1="21.463" x2="3.683" y2="20.32" width="0.2032" layer="1"/>
-<wire x1="3.683" y1="20.32" x2="3.683" y2="17.907" width="0.2032" layer="1"/>
-<wire x1="3.683" y1="17.907" x2="4.318" y2="17.272" width="0.2032" layer="1"/>
-<wire x1="4.318" y1="17.272" x2="5.08" y2="17.272" width="0.2032" layer="1"/>
+<wire x1="2.413" y1="21.463" x2="3.937" y2="20.066" width="0.2032" layer="1"/>
+<wire x1="3.937" y1="20.066" x2="3.937" y2="17.653" width="0.2032" layer="1"/>
+<wire x1="3.937" y1="17.653" x2="4.318" y2="17.272" width="0.2032" layer="1"/>
 <wire x1="5.08" y1="17.272" x2="5.08" y2="16.3068" width="0.2032" layer="1"/>
+<wire x1="4.318" y1="17.272" x2="5.08" y2="17.272" width="0.2032" layer="1"/>
 </signal>
 <signal name="SCK">
 <contactref element="U7" pad="6"/>
@@ -3688,6 +3689,14 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U1" pad="P$24"/>
 <contactref element="JP6" pad="8"/>
 <wire x1="26.67" y1="26.543" x2="35.687" y2="29.083" width="0.381" layer="1"/>
+</signal>
+<signal name="N$9">
+<polygon width="0.1524" layer="1" pour="cutout">
+<vertex x="8.636" y="15.24"/>
+<vertex x="9.144" y="15.24"/>
+<vertex x="9.144" y="14.732"/>
+<vertex x="8.636" y="14.732"/>
+</polygon>
 </signal>
 </signals>
 </board>

@@ -7975,6 +7975,11 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="165.1" y1="167.64" x2="172.72" y2="167.64" width="0.1524" layer="91"/>
 <label x="167.64" y="167.64" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="68.58" y1="162.56" x2="78.74" y2="162.56" width="0.1524" layer="91"/>
+<label x="71.12" y="162.56" size="1.778" layer="95"/>
+<pinref part="U6" gate="G$1" pin="SCL"/>
+</segment>
 </net>
 <net name="SDA" class="4">
 <segment>
@@ -7995,6 +8000,11 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="U3" gate="G$1" pin="SDA"/>
 <wire x1="165.1" y1="165.1" x2="172.72" y2="165.1" width="0.1524" layer="91"/>
 <label x="167.64" y="165.1" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="68.58" y1="160.02" x2="78.74" y2="160.02" width="0.1524" layer="91"/>
+<label x="71.12" y="160.02" size="1.778" layer="95"/>
+<pinref part="U6" gate="G$1" pin="SDA"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -8020,11 +8030,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <label x="66.04" y="101.6" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="68.58" y1="162.56" x2="78.74" y2="162.56" width="0.1524" layer="91"/>
-<label x="71.12" y="162.56" size="1.778" layer="95"/>
-<pinref part="U6" gate="G$1" pin="SCL"/>
-</segment>
-<segment>
 <pinref part="JP6" gate="A" pin="2"/>
 <wire x1="233.68" y1="22.86" x2="227.33" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="227.33" y1="22.86" x2="227.33" y2="12.7" width="0.1524" layer="91"/>
@@ -8037,11 +8042,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="U5" gate="G$1" pin="AUXDA"/>
 <wire x1="66.04" y1="99.06" x2="73.66" y2="99.06" width="0.1524" layer="91"/>
 <label x="66.04" y="99.06" size="1.778" layer="95"/>
-</segment>
-<segment>
-<wire x1="68.58" y1="160.02" x2="78.74" y2="160.02" width="0.1524" layer="91"/>
-<label x="71.12" y="160.02" size="1.778" layer="95"/>
-<pinref part="U6" gate="G$1" pin="SDA"/>
 </segment>
 <segment>
 <wire x1="226.06" y1="25.4" x2="226.06" y2="15.24" width="0.1524" layer="91"/>
