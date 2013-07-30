@@ -1,16 +1,17 @@
+#include <i2c_t3.h>
 #include <MPL3115A2.h>
-#include <Wire.h>
+
 
 MPL3115A2 altimeter;
 
 void setup() {
-  Wire.begin();
-  altimeter.init();
+  Wire.begin(I2C_MASTER, 0x00, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_400);//  Starts I2C on Teensy
   Serial.begin(115200);
+  altimeter.init();
 }
 
 void loop() {
-  Serial.print("Altitude: ");
+  Serial.print("\nAltitude: ");
   Serial.print(altimeter.readAltitudeM());//  Use readAltitudeF() for feet
   Serial.println(" meters");
   
