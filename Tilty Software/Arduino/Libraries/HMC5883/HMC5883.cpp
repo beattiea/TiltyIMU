@@ -1,6 +1,11 @@
+/**
+* @author Tyler Pawlaczyk (@embedeek)
+* @file HMC5883.cpp
+* 
+*/
+
 #include "HMC5883.h"
 
-//milligauss per gain for self test current bias
 const int counts_per_milligauss[8]={  
 	1370,
 	1090,
@@ -11,7 +16,10 @@ const int counts_per_milligauss[8]={
 	330,
 	230
 };
-  
+
+/**
+* 
+*/
 HMC5883::HMC5883()
 {
 	x_scale = (float) 1.0;
@@ -19,6 +27,9 @@ HMC5883::HMC5883()
 	z_scale = (float) 1.0;
 }
 
+/**
+* @param[in] mode Set mode to 0 if true. Otherwise you must set the mode using setMode().
+*/ 
 bool HMC5883::init(bool mode)
 {
 	if(mode)
@@ -33,6 +44,9 @@ bool HMC5883::init(bool mode)
 	writeRegister(HMC58X3_R_MODE, 0x00);
 }
 
+/**
+* @param[in] mode The mode that you want the chip in.
+*/
 void HMC5883::setMode(unsigned char mode)
 {
 	if (mode > 2) {return;} //modes above two are invalid
@@ -41,13 +55,21 @@ void HMC5883::setMode(unsigned char mode)
 	delay(100);
 }
 
-void HMC5883::setDOR(unsigned char DOR) {
+/**
+* @param[in] DOR Change the DOR.
+*/
+void HMC5883::setDOR(unsigned char DOR)
+{
 	if (DOR>6){return;}
+	
 	writeRegister(HMC58X3_R_CONFA,DOR<<2);
 }
 
-
-void HMC5883::setGain(unsigned char gain) { 
+/**
+* @param[in] gain Set the gain.
+*/
+void HMC5883::setGain(unsigned char gain)
+{ 
 	// 0-7, 1 default
 	if (gain > 7) return;
 	writeRegister(HMC58X3_R_CONFB, gain << 5);
@@ -62,7 +84,11 @@ void HMC5883::writeRegister(unsigned char reg, unsigned char val)
 	Wire.endTransmission(); //end transmission
 }
 
-
+/**
+*@param[out] *x Pointer to where you want the x component of the reading.
+*@param[out] *y Pointer to where you want the y component of the reading.
+*@param[out] *z Pointer to where you want the z component of the reading.
+*/
 void HMC5883::getValues(int *x,int *y,int *z)
 {
 	float fx,fy,fz;
@@ -72,7 +98,11 @@ void HMC5883::getValues(int *x,int *y,int *z)
 	*z= (int) (fz + 0.5);
 }
 
-
+/**
+*@param[out] *x Pointer to where you want the x component of the reading.
+*@param[out] *y Pointer to where you want the y component of the reading.
+*@param[out] *z Pointer to where you want the z component of the reading.
+*/
 void HMC5883::getValues(float *x,float *y,float *z)
 {
 	int xr,yr,zr;
@@ -83,7 +113,11 @@ void HMC5883::getValues(float *x,float *y,float *z)
 	*z = ((float) zr) / z_scale;
 }
 
-
+/**
+*@param[out] *x Pointer to where you want the x raw value.
+*@param[out] *y Pointer to where you want the y raw value.
+*@param[out] *z Pointer to where you want the z raw value.
+*/
 void HMC5883::getRaw(int *x,int *y,int *z)
 {
 	Wire.beginTransmission(HMC58X3_ADDR);

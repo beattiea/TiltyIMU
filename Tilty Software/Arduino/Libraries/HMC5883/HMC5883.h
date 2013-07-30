@@ -15,21 +15,9 @@
 #define HMC58X3_R_XM 3
 #define HMC58X3_R_XL 4
 
-#ifdef ISHMC5843
-    #define HMC58X3_R_YM (5)    //!< Register address for YM.
-    #define HMC58X3_R_YL (6)    //!< Register address for YL.
-    #define HMC58X3_R_ZM (7)    //!< Register address for ZM.
-    #define HMC58X3_R_ZL (8)    //!< Register address for ZL.
 
-    #define HMC58X3_X_SELF_TEST_GAUSS (+0.55)                       //!< X axis level when bias current is applied.
-    #define HMC58X3_Y_SELF_TEST_GAUSS (HMC58X3_X_SELF_TEST_GAUSS)   //!< Y axis level when bias current is applied.
-    #define HMC58X3_Z_SELF_TEST_GAUSS (HMC58X3_X_SELF_TEST_GAUSS)   //!< Y axis level when bias current is applied.
-
-    #define SELF_TEST_LOW_LIMIT  (HMC58X3_X_SELF_TEST_GAUSS*0.53)   //!< Low limit 53% of expected value.
-    #define SELF_TEST_HIGH_LIMIT (HMC58X3_X_SELF_TEST_GAUSS*1.36)   //!< High limit 136% of expected values.
-#else // HMC5883L
-    #define HMC58X3_R_YM (7)  //!< Register address for YM.
-    #define HMC58X3_R_YL (8)  //!< Register address for YL.
+#define HMC58X3_R_YM (7)  //!< Register address for YM.
+#define HMC58X3_R_YL (8)  //!< Register address for YL.
     #define HMC58X3_R_ZM (5)  //!< Register address for ZM.
     #define HMC58X3_R_ZL (6)  //!< Register address for ZL.
 
@@ -39,13 +27,16 @@
 
     #define SELF_TEST_LOW_LIMIT  (243.0/390.0)   //!< Low limit when gain is 5.
     #define SELF_TEST_HIGH_LIMIT (575.0/390.0)   //!< High limit when gain is 5.
-#endif
+
 
 #define HMC58X3_R_STATUS 9
 #define HMC58X3_R_IDA 10
 #define HMC58X3_R_IDB 11
 #define HMC58X3_R_IDC 12
 
+/**
+*@class HMC5883
+*/
 class HMC5883
 {
 	public:
