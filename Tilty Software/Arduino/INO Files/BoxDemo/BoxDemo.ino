@@ -24,7 +24,7 @@ void setup() {
   Serial.begin(115200);
   Wire.begin();
   delay(10);
-  //IMU.init(true);
+  IMU.init(true);
   Serial.println("IMU intialized");
   //while(!Serial) {  IMU.zeroGyro();}
   sensorConfig();
@@ -39,7 +39,7 @@ float roll_offset = 0;
 float alt_offset = 0;
 
 void loop() {
-  //IMU.getYawPitchRoll(ypr);
+  IMU.getYawPitchRoll(ypr);
   if (check_new()) {  sensorReadData();}
   Serial.print(ROLL_); Serial.println(ypr[2] - roll_offset, 2);
   Serial.print(PITCH_); Serial.println(ypr[1] - pitch_offset, 2);
