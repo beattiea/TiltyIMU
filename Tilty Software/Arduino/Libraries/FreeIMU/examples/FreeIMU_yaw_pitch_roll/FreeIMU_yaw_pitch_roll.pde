@@ -1,8 +1,3 @@
-#include <ADXL345.h>
-#include <bma180.h>
-#include <HMC58X3.h>
-#include <ITG3200.h>
-#include <MS561101BA.h>
 #include <I2Cdev.h>
 #include <MPU60X0.h>
 #include <EEPROM.h>

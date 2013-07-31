@@ -1,11 +1,9 @@
 // I2Cdev library collection - Main I2C device class header file
 // Abstracts bit and byte I2C R/W functions into a convenient class
-// 6/9/2012 by Jeff Rowberg <jeff@rowberg.net>
+// 11/1/2011 by Jeff Rowberg <jeff@rowberg.net>
 //
 // Changelog:
-//     2013-05-05 - fix issue with writing bit values to words (Sasquatch/Farzanegan)
-//     2012-06-09 - fix major issue with reading > 32 bytes at a time with Arduino Wire
-//                - add compiler warnings when using outdated or IDE or limited I2Cdev implementation
+//     2012-10-11 - add bit and bytes SPI R/W functions
 //     2011-11-01 - fix write*Bits mask calculation (thanks sasquatch @ Arduino forums)
 //     2011-10-03 - added automatic Arduino version detection for ease of use
 //     2011-10-02 - added Gene Knight's NBWire TwoWire class implementation with small modifications
@@ -20,7 +18,7 @@
 
 /* ============================================
 I2Cdev device library code is placed under the MIT license
-Copyright (c) 2012 Jeff Rowberg
+Copyright (c) 2011 Jeff Rowberg
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -45,9 +43,10 @@ THE SOFTWARE.
 #ifndef _I2CDEV_H_
 #define _I2CDEV_H_
 
-// comment this out if you are using a non-optimal IDE/implementation setting
-// but want the compiler to shut up about it
-#define I2CDEV_IMPLEMENTATION_WARNINGS
+// -----------------------------------------------------------------------------
+// I2C interface implementation setting
+// -----------------------------------------------------------------------------
+#define I2CDEV_IMPLEMENTATION       I2CDEV_ARDUINO_WIRE
 
 // -----------------------------------------------------------------------------
 // I2C interface implementation options
@@ -55,15 +54,6 @@ THE SOFTWARE.
 #define I2CDEV_ARDUINO_WIRE         1 // Wire object from Arduino
 #define I2CDEV_BUILTIN_NBWIRE       2 // Tweaked Wire object from Gene Knight's NBWire project
                                       // ^^^ NBWire implementation is still buggy w/some interrupts!
-#define I2CDEV_BUILTIN_FASTWIRE     3 // FastWire object from Francesco Ferrara's project
-                                      // ^^^ FastWire implementation in I2Cdev is INCOMPLETE!
-#define I2CDEV_I2CMASTER_LIBRARY    4 // I2C object from DSSCircuits I2C-Master Library at
-                                      //  https://github.com/DSSCircuits/I2C-Master-Library
-
-// -----------------------------------------------------------------------------
-// I2C interface implementation setting
-// -----------------------------------------------------------------------------
-#define I2CDEV_IMPLEMENTATION       I2CDEV_ARDUINO_WIRE
 
 // -----------------------------------------------------------------------------
 // Arduino-style "Serial.print" debug constant (uncomment to enable)
@@ -82,82 +72,39 @@ THE SOFTWARE.
     	#else
 	        #include <Wire.h>
 	#endif
-    #else
-    #if I2CDEV_IMPLEMENTATION == I2CDEV_I2CMASTER_LIBRARY
-        #include <I2C.h>
-    #endif
+	#include <SPI.h>
     #endif
 #else
     #include "ArduinoWrapper.h"
 #endif
 
 // 1000ms default read timeout (modify with "I2Cdev::readTimeout = [ms];")
-#define I2CDEV_DEFAULT_READ_TIMEOUT     1000
+#define I2CDEV_DEFAULT_READ_TIMEOUT     250//	Default 1000
 
 class I2Cdev {
     public:
         I2Cdev();
         
-        static int8_t readBit(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout);
-        static int8_t readBitW(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout);
-        static int8_t readBits(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout);
-        static int8_t readBitsW(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout);
-        static int8_t readByte(uint8_t devAddr, uint8_t regAddr, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout);
-        static int8_t readWord(uint8_t devAddr, uint8_t regAddr, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout);
-        static int8_t readBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout);
-        static int8_t readWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout);
+        static int8_t readBit(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout);
+        static int8_t readBitW(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout);
+        static int8_t readBits(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout);
+        static int8_t readBitsW(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout);
+        static int8_t readByte(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout);
+        static int8_t readWord(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout);
+        static int8_t readBytes(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout);
+        static int8_t readWords(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout);
 
-        static bool writeBit(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t data);
-        static bool writeBitW(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint16_t data);
-        static bool writeBits(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t data);
-        static bool writeBitsW(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t data);
-        static bool writeByte(uint8_t devAddr, uint8_t regAddr, uint8_t data);
-        static bool writeWord(uint8_t devAddr, uint8_t regAddr, uint16_t data);
-        static bool writeBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t *data);
-        static bool writeWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t *data);
+        static bool writeBit(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t data);
+        static bool writeBitW(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint16_t data);
+        static bool writeBits(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t data);
+        static bool writeBitsW(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t data);
+        static bool writeByte(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t data);
+        static bool writeWord(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint16_t data);
+        static bool writeBytes(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t *data);
+        static bool writeWords(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t *data);
 
         static uint16_t readTimeout;
 };
-
-#if I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
-    //////////////////////
-    // FastWire 0.2
-    // This is a library to help faster programs to read I2C devices.
-    // Copyright(C) 2011
-    // Francesco Ferrara
-    //////////////////////
-    
-    /* Master */
-    #define TW_START                0x08
-    #define TW_REP_START            0x10
-
-    /* Master Transmitter */
-    #define TW_MT_SLA_ACK           0x18
-    #define TW_MT_SLA_NACK          0x20
-    #define TW_MT_DATA_ACK          0x28
-    #define TW_MT_DATA_NACK         0x30
-    #define TW_MT_ARB_LOST          0x38
-
-    /* Master Receiver */
-    #define TW_MR_ARB_LOST          0x38
-    #define TW_MR_SLA_ACK           0x40
-    #define TW_MR_SLA_NACK          0x48
-    #define TW_MR_DATA_ACK          0x50
-    #define TW_MR_DATA_NACK         0x58
-
-    #define TW_OK                   0
-    #define TW_ERROR                1
-
-    class Fastwire {
-        private:
-            static boolean waitInt();
-
-        public:
-            static void setup(int khz, boolean pullup);
-            static byte write(byte device, byte address, byte value);
-            static byte readBuf(byte device, byte address, byte *data, byte num);
-    };
-#endif
 
 #if I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_NBWIRE
     // NBWire implementation based heavily on code by Gene Knight <Gene@Telobot.com>
