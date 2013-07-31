@@ -195,7 +195,7 @@ int8_t I2Cdev::readBytes(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t 
 		#endif
 		Wire.endTransmission();
 		Wire.beginTransmission(devAddr);
-		Wire.requestFrom(devAddr, length);
+		Wire.requestFrom((int)devAddr, length);
 
 		uint32_t t1 = millis();
 		for (; Wire.available() && (timeout == 0 || millis() - t1 < timeout); count++) {
@@ -262,7 +262,7 @@ int8_t I2Cdev::readWords(bool useSPI, uint8_t devAddr, uint8_t regAddr, uint8_t 
 		Wire.endTransmission();
 
 		Wire.beginTransmission(devAddr);
-		Wire.requestFrom(devAddr, (uint8_t)(length * 2)); // length=words, this wants bytes
+		Wire.requestFrom((int)devAddr, (uint8_t)(length * 2)); // length=words, this wants bytes
 
 		uint32_t t1 = millis();
 		bool msb = true; // starts with MSB, then LSB

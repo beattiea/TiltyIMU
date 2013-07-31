@@ -132,22 +132,20 @@ void FreeIMU::init(int accgyro_addr, bool fastmode) {
     cbi(PORTD, 1);
   #endif
 
-  #ifndef I2C_T3_H
-	  #if defined(__AVR__) // only valid on AVR, not on 32bit platforms (eg: Arduino 2, Teensy 3.0)
-	    if(fastmode) { // switch to 400KHz I2C - eheheh
-	      TWBR = ((F_CPU / 400000L) - 16) / 2; // see twi_init in Wire/utility/twi.c
-	    }
-	  #elif defined(__arm__)
-	    if(fastmode) {
-	      #if defined(CORE_TEENSY) && F_BUS == 48000000
-	        I2C0_F = 0x1A;  // Teensy 3.0 at 48 or 96 MHz
-	        I2C0_FLT = 2;
-	      #elif defined(CORE_TEENSY) && F_BUS == 24000000
-	        I2C0_F = 0x45;  // Teensy 3.0 at 24 MHz
-	        I2C0_FLT = 1;
-	      #endif
-	    }
-	  #endif
+  #if defined(__AVR__) // only valid on AVR, not on 32bit platforms (eg: Arduino 2, Teensy 3.0)
+    if(fastmode) { // switch to 400KHz I2C - eheheh
+      TWBR = ((F_CPU / 400000L) - 16) / 2; // see twi_init in Wire/utility/twi.c
+    }
+  #elif defined(__arm__)
+    if(fastmode) {
+      #if defined(CORE_TEENSY) && F_BUS == 48000000
+        I2C0_F = 0x1A;  // Teensy 3.0 at 48 or 96 MHz
+        I2C0_FLT = 2;
+      #elif defined(CORE_TEENSY) && F_BUS == 24000000
+        I2C0_F = 0x45;  // Teensy 3.0 at 24 MHz
+        I2C0_FLT = 1;
+      #endif
+    }
   #endif
   
   
