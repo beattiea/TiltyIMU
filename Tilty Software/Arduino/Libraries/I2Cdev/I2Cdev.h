@@ -67,8 +67,12 @@ THE SOFTWARE.
         #include "Arduino.h"
     #endif
     #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-        #include <Wire.h>
-		#include <SPI.h>
+    	#ifdef CORE_TEENSY && __arm__
+    		#include <i2c_t3.h>
+    	#else
+	        #include <Wire.h>
+	#endif
+	#include <SPI.h>
     #endif
 #else
     #include "ArduinoWrapper.h"

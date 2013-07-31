@@ -8658,7 +8658,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 </sheets>
 <errors>
 <approved hash="104,1,203.2,60.96,U1,VIN,5V,,,"/>
-<approved hash="204,1,203.2,53.34,U1,AGND,,,,"/>
 <approved hash="104,1,203.2,58.42,U1,3.3V,TEENSY_3V3,,,"/>
 <approved hash="106,1,106.68,25.4,CHASSIS_GND,,,,,"/>
 <approved hash="115,1,142.003,50.6688,JP1,,,,,"/>
@@ -8667,7 +8666,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <approved hash="115,1,233.917,27.8088,JP6,,,,,"/>
 <approved hash="115,1,234.908,110.621,JP3,,,,,"/>
 <approved hash="115,1,234.908,85.2212,JP7,,,,,"/>
-<approved hash="115,1,127.237,10.2912,JP8,,,,,"/>
 <approved hash="115,1,254,95.8431,SJ3,,,,,"/>
 <approved hash="115,1,254,121.243,SJ2,,,,,"/>
 <approved hash="115,1,71.1369,67.4328,JP9,,,,,"/>

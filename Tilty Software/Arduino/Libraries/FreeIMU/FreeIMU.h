@@ -100,8 +100,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define HAS_AXIS_ALIGNED() (defined(FREEIMU_v01) || defined(FREEIMU_v02) || defined(FREEIMU_v03) || defined(FREEIMU_v035) || defined(FREEIMU_v035_MS) || defined(FREEIMU_v035_BMP) || defined(FREEIMU_v04) || defined(SEN_10121) || defined(SEN_10736) || defined(TILTY_QUAD))
 
 
-
-#include <Wire.h>
 #include "Arduino.h"
 #include "calibration.h"
 
@@ -124,7 +122,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   //#define FIMU_ACC_ADDR BMA180_ADDRESS_SDO_HIGH
 //#elif FREEIMU_VER == 7
 #elif HAS_MPU6050()
-  #include <Wire.h>
+  #ifdef CORE_TEENSY && __arm__
+  	#include <i2c_t3.h>
+  #else
+  	#include <Wire.h>
+  #endif
   #include "I2Cdev.h"
   #include "MPU60X0.h"
   #define FIMU_ACCGYRO_ADDR MPU60X0_DEFAULT_ADDRESS
