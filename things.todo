@@ -21,6 +21,8 @@ Documentation:
 Software Library work:
 ======================
 	Flash memory library (maybe one exists, should be adaptable to work with various memory sizes)
+	Compass sensor temperature compensation
+	MPU-6050 i2c_t3 library
 
 Hardware Work
 =============
