@@ -25,12 +25,9 @@ Software Library work:
 	Compass sensor temperature compensation
 	Compass sensor tilt compensation
 	Compass sensor data status register checking for data ready optimization
-	Add compass sensor I2C timeout
 	
 	Allow for different altimeter read modes/frequencies
 	Altimeter library Doxygen formatting
-	
-	I2CDevLib I2C timeout
 
 Hardware Work
 =============
