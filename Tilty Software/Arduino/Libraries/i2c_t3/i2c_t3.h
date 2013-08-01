@@ -76,6 +76,9 @@
 #define I2C_RX_BUFFER_LENGTH 259
 #define BUFFER_LENGTH 259
 
+// Default I2C 
+#define I2C_DEFAULT_TIMEOUT 500
+
 // Debug controls - these defines control ISR diagnostics.  This is only really necessary for
 //                  debugging bus problems, or for devices with no other means of data visibility,
 //                  or for ISR development.  When enabled data will output on Serial, so if Serial

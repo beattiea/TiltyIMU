@@ -665,11 +665,11 @@ void i2c_t3::sendTransmission(i2c_stop sendStop)
 // return: #bytes received, 0=fail (0 length request, NAK, timeout, or bus error)
 //
 size_t i2c_t3::requestFrom(uint8_t addr, size_t len)
-    { return requestFrom(addr, len, I2C_STOP, 0); }
+    { return requestFrom(addr, len, I2C_STOP, I2C_DEFAULT_TIMEOUT); }
 size_t i2c_t3::requestFrom(int addr, int len)
-    { return requestFrom((uint8_t)addr, (size_t)len, I2C_STOP, 0); }
+    { return requestFrom((uint8_t)addr, (size_t)len, I2C_STOP, I2C_DEFAULT_TIMEOUT); }
 size_t i2c_t3::requestFrom(uint8_t addr, size_t len, i2c_stop sendStop)
-    { return requestFrom(addr, len, sendStop, 0); }
+    { return requestFrom(addr, len, sendStop, I2C_DEFAULT_TIMEOUT); }
 size_t i2c_t3::requestFrom(uint8_t addr, size_t len, i2c_stop sendStop, uint32_t timeout)
 {
     // exit immediately if request for 0 bytes
