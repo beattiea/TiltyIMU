@@ -9,7 +9,7 @@ Uncomment the below lines if the compass is installed  */
 
 /*  Setup the IMU objects  */
 FreeIMU IMU = FreeIMU();
-MPU60X0 mpu6050 = MPU60X0();
+MPU6050 mpu6050 = MPU6050();
 
 /*  IMU Function Definitions  */
 void checkIMUconnection();

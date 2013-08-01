@@ -1,5 +1,5 @@
 /*  Standard Arduino library includes  */
-#include <Wire.h>
+#include <i2c_t3.h>
 #include <SPI.h>
 #include <EEPROM.h>
 #include <FastServo.h>
@@ -11,15 +11,14 @@
 #include "CommunicationUtils.h"
 #include "FreeIMU.h"
 #include <I2Cdev.h>
-#include <MPU60X0.h>
+#include <MPU6050.h>
 
 /*  Custom Library Includes  */
-#include <Multiplexer.h>
-#include <TeensyTimerInterrupts.h>
+//#include <Multiplexer.h>
 #include <Settings.h>
 
 /*  Definition File Includes  */
-#import "Mux_Definitions.h"
+//#import "Mux_Definitions.h"
 #import "EEPROM_Definitions.h"
 #import "IMU_Definitions.h"
 #import "Serial_Definitions.h"

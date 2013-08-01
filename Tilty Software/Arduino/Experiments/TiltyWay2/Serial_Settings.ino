@@ -72,7 +72,7 @@ void readVariable() {
     case (VARIABLE_OFFSET): {  myPort.print(VARIABLE_OFFSET); myPort.println(pitch_offset, float_precision); break;}
     case (VARIABLE_SPEED): {  myPort.print(VARIABLE_SPEED); myPort.println(speed_limit, float_precision); break;}
     case (VARIABLE_KICK): {  myPort.print(VARIABLE_KICK); myPort.println(kickback, float_precision); break;}
-    case (VARIABLE_TRIM): {  printTrimPots(); break;}
+    //case (VARIABLE_TRIM): {  printTrimPots(); break;}
   }
 }
 
@@ -157,20 +157,6 @@ void setkS() {
 void setSteeringOffset() {
   while (!myPort.available()) {}
   settings.steeringOffset = myPort.parseInt();
-}
-
-void printTrimPots() {
-  int data[4];
-  data[0] = mux.muxAnalogRead(TRIM_1);
-  data[1] = mux.muxAnalogRead(TRIM_2);
-  data[2] = mux.muxAnalogRead(TRIM_3);
-  data[3] = mux.muxAnalogRead(TRIM_4);
-  
-  for (int i = 1; i < 5; i++) {
-    myPort.print(VARIABLE_TRIM);
-    myPort.print(i);
-    myPort.println(data[i - 1]);
-  }
 }
 
 

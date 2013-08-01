@@ -1,13 +1,13 @@
 /*  Tests multiplexer connection to default connections  */
 void testMux() {
-  
+  /*
   for (int i = 0; i < 7; i++) {
     Serial.print("Value of DIP ");
     Serial.print(i + 1);
     Serial.print(": ");
     Serial.println(mux.muxDigitalRead(i));
   }
-  
+  */
   /*
   for (int i = 12; i < 16; i++) {
     Serial.print("Value of trimm R");
