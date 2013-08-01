@@ -48,35 +48,35 @@ long start, stop;
 
 void loop()
 {
-        Serial.println("Testing raw reading speed (average on 1024 samples):");
-        start = micros();
-        for(int i=0; i<1024; i++) {
-	        compass.getValues(&compass_x, &compass_y, &compass_z);
-	        imu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-                if (altimeter.checkData()) {
-                      altimeter.readAltitudeM();
-                      altimeter.readTempC();
-                }
+	Serial.println("Testing raw reading speed (average on 1024 samples):");
+	start = micros();
+	for(int i=0; i<1024; i++) {
+		compass.getValues(&compass_x, &compass_y, &compass_z);
+		imu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+		if (altimeter.checkData()) {
+			  altimeter.readAltitudeM();
+			  altimeter.readTempC();
 		}
-        stop = micros();
-        Serial.print("--> result: ");
-        Serial.print((stop - start) / 1024);
-        Serial.print(" microseconds .... ");
-        Serial.print(((stop - start) / 1024) / 1000.0);
-        Serial.println(" milliseconds\n");
+	}
+	stop = micros();
+	Serial.print("--> result: ");
+	Serial.print((stop - start) / 1024);
+	Serial.print(" microseconds .... ");
+	Serial.print(((stop - start) / 1024) / 1000.0);
+	Serial.println(" milliseconds\n");
 
-		Serial.print("Compass x: "); Serial.print(compass_x);
-		Serial.print(" y: "); Serial.print(compass_y);
-		Serial.print(" z: "); Serial.print(compass_z);
-		
-		Serial.print("\t\tAccelerometer x: "); Serial.print(ax);
-		Serial.print(" y: "); Serial.print(ay);
-		Serial.print(" z: "); Serial.print(az);
-		
-		Serial.print("\t\tGyro x: "); Serial.print(gx);
-		Serial.print(" y: "); Serial.print(gy);
-		Serial.print(" z: "); Serial.print(gz);
-		
-		Serial.print("\t\t Altitude: "); Serial.print(altimeter.readAltitudeM());
-		Serial.print("\t\t Temperature: "); Serial.println(altimeter.readTempC());
+	Serial.print("Compass x: "); Serial.print(compass_x);
+	Serial.print(" y: "); Serial.print(compass_y);
+	Serial.print(" z: "); Serial.print(compass_z);
+	
+	Serial.print("\t\tAccelerometer x: "); Serial.print(ax);
+	Serial.print(" y: "); Serial.print(ay);
+	Serial.print(" z: "); Serial.print(az);
+	
+	Serial.print("\t\tGyro x: "); Serial.print(gx);
+	Serial.print(" y: "); Serial.print(gy);
+	Serial.print(" z: "); Serial.print(gz);
+	
+	Serial.print("\t\t Altitude: "); Serial.print(altimeter.readAltitudeM());
+	Serial.print("\t\t Temperature: "); Serial.println(altimeter.readTempC());
 }

@@ -56,8 +56,12 @@ class MPL3115A2 {
 		
 	private:
 		//	I2C read/write functions
-		byte read(byte _regAddr);
-		byte write(byte _regAddr, byte _value);
+		byte readByte(byte _regAddr);// Read a single byte from a given register
+		byte writeByte(byte _regAddr, byte _value);// Writes a given byte to a given register
+		void readBytes(byte _regAddr, uint8_t _length, uint8_t *buffer);// Reads a given number of bytes sequentially from a given initial register to a given buffer array
+		
+		//	Private variables
+		uint8_t _buffer[5];
 };
 
 #endif

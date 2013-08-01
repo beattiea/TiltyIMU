@@ -32,7 +32,7 @@ MPL3115A2::MPL3115A2()
 //	and sets up the control registers
 boolean MPL3115A2::init()
 {	
-	if (read(0x0C) == 196)
+	if (readByte(0x0C) == 196)
 	{  
 		// CTRL_REG1 (0x26): enable sensor, oversampling x128, altimeter mode 
   		write(0x26, 0xB9);
@@ -64,7 +64,7 @@ void MPL3115A2::reset()
 //  Checks INT_SOURCE register to see if new data is available
 boolean MPL3115A2::checkData()
 {
-	if(read(0x12) & 0x80) 
+	if(readByte(0x12) & 0x80) 
 	{	return true;}
 	else 
 	{	return false;}
@@ -78,11 +78,14 @@ float MPL3115A2::readAltitudeM()
 	int u_altitude, m_altitude;
 	float l_altitude;
 	
-	u_altitude = read(0x01) << 8;//  The upper 8 bits of the altitude
-	m_altitude = read(0x02);//  The middle 8 bits of the altitude
-	l_altitude = float(read(0x03) >> 4) / 16.0;//  The lower 4 bits of the altitude
+	readBytes(0x01, 3, _buffer);
+	
+	u_altitude = _buffer[0] << 8;//  The upper 8 bits of the altitude
+	m_altitude = _buffer[1];//  The middle 8 bits of the altitude
+	l_altitude = float(_buffer[2] >> 4) / 16.0;//  The lower 4 bits of the altitude
 	
 	int16_t _temp = u_altitude | m_altitude;
+	
 	if (_temp < 0)
 	{
 		return float(_temp) - l_altitude;
@@ -109,8 +112,10 @@ float MPL3115A2::readTempC()
 	int8_t u_temp;
 	float l_temp;
 	
-	u_temp = read(0x04);//  Upper 8 bits of the temperature, representing the numbers before the decimal
-	l_temp = float(read(0x05) >> 4) / 16.0;//  Lower 4 bits of the temperature, representing the numbers after the decimal
+	readBytes(0x04, 2, _buffer);
+
+	u_temp = _buffer[0];//  Upper 8 bits of the temperature, representing the numbers before the decimal
+	l_temp = float(_buffer[1] >> 4) / 16.0;//  Lower 4 bits of the temperature, representing the numbers 
 	
 	return float(u_temp) + l_temp;
 }
@@ -126,7 +131,7 @@ float MPL3115A2::readTempF()
 
 
 //	Reads a byte on the sensor from the given address
-byte MPL3115A2::read(byte _regAddr)
+byte MPL3115A2::readByte(byte _regAddr)
 {
 	Wire.beginTransmission(_addr);
 	Wire.write(_regAddr);
@@ -146,4 +151,19 @@ byte MPL3115A2::write(byte _regAddr, byte _value)
 	return Wire.endTransmission(I2C_STOP);
 }
 
+
+
+//	Reads consecutive bytes into a given data buffer
+void MPL3115A2::readBytes(byte _regAddr, uint8_t _length, uint8_t *_data)
+{
+	Wire.beginTransmission(_addr);
+	Wire.write(_regAddr);
+	Wire.endTransmission(I2C_NOSTOP);
+	Wire.requestFrom(_addr, _length, I2C_STOP, _timeout); // Request the data...
+	
+	for (int _i = 0; _i < _length; i++)
+	{
+		_data[_i] = Wire.read();
+	}
+}
 

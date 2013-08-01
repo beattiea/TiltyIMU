@@ -39,9 +39,9 @@ bool HMC5883::init(bool mode)
 	
 	delay(5); //we need some time for the chip to power on
 	
-	writeRegister(HMC58X3_R_CONFA, 0x70); // 8 samples averaged, 75Hz frequency, no artificial bias.
-	writeRegister(HMC58X3_R_CONFB, 0xA0);
-	writeRegister(HMC58X3_R_MODE, 0x00);
+	writeRegister(HMC5883_R_CONFA, 0x70); // 8 samples averaged, 75Hz frequency, no artificial bias.
+	writeRegister(HMC5883_R_CONFB, 0xA0);
+	writeRegister(HMC5883_R_MODE, 0x00);
 }
 
 /**
@@ -51,7 +51,7 @@ void HMC5883::setMode(unsigned char mode)
 {
 	if (mode > 2) {return;} //modes above two are invalid
   
-	writeRegister(HMC58X3_R_MODE, mode);
+	writeRegister(HMC5883_R_MODE, mode);
 	delay(100);
 }
 
@@ -62,7 +62,7 @@ void HMC5883::setDOR(unsigned char DOR)
 {
 	if (DOR>6){return;}
 	
-	writeRegister(HMC58X3_R_CONFA,DOR<<2);
+	writeRegister(HMC5883_R_CONFA,DOR<<2);
 }
 
 /**
@@ -72,13 +72,13 @@ void HMC5883::setGain(unsigned char gain)
 { 
 	// 0-7, 1 default
 	if (gain > 7) return;
-	writeRegister(HMC58X3_R_CONFB, gain << 5);
+	writeRegister(HMC5883_R_CONFB, gain << 5);
 }
 
 
 void HMC5883::writeRegister(unsigned char reg, unsigned char val)
 {
-	Wire.beginTransmission(HMC58X3_ADDR);
+	Wire.beginTransmission(HMC5883_ADDR);
 	Wire.write(reg);        // send register address
 	Wire.write(val);        // send value to write
 	Wire.endTransmission(); //end transmission
@@ -120,12 +120,12 @@ void HMC5883::getValues(float *x,float *y,float *z)
 */
 void HMC5883::getRaw(int *x,int *y,int *z)
 {
-	Wire.beginTransmission(HMC58X3_ADDR);
-	Wire.write(HMC58X3_R_XM); // will start from DATA X MSB and fetch all the others
+	Wire.beginTransmission(HMC5883_ADDR);
+	Wire.write(HMC5883_R_XM); // will start from DATA X MSB and fetch all the others
 	Wire.endTransmission();
   
-	Wire.beginTransmission(HMC58X3_ADDR);
-	Wire.requestFrom(HMC58X3_ADDR, 6);
+	Wire.beginTransmission(HMC5883_ADDR);
+	Wire.requestFrom(HMC5883_ADDR, 6);
 	if(6 == Wire.available())
 	{
 		// read out the 3 values, 2 bytes each.
@@ -134,7 +134,7 @@ void HMC5883::getRaw(int *x,int *y,int *z)
 		*z = (int16_t)((Wire.read() << 8) | Wire.read());
 		*y = (int16_t)((Wire.read() << 8) | Wire.read());
 		
-		// the HMC58X3 will automatically wrap around on the next request
+		// the HMC5883 will automatically wrap around on the next request
 	}
 	Wire.endTransmission();
 }
@@ -154,12 +154,12 @@ void HMC5883::getValues(float *xyz)
 */
 void HMC5883::getID(char id[3]) 
 {
-	Wire.beginTransmission(HMC58X3_ADDR);
-	Wire.write(HMC58X3_R_IDA);             // Will start reading registers starting from Identification Register A.
+	Wire.beginTransmission(HMC5883_ADDR);
+	Wire.write(HMC5883_R_IDA);             // Will start reading registers starting from Identification Register A.
 	Wire.endTransmission();
   
-	Wire.beginTransmission(HMC58X3_ADDR);
-	Wire.requestFrom(HMC58X3_ADDR, 3);
+	Wire.beginTransmission(HMC5883_ADDR);
+	Wire.requestFrom(HMC5883_ADDR, 3);
 	if(3 == Wire.available()) 
 	{
 		id[0] = Wire.read();

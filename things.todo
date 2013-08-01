@@ -25,6 +25,7 @@ Software Library work:
 	Compass sensor tilt compensation
 	Allow for different altimeter read modes/frequencies
 	Update sensor libraries to use timeout I2C requests
+	Altimeter library Doxygen formatting
 
 Hardware Work
 =============
