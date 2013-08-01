@@ -22,12 +22,10 @@ Software Library work:
 ======================
 	Flash memory library (maybe one exists, should be adaptable to work with various memory sizes)
 	Compass sensor temperature compensation
-	MPU-6050 i2c_t3 library
+	Compass sensor tilt compensation
 
 Hardware Work
 =============
 	Dual motor driver add-on board
 	Try decreasing LED currents to see if they can be dimmed a bit
-
-Tyler:
-Learn to use the IMU (Free IMU library)
+	Look into current boosting the 5V regulator on the Tilty controllers
