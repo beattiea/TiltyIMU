@@ -7,3 +7,4 @@ setGain KEYWORD2
 getValues KEYWORD2
 getRaw KEYWORD2
 getID KEYWORD2
+writeRegister KEYWORD2
