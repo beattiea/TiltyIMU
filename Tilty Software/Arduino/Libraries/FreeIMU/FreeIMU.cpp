@@ -44,9 +44,9 @@ FreeIMU::FreeIMU() {
   #if HAS_ITG3200()
     gyro = ITG3200();
   #elif HAS_MPU6050()
-    accgyro = MPU60X0(); // I2C
+    accgyro = MPU6050(); // I2C
   #elif HAS_MPU6000()
-    accgyro = MPU60X0(); // SPI for Arduimu v3
+    accgyro = MPU6050(); // SPI for Arduimu v3
   #endif
     
   #if HAS_MS5611()
@@ -176,18 +176,18 @@ void FreeIMU::init(int accgyro_addr, bool fastmode) {
   
   
   #if HAS_MPU6050()
-  accgyro = MPU60X0(false, accgyro_addr);
+  accgyro = MPU6050(accgyro_addr);
   accgyro.initialize();
   accgyro.setI2CMasterModeEnabled(0);
   accgyro.setI2CBypassEnabled(1);
-  accgyro.setFullScaleGyroRange(MPU60X0_GYRO_FS_2000);
+  accgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_2000);
   delay(5);
   #endif
   
   #if HAS_MPU6000()
-  accgyro = MPU60X0(true, accgyro_addr);
+  accgyro = MPU6050(true, accgyro_addr);
   accgyro.initialize();
-  accgyro.setFullScaleGyroRange(MPU60X0_GYRO_FS_2000);
+  accgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_2000);
   delay(5);
   #endif 
   
