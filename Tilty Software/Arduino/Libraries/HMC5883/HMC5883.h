@@ -1,8 +1,8 @@
 #include "Arduino.h"
-#include <Wire.h>
+#include <i2c_t3.h>
 
-#ifndef HMC58X3_h
-#define HMC58X3_h
+#ifndef HMC5883_h
+#define HMC5883_h
 
 #define HMC58X3_ADDR 0x1E // 7 bit address of the HMC58X3 used with the Wire library
 #define HMC_POS_BIAS 1
