@@ -23,6 +23,8 @@ Software Library work:
 	Flash memory library (maybe one exists, should be adaptable to work with various memory sizes)
 	Compass sensor temperature compensation
 	Compass sensor tilt compensation
+	Allow for different altimeter read modes/frequencies
+	Update sensor libraries to use timeout I2C requests
 
 Hardware Work
 =============

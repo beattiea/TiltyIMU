@@ -25,7 +25,7 @@ void setup()
 	Serial.begin(115200);
 	
 	//Start the internal I2C Bus for the sensors 
-	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_400);
+	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_1500);
 	
 	delay(10);
 	
@@ -42,8 +42,7 @@ void setup()
 	compass.init(0);
 	
 	altimeter.init();
-	
-	}
+}
 
 long start, stop;
 
@@ -58,28 +57,26 @@ void loop()
                       altimeter.readAltitudeM();
                       altimeter.readTempC();
                 }
-	}
+		}
         stop = micros();
         Serial.print("--> result: ");
         Serial.print((stop - start) / 1024);
         Serial.print(" microseconds .... ");
         Serial.print(((stop - start) / 1024) / 1000.0);
         Serial.println(" milliseconds\n");
-/*
-	Serial.print("Compass x: "); Serial.print(compass_x);
-	Serial.print(" y: "); Serial.print(compass_y);
-	Serial.print(" z: "); Serial.print(compass_z);
-	
-	Serial.print("\t\tAccelerometer x: "); Serial.print(ax);
-	Serial.print(" y: "); Serial.print(ay);
-	Serial.print(" z: "); Serial.print(az);
-	
-	Serial.print("\t\tGyro x: "); Serial.print(gx);
-	Serial.print(" y: "); Serial.print(gy);
-	Serial.print(" z: "); Serial.print(gz);
-	
-	Serial.print("\t\t Altitude: "); Serial.print(altimeter.readAltitudeM());
-	Serial.print("\t\t Temperature: "); Serial.println(altimeter.readTempC());
 
-*/	
+		Serial.print("Compass x: "); Serial.print(compass_x);
+		Serial.print(" y: "); Serial.print(compass_y);
+		Serial.print(" z: "); Serial.print(compass_z);
+		
+		Serial.print("\t\tAccelerometer x: "); Serial.print(ax);
+		Serial.print(" y: "); Serial.print(ay);
+		Serial.print(" z: "); Serial.print(az);
+		
+		Serial.print("\t\tGyro x: "); Serial.print(gx);
+		Serial.print(" y: "); Serial.print(gy);
+		Serial.print(" z: "); Serial.print(gz);
+		
+		Serial.print("\t\t Altitude: "); Serial.print(altimeter.readAltitudeM());
+		Serial.print("\t\t Temperature: "); Serial.println(altimeter.readTempC());
 }
