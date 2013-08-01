@@ -74,6 +74,7 @@
 //                      Default is 1byte Addr + 2byte Command + 256byte Data
 #define I2C_TX_BUFFER_LENGTH 259
 #define I2C_RX_BUFFER_LENGTH 259
+#define BUFFER_LENGTH 259
 
 // Debug controls - these defines control ISR diagnostics.  This is only really necessary for
 //                  debugging bus problems, or for devices with no other means of data visibility,
