@@ -31,7 +31,8 @@ THE SOFTWARE.
 
 // Arduino Wire library is required if I2Cdev I2CDEV_ARDUINO_WIRE implementation
 // is used in I2Cdev.h
-#include "Wire.h"
+//#include "Wire.h" //	Uncomment for use on a standard Arduino
+#include <i2c_t3.h> //	Uncomment for use on a Teensy 3.0
 
 // I2Cdev and MPU6050 must be installed as libraries, or else the .cpp/.h files
 // for both classes must be in the include path of your project
