@@ -25,7 +25,7 @@ void setup()
 	Serial.begin(115200);
 	
 	//Start the internal I2C Bus for the sensors 
-	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_1500);
+	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_800);
 	
 	delay(10);
 	

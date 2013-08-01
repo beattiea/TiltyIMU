@@ -136,7 +136,7 @@ byte MPL3115A2::readByte(byte _regAddr)
 	Wire.beginTransmission(_addr);
 	Wire.write(_regAddr);
 	Wire.endTransmission(I2C_NOSTOP);
-	Wire.requestFrom(_addr, 1, I2C_STOP, _timeout); // Request the data...
+	Wire.requestFrom(_addr, 1); // Request the data...
 	return Wire.read();
 }
 
@@ -159,7 +159,7 @@ void MPL3115A2::readBytes(byte _regAddr, uint8_t _length, uint8_t *_data)
 	Wire.beginTransmission(_addr);
 	Wire.write(_regAddr);
 	Wire.endTransmission(I2C_NOSTOP);
-	Wire.requestFrom(_addr, _length, I2C_STOP, _timeout); // Request the data...
+	Wire.requestFrom(_addr, _length); // Request the data...
 	
 	for (int _i = 0; _i < _length; i++)
 	{
