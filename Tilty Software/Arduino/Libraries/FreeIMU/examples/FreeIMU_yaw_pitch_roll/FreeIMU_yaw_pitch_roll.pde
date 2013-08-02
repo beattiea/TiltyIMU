@@ -1,12 +1,13 @@
 #include <I2Cdev.h>
-#include <MPU60X0.h>
+#include <MPU6050.h>
 #include <EEPROM.h>
 
 //#define DEBUG
 #include "DebugUtils.h"
 #include "CommunicationUtils.h"
 #include "FreeIMU.h"
-#include <Wire.h>
+//#include <Wire.h> // Uncomment to use standard Wire library on normal Arduinos
+#include <i2c_t3.h> // Uncomment to use I2C_t3 Wire library on Teensy 3.0
 #include <SPI.h>
 
 int raw_values[9];

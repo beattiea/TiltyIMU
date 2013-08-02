@@ -28,6 +28,8 @@ Software Library work:
 	
 	Allow for different altimeter read modes/frequencies
 	Altimeter library Doxygen formatting
+	
+	PID library Doxygen formatting
 
 Hardware Work
 =============
