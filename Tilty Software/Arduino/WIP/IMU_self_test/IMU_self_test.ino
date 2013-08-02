@@ -13,12 +13,13 @@ MPU6050 imu;
 
 //byte readRegsiter(int reg_addr);
 
-//#define PRINT_ST
-//#define PRINT_FT
-//#define PRINT_RAW
-//#define PRINT_STR
+#define PRINT_ST
+#define PRINT_FT
+#define PRINT_RAW
+#define PRINT_STR
 #define PRINT_RES
-//#define PRINT_PASSFAIL
+#define PRINT_PASSFAIL
+//#define CONTINUOUS_MODE
 
 int16_t ax_offset, ay_offset, az_offset, gx_offset, gy_offset, gz_offset;
 int16_t ax, ay, az, gx, gy, gz;//	Self-test disabled sensor reading values
@@ -115,6 +116,11 @@ void loop() {
 	#endif
 	
 	
+	imu.reset();
+	while (!imu.testConnection()) {	delay(5);}
+	imu.initialize();
+	delay(5);
+	
 	writeRegister(27, 0b00000000);
 	writeRegister(28, 0b00010000);
 	delay(5);
@@ -177,18 +183,20 @@ void loop() {
 		Serial.println(abs(dax) < 0.14 ? "Accel X:\tPASS" : "Accel X:\tFAIL");
 		Serial.println(abs(day) < 0.14 ? "Accel Y:\tPASS" : "Accel Y:\tFAIL");
 		Serial.println(abs(daz) < 0.14 ? "Accel Z:\tPASS" : "Accel Z:\tFAIL");
-		Serial.println(abs(dgx) < 0.14 ? "Gyro X:\tPASS" : "Gyro X:\tFAIL");
-		Serial.println(abs(dgy) < 0.14 ? "Gyro Y:\tPASS" : "Gyro Y:\tFAIL");
-		Serial.println(abs(dgz) < 0.14 ? "Gyro Z:\tPASS" : "Gyro Z:\tFAIL");
+		Serial.println(abs(dgx) < 0.14 ? " Gyro X:\tPASS" : "Gyro X:\tFAIL");
+		Serial.println(abs(dgy) < 0.14 ? " Gyro Y:\tPASS" : "Gyro Y:\tFAIL");
+		Serial.println(abs(dgz) < 0.14 ? " Gyro Z:\tPASS" : "Gyro Z:\tFAIL");
 	#endif
 	
-	writeRegister(27, 0b00000000);
-	writeRegister(28, 0b00110000);
+	writeRegister(27, 0b11100000);
+	writeRegister(28, 0b11110000);
 	delay(5);
 	
-	//Serial.println("\nSend any character over serial to begin a new test...");
-	//while (!Serial.available()){}
-	//while (Serial.available()) {	Serial.read();}
+	#ifndef CONTINUOUS_MODE
+		Serial.println("\nSend any character over serial to begin a new test...");
+		while (!Serial.available()){}
+		while (Serial.available()) {	Serial.read();}
+	#endif
 }
 
 byte readRegister(int reg_addr)
