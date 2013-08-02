@@ -43,8 +43,9 @@ void setup()
 	
 	//Start the internal I2C Bus for the sensors 
 	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_400);
-	
+	delay(5);
 	my3IMU.init();
+        delay(5);
 	compass.init(0);
 	altimeter.init();	
 }
