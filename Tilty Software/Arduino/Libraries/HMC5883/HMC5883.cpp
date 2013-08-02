@@ -40,7 +40,7 @@ bool HMC5883::init(bool mode)
 	delay(5); //we need some time for the chip to power on
 	
 	writeRegister(HMC5883_R_CONFA, 0x70); // 8 samples averaged, 75Hz frequency, no artificial bias.
-	writeRegister(HMC5883_R_CONFB, 0xA0);
+	writeRegister(HMC5883_R_CONFB, 0x00);
 	writeRegister(HMC5883_R_MODE, 0x00);
 }
 
@@ -125,7 +125,7 @@ void HMC5883::getRaw(int *x,int *y,int *z)
 	Wire.endTransmission();
   
 	Wire.beginTransmission(HMC5883_ADDR);
-	Wire.requestFrom(HMC5883_ADDR, 6, I2C_STOP, I2C_timeout);
+	Wire.requestFrom(HMC5883_ADDR, 6);
 	if(6 == Wire.available())
 	{
 		// read out the 3 values, 2 bytes each.

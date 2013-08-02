@@ -1,8 +1,26 @@
 #include <i2c_t3.h>
 #include <HMC5883.h>
+#include <MPL3115A2.h>
+
 #include <I2Cdev.h>
 #include <MPU6050.h>
-#include <MPL3115A2.h>
+#include <EEPROM.h>
+
+//#define DEBUG
+#include "DebugUtils.h"
+#include "CommunicationUtils.h"
+#include "FreeIMU.h"
+//#include <Wire.h> // Uncomment to use standard Wire library on normal Arduinos
+#include <i2c_t3.h> // Uncomment to use I2C_t3 Wire library on Teensy 3.0
+#include <SPI.h>
+
+int raw_values[9];
+//char str[512];
+float ypr[3]; // yaw pitch roll
+float val[9];
+
+// Set the FreeIMU object
+FreeIMU my3IMU = FreeIMU();
 
 //Places to store the compass reading
 int compass_x, compass_y, compass_z;
@@ -43,29 +61,13 @@ void setup()
 	
 	altimeter.init();
 	
-	}
-
-long start, stop;
-
+}
+	
 void loop()
 {
-        Serial.println("Testing raw reading speed (average on 1024 samples):");
-        start = micros();
-        for(int i=0; i<1024; i++) {
-	        compass.getValues(&compass_x, &compass_y, &compass_z);
-	        imu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-                if (altimeter.checkData()) {
-                      altimeter.readAltitudeM();
-                      altimeter.readTempC();
-                }
-	}
-        stop = micros();
-        Serial.print("--> result: ");
-        Serial.print((stop - start) / 1024);
-        Serial.print(" microseconds .... ");
-        Serial.print(((stop - start) / 1024) / 1000.0);
-        Serial.println(" milliseconds\n");
-/*
+	compass.getValues(&compass_x, &compass_y, &compass_z);
+	imu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+
 	Serial.print("Compass x: "); Serial.print(compass_x);
 	Serial.print(" y: "); Serial.print(compass_y);
 	Serial.print(" z: "); Serial.print(compass_z);
@@ -80,6 +82,6 @@ void loop()
 	
 	Serial.print("\t\t Altitude: "); Serial.print(altimeter.readAltitudeM());
 	Serial.print("\t\t Temperature: "); Serial.println(altimeter.readTempC());
-
-*/	
+	
+	delay(25);
 }

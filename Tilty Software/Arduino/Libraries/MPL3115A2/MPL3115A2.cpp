@@ -161,7 +161,7 @@ void MPL3115A2::readBytes(byte _regAddr, uint8_t _length, uint8_t *_data)
 	Wire.endTransmission(I2C_NOSTOP);
 	Wire.requestFrom(_addr, _length); // Request the data...
 	
-	for (int _i = 0; _i < _length; i++)
+	for (int _i = 0; _i < _length; _i++)
 	{
 		_data[_i] = Wire.read();
 	}
