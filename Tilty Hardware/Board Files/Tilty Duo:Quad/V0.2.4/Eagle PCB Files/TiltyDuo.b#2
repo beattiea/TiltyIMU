@@ -2780,6 +2780,8 @@ Please make sure your boards conform to these design rules.</description>
 <element name="C5" library="resistor" package="C0603" value="0.1uF" x="15.113" y="40.259" smashed="yes" rot="MR90"/>
 <element name="U1" library="My Parts" package="28-DIP" value="TEENSY_3.0_OUTER-PINS28-DIP_SOCKET" x="19.05" y="32.893">
 <attribute name="COST" value="0.28" x="19.05" y="32.893" size="1.778" layer="27" display="off"/>
+<attribute name="PART#" value="AE10004-ND" x="19.05" y="32.893" size="1.778" layer="27" display="off"/>
+<attribute name="PART#2" value="A28-LC-TR-R" x="19.05" y="32.893" size="1.778" layer="27" display="off"/>
 </element>
 <element name="JP1" library="pinhead" package="1X08_NO_SS_LOCKING" value="" x="7.62" y="40.513" smashed="yes" rot="R90">
 <attribute name="VALUE" x="10.795" y="30.353" size="1.27" layer="27" rot="R90"/>

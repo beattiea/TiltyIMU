@@ -2772,7 +2772,10 @@ Please make sure your boards conform to these design rules.</description>
 <element name="U2" library="csr" package="HC-09_BREAKOUT" value="HC-09_BREAKOUT" x="22.86" y="7.62" smashed="yes" rot="MR270"/>
 <element name="R5" library="resistor" package="R0603" value="10k" x="20.955" y="15.621" smashed="yes" rot="MR180"/>
 <element name="R6" library="resistor" package="R0603" value="680" x="25.0825" y="16.383" smashed="yes" rot="MR90"/>
-<element name="JP4" library="My Parts" package="2-POS_SMD_TERMINAL_BLOCK" value="2-POS_SMD_TERM_BLOCK" x="19.05" y="6.096"/>
+<element name="JP4" library="My Parts" package="2-POS_SMD_TERMINAL_BLOCK" value="2-POS_SMD_TERM_BLOCK" x="19.05" y="6.096">
+<attribute name="PART#" value="277-2337-1-ND" x="19.05" y="6.096" size="1.778" layer="27" display="off"/>
+<attribute name="POSSIBLE_ALT" value="009276002021106" x="19.05" y="6.096" size="1.778" layer="27" display="off"/>
+</element>
 <element name="U4" library="on-semiconductor" package="TO263" value="LM2931" x="19.05" y="44.5135" smashed="yes" rot="MR0">
 <attribute name="COST" value="0.53" x="19.05" y="44.5135" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>

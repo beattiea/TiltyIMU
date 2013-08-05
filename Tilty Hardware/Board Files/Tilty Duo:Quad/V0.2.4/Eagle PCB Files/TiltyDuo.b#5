@@ -3533,9 +3533,9 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="JP8" pad="1"/>
 <wire x1="35.687" y1="24.003" x2="35.814" y2="24.003" width="0.1524" layer="16"/>
 <wire x1="35.814" y1="24.003" x2="36.957" y2="22.86" width="0.1524" layer="16"/>
-<via x="36.957" y="9.398" extent="1-16" drill="0.3302"/>
-<wire x1="36.957" y1="22.86" x2="36.957" y2="9.398" width="0.1524" layer="16"/>
-<wire x1="36.957" y1="9.398" x2="36.957" y2="8.0319" width="0.1524" layer="1"/>
+<via x="36.957" y="9.525" extent="1-16" drill="0.3302"/>
+<wire x1="36.957" y1="22.86" x2="36.957" y2="9.525" width="0.1524" layer="16"/>
+<wire x1="36.957" y1="9.525" x2="36.957" y2="8.0319" width="0.1524" layer="1"/>
 <wire x1="36.957" y1="8.0319" x2="36.9879" y2="8.001" width="0.1524" layer="1"/>
 </signal>
 <signal name="N$20">

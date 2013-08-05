@@ -213,7 +213,7 @@
 <wire x1="18.7325" y1="24.5745" x2="19.05" y2="24.892" width="0.2032" layer="25"/>
 <text x="18.0975" y="25.9715" size="1.27" layer="25" ratio="15">X</text>
 <text x="20.1295" y="23.9395" size="1.27" layer="25" ratio="15">Y</text>
-<text x="17.3355" y="23.1775" size="1.27" layer="25" ratio="15">Z</text>
+<text x="17.4625" y="23.1775" size="1.27" layer="25" ratio="15">Z</text>
 <wire x1="17.399" y1="36.8935" x2="20.701" y2="36.8935" width="0.381" layer="26"/>
 <text x="32.4485" y="48.5775" size="1.016" layer="25" ratio="12" rot="R90" align="center-left">5V</text>
 <text x="32.4485" y="45.593" size="1.016" layer="25" ratio="12" rot="R90" align="center-left">GND</text>

@@ -7610,7 +7610,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="JP9" library="pinhead" deviceset="PINHD-1X4" device="1X04_NO_SS_LOCKING"/>
 <part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="68"/>
 <part name="SJ4" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE"/>
-<part name="JP8" library="SparkFun-Passives" deviceset="JUMPER-2" device="SMD-NC"/>
+<part name="SJ5" library="SparkFun-Passives" deviceset="JUMPER-2" device="SMD-NC"/>
 </parts>
 <sheets>
 <sheet>
@@ -7758,7 +7758,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="SJ4" gate="1" x="107.95" y="68.58" smashed="yes">
 <attribute name="NAME" x="105.41" y="71.12" size="1.778" layer="95"/>
 </instance>
-<instance part="JP8" gate="A" x="129.54" y="10.16" rot="R270"/>
+<instance part="SJ5" gate="A" x="129.54" y="10.16" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -8131,7 +8131,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <wire x1="127" y1="7.62" x2="111.76" y2="7.62" width="0.1524" layer="91"/>
 <label x="111.76" y="7.62" size="1.778" layer="95"/>
-<pinref part="JP8" gate="A" pin="2"/>
+<pinref part="SJ5" gate="A" pin="2"/>
 </segment>
 </net>
 <net name="TEENSY_3V3" class="3">
@@ -8471,7 +8471,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <wire x1="127" y1="10.16" x2="111.76" y2="10.16" width="0.1524" layer="91"/>
 <label x="111.76" y="10.16" size="1.778" layer="95"/>
-<pinref part="JP8" gate="A" pin="1"/>
+<pinref part="SJ5" gate="A" pin="1"/>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="15/A1"/>

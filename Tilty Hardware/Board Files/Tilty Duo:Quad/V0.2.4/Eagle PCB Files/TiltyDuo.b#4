@@ -2838,8 +2838,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="C12" library="resistor" package="C0603" value="0.1uF" x="25.273" y="26.289" smashed="yes" rot="MR90"/>
 <element name="U7" library="SparkFun-DigitalIC" package="SO08" value="SPI_FLASH-X25XXSMD" x="6.985" y="18.923" smashed="yes" rot="MR180">
-<attribute name="PART#" value="S25FL204K0TMFI011" x="6.985" y="18.923" size="1.778" layer="28" rot="MR180" display="off"/>
-<attribute name="PART#2" value="S25FL208K0RMFI011" x="6.985" y="18.923" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="PART#" value="S25FL204K0TMFI043" x="6.985" y="18.923" size="1.778" layer="28" rot="MR180" display="off"/>
 </element>
 <element name="C13" library="resistor" package="C0603" value="0.1uF" x="7.112" y="23.368" smashed="yes" rot="MR180">
 <attribute name="RATED_VOLTAGE" value="2" x="7.112" y="23.368" size="1.778" layer="28" font="vector" ratio="15" rot="MR180" display="off"/>
@@ -3748,17 +3747,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="26.67" y1="17.78" x2="26.67" y2="18.923" width="0.2032" layer="16"/>
 </signal>
 </signals>
-<errors>
-<approved hash="19,1,e5d92bbdf37a1b28"/>
-<approved hash="19,1,423a2dbb6ccc1955"/>
-<approved hash="19,1,7f335674337f1bda"/>
-<approved hash="19,1,1675c04a64bcb361"/>
-<approved hash="19,16,dce4619c6180dcf8"/>
-<approved hash="19,16,dc76610e670dda75"/>
-<approved hash="19,16,0a55e8ade62604de"/>
-<approved hash="19,16,6e75bd0dbb1d6865"/>
-<approved hash="19,16,6ee7bd9fbd906ee8"/>
-</errors>
 </board>
 </drawing>
 </eagle>
