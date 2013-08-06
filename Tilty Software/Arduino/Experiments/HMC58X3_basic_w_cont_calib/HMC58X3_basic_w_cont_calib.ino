@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <Wire.h>
-//#include <DebugUtils.h>
+//#include <Debugtils.h>
 #include <HMC58X3.h>
 
 HMC58X3 magn;
