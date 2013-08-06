@@ -6,9 +6,10 @@ void setup() {
 byte state = 0b00000000;
 int time[4];
 int start[4];
-boolean printNow = false;
+boolean printNow = true;
 
 void loop() {
+  /*
   if (digitalRead(3) && !bitRead(state, 0)) {
     bitSet(state, 0);
     start[0] = micros();
@@ -47,16 +48,21 @@ void loop() {
     time[3] = micros() - start[3];
     printNow = true;
   }
+  */
+  time[0] = pulseIn(3, HIGH, 21000);
+  time[1] = pulseIn(2, HIGH, 21000);
+  time[2] = pulseIn(0, HIGH, 21000);
+  time[3] = pulseIn(1, HIGH, 21000);
   
   if (printNow) {
-    Serial.print(time[0] - 3);
+    Serial.print(time[0]);// - 3);
     Serial.print(",");
-    Serial.print(time[1] - time[0] - 3);
+    Serial.print(time[1]);// - time[0] - 3);
     Serial.print(",");
-    Serial.print(time[2] - time[1] - 3);
+    Serial.print(time[2]);// - time[1] - 3);
     Serial.print(",");
-    Serial.print(time[3] - time[2] - 3);
+    Serial.print(time[3]);// - time[2] - 3);
     Serial.println();
-    printNow = false;
+    //printNow = false;
   }
 }
