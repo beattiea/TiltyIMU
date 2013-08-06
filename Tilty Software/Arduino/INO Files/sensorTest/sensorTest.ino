@@ -62,7 +62,9 @@ void setup()
 	altimeter.init();
 	
 }
-	
+
+long start = 0;
+
 void loop()
 {
 	compass.getValues(&compass_x, &compass_y, &compass_z);

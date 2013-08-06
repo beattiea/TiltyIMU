@@ -138,9 +138,9 @@ void HMC5883::getRaw(int *x,int *y,int *z)
 		// the HMC5883 will automatically wrap around on the next request
 	}
 	
-	if (*x == -4096 || *y == -4096 || *z == -4096)
+	if ((*x == -4096 || *y == -4096 || *z == -4096) && _gain < 7)
 	{
-		if (_gain < 7)
+		if (dataReady())
 		{
 			_gain += 1;
 			setGain(_gain);
@@ -192,5 +192,5 @@ bool HMC5883::dataReady()
 	Wire.endTransmission();
 	
 	Wire.requestFrom(HMC5883_ADDR, 1);
-	return Wire.read() & 1;
+	return Wire.read() & 0b00000001;
 }
