@@ -73,6 +73,7 @@ void HMC5883::setGain(unsigned char gain)
 	// 0-7, 1 default
 	if (gain > 7) return;
 	writeRegister(HMC5883_R_CONFB, gain << 5);
+	_gain = gain;
 }
 
 
@@ -126,6 +127,7 @@ void HMC5883::getRaw(int *x,int *y,int *z)
   
 	Wire.beginTransmission(HMC5883_ADDR);
 	Wire.requestFrom(HMC5883_ADDR, 6);
+	Wire.endTransmission();
 	if(6 == Wire.available())
 	{
 		// read out the 3 values, 2 bytes each.
@@ -135,7 +137,16 @@ void HMC5883::getRaw(int *x,int *y,int *z)
 		
 		// the HMC5883 will automatically wrap around on the next request
 	}
-	Wire.endTransmission();
+	
+	if (*x == -4096 || *y == -4096 || *z == -4096)
+	{
+		if (_gain < 7)
+		{
+			_gain += 1;
+			setGain(_gain);
+			Serial.println("Gain decreased!");
+		}
+	}
 }
 
 
