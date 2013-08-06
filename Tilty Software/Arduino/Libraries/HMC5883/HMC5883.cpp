@@ -184,3 +184,13 @@ void HMC5883::getID(char id[3])
 	}
 	Wire.endTransmission();
 }
+
+bool HMC5883::dataReady()
+{
+	Wire.beginTransmission(HMC5883_ADDR);
+	Wire.write(0x09);
+	Wire.endTransmission();
+	
+	Wire.requestFrom(HMC5883_ADDR, 1);
+	return Wire.read() & 1;
+}
