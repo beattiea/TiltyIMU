@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 //#include "WProgram.h"
-//#include "Arduino.h"
+#include "Arduino.h"
 #include "MPL3115A2.h"
 #include <stdint.h>
 //#include "i2c_t3.h"
@@ -35,11 +35,11 @@ boolean MPL3115A2::init()
 	if (readByte(0x0C) == 196)
 	{  
 		// CTRL_REG1 (0x26): enable sensor, oversampling x128, altimeter mode 
-  		write(0x26, 0xB9);
+  		writeByte(0x26, 0xB9);
   		// CTRL_REG4 (0x29): Data ready interrupt enbabled
- 		write(0x29, 0x80);
+ 		writeByte(0x29, 0x80);
  		// PT_DATA_CFG (0x13): enable both pressure and temp event flags 
-		write(0x13, 0x07);
+		writeByte(0x13, 0x07);
 		
 		// Use these to set custom sea level pressures (Pressure in pascals at sea level / 2)
 		//write(0x14, 0xC6);// BAR_IN_MSB (0x14):
@@ -56,7 +56,7 @@ boolean MPL3115A2::init()
 //  Resets the altimeter via software
 void MPL3115A2::reset()
 {
-	write(0x26, 0x04);
+	writeByte(0x26, 0x04);
 }
 
 
@@ -66,9 +66,9 @@ void MPL3115A2::setOversampling(uint8_t _oversample)
 {
 	byte old_ctrl_reg1 = readByte(0x26);
 	
-	write(0x26, _ctrl_reg1 & 0b10111000);
+	writeByte(0x26, old_ctrl_reg1 & 0b10111000);
 	
-	byte new_cntrl_reg1 = old_ctrl_reg1 & 0b10000001;
+	byte new_ctrl_reg1 = old_ctrl_reg1 & 0b10000001;
 	new_ctrl_reg1 += pow(2, _oversample);
 	
 	#ifdef DEBUG
@@ -78,7 +78,7 @@ void MPL3115A2::setOversampling(uint8_t _oversample)
 		Serial.println(new_ctrl_reg1, HEX);
 	#endif
 	
-	write(0x26, new_ctrl_reg1);
+	writeByte(0x26, new_ctrl_reg1);
 }
 
 
@@ -165,12 +165,12 @@ byte MPL3115A2::readByte(byte _regAddr)
 
 
 //	Writes a byte of data to the sensor at the given address
-byte MPL3115A2::write(byte _regAddr, byte _value)
+byte MPL3115A2::writeByte(byte _regAddr, byte _value)
 {
 	Wire.beginTransmission(_addr);
 	Wire.write(_regAddr);
 	Wire.write(_value);
-	return Wire.endTransmission();
+	return Wire.endTransmission(I2C_STOP);
 }
 
 
@@ -180,7 +180,7 @@ void MPL3115A2::readBytes(byte _regAddr, uint8_t _length, uint8_t *_data)
 {
 	Wire.beginTransmission(_addr);
 	Wire.write(_regAddr);
-	Wire.endTransmission();//I2C_NOSTOP);
+	Wire.endTransmission(I2C_NOSTOP);
 	Wire.requestFrom(_addr, _length); // Request the data...
 	
 	for (int _i = 0; _i < _length; _i++)
