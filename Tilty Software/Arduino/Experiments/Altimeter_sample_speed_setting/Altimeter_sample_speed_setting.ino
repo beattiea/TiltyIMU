@@ -52,7 +52,7 @@ byte read(byte _regAddr)
 	Wire.beginTransmission(_addr);
 	Wire.write(_regAddr);
 	Wire.endTransmission(I2C_NOSTOP);
-	Wire.requestFrom(_addr, 1, I2C_STOP, _timeout); // Request the data...
+	Wire.requestFrom(_addr, 1, I2C_STOP); // Request the data...
 	return Wire.read();
 }
 

@@ -23,6 +23,7 @@ This is a library to control and read a MPL3115A2 Altimeter from Freescale Semic
 #ifndef MPL3115A2_h
 #define MPL3115A2_h
 
+#define DEBUG
 
 #include <i2c_t3.h>
 #include "WProgram.h"
@@ -42,6 +43,7 @@ class MPL3115A2 {
 		
 		//	Sensor configuration functions
 		void reset();
+		void setOversampling(uint8_t _oversample);
 		
 		//	Check for data functions
 		boolean checkData();

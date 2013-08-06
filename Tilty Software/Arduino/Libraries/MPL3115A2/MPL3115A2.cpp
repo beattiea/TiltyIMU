@@ -61,6 +61,28 @@ void MPL3115A2::reset()
 
 
 
+// Sets the oversampling rate of the altimeter
+void MPL3115A2::setOversampling(uint8_t _oversample)
+{
+	byte old_ctrl_reg1 = readByte(0x26);
+	
+	write(0x26, _ctrl_reg1 & 0b10111000);
+	
+	byte new_cntrl_reg1 = old_ctrl_reg1 & 0b10000001;
+	new_ctrl_reg1 += pow(2, _oversample);
+	
+	#ifdef DEBUG
+		Serial.print("Old ctrl_reg1: 0x");
+		Serial.println(old_ctrl_reg1, HEX);
+		Serial.print("New ctrl_reg1: 0x");
+		Serial.println(new_ctrl_reg1, HEX);
+	#endif
+	
+	write(0x26, new_ctrl_reg1);
+}
+
+
+
 //  Checks INT_SOURCE register to see if new data is available
 boolean MPL3115A2::checkData()
 {
@@ -135,7 +157,7 @@ byte MPL3115A2::readByte(byte _regAddr)
 {
 	Wire.beginTransmission(_addr);
 	Wire.write(_regAddr);
-	Wire.endTransmission(I2C_NOSTOP);
+	Wire.endTransmission();
 	Wire.requestFrom(_addr, 1); // Request the data...
 	return Wire.read();
 }
@@ -148,7 +170,7 @@ byte MPL3115A2::write(byte _regAddr, byte _value)
 	Wire.beginTransmission(_addr);
 	Wire.write(_regAddr);
 	Wire.write(_value);
-	return Wire.endTransmission(I2C_STOP);
+	return Wire.endTransmission();
 }
 
 
@@ -158,7 +180,7 @@ void MPL3115A2::readBytes(byte _regAddr, uint8_t _length, uint8_t *_data)
 {
 	Wire.beginTransmission(_addr);
 	Wire.write(_regAddr);
-	Wire.endTransmission(I2C_NOSTOP);
+	Wire.endTransmission();//I2C_NOSTOP);
 	Wire.requestFrom(_addr, _length); // Request the data...
 	
 	for (int _i = 0; _i < _length; _i++)
