@@ -69,7 +69,8 @@ void MPL3115A2::setOversampling(uint8_t _oversample)
 	writeByte(0x26, old_ctrl_reg1 & 0b10111000);
 	
 	byte new_ctrl_reg1 = old_ctrl_reg1 & 0b10000001;
-	new_ctrl_reg1 += pow(2, _oversample);
+	new_ctrl_reg1 += pow(2, _oversample) - 1;
+	new_ctrl_reg1 = new_ctrl_reg1 | 0b10000001;
 	
 	#ifdef DEBUG
 		Serial.print("Old ctrl_reg1: 0x");
@@ -157,7 +158,7 @@ byte MPL3115A2::readByte(byte _regAddr)
 {
 	Wire.beginTransmission(_addr);
 	Wire.write(_regAddr);
-	Wire.endTransmission();
+	Wire.endTransmission(I2C_NOSTOP);
 	Wire.requestFrom(_addr, 1); // Request the data...
 	return Wire.read();
 }

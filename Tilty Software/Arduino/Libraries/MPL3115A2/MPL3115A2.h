@@ -23,7 +23,7 @@ This is a library to control and read a MPL3115A2 Altimeter from Freescale Semic
 #ifndef MPL3115A2_h
 #define MPL3115A2_h
 
-#define DEBUG
+//#define DEBUG
 
 #include <i2c_t3.h>
 #include "WProgram.h"
