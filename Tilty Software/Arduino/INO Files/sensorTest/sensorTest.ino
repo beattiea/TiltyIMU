@@ -47,23 +47,22 @@ void setup()
 	
 	delay(10);
 	
+	// initialize the IMU
 	imu = MPU6050();
 	imu.initialize();
 	imu.setI2CBypassEnabled(true);
 
 	delay(10);
 	
-	//construct the compass
+	// initialize the compass
 	compass = HMC5883();
+	compass.init();
 	
-	//initialize the compass
-	compass.init(0);
-	
+	// initialize the altimeter and set oversampling to 0 to speed up measurements
 	altimeter.init();
+	altimeter.setOversampling(0);
 	
 }
-
-long start = 0;
 
 void loop()
 {
@@ -84,6 +83,10 @@ void loop()
 	
 	Serial.print("\t\t Altitude: "); Serial.print(altimeter.readAltitudeM());
 	Serial.print("\t\t Temperature: "); Serial.println(altimeter.readTempC());
+	altimeter.forceMeasurement();
 	
-	delay(25);
+	// wait for all three sensors to have new data available
+	while (!imu.getIntDataReadyStatus()) {}
+	while (!compass.getDataReady()) {}
+	while (!altimeter.getDataReady()) {}
 }
