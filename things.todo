@@ -2,8 +2,6 @@ Arduino code:
 =============
 	Implement smart sensor indicator loading in Processing
 	
-	Self-test program for testing IMU, magnetometer, and altimeter
-	
 	Kalman filter for IMU using just accel and gyro
 	Kalman filter for IMU using accel, gyro, and magnetometer
 	Kalman filter for altimeter
@@ -25,13 +23,10 @@ Software Library work:
 ======================
 	Flash memory library (maybe one exists, should be adaptable to work with various memory sizes)
 	
-	Compass sensor dataReady check doesn't seem to work
 	Compass sensor temperature compensation
 	Compass sensor tilt compensation
-	Compass sensor data status register checking for data ready optimization
 	Compass sensor calibration and testing out of a magnetic environment
 	
-	Allow for different altimeter read modes/frequencies
 	Altimeter library Doxygen formatting
 	Update altimeter library to take pointers to variables like compass and IMU
 	
