@@ -5,7 +5,7 @@ bool blinkState = false;
 
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
-uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU
+uint8_t imuIntStatus;   // holds actual interrupt status byte from MPU
 uint8_t devStatus;	  // return status after each device operation (0 = success, !0 = error)
 uint16_t packetSize;	// expected DMP packet size (default is 42 bytes)
 uint16_t fifoCount;	 // count of all bytes currently in FIFO
@@ -24,9 +24,9 @@ float euler[3];		 // [psi, theta, phi]	Euler angle container
 // ===			   INTERRUPT DETECTION ROUTINE				===
 // ================================================================
 
-volatile bool mpuInterrupt = false;	 // indicates whether MPU interrupt pin has gone high
+volatile bool imuInterrupt = false;	 // indicates whether MPU interrupt pin has gone high
 void dmpDataReady() {
-	mpuInterrupt = true;
+	imuInterrupt = true;
 }
 
 
@@ -50,33 +50,33 @@ void setupDMP() {
 
 	// initialize device
 	myPort.println(F("Initializing I2C devices..."));
-	mpu.initialize();
+	imu.initialize();
 
 	// verify connection
 	myPort.println(F("Testing device connections..."));
-	myPort.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
+	myPort.println(imu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
 
 	// load and configure the DMP
 	myPort.println(F("Initializing DMP..."));
-	devStatus = mpu.dmpInitialize();
+	devStatus = imu.dmpInitialize();
 	
 	// make sure it worked (returns 0 if so)
 	if (devStatus == 0) {
 		// turn on the DMP, now that it's ready
 		myPort.println(F("Enabling DMP..."));
-		mpu.setDMPEnabled(true);
+		imu.setDMPEnabled(true);
 
 		// enable Arduino interrupt detection
 		myPort.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
 		attachInterrupt(6, dmpDataReady, RISING);
-		mpuIntStatus = mpu.getIntStatus();
+		imuIntStatus = imu.getIntStatus();
 
 		// set our DMP Ready flag so the main loop() function knows it's okay to use it
 		myPort.println(F("DMP ready! Waiting for first interrupt..."));
 		dmpReady = true;
 
 		// get expected DMP packet size for later comparison
-		packetSize = mpu.dmpGetFIFOPacketSize();
+		packetSize = imu.dmpGetFIFOPacketSize();
 	} else {
 		// ERROR!
 		// 1 = initial memory load failed
@@ -103,29 +103,29 @@ void setupDMP() {
 
 void readDMP() {
 	// reset interrupt flag and get INT_STATUS byte
-	mpuInterrupt = false;
-	mpuIntStatus = mpu.getIntStatus() & 0x12;
+	imuInterrupt = false;
+	imuIntStatus = imu.getIntStatus() & 0x12;
 	
-	while (!mpuIntStatus) {
-		mpuIntStatus = mpu.getIntStatus() & 0x12;
+	while (!imuIntStatus) {
+		imuIntStatus = imu.getIntStatus() & 0x12;
 	}
 
 	// get current FIFO count
-	fifoCount = mpu.getFIFOCount();
+	fifoCount = imu.getFIFOCount();
 
 	// check for overflow (this should never happen unless our code is too inefficient)
-	if ((mpuIntStatus & 0x10) || fifoCount == 1024) {
+	if ((imuIntStatus & 0x10) || fifoCount == 1024) {
 		// reset so we can continue cleanly
-		mpu.resetFIFO();
+		imu.resetFIFO();
 		myPort.println(F("FIFO overflow!"));
 
 	// otherwise, check for DMP data ready interrupt (this should happen frequently)
-	} else if (mpuIntStatus & 0x02) {
+	} else if (imuIntStatus & 0x02) {
 		// wait for correct available data length, should be a VERY short wait
-		while (fifoCount < packetSize) fifoCount = mpu.getFIFOCount();
+		while (fifoCount < packetSize) fifoCount = imu.getFIFOCount();
 
 		// read a packet from FIFO
-		mpu.getFIFOBytes(fifoBuffer, packetSize);
+		imu.getFIFOBytes(fifoBuffer, packetSize);
 		
 		// track FIFO count here in case there is > 1 packet available
 		// (this lets us immediately read more without waiting for an interrupt)
@@ -134,9 +134,9 @@ void readDMP() {
 
 		#ifdef OUTPUT_READABLE_YAWPITCHROLL
 			// display Euler angles in degrees
-			mpu.dmpGetQuaternion(&q, fifoBuffer);
-			mpu.dmpGetGravity(&gravity, &q);
-			mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+			imu.dmpGetQuaternion(&q, fifoBuffer);
+			imu.dmpGetGravity(&gravity, &q);
+			imu.dmpGetYawPitchRoll(ypr, &q, &gravity);
 			ypr[0] *= 180/M_PI;
 			ypr[1] *= 180/M_PI;
 			ypr[2] *= 180/M_PI;

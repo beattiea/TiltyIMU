@@ -2,15 +2,18 @@
 #include <PID.h>
 
 #include <i2c_t3.h>
-#include "I2Cdev.h"
-#include "MPU6050_6Axis_MotionApps20.h"
+#include <I2Cdev.h>
+#include <MPU6050_6Axis_MotionApps20.h>
+#include <HMC5883.h>
 
-#define USE_BT
+//#define USE_BT // Uncomment to use Bluetooth instead of USB serial
 
-MPU6050 mpu;
+MPU6050 imu;
+HMC5883 compass;
 Servo roll_servo, pitch_servo, yaw_servo, throttle_servo;
 
 float ypr[3]; // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
+int ix,iy,iz; // X, Y, and Z magnetometer values
 
 #define ROLL_PIN 2 // Servo header 1
 #define ROLL_INDEX 2 // ypr[] data index
@@ -37,9 +40,12 @@ void setup() {
 	#ifdef USE_BT
 		Serial1.begin(115200);
 		#define myPort Serial1
+		while (!myPort.available()) {}
+		while (myPort.available()) {	myPort.read();}
 	#else
 		Serial.begin(115200);
 		#define myPort Serial
+		while (!myPort) {}
 	#endif
 	
 	roll_servo.attach(ROLL_PIN); // Attach aileron servo to aileron servo header
@@ -50,14 +56,19 @@ void setup() {
 	Wire.begin(I2C_MASTER, 0x00, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_400);//  Starts I2C on Teensy
 	delay(5);
 	
-	while (!myPort.available()) {}
-	while (myPort.available()) {	myPort.read();}
-	
 	setupDMP();
+	imu.setI2CBypassEnabled(true);
+	
+	compass.init();
 }
 
 void loop() {
 	readDMP();
+	
+	compass.getValues(&ix, &iy, &iz);
+	Serial.print(ix); Serial.print("\t\t"); Serial.print(iy);
+	ix = map(ix, 347, 817, -130, 341);
+	Serial.print("\t\t"); Serial.println(atan2(ix, iy) * 180/M_PI);
 	
 	roll_pid.update();
 	pitch_pid.update();

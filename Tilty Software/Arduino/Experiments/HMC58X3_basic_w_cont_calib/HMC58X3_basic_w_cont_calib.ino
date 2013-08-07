@@ -17,22 +17,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Wire.h>
+#include <i2c_t3.h>
 //#include <Debugtils.h>
-#include <HMC58X3.h>
+#include <HMC5883.h>
 
-HMC58X3 magn;
+HMC5883 magn;
 
 void setup(void) {
   Serial.begin(115200);
   Wire.begin();
   
   // no delay needed as we have already a delay(5) in HMC5843::init()
-  magn.init(false); // Dont set mode yet, we'll do that later on.
-  // Calibrate HMC using self test, not recommended to change the gain after calibration.
-  magn.calibrate(1, 32); // Use gain 1=default, valid 0-7, 7 not recommended.
-  // Single mode conversion was used in calibration, now set continuous mode
-  magn.setMode(0);
+  magn.init(); // Dont set mode yet, we'll do that later on.
 }
 
 int16_t ix_min = 1000, ix_max = -1000;
