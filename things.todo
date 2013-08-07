@@ -23,6 +23,7 @@ Software Library work:
 ======================
 	Flash memory library (maybe one exists, should be adaptable to work with various memory sizes)
 	
+	Check out FreeIMU compass math
 	Compass sensor temperature compensation
 	Compass sensor tilt compensation
 	Compass sensor calibration and testing out of a magnetic environment
