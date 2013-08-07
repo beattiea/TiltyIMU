@@ -36,9 +36,14 @@ Software Library work:
 	PID library Doxygen formatting
 	
 	R/C receiver Teensy compatability
+	
+	GPS settings/control library
 
 Hardware Work
 =============
 	Dual motor driver add-on board
 	Try decreasing LED currents to see if they can be dimmed a bit
 	Look into current boosting the 5V regulator on the Tilty controllers
+
+Tyler:
+GPS NMEA Parser
