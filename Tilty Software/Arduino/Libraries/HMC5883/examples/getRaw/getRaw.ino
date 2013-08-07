@@ -6,16 +6,15 @@ HMC5883 magn;
 void setup(void) {
 	Serial.begin(9600);
 	Wire.begin();
-	
-	magn.init(true); // Dont set mode yet, we'll do that later on.
+
+	magn.init();// returns true if device is successfully recognized
 }
 
 void loop() { 
 	int ix,iy,iz;
-	//delay(10);
 	
-	// Get values, as ints and floats.
-	if (magn.dataReady()) {
+	// Get values as ints, only when new data is available
+	if (magn.getDataReady()) {
 		magn.getRaw(&ix,&iy,&iz);
 		Serial.print(ix);
 		Serial.print(",");

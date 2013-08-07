@@ -41,16 +41,17 @@ class HMC5883
 {
 	public:
 		HMC5883();
-		bool init(bool mode);
+		bool init();
 		void setMode(unsigned char mode);
-		void setDOR(unsigned char DOR);
+		void setRate(unsigned char rate);
 		void setGain(unsigned char gain);
 		void getValues(int *x,int *y,int *z);
 		void getValues(float *x,float *y,float *z);
 		void getValues(float *xyz);
 		void getRaw(int *x,int *y,int *z);
 		void getID(char id[3]);
-		bool dataReady();
+		bool getDataReady();
+		uint8_t getGain();
 
 	private:
 		void writeRegister(unsigned char reg, unsigned char val);

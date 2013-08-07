@@ -30,18 +30,17 @@ HMC5883::HMC5883()
 /**
 * @param[in] mode Set mode to 0 if true. Otherwise you must set the mode using setMode().
 */ 
-bool HMC5883::init(bool mode)
+bool HMC5883::init()
 {
-	if(mode)
-	{
-		setMode(0);
-	}
+	setMode(0);
 	
-	delay(5); //we need some time for the chip to power on
-	
-	writeRegister(HMC5883_R_CONFA, 0x70); // 8 samples averaged, 75Hz frequency, no artificial bias.
+	writeRegister(HMC5883_R_CONFA, 0x7C); // 8 samples averaged, 75Hz frequency, no artificial bias.
 	writeRegister(HMC5883_R_CONFB, 0x00);
 	writeRegister(HMC5883_R_MODE, 0x00);
+	
+	char deviceID[3];
+	getID(deviceID);
+	return (deviceID[0] == 'H' && deviceID[1] == '4' && deviceID[2] == '3');
 }
 
 /**
@@ -56,13 +55,13 @@ void HMC5883::setMode(unsigned char mode)
 }
 
 /**
-* @param[in] DOR Change the DOR.
+* @param[in] rate Change the data output rate.
 */
-void HMC5883::setDOR(unsigned char DOR)
+void HMC5883::setRate(unsigned char rate)
 {
-	if (DOR>6){return;}
+	if (rate>6){return;}
 	
-	writeRegister(HMC5883_R_CONFA,DOR<<2);
+	writeRegister(HMC5883_R_CONFA,rate<<2);
 }
 
 /**
@@ -74,15 +73,6 @@ void HMC5883::setGain(unsigned char gain)
 	if (gain > 7) return;
 	writeRegister(HMC5883_R_CONFB, gain << 5);
 	_gain = gain;
-}
-
-
-void HMC5883::writeRegister(unsigned char reg, unsigned char val)
-{
-	Wire.beginTransmission(HMC5883_ADDR);
-	Wire.write(reg);        // send register address
-	Wire.write(val);        // send value to write
-	Wire.endTransmission(); //end transmission
 }
 
 /**
@@ -125,9 +115,8 @@ void HMC5883::getRaw(int *x,int *y,int *z)
 	Wire.write(HMC5883_R_XM); // will start from DATA X MSB and fetch all the others
 	Wire.endTransmission();
   
-	Wire.beginTransmission(HMC5883_ADDR);
 	Wire.requestFrom(HMC5883_ADDR, 6);
-	Wire.endTransmission();
+	
 	if(6 == Wire.available())
 	{
 		// read out the 3 values, 2 bytes each.
@@ -140,12 +129,8 @@ void HMC5883::getRaw(int *x,int *y,int *z)
 	
 	if ((*x == -4096 || *y == -4096 || *z == -4096) && _gain < 7)
 	{
-		if (dataReady())
-		{
-			_gain += 1;
-			setGain(_gain);
-			Serial.println("Gain decreased!");
-		}
+		_gain += 1;
+		setGain(_gain);
 	}
 }
 
@@ -157,9 +142,7 @@ void HMC5883::getValues(float *xyz)
 
 /*! 
 	\brief Retrieve the value of the three ID registers.    
-
 	Note:  Both the HMC5843 and HMC5883L have the same 'H43' identification register values. (Looks like someone at Honeywell screwed up.)
-
 	\param id [out] Returns the three id register values.
 */
 void HMC5883::getID(char id[3]) 
@@ -168,8 +151,8 @@ void HMC5883::getID(char id[3])
 	Wire.write(HMC5883_R_IDA);             // Will start reading registers starting from Identification Register A.
 	Wire.endTransmission();
   
-	Wire.beginTransmission(HMC5883_ADDR);
 	Wire.requestFrom(HMC5883_ADDR, 3);
+	
 	if(3 == Wire.available()) 
 	{
 		id[0] = Wire.read();
@@ -185,12 +168,26 @@ void HMC5883::getID(char id[3])
 	Wire.endTransmission();
 }
 
-bool HMC5883::dataReady()
+bool HMC5883::getDataReady()
 {
 	Wire.beginTransmission(HMC5883_ADDR);
 	Wire.write(0x09);
 	Wire.endTransmission();
 	
 	Wire.requestFrom(HMC5883_ADDR, 1);
-	return Wire.read() & 0b00000001;
+	
+	return Wire.read() == 17;
+}
+
+uint8_t HMC5883::getGain()
+{
+	return _gain;
+}
+
+void HMC5883::writeRegister(unsigned char reg, unsigned char val)
+{
+	Wire.beginTransmission(HMC5883_ADDR);
+	Wire.write(reg);        // send register address
+	Wire.write(val);        // send value to write
+	Wire.endTransmission(); //end transmission
 }
