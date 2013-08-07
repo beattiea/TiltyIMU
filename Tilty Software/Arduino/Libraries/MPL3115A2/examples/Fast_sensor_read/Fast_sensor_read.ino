@@ -10,8 +10,6 @@ void setup() {
 	delay(5);
 	altimeter.init();
 	while (!Serial) {}
-	
-	altimeter.setOversampling(7);// Sets oversampling to 2^n (0-7)
 }
 
 void loop() {
@@ -23,5 +21,8 @@ void loop() {
 	Serial.print(altimeter.readTempC());//  Use readTempF() for fahrenheit
 	Serial.println(" degrees C");
 	
+	altimeter.forceMeasurement();// Forces the altimeter to immediately take another measurement and update all data
+	
 	while (!altimeter.getDataReady()) {  delay(1);}
 }
+	

@@ -46,7 +46,7 @@ class MPL3115A2 {
 		void setOversampling(uint8_t _oversample);
 		
 		//	Check for data functions
-		boolean checkData();
+		bool getDataReady();
 		
 		//	Read data functions
 		float readAltitudeM();
@@ -54,6 +54,8 @@ class MPL3115A2 {
 		
 		float readTempC();
 		float readTempF();
+		
+		void forceMeasurement();
 		
 	private:
 		//	I2C read/write functions

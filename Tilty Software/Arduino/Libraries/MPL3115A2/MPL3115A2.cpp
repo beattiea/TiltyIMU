@@ -85,7 +85,7 @@ void MPL3115A2::setOversampling(uint8_t _oversample)
 
 
 //  Checks INT_SOURCE register to see if new data is available
-boolean MPL3115A2::checkData()
+bool MPL3115A2::getDataReady()
 {
 	if(readByte(0x12) & 0x80) 
 	{	return true;}
@@ -149,6 +149,16 @@ float MPL3115A2::readTempC()
 float MPL3115A2::readTempF() 
 {
 	return (readTempC() * 9) / 5.0 + 32;
+}
+
+
+
+//	forces the altimeter to take an immediate measurement of altitude and temperature
+void MPL3115A2::forceMeasurement()
+{
+	byte _settings = readByte(0x26);
+	writeByte(0x26, _settings | 0b00000010);
+	writeByte(0x26, _settings);
 }
 
 
