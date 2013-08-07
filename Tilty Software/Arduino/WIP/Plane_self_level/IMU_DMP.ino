@@ -42,7 +42,7 @@ void dmpDataReady() {
 void setupDMP() {
 	// join I2C bus (I2Cdev library doesn't do this automatically)
 
-	// initialize serial communication
+	// initialize myPort communication
 	// (115200 chosen because it is required for Teapot Demo output, but it's
 	// really up to you depending on your project)
 
@@ -53,30 +53,30 @@ void setupDMP() {
 	// crystal solution for the UART timer.
 
 	// initialize device
-	Serial.println(F("Initializing I2C devices..."));
+	myPort.println(F("Initializing I2C devices..."));
 	mpu.initialize();
 
 	// verify connection
-	Serial.println(F("Testing device connections..."));
-	Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
+	myPort.println(F("Testing device connections..."));
+	myPort.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
 
 	// load and configure the DMP
-	Serial.println(F("Initializing DMP..."));
+	myPort.println(F("Initializing DMP..."));
 	devStatus = mpu.dmpInitialize();
 	
 	// make sure it worked (returns 0 if so)
 	if (devStatus == 0) {
 		// turn on the DMP, now that it's ready
-		Serial.println(F("Enabling DMP..."));
+		myPort.println(F("Enabling DMP..."));
 		mpu.setDMPEnabled(true);
 
 		// enable Arduino interrupt detection
-		Serial.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
+		myPort.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
 		attachInterrupt(0, dmpDataReady, RISING);
 		mpuIntStatus = mpu.getIntStatus();
 
 		// set our DMP Ready flag so the main loop() function knows it's okay to use it
-		Serial.println(F("DMP ready! Waiting for first interrupt..."));
+		myPort.println(F("DMP ready! Waiting for first interrupt..."));
 		dmpReady = true;
 
 		// get expected DMP packet size for later comparison
@@ -86,9 +86,13 @@ void setupDMP() {
 		// 1 = initial memory load failed
 		// 2 = DMP configuration updates failed
 		// (if it's going to break, usually the code will be 1)
-		Serial.print(F("DMP Initialization failed (code "));
-		Serial.print(devStatus);
-		Serial.println(F(")"));
+		myPort.print(F("DMP Initialization failed (code "));
+		myPort.print(devStatus);
+		myPort.println(F(")"));
+	}
+	
+	while (abs(ypr[1]) > 3 || abs(ypr[2]) > 3 ) {
+		readDMP();
 	}
 
 	// configure LED for output
@@ -98,7 +102,7 @@ void setupDMP() {
 
 
 // ================================================================
-// ===					MAIN PROGRAM LOOP					 ===
+// ===				    MAIN SENSOR READ LOOP				     ===
 // ================================================================
 
 void readDMP() {
@@ -117,7 +121,7 @@ void readDMP() {
 	if ((mpuIntStatus & 0x10) || fifoCount == 1024) {
 		// reset so we can continue cleanly
 		mpu.resetFIFO();
-		Serial.println(F("FIFO overflow!"));
+		myPort.println(F("FIFO overflow!"));
 
 	// otherwise, check for DMP data ready interrupt (this should happen frequently)
 	} else if (mpuIntStatus & 0x02) {
@@ -137,12 +141,15 @@ void readDMP() {
 			mpu.dmpGetQuaternion(&q, fifoBuffer);
 			mpu.dmpGetGravity(&gravity, &q);
 			mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
-			Serial.print("ypr\t");
-			Serial.print(ypr[0] * 180/M_PI);
-			Serial.print("\t");
-			Serial.print(ypr[1] * 180/M_PI);
-			Serial.print("\t");
-			Serial.println(ypr[2] * 180/M_PI);
+			ypr[0] *= 180/M_PI;
+			ypr[1] *= 180/M_PI;
+			ypr[2] *= 180/M_PI;
+			myPort.print("ypr\t");
+			myPort.print(ypr[0]);
+			myPort.print("\t");
+			myPort.print(ypr[1]);
+			myPort.print("\t");
+			myPort.println(ypr[2]);
 		#endif
 
 		// blink LED to indicate activity
