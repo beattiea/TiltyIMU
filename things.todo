@@ -38,6 +38,8 @@ Software Library work:
 	R/C receiver Teensy compatability
 	
 	GPS settings/control library
+	
+	TiltyIMU library to integrate everything together
 
 Hardware Work
 =============
