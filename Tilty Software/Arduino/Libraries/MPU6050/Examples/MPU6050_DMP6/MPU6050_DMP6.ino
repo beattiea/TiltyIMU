@@ -233,10 +233,10 @@ void loop() {
 
 	// reset interrupt flag and get INT_STATUS byte
 	mpuInterrupt = false;
-	mpuIntStatus = mpu.getIntStatus();
+	mpuIntStatus = mpu.getIntStatus() & 0x12;
 	
 	while (!mpuIntStatus) {
-		mpuIntStatus = mpu.getIntStatus();
+		mpuIntStatus = mpu.getIntStatus() & 0x12;
 		//Serial.println(mpuIntStatus);
 	}
 
