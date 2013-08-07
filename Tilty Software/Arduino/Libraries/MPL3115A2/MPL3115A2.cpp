@@ -68,8 +68,9 @@ void MPL3115A2::setOversampling(uint8_t _oversample)
 	
 	writeByte(0x26, old_ctrl_reg1 & 0b10111000);
 	
+	//	This block of code could use some optimizing
 	byte new_ctrl_reg1 = old_ctrl_reg1 & 0b10000001;
-	new_ctrl_reg1 += pow(2, _oversample) - 1;
+	new_ctrl_reg1 = new_ctrl_reg1 | (_oversample << 3);
 	new_ctrl_reg1 = new_ctrl_reg1 | 0b10000001;
 	
 	#ifdef DEBUG
