@@ -23,6 +23,8 @@ Software Library work:
 ======================
 	Flash memory library (maybe one exists, should be adaptable to work with various memory sizes)
 	
+	IMU gravity compensation for accelerometer to allow altimeter sensor fusion
+	
 	Check out FreeIMU compass math
 	Compass sensor temperature compensation
 	Compass sensor tilt compensation
