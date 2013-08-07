@@ -19,10 +19,6 @@ VectorInt16 aaWorld;	// [x, y, z]			world-frame accel sensor measurements
 VectorFloat gravity;	// [x, y, z]			gravity vector
 float euler[3];		 // [psi, theta, phi]	Euler angle container
 
-// packet structure for InvenSense teapot demo
-uint8_t teapotPacket[14] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
-
-
 
 // ================================================================
 // ===			   INTERRUPT DETECTION ROUTINE				===
@@ -72,7 +68,7 @@ void setupDMP() {
 
 		// enable Arduino interrupt detection
 		myPort.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
-		attachInterrupt(0, dmpDataReady, RISING);
+		attachInterrupt(6, dmpDataReady, RISING);
 		mpuIntStatus = mpu.getIntStatus();
 
 		// set our DMP Ready flag so the main loop() function knows it's okay to use it
