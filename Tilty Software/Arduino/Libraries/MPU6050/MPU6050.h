@@ -402,6 +402,8 @@ class MPU6050 {
     public:
         MPU6050();
         MPU6050(uint8_t address);
+        
+        ~MPU6050();
 
         void initialize();
         bool testConnection();

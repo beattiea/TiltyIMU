@@ -37,6 +37,7 @@ class MPL3115A2 {
 	public:
 		//	Constructors:
 		MPL3115A2();
+		~MPL3115A2();
 		
 		//	Initialization functions
 		boolean init();

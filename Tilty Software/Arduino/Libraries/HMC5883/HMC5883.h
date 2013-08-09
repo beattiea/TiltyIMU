@@ -41,6 +41,7 @@ class HMC5883
 {
 	public:
 		HMC5883();
+		~HMC5883();
 		bool init();
 		void setMode(unsigned char mode);
 		void setRate(unsigned char rate);

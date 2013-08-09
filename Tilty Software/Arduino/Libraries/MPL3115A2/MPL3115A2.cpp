@@ -26,6 +26,11 @@ MPL3115A2::MPL3115A2()
 	//	Do nothing
 }
 
+MPL3115A2::~MPL3115A2()
+{
+	//	Do nothing
+}
+
 
 
 //	Checks to see that the altimeter is connected and functional

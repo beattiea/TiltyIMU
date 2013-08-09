@@ -27,6 +27,11 @@ HMC5883::HMC5883()
 	z_scale = (float) 1.0;
 }
 
+HMC5883::~HMC5883()
+{
+	//	Do nothing
+}
+
 /**
 * @param[in] mode Set mode to 0 if true. Otherwise you must set the mode using setMode().
 */ 
