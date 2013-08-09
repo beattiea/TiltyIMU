@@ -46,6 +46,7 @@ Hardware Work
 	Dual motor driver add-on board
 	Try decreasing LED currents to see if they can be dimmed a bit
 	Look into current boosting the 5V regulator on the Tilty controllers
+	Possible zener/transistor clamp circuits on 3.3v line to prevent 5v shorting
 
 Tyler:
 GPS NMEA Parser
