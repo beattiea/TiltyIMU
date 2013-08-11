@@ -5,6 +5,11 @@ PID::PID()
 	//	Do nothing
 }
 
+PID::~PID()
+{
+	//	Do nothing
+}
+
 PID::PID(float _kP, float _kI, float _kD)
 {
 	kP = _kP;
@@ -73,6 +78,13 @@ float PID::update(float _value)
 		_timer = millis();
 	#endif
 	
+	_value = checkInputOK(_value);
+	
+	if (_value == 0)
+	{
+		reset();
+	}
+	
 	if (_direction)
 	{
 		Pvalue = constrain(kP * _value, lowerPLimit, upperPLimit);
@@ -133,6 +145,20 @@ void PID::setDLimits(float _lower, float _upper)
 
 
 
+void PID::setInputTriggers(float _lower, float _upper)
+{
+	upperInputTrigger = _upper;
+	lowerInputTrigger = _lower;
+}
+
+void PID::setInputConstraints(float _lower, float _upper)
+{
+	upperInputConstraint = _upper;
+	lowerInputConstraint = _lower;
+}
+
+
+
 void PID::reset()
 {
 	Pvalue = 0;
@@ -151,6 +177,27 @@ float PID::getkP() { return kP;}
 float PID::getkI() { return kI;}
 float PID::getkD() { return kD;}
 
+
+
+float PID::checkInputOK(float _value)
+{
+	if (_value >= upperInputTrigger)
+	{
+		if (_value <= upperInputConstraint || _value >= lowerInputConstraint)
+		{
+			return _value - upperInputTrigger;
+		}
+	}
+	else if (_value <= lowerInputTrigger)
+	{
+		if (_value <= upperInputConstraint || _value >= lowerInputConstraint)
+		{
+			return _value - lowerInputTrigger;
+		}
+	}
+	
+	return 0;
+}
 
 
 #ifdef DEBUG_PID

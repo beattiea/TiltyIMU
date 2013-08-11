@@ -38,6 +38,7 @@ class PID {
 	public:
 	//	constructors
 	PID();
+	~PID();
 	PID(float _kP, float _kI, float _kD);
 	PID(float _kP, float _kI, float _kD, bool _dir);
 	PID(float *_inputVar, float *_outputVar);
@@ -59,6 +60,10 @@ class PID {
 	void setILimits(float _lower, float _upper);
 	void setDLimits(float _lower, float _upper);
 	void setDirection(bool _dir);
+	
+		//	Sets the PID input limits
+	void setInputTriggers(float _lower, float _upper);
+	void setInputConstraints(float _lower, float _upper);
 	
 		//	Resets the PID values, needs to be followed by an update
 	void reset();
@@ -96,12 +101,21 @@ class PID {
 	float upperDLimit = 2147483647;
 	float lowerDLimit = -2147483647;
 	
+	//	Input limits
+		//	PID input trigger limits
+	float upperInputTrigger = 0;
+	float lowerInputTrigger = 0;
+		//	PID input constraint limits
+	float upperInputConstraint = 2147483647;
+	float lowerInputConstraint = -214783647;
+	
 	private:
 	//	Functions
+	float checkInputOK(float _value);
 	#ifdef DEBUG_PID
 		void _serialDebug();
 	#endif
-	
+		
 	//	Loop timer
 	double _dT = 1;
 	unsigned long _timer;

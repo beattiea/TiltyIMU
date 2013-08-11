@@ -50,8 +50,10 @@ void setup() {
 	
 	roll_servo.attach(ROLL_PIN); // Attach aileron servo to aileron servo header
 	roll_pid.setLimits(-500, 500); // Sets servo output limits for PID
+	roll_pid.setInputTriggers(-15, 15);
 	pitch_servo.attach(PITCH_PIN); // Attach elevator servo to elevator servo header
 	pitch_pid.setLimits(-500, 500); // Sets servo output limits for PID
+	pitch_pid.setInputTriggers(-20, 20);
 	
 	Wire.begin(I2C_MASTER, 0x00, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_400);//  Starts I2C on Teensy
 	delay(5);
