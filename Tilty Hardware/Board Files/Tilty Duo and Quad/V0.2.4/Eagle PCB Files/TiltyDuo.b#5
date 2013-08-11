@@ -2780,6 +2780,8 @@ Please make sure your boards conform to these design rules.</description>
 <element name="C5" library="resistor" package="C0603" value="0.1uF" x="15.113" y="40.259" smashed="yes" rot="MR90"/>
 <element name="U1" library="My Parts" package="28-DIP" value="TEENSY_3.0_OUTER-PINS28-DIP_SOCKET" x="19.05" y="32.893">
 <attribute name="COST" value="0.28" x="19.05" y="32.893" size="1.778" layer="27" display="off"/>
+<attribute name="PART#" value="AE10004-ND" x="19.05" y="32.893" size="1.778" layer="27" display="off"/>
+<attribute name="PART#2" value="A28-LC-TR-R" x="19.05" y="32.893" size="1.778" layer="27" display="off"/>
 </element>
 <element name="JP1" library="pinhead" package="1X08_NO_SS_LOCKING" value="" x="7.62" y="40.513" smashed="yes" rot="R90">
 <attribute name="VALUE" x="10.795" y="30.353" size="1.27" layer="27" rot="R90"/>
@@ -2838,8 +2840,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="C12" library="resistor" package="C0603" value="0.1uF" x="25.273" y="26.289" smashed="yes" rot="MR90"/>
 <element name="U7" library="SparkFun-DigitalIC" package="SO08" value="SPI_FLASH-X25XXSMD" x="6.985" y="18.923" smashed="yes" rot="MR180">
-<attribute name="PART#" value="S25FL204K0TMFI011" x="6.985" y="18.923" size="1.778" layer="28" rot="MR180" display="off"/>
-<attribute name="PART#2" value="S25FL208K0RMFI011" x="6.985" y="18.923" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="PART#" value="S25FL204K0TMFI043" x="6.985" y="18.923" size="1.778" layer="28" rot="MR180" display="off"/>
 </element>
 <element name="C13" library="resistor" package="C0603" value="0.1uF" x="7.112" y="23.368" smashed="yes" rot="MR180">
 <attribute name="RATED_VOLTAGE" value="2" x="7.112" y="23.368" size="1.778" layer="28" font="vector" ratio="15" rot="MR180" display="off"/>
@@ -2848,7 +2849,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="SJ4" library="SparkFun-Passives" package="SJ_2S-TRACE" value="SOLDERJUMPERTRACE" x="22.86" y="13.462" smashed="yes" rot="R90">
 <attribute name="VALUE" x="24.511" y="12.5095" size="0.4064" layer="27" rot="R90"/>
 </element>
-<element name="JP8" library="SparkFun-Passives" package="SJ_2S" value="" x="36.576" y="8.001" smashed="yes" rot="R180">
+<element name="SJ5" library="SparkFun-Passives" package="SJ_2S" value="" x="36.576" y="8.001" smashed="yes" rot="R180">
 <attribute name="VALUE" x="37.5258" y="9.652" size="0.4064" layer="27" rot="R180"/>
 </element>
 </elements>
@@ -3199,7 +3200,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="12.3825" y1="1.0975" x2="12.3825" y2="1.8415" width="0.1524" layer="16"/>
 <wire x1="12.3825" y1="1.8415" x2="13.589" y2="3.048" width="0.1524" layer="16"/>
 <wire x1="27.051" y1="3.048" x2="27.686" y2="3.683" width="0.1524" layer="16"/>
-<contactref element="JP8" pad="2"/>
+<contactref element="SJ5" pad="2"/>
 <via x="33.655" y="5.461" extent="1-16" drill="0.3302"/>
 <wire x1="33.3248" y1="4.6228" x2="27.94" y2="4.6228" width="0.1524" layer="16"/>
 <wire x1="27.94" y1="4.6228" x2="27.686" y2="4.318" width="0.1524" layer="16"/>
@@ -3530,7 +3531,7 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U1" pad="P$26"/>
 <contactref element="JP6" pad="6"/>
 <wire x1="26.67" y1="21.463" x2="35.687" y2="24.003" width="0.381" layer="16"/>
-<contactref element="JP8" pad="1"/>
+<contactref element="SJ5" pad="1"/>
 <wire x1="35.687" y1="24.003" x2="35.814" y2="24.003" width="0.1524" layer="16"/>
 <wire x1="35.814" y1="24.003" x2="36.957" y2="22.86" width="0.1524" layer="16"/>
 <via x="36.957" y="9.525" extent="1-16" drill="0.3302"/>
@@ -3748,17 +3749,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="26.67" y1="17.78" x2="26.67" y2="18.923" width="0.2032" layer="16"/>
 </signal>
 </signals>
-<errors>
-<approved hash="19,1,e5d92bbdf37a1b28"/>
-<approved hash="19,1,423a2dbb6ccc1955"/>
-<approved hash="19,1,7f335674337f1bda"/>
-<approved hash="19,1,1675c04a64bcb361"/>
-<approved hash="19,16,dce4619c6180dcf8"/>
-<approved hash="19,16,dc76610e670dda75"/>
-<approved hash="19,16,0a55e8ade62604de"/>
-<approved hash="19,16,6e75bd0dbb1d6865"/>
-<approved hash="19,16,6ee7bd9fbd906ee8"/>
-</errors>
 </board>
 </drawing>
 </eagle>

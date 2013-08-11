@@ -5,10 +5,10 @@ int _bauds[] = {9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600};
 
 void setup() {
   Serial.begin(115200);
-  Serial1.begin(57600);
+  Serial1.begin(38400);
   while (!Serial) {}
   //int baud = findBaud();
-  Serial.println(init());
+  //Serial.println(init());
   Serial.println("begin...");
   delay(5);
   //setBaud(115200);
@@ -31,8 +31,8 @@ void loop() {
     while (Serial.available())
     {  Serial1.print(char(Serial.read()));}
     Serial1.print("\r\n");
-    //delay(50);
-    //digitalWrite(_key, LOW);
+    delay(50);
+    digitalWrite(_key, LOW);
   }
   
   if (Serial1.available()) {

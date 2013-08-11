@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.4">
+<eagle version="6.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
+<grid distance="0.01" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -3035,7 +3035,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="33.401" y1="2.667" x2="33.02" y2="2.286" width="0.254" layer="16"/>
 <wire x1="33.02" y1="2.286" x2="32.194" y2="2.286" width="0.254" layer="16"/>
 <wire x1="32.194" y1="2.286" x2="32.11" y2="2.37" width="0.254" layer="16"/>
-<via x="30.734" y="3.302" extent="1-16" drill="0.3302"/>
+<via x="29.718" y="6.858" extent="1-16" drill="0.3302"/>
 <contactref element="U1" pad="P$16"/>
 <wire x1="20.32" y1="23.38" x2="20.955" y2="22.86" width="0.1524" layer="16"/>
 <via x="17.018" y="15.24" extent="1-16" drill="0.3302"/>
@@ -3581,16 +3581,15 @@ Please make sure your boards conform to these design rules.</description>
 </polygon>
 </signal>
 <signal name="YEL_LED">
-<contactref element="U2" pad="P$31"/>
 <contactref element="D3" pad="1"/>
-<wire x1="16.86" y1="1.12" x2="16.86" y2="1.747" width="0.2032" layer="16"/>
-<wire x1="28.956" y1="2.032" x2="17.145" y2="2.032" width="0.2032" layer="16"/>
-<wire x1="17.145" y1="2.032" x2="16.86" y2="1.747" width="0.2032" layer="16"/>
-<via x="29.464" y="3.302" extent="1-16" drill="0.3302"/>
-<wire x1="28.956" y1="2.032" x2="29.464" y2="2.54" width="0.2032" layer="16"/>
-<wire x1="29.464" y1="2.54" x2="29.464" y2="3.302" width="0.2032" layer="16"/>
-<wire x1="29.464" y1="3.302" x2="29.464" y2="4.738" width="0.2032" layer="1"/>
+<via x="29.464" y="3.556" extent="1-16" drill="0.3302"/>
+<wire x1="29.464" y1="3.556" x2="29.464" y2="4.738" width="0.2032" layer="1"/>
 <wire x1="29.464" y1="4.738" x2="29.122" y2="5.08" width="0.2032" layer="1"/>
+<contactref element="U2" pad="P$32"/>
+<wire x1="15.36" y1="1.12" x2="15.36" y2="2.279" width="0.2032" layer="16"/>
+<wire x1="15.36" y1="2.279" x2="15.748" y2="2.667" width="0.2032" layer="16"/>
+<wire x1="15.748" y1="2.667" x2="28.575" y2="2.667" width="0.2032" layer="16"/>
+<wire x1="28.575" y1="2.667" x2="29.464" y2="3.556" width="0.2032" layer="16"/>
 </signal>
 <signal name="N$24">
 <contactref element="D3" pad="2"/>
@@ -3715,18 +3714,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="34.036" y1="4.699" x2="35.687" y2="4.699" width="0.2032" layer="1"/>
 <wire x1="35.687" y1="4.699" x2="36.449" y2="5.461" width="0.2032" layer="1"/>
 </signal>
-<signal name="RED_LED">
-<via x="28.448" y="3.302" extent="1-16" drill="0.3302"/>
-<contactref element="U2" pad="P$32"/>
-<contactref element="D1" pad="1"/>
-<wire x1="15.36" y1="1.12" x2="15.36" y2="1.771" width="0.2032" layer="16"/>
-<wire x1="15.36" y1="1.771" x2="16.256" y2="2.667" width="0.2032" layer="16"/>
-<wire x1="16.256" y1="2.667" x2="27.813" y2="2.667" width="0.2032" layer="16"/>
-<wire x1="28.448" y1="3.302" x2="27.686" y2="4.064" width="0.2032" layer="1"/>
-<wire x1="27.686" y1="4.064" x2="27.686" y2="7.454" width="0.2032" layer="1"/>
-<wire x1="27.686" y1="7.454" x2="29.122" y2="8.89" width="0.2032" layer="1"/>
-<wire x1="27.813" y1="2.667" x2="28.448" y2="3.302" width="0.2032" layer="16"/>
-</signal>
 <signal name="N$9">
 <contactref element="R5" pad="1"/>
 <contactref element="SJ4" pad="2"/>
@@ -3752,7 +3739,33 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="25.0435" y1="17.399" x2="25.0825" y2="17.233" width="0.2032" layer="16"/>
 <wire x1="26.67" y1="17.78" x2="26.67" y2="18.923" width="0.2032" layer="16"/>
 </signal>
+<signal name="N$14">
+<contactref element="D1" pad="1"/>
+<contactref element="U2" pad="P$31"/>
+<via x="30.734" y="3.302" extent="1-16" drill="0.3302"/>
+<wire x1="30.734" y1="3.302" x2="30.226" y2="2.794" width="0.2032" layer="1"/>
+<wire x1="30.226" y1="2.794" x2="28.448" y2="2.794" width="0.2032" layer="1"/>
+<wire x1="28.448" y1="2.794" x2="27.94" y2="3.302" width="0.2032" layer="1"/>
+<wire x1="27.94" y1="3.302" x2="27.94" y2="7.708" width="0.1524" layer="1"/>
+<wire x1="27.94" y1="7.708" x2="29.122" y2="8.89" width="0.1524" layer="1"/>
+<wire x1="16.86" y1="1.12" x2="16.86" y2="1.874" width="0.2032" layer="16"/>
+<wire x1="16.86" y1="1.874" x2="17.145" y2="2.159" width="0.2032" layer="16"/>
+<wire x1="17.145" y1="2.159" x2="30.353" y2="2.159" width="0.2032" layer="16"/>
+<wire x1="30.353" y1="2.159" x2="30.734" y2="2.54" width="0.2032" layer="16"/>
+<wire x1="30.734" y1="2.54" x2="30.734" y2="3.302" width="0.2032" layer="16"/>
+</signal>
 </signals>
+<errors>
+<approved hash="19,1,e5d92bbdf37a1b28"/>
+<approved hash="19,1,423a2dbb6ccc1955"/>
+<approved hash="19,1,1675c04a64bcb361"/>
+<approved hash="19,1,7f335674337f1bda"/>
+<approved hash="19,16,dc76610e670dda75"/>
+<approved hash="19,16,dce4619c6180dcf8"/>
+<approved hash="19,16,0a55e8ade62604de"/>
+<approved hash="19,16,6e75bd0dbb1d6865"/>
+<approved hash="19,16,6ee7bd9fbd906ee8"/>
+</errors>
 </board>
 </drawing>
 </eagle>

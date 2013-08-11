@@ -7554,6 +7554,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="COST" value="0.28"/>
 <attribute name="PART#" value="AE10004-ND"/>
 <attribute name="PART#2" value="A28-LC-TR-R"/>
+<attribute name="PART#3" value="ED3052-5-ND"/>
 </part>
 <part name="JP1" library="pinhead" deviceset="PINHD-1X8" device="1X08_NO_SILK_LOCK"/>
 <part name="JP2" library="pinhead" deviceset="PINHD-1X8" device="1X08_NO_SILK_LOCK"/>
@@ -7695,6 +7696,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="COST" x="187.96" y="45.72" size="3.81" layer="96" ratio="14" display="off"/>
 <attribute name="PART#" x="187.96" y="45.72" size="1.778" layer="96" display="off"/>
 <attribute name="PART#2" x="187.96" y="45.72" size="1.778" layer="96" display="off"/>
+<attribute name="PART#3" x="187.96" y="45.72" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="JP1" gate="A" x="139.7" y="53.34" rot="R180"/>
 <instance part="JP2" gate="A" x="147.32" y="33.02" rot="R180"/>
