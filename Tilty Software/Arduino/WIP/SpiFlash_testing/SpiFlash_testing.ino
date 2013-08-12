@@ -26,7 +26,7 @@ void loop() {
 	
 	long start = micros();
 	
-	for (int i = 0; i < 65536; i++) {
+	for (int i = 0; i < 256; i++) {
 		flash.bufferData(i);
 	}
 	//flash.writeBuffer(x);

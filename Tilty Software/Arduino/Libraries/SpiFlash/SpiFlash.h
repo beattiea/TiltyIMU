@@ -75,7 +75,7 @@ class SpiFlash {
 		// Chip data
 		byte manufacturer; // Manufacturer ID, not currently used
 		byte type; // Memory type, not currently used
-		unsigned long capacity; // Total available device memory. Address may not exceed this number
+		unsigned long capacity; // Total available device memory. _address may not exceed this number
 		
 		// Buffer only works for full page writes
 		uint16_t buffer_pos = 0;
@@ -96,7 +96,7 @@ class SpiFlash {
 		// Check that the chip is not in a write cycle
 		bool checkWriteInProgress();
 		// Check that data is within chip memory
-		bool checkAddress(long _addr, uint16_t _length);
+		bool check_address(long _addr, uint16_t _length);
 		// check that there won't be a page overflow
 		bool checkPageOverflow(long _addr, uint16_t _length);
 		// Send a byte.

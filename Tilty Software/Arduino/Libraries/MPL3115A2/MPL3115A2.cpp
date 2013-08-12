@@ -172,10 +172,10 @@ void MPL3115A2::forceMeasurement()
 //	Reads a byte on the sensor from the given address
 byte MPL3115A2::readByte(byte _regAddr)
 {
-	Wire.beginTransmission(_addr);
+	Wire.beginTransmission(ADDRESS);
 	Wire.write(_regAddr);
 	Wire.endTransmission(I2C_NOSTOP);
-	Wire.requestFrom(_addr, 1); // Request the data...
+	Wire.requestFrom(ADDRESS, 1); // Request the data...
 	return Wire.read();
 }
 
@@ -184,7 +184,7 @@ byte MPL3115A2::readByte(byte _regAddr)
 //	Writes a byte of data to the sensor at the given address
 byte MPL3115A2::writeByte(byte _regAddr, byte _value)
 {
-	Wire.beginTransmission(_addr);
+	Wire.beginTransmission(ADDRESS);
 	Wire.write(_regAddr);
 	Wire.write(_value);
 	return Wire.endTransmission(I2C_STOP);
@@ -195,10 +195,10 @@ byte MPL3115A2::writeByte(byte _regAddr, byte _value)
 //	Reads consecutive bytes into a given data buffer
 void MPL3115A2::readBytes(byte _regAddr, uint8_t _length, uint8_t *_data)
 {
-	Wire.beginTransmission(_addr);
+	Wire.beginTransmission(ADDRESS);
 	Wire.write(_regAddr);
 	Wire.endTransmission(I2C_NOSTOP);
-	Wire.requestFrom(_addr, _length); // Request the data...
+	Wire.requestFrom(ADDRESS, _length); // Request the data...
 	
 	for (int _i = 0; _i < _length; _i++)
 	{

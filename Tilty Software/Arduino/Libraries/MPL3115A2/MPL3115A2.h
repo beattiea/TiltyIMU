@@ -29,9 +29,9 @@ This is a library to control and read a MPL3115A2 Altimeter from Freescale Semic
 #include "WProgram.h"
 #include "Arduino.h"
 
-#define _addr 0x60//	Sensor I2C address
-#define std_temp 20//	Standard temperature at sea level
-#define std_press 101326//	Standard pressure at sea level
+#define ADDRESS 0x60//	Sensor I2C address
+#define STD_TEMP 20//	Standard temperature at sea level
+#define STD_PRESS 101326//	Standard pressure at sea level
 
 class MPL3115A2 {
 	public:
