@@ -50,6 +50,8 @@ void loop() {
 	void setILimits(float lowerLimit, float upperLimit);
 	void setDLimits(float lowerLimit, float upperLimit);
 	void setDirection(bool direction); // FORWARD or REVERSE
+	void setInputTriggers(float lowerLimit, float upperLimit); // Sets limits for what inputs will trigger the PID
+	void setInputConstraints(float lowerLimit, float upperLimit); // Sets limits for what inputs will turn off the PID
 	
 =======================Error Handling Functions==========================
 	void reset();
