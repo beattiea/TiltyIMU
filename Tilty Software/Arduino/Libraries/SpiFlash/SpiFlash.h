@@ -48,6 +48,9 @@ class SpiFlash {
 		int bufferData(double _data);
 		int writeBuffer(long _addr);
 		
+		// Get how far buffered data has been written into the device
+		int getWrittenPages();
+		
 	// Standard SPI flash memory read commands
 		// Read a single byte
 		byte read(long _addr);
@@ -71,6 +74,7 @@ class SpiFlash {
 		
 	private:
 		uint8_t SS; // Slave Select pin
+		int written_pages = 0;
 		
 		// Chip data
 		byte manufacturer; // Manufacturer ID, not currently used
