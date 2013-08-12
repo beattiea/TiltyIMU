@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "SpiFlash.h"
 
-#define DEBUG
+//#define DEBUG
 
 // Error code defines
 #define PAGE_OVERFLOW 2
@@ -112,45 +112,40 @@ int SpiFlash::write(double _data, long _addr)
 }
 
 
+int SpiFlash::bufferData(int _data)
+{
+	return bufferData((float)_data);
+}
+
+
 int SpiFlash::bufferData(float _data)
 {
-	if (buffer_pos + sizeof(float) - 1 < sizeof(buffer))
+	uint8_t _size = sizeof(float);
+	if (buffer_pos + _size - 1 < sizeof(buffer))
 	{
 		float_buf.float_value = _data;
 		for (int i = 0; i < 4; i++)
 		{
 			buffer[buffer_pos + i] = float_buf.bytes[i];
-			/*
-			#ifdef DEBUG
-				Serial.println(buffer[buffer_pos + i], BIN);
-			#endif
-			*/
 		}
-		buffer_pos += 4;
+		buffer_pos += _size;
+	}
+	
+	if (buffer_pos > PAGE_SIZE - _size)
+	{
+		#ifdef DEBUG
+			Serial.println("Buffer full. Writing data. . .");
+		#endif
+		int _result = writeBuffer(buffer_addr);
+		buffer_addr += PAGE_SIZE;
+		buffer_pos = 0;
+		return _result;
 	}
 }
 
 
-int SpiFlash::bufferData(int _data)
+int SpiFlash::bufferData(double _data)
 {
-	/*
-	if (buffer_pos + sizeof(float) - 1 < sizeof(buffer))
-	{
-		buffer[buffer_pos] = _data >> 24;
-		buffer[buffer_pos + 1] = _data >> 16;
-		buffer[buffer_pos + 2] = _data >> 8;
-		buffer[buffer_pos + 3] = _data;
-		
-		#ifdef DEBUG
-			Serial.println(buffer[buffer_pos], BIN);
-			Serial.println(buffer[buffer_pos + 1], BIN);
-			Serial.println(buffer[buffer_pos + 2], BIN);
-			Serial.println(buffer[buffer_pos + 3], BIN);
-		#endif
-		
-		buffer_pos += 4;
-	}
-	*/
 	return bufferData((float)_data);
 }
 
@@ -173,26 +168,16 @@ byte SpiFlash::read(long _addr)
 		send(_addr);
 		return receive();
 	}
+	else
+	{
+		return 0;
+	}
 }
 
 int SpiFlash::readInt(long _addr)
 {
 	if(!checkWriteInProgress())
 	{
-		/*
-		digitalWriteFast(SS, LOW);
-		send(READ_DATA);
-		send(_addr >> 16);
-		send(_addr >> 8);
-		send(_addr);
-		int _buf = receive() << 24;
-		_buf |= receive() << 16;
-		_buf |= receive() << 8;
-		_buf |= receive();
-		digitalWriteFast(SS, HIGH);
-		
-		return _buf;
-		*/
 		return readFloat(_addr);
 	}
 	else

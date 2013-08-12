@@ -17,30 +17,26 @@ void setup() {
 	Serial.println("Begin...");
 	
 	flash.begin(10, 2);// start SPI flash instance witch slave select on pin 10 and clock divider of 2
-	flash.eraseSector(0);
+	flash.eraseChip();
 }
 
 void loop() {
 	Serial.println("Buffer data");
 	int x = 0;
-	for (int i = 0; i < 256; i++) {
-		if (i % 64 == 0 && i > 0) {
-			Serial.println(i);
-			Serial.print("\t\t\t\t\tWrite data results: ");
-			Serial.println(flash.writeBuffer(x));
-			x += 256;
-		}
+	
+	long start = micros();
+	
+	for (int i = 0; i < 65536; i++) {
 		flash.bufferData(i);
 	}
-	flash.writeBuffer(x);
-	//Serial.println(flash.write(3.14159, 2048));
-	//Serial.println(flash.readFloat(2048), 5);
-	//flash.eraseSector(0);
-	//flash.write(314159, 0x00);
-	//Serial.println(flash.readInt(0x00));
+	//flash.writeBuffer(x);
+	
+	long stop = micros();
+	
+	Serial.println(stop - start);
 	
 	// Read a given length to a given buffer
-	byte buffer[256 * sizeof(int)];
+	//byte buffer[256 * sizeof(int)];
 	//flash.read(&buffer[0], 0, sizeof(buffer));
 	
 	/*
@@ -50,7 +46,7 @@ void loop() {
 	}
 	*/
 	
-	for (int i = 0; i < sizeof(buffer) / sizeof(int); i++) {
+	for (int i = 0; i < 65536; i++) {
 		Serial.println(flash.readInt(i * sizeof(int)));
 	}
 	

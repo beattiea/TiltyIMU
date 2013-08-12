@@ -43,8 +43,9 @@ class SpiFlash {
 		
 	// Special SPI flash memory write commands
 		// Write data into a buffer until it's full, then it will automatically write to the next page
-		int bufferData(float _data);
 		int bufferData(int _data);
+		int bufferData(float _data);
+		int bufferData(double _data);
 		int writeBuffer(long _addr);
 		
 	// Standard SPI flash memory read commands
@@ -77,7 +78,7 @@ class SpiFlash {
 		unsigned long capacity; // Total available device memory. Address may not exceed this number
 		
 		// Buffer only works for full page writes
-		uint8_t buffer_pos = 0;
+		uint16_t buffer_pos = 0;
 		byte buffer[256];
 		long buffer_addr = 0;
 		
