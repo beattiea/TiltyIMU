@@ -140,12 +140,18 @@ void readDMP() {
 			ypr[0] *= 180/M_PI;
 			ypr[1] *= 180/M_PI;
 			ypr[2] *= 180/M_PI;
+			
+			ypr[PITCH_INDEX] -= pitch_offset;
+			ypr[ROLL_INDEX] -= roll_offset;
+			
 			myPort.print("ypr\t");
-			myPort.print(ypr[0]);
+			myPort.print(ypr[YAW_INDEX]);
 			myPort.print("\t");
-			myPort.print(ypr[1]);
+			myPort.print(ypr[PITCH_INDEX]);
 			myPort.print("\t");
-			myPort.println(ypr[2]);
+			myPort.print(ypr[ROLL_INDEX]);
+			myPort.print("\t");
+			myPort.println(pitch_offset);
 		#endif
 
 		// blink LED to indicate activity
