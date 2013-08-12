@@ -42,21 +42,24 @@
 #define CHIP_SIZE 524288
 
 
-int SpiFlash::write(byte* _buf, long _addr, uint8_t _length)
+int SpiFlash::write(byte* _buf, long _addr, uint16_t _length)
 {
 	// Below if statement checks that device is ready, address is within device memory, and there won't be a page overflow writing data
-	if (!checkWriteInProgress() && _length < PAGE_SIZE && _addr + _length < capacity && ((_addr + _length) % PAGE_SIZE) >= _length)
+	if (!checkWriteInProgress() && _length <= PAGE_SIZE && checkAddress(_addr, _length) && checkPageOverflow(_addr, _length))
 	{
 		digitalWriteFast(SS, LOW);
 		send(PAGE_PROGRAM);
 		send(_addr >> 16);
 		send(_addr >> 8);
 		send(_addr);
+		#ifdef DEBUG
+			Serial.println("Writing Data. . .");
+		#endif
 		for (int i = 0; i < _length; i++)
 		{
 			send(*_buf);
 			#ifdef DEBUG
-				Serial.println(*_buf, BIN);
+				//Serial.println(*_buf, BIN);
 			#endif
 			_buf++;
 		}
@@ -68,11 +71,13 @@ int SpiFlash::write(byte* _buf, long _addr, uint8_t _length)
 	}
 	else
 	{ // Returns other error codes if something goes wrong
-		if (((_addr + _length) % PAGE_SIZE) < _length) { return PAGE_OVERFLOW;}
+		if (((_addr + _length) % PAGE_SIZE) < _length - 1) { return PAGE_OVERFLOW;}
 		else if (_length >= PAGE_SIZE) { return BUFFER_OVERFLOW;}
 		else if (_addr >= capacity) { return MEMORY_OVERFLOW;}
 		else if (checkWriteInProgress()) { return WRITE_IN_PROGRESS;}
 	}
+	
+	return -1; // Unknown error
 }
 
 int SpiFlash::write(int _data, long _addr)
@@ -93,17 +98,67 @@ int SpiFlash::write(float _data, long _addr)
 	uint8_t _size = sizeof(float);
 	float_buf.float_value = _data;
 	
-	for (int i = 0; i < 4; i++)
-	{
-		Serial.println(float_buf.bytes[i], BIN);
-	}
+	#ifdef DEBUG
+		for (int i = 0; i < 4; i++){	Serial.println(float_buf.bytes[i], BIN);}
+	#endif
 
 	return write(&float_buf.bytes[0], _addr, _size);
 }
 
+
 int SpiFlash::write(double _data, long _addr)
 {
 	return write(float(_data), _addr);
+}
+
+
+int SpiFlash::bufferData(float _data)
+{
+	if (buffer_pos + sizeof(float) - 1 < sizeof(buffer))
+	{
+		float_buf.float_value = _data;
+		for (int i = 0; i < 4; i++)
+		{
+			buffer[buffer_pos + i] = float_buf.bytes[i];
+			/*
+			#ifdef DEBUG
+				Serial.println(buffer[buffer_pos + i], BIN);
+			#endif
+			*/
+		}
+		buffer_pos += 4;
+	}
+}
+
+
+int SpiFlash::bufferData(int _data)
+{
+	/*
+	if (buffer_pos + sizeof(float) - 1 < sizeof(buffer))
+	{
+		buffer[buffer_pos] = _data >> 24;
+		buffer[buffer_pos + 1] = _data >> 16;
+		buffer[buffer_pos + 2] = _data >> 8;
+		buffer[buffer_pos + 3] = _data;
+		
+		#ifdef DEBUG
+			Serial.println(buffer[buffer_pos], BIN);
+			Serial.println(buffer[buffer_pos + 1], BIN);
+			Serial.println(buffer[buffer_pos + 2], BIN);
+			Serial.println(buffer[buffer_pos + 3], BIN);
+		#endif
+		
+		buffer_pos += 4;
+	}
+	*/
+	return bufferData((float)_data);
+}
+
+
+int SpiFlash::writeBuffer(long _addr)
+{
+	buffer_pos = 0;
+	return write(&buffer[0], _addr, sizeof(buffer));
 }
 
 
@@ -124,6 +179,7 @@ int SpiFlash::readInt(long _addr)
 {
 	if(!checkWriteInProgress())
 	{
+		/*
 		digitalWriteFast(SS, LOW);
 		send(READ_DATA);
 		send(_addr >> 16);
@@ -136,6 +192,8 @@ int SpiFlash::readInt(long _addr)
 		digitalWriteFast(SS, HIGH);
 		
 		return _buf;
+		*/
+		return readFloat(_addr);
 	}
 	else
 	{
@@ -316,4 +374,24 @@ bool SpiFlash::checkWriteInProgress()
 {
 	if (readStatusReg() & WIP) {	return true;}
 	else {	return false;}
+}
+
+
+bool SpiFlash::checkAddress(long _addr, uint16_t _length) // returns true if address is in acceptable range
+{
+	if (_addr + _length < capacity)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool SpiFlash::checkPageOverflow(long _addr, uint16_t _length)// Returns true if page will not overflow
+{
+	uint8_t _temp = (_addr + _length) % PAGE_SIZE;
+	if (_temp >= _length || _temp == 0)
+	{
+		return true;
+	}
+	return false;
 }

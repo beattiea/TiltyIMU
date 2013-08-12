@@ -36,15 +36,16 @@ class SpiFlash {
 		void begin(uint8_t _SS, uint8_t sckDivisor);
 		
 	// Standard SPI flash memory write commands
-		int write(byte* _buf, long _addr, uint8_t _length);
+		int write(byte* _buf, long _addr, uint16_t _length);
 		int write(int _data, long _addr);
 		int write(float _data, long _addr);
 		int write(double _data, long _addr);
 		
 	// Special SPI flash memory write commands
 		// Write data into a buffer until it's full, then it will automatically write to the next page
-		//int writeBuffer(float _data);
-		//int buffer(int _data); 
+		int bufferData(float _data);
+		int bufferData(int _data);
+		int writeBuffer(long _addr);
 		
 	// Standard SPI flash memory read commands
 		// Read a single byte
@@ -78,6 +79,7 @@ class SpiFlash {
 		// Buffer only works for full page writes
 		uint8_t buffer_pos = 0;
 		byte buffer[256];
+		long buffer_addr = 0;
 		
 		// Union to save and load float values
 		union floatUnion_t
@@ -92,6 +94,10 @@ class SpiFlash {
 		void writeEnable();
 		// Check that the chip is not in a write cycle
 		bool checkWriteInProgress();
+		// Check that data is within chip memory
+		bool checkAddress(long _addr, uint16_t _length);
+		// check that there won't be a page overflow
+		bool checkPageOverflow(long _addr, uint16_t _length);
 		// Send a byte.
 		void send(uint8_t data);
 		 // Send multiple bytes.
