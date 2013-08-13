@@ -32,12 +32,6 @@ void readCompass() {
 	iy_offset = (iy_min + iy_max) / 2;
 	iz_offset = (iz_min + iz_max) / 2;
 	
-	/*
-	ix = map(ix, ix_min, ix_max, -360, 360);
-	iy = map(iy, iy_min, iy_max, -360, 360);
-	iz = map(iz, iz_min, iz_max, -360, 360);
-	*/
-	
 	ix -= ix_offset;
 	iy -= iy_offset;
 	iz -= iz_offset;
@@ -48,27 +42,10 @@ void readCompass() {
 	int xH = ix * cos(pitch_rad) + iz * sin(pitch_rad);
 	int yH = ix * sin(roll_rad) * sin(pitch_rad) + iy * cos(roll_rad) - iz * sin(roll_rad) * cos(pitch_rad);
 	
-	
-	// Print int values
-	/*
-	Serial.print("Maxes: ");
-	Serial.print(ix_max);
-	Serial.print(", ");
-	Serial.print(iy_max);
-	Serial.print(", ");
-	Serial.println(iz_max);
-	
-	Serial.print("Mins: ");
-	Serial.print(ix_min);
-	Serial.print(", ");
-	Serial.print(iy_min);
-	Serial.print(", ");
-	Serial.println(iz_min);
-	*/
-	
 	heading = atan2(yH, xH);
+	heading += M_PI;
 	if(heading < 0) {
-		heading += 2 * M_PI;
+		//heading += 2 * M_PI;
 	}
 	heading *= 180/M_PI;
 	
