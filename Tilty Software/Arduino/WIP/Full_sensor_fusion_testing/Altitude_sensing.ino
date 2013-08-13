@@ -1,3 +1,5 @@
+//#define OUTPUT_ALTITUDE
+
 float bias = 0.98;
 
 float sensor_alt;
@@ -15,17 +17,12 @@ void computeAltitude() {
 		altitude = bias * altitude + (axyz[2] * alt_dt) + (1 - bias) * sensor_alt;
 		alt_dt_us = alt_now;
 	}
-	/*
-	while (true) {
-		Serial.println(alt.readAltitudeM());
-		alt.forceMeasurement();
-		delay(5);
-	}
-	*/
 	
-	//Serial.print("Altitude fusion: ");
-	Serial.print(altitude);
-	//Serial.print("\t\tSensor reading: ");
-	Serial.print(", ");
-	Serial.println(sensor_alt);
+	#ifdef OUTPUT_ALTITUDE
+		Serial.print("Altitude fusion: ");
+		Serial.print(altitude);
+		Serial.print("\t\tSensor reading: ");
+		Serial.print(", ");
+		Serial.println(sensor_alt);
+	#endif
 }
