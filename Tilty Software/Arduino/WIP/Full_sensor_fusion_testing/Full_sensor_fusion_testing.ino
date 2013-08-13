@@ -4,21 +4,14 @@
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
 
-// Altimeter includes
-#include <MPL3115A2.h>
-
 // Sensor constructors
 MPU6050 imu;
-MPL3115A2 alt;
 
 // Sensor variables
-#define YAW_INDEX 0 // ypr[] data index
-#define PITCH_INDEX 1 // ypr[] data index
+#define YAW_INDEX 0
+#define PITCH_INDEX 1
 #define ROLL_INDEX 2 // ypr[] data index
-float ypr[3]; // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
-float axyz[3];
-
-float altitude;
+float ypr[3];		   // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
 
 void setup() {
@@ -26,8 +19,6 @@ void setup() {
 	delay(5);
 	
 	setupDMP();
-	alt.init();
-	alt.setOversampling(0);
 	
 	#ifdef USE_BT
 		Serial1.begin(115200);
@@ -49,5 +40,4 @@ void setup() {
 
 void loop() {
 	readDMP();
-	computeAltitude();
 }

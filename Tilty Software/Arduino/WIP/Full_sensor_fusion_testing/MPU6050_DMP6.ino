@@ -1,5 +1,5 @@
-//#define OUTPUT_READABLE_YAWPITCHROLL
-//#define OUTPUT_READABLE_WORLDACCEL
+#define OUTPUT_READABLE_YAWPITCHROLL
+#define OUTPUT_READABLE_WORLDACCEL
 
 #define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
 bool blinkState = false;
@@ -15,7 +15,7 @@ uint8_t fifoBuffer[64]; // FIFO storage buffer
 // orientation/motion vars
 Quaternion q;		   // [w, x, y, z]		 quaternion container
 VectorInt16 aa;		 // [x, y, z]			accel sensor measurements
-VectorInt16 aaReal;	// [x, y, z]			world-frame accel sensor measurements
+VectorInt16 aaReal;	 // [x, y, z]			gravity-free accel sensor measurements
 VectorInt16 aaWorld;	// [x, y, z]			world-frame accel sensor measurements
 VectorFloat gravity;	// [x, y, z]			gravity vector
 float euler[3];		 // [psi, theta, phi]	Euler angle container
@@ -158,18 +158,12 @@ void readDMP() {
 			imu.dmpGetGravity(&gravity, &q);
 			imu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
 			imu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-			
-			axyz[0] = 9.81 * (aaWorld.x / 8192.0);
-			axyz[1] = 9.81 * (aaWorld.y / 8192.0);
-			axyz[2] = 9.81 * (aaWorld.z / 8192.0);
-			
 			Serial.print("aworld\t");
 			Serial.print(aaWorld.x);
 			Serial.print("\t");
 			Serial.print(aaWorld.y);
 			Serial.print("\t");
 			Serial.println(aaWorld.z);
-			
 		#endif
 
 		// blink LED to indicate activity
