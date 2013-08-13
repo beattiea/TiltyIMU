@@ -1,4 +1,4 @@
-float bias = 0.98;
+float bias = 0.97;
 
 float sensor_alt;
 
@@ -24,8 +24,8 @@ void computeAltitude() {
 	*/
 	
 	//Serial.print("Altitude fusion: ");
-	Serial.print(altitude);
+	Serial.println(altitude);
 	//Serial.print("\t\tSensor reading: ");
-	Serial.print(", ");
-	Serial.println(sensor_alt);
+	//Serial.print(", ");
+	//Serial.println(sensor_alt);
 }
