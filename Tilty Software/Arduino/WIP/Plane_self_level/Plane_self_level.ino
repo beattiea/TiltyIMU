@@ -20,7 +20,7 @@ int ix,iy,iz; // X, Y, and Z magnetometer values
 float roll_offset = 0;
 float roll_kP = 75;
 float roll_kI = 110;
-float roll_kD = 1;
+float roll_kD = 0.05;
 float roll_value = 1500;
 PID roll_pid = PID(&ypr[ROLL_INDEX], &roll_value, roll_kP, roll_kI, roll_kD, 0);
 
@@ -29,7 +29,7 @@ PID roll_pid = PID(&ypr[ROLL_INDEX], &roll_value, roll_kP, roll_kI, roll_kD, 0);
 float pitch_offset = 3.25;
 float pitch_kP = 75;
 float pitch_kI =110;
-float pitch_kD = 1;
+float pitch_kD = 0.05;
 float pitch_value = 1500;
 PID pitch_pid = PID(&ypr[PITCH_INDEX], &pitch_value, pitch_kP, pitch_kI, pitch_kD, 1);
 
@@ -66,9 +66,9 @@ void setup() {
 	yaw_servo.attach(YAW_PIN); // Attach elevator servo to elevator servo header
 	yaw_pid.setLimits(-250, 250); // Sets servo output limits for PID
 	throttle_servo.attach(PITCH_PIN); // Attach ESC to throttle servo header
-	throttle_pid.setLimits(0, 125); // Sets servo output limits for PID
-	throttle_pid.setInputConstraints(0, 3);
-	throttle_servo.writeMicroseconds(throttle_value);
+	//throttle_pid.setLimits(0, 125); // Sets servo output limits for PID
+	//throttle_pid.setInputConstraints(0, 3);
+	//throttle_servo.writeMicroseconds(throttle_value);
 	
 	
 	#ifdef USE_BT
@@ -105,12 +105,14 @@ void loop() {
 	roll_servo.writeMicroseconds(1500 + roll_value);
 	pitch_servo.writeMicroseconds(1500 + pitch_value);
 	yaw_servo.writeMicroseconds(1500 + yaw_value);
-	throttle_servo.writeMicroseconds(1000 + throttle_value);
+	//throttle_servo.writeMicroseconds(1000 + throttle_value);
 	
 	myPort.print("Ailerons: ");
 	myPort.print(roll_value);
 	myPort.print("\tElevator: ");
 	myPort.print(pitch_value);
+	//myPort.print("\tThrottle: ");
+	//myPort.print(throttle_value);
 	myPort.println();
 	
 	if (myPort.available()) {
