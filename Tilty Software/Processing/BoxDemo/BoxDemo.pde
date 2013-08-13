@@ -77,8 +77,8 @@ void serialEvent(Serial myPort) {
     println("Roll Offset: " + str(roll_offset));
   }
   switch (serial_event.charAt(0)) {
-    case (VARIABLE_PITCH): {  rot_y = float(serial_event.substring(1)) * PI/180 - pitch_offset; break;}
-    case (VARIABLE_ROLL): {  rot_x = -float(serial_event.substring(1)) * PI/180 - roll_offset; break;}
+    case (VARIABLE_ROLL): {  rot_y = float(serial_event.substring(1)) * PI/180 - pitch_offset; break;}
+    case (VARIABLE_PITCH): {  rot_x = -float(serial_event.substring(1)) * PI/180 - roll_offset; break;}
     case (VARIABLE_YAW): {  rot_z = float(serial_event.substring(1)) * PI/180 - yaw_offset; break;}
     default: {  print(serial_event); break;}
   }

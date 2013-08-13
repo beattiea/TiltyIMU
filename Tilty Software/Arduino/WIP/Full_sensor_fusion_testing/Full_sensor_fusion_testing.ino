@@ -50,12 +50,29 @@ void setup() {
 		//while (!myPort) {	readDMP();}
 		for (int i = 0; i < 1000; i++) {
 			readDMP();
+			if (Serial) {
+				Serial.println("Zeroing. . .");
+			}
 		}
 	#endif
+	
+	altitude = alt.readAltitudeM();
 }
 
 void loop() {
 	readDMP();
 	computeAltitude();
 	calculateYaw();
+	/*
+	Serial.print("P");
+	Serial.println(ypr[PITCH_INDEX]);
+	Serial.print("Y");
+	Serial.println(yaw);
+	Serial.print("R");
+	Serial.println(ypr[ROLL_INDEX]);
+	Serial.print("A");
+	Serial.println(altitude);
+	Serial.print("T");
+	Serial.println(alt.readTempF());
+	*/
 }

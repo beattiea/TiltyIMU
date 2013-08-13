@@ -133,14 +133,24 @@ void readDMP() {
 		fifoCount -= packetSize;
 
 
+		imu.dmpGetQuaternion(&q, fifoBuffer);
+		imu.dmpGetGravity(&gravity, &q);
+		imu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+		ypr[0] *= 180/M_PI;
+		ypr[1] *= 180/M_PI;
+		ypr[2] *= 180/M_PI;
+			
+		
 		#ifdef OUTPUT_READABLE_YAWPITCHROLL
 			// display Euler angles in degrees
+			/*
 			imu.dmpGetQuaternion(&q, fifoBuffer);
 			imu.dmpGetGravity(&gravity, &q);
 			imu.dmpGetYawPitchRoll(ypr, &q, &gravity);
 			ypr[0] *= 180/M_PI;
 			ypr[1] *= 180/M_PI;
 			ypr[2] *= 180/M_PI;
+			*/
 			
 			myPort.print("ypr\t");
 			myPort.print(ypr[YAW_INDEX]);
