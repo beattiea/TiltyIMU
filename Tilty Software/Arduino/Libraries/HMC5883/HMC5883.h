@@ -50,6 +50,11 @@ class HMC5883
 		void getValues(float *x,float *y,float *z);
 		void getValues(float *xyz);
 		void getRaw(int *x,int *y,int *z);
+		float getHeading(int x, int y);
+		float getHeadingRadians(int x, int y);
+		float getTiltCompensatedHeading(int x, int y, int z, float pitch, float roll);
+		float getTiltCompensatedHeadingRadians(int x, int y, int z, float pitch, float roll);
+		
 		void getID(char id[3]);
 		bool getDataReady();
 		uint8_t getGain();
@@ -58,5 +63,9 @@ class HMC5883
 		void writeRegister(unsigned char reg, unsigned char val);
 		float x_scale,y_scale,z_scale,x_max,y_max,z_max;
 		uint8_t _gain = 0;
+		int16_t xMin, xMax;
+		int16_t yMin, yMax;
+		int16_t zMin, zMax;
+		
 };
 #endif

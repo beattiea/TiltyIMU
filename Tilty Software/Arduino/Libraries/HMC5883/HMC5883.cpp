@@ -110,6 +110,14 @@ void HMC5883::getValues(float *x,float *y,float *z)
 }
 
 /**
+*@param[out] *xyz Pointer to where you want the xyz raw values.
+*/
+void HMC5883::getValues(float *xyz)
+{
+	getValues(&xyz[0], &xyz[1], &xyz[2]);
+}
+
+/**
 *@param[out] *x Pointer to where you want the x raw value.
 *@param[out] *y Pointer to where you want the y raw value.
 *@param[out] *z Pointer to where you want the z raw value.
@@ -139,10 +147,55 @@ void HMC5883::getRaw(int *x,int *y,int *z)
 	}
 }
 
+/**
+*@param[in] x X magnetometer value.
+*@param[in] y Y magnetometer value.
+*/
+float HMC5883::getHeading(int x, int y)
+{	
+	return (atan2(y, x) + M_PI) * 180/M_PI;
+}
 
-void HMC5883::getValues(float *xyz)
+/**
+*@param[in] x X magnetometer value.
+*@param[in] y Y magnetometer value.
+*/
+float HMC5883::getHeadingRadians(int x, int y)
+{	
+	return (atan2(y, x) + M_PI);
+}
+
+/**
+*@param[in] x X magnetometer value.
+*@param[in] y Y magnetometer value.
+*@param[in] z Z magnetometer value.
+*@param[in] pitch  Pitch angle in degrees.
+*@param[in] roll Y Roll angle in degrees.
+*/
+float HMC5883::getTiltCompensatedHeading(int x, int y, int z, float pitch, float roll)
 {
-	getValues(&xyz[0], &xyz[1], &xyz[2]);
+	float pitch_rad = pitch * (M_PI / 180);
+	float roll_rad = roll * (M_PI / 180);
+	
+	int xH = x * cos(pitch_rad) + z * sin(pitch_rad);
+	int yH = x * sin(roll_rad) * sin(pitch_rad) + y * cos(roll_rad) - z * sin(roll_rad) * cos(pitch_rad);
+	
+	return (atan2(yH, xH) + M_PI) * 180/M_PI;
+}
+
+/**
+*@param[in] x X magnetometer value.
+*@param[in] y Y magnetometer value.
+*@param[in] z Z magnetometer value.
+*@param[in] pitch  Pitch angle in radians.
+*@param[in] roll Y Roll angle in radians.
+*/
+float HMC5883::getTiltCompensatedHeadingRadians(int x, int y, int z, float pitch, float roll)
+{	
+	int xH = x * cos(pitch) + z * sin(pitch);
+	int yH = x * sin(roll) * sin(pitch) + y * cos(roll) - z * sin(roll) * cos(pitch);
+	
+	return (atan2(yH, xH) + M_PI);
 }
 
 /*! 

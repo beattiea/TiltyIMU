@@ -53,7 +53,6 @@ void readCompass() {
 		Serial.print(" Heading: ");
 		Serial.println(heading); 
 	#endif
-	// x and y axis are swapped above with respect to the above paper as our Z axis points to the sky while in the paper it points to the bottom
 }
 
 float old_yaw = 0;

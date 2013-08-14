@@ -1,12 +1,6 @@
 Arduino code:
 =============
 	Implement smart sensor indicator loading in Processing
-	
-	Kalman filter for IMU using just accel and gyro
-	Kalman filter for IMU using accel, gyro, and magnetometer
-	Kalman filter for altimeter
-	
-	Sensor fusion of altimeter and accelerometer for better altitude sensing
 
 Processing program:
 ===================
@@ -21,11 +15,6 @@ Documentation:
 
 Software Library work:
 ======================
-	Flash memory library (maybe one exists, should be adaptable to work with various memory sizes)
-	
-	IMU gravity compensation for accelerometer to allow altimeter sensor fusion
-	
-	Check out FreeIMU compass math
 	Compass sensor temperature compensation
 	Compass sensor tilt compensation
 	Compass sensor calibration and testing out of a magnetic environment
