@@ -609,8 +609,8 @@ void i2c_t3::beginTransmission(uint8_t address)
 // Master Transmit - blocking function, returns after Tx complete
 // return: 0=success, 1=data too long, 2=recv addr NACK, 3=recv data NACK, 4=other error
 //
-uint8_t i2c_t3::endTransmission(void) { return endTransmission(I2C_STOP, 0); }
-uint8_t i2c_t3::endTransmission(i2c_stop sendStop) { return endTransmission(sendStop, 0); }
+uint8_t i2c_t3::endTransmission(void) { return endTransmission(I2C_STOP, I2C_DEFAULT_TIMEOUT); }
+uint8_t i2c_t3::endTransmission(i2c_stop sendStop) { return endTransmission(sendStop, I2C_DEFAULT_TIMEOUT); }
 uint8_t i2c_t3::endTransmission(i2c_stop sendStop, uint32_t timeout)
 {
     sendTransmission(sendStop);
@@ -665,7 +665,7 @@ void i2c_t3::sendTransmission(i2c_stop sendStop)
 // return: #bytes received, 0=fail (0 length request, NAK, timeout, or bus error)
 //
 size_t i2c_t3::requestFrom(uint8_t addr, size_t len)
-    { return requestFrom(addr, len, I2C_STOP, I2C_DEFAULT_TIMEOUT); }
+    { return requestFrom((uint8_t)addr, len, I2C_STOP, I2C_DEFAULT_TIMEOUT); }
 size_t i2c_t3::requestFrom(int addr, int len)
     { return requestFrom((uint8_t)addr, (size_t)len, I2C_STOP, I2C_DEFAULT_TIMEOUT); }
 size_t i2c_t3::requestFrom(uint8_t addr, size_t len, i2c_stop sendStop)

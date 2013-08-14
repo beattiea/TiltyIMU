@@ -1,3 +1,0 @@
-examplesV1 - Examples from earlier versions of SdFat.
-
-SdFatTestSuite - Development tests.
