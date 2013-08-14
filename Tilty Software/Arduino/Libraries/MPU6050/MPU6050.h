@@ -41,7 +41,6 @@ THE SOFTWARE.
 #include <avr/pgmspace.h>
 
 
-
 #define MPU6050_ADDRESS_AD0_LOW     0x68 // address pin low (GND), default for InvenSense evaluation board
 #define MPU6050_ADDRESS_AD0_HIGH    0x69 // address pin high (VCC)
 #define MPU6050_DEFAULT_ADDRESS     MPU6050_ADDRESS_AD0_LOW
@@ -405,7 +404,8 @@ class MPU6050 {
         
         ~MPU6050();
 
-        void initialize();
+	bool initialize();
+	bool init();
         bool testConnection();
 
         // AUX_VDDIO register

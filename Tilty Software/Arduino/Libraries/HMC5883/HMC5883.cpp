@@ -37,15 +37,20 @@ HMC5883::~HMC5883()
 */ 
 bool HMC5883::init()
 {
-	setMode(0);
-	
-	writeRegister(HMC5883_R_CONFA, 0x7C); // 8 samples averaged, 75Hz frequency, no artificial bias.
-	writeRegister(HMC5883_R_CONFB, 0x00);
-	writeRegister(HMC5883_R_MODE, 0x00);
-	
 	char deviceID[3];
 	getID(deviceID);
-	return (deviceID[0] == 'H' && deviceID[1] == '4' && deviceID[2] == '3');
+	
+	if (deviceID[0] == 'H' && deviceID[1] == '4' && deviceID[2] == '3')
+	{
+		setMode(0);
+		
+		writeRegister(HMC5883_R_CONFA, 0x7C); // 8 samples averaged, 75Hz frequency, no artificial bias.
+		writeRegister(HMC5883_R_CONFB, 0x00);
+		writeRegister(HMC5883_R_MODE, 0x00);
+		
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -208,7 +213,7 @@ void HMC5883::getID(char id[3])
 	Wire.beginTransmission(HMC5883_ADDR);
 	Wire.write(HMC5883_R_IDA);             // Will start reading registers starting from Identification Register A.
 	Wire.endTransmission();
-  
+	
 	Wire.requestFrom(HMC5883_ADDR, 3);
 	
 	if(3 == Wire.available()) 

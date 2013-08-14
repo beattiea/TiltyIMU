@@ -27,8 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #include "Arduino.h"
-
-#include "TiltyIMU.h"
+//#include "TiltyIMU.h"
 
 //	I2C library
 #include <i2c_t3.h>
@@ -42,8 +41,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // MPU-6050 IMU libraries
 #include <I2Cdev.h>
-#ifndef USE_DMP
-	#include "MPU6050.h"
+#ifdef USE_DMP
+	#include <MPU6050_6Axis_MotionApps20.h>
+#else
+	#include <MPU6050.h>
 #endif
 
 //	Altimeter library
@@ -55,25 +56,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class TiltyIMU {
 	public:
+	// Class constructors
 		TiltyIMU();
 		~TiltyIMU();
+	// Sensor declarations
+		MPU6050 imu; // IMU motion sensor
+		HMC5883 magn; // Compass sensor
+		MPL3115A2 alt; // Altitude/pressure sensor
+	
+	// Sensor initializers
+		void init();
 	
 	private:
-	
+	// Sensor initializations
+		
+		bool hasIMU;
+		bool hasMagn;
+		bool hasAlt;
 		
 		//	Debug defines
 		#ifdef DEBUG
-		    #define DEBUG_PRINT(x) Serial.print(x)
-		    #define DEBUG_PRINTF(x, y) Serial.print(x, y)
-		    #define DEBUG_PRINTLN(x) Serial.println(x)
-		    #define DEBUG_PRINTLNF(x, y) Serial.println(x, y)
+			#define DEBUG_PRINT(x) Serial.print(x)
+			#define DEBUG_PRINTF(x, y) Serial.print(x, y)
+			#define DEBUG_PRINTLN(x) Serial.println(x)
+			#define DEBUG_PRINTLNF(x, y) Serial.println(x, y)
 		#else
-		    #define DEBUG_PRINT(x)
-		    #define DEBUG_PRINTF(x, y)
-		    #define DEBUG_PRINTLN(x)
-		    #define DEBUG_PRINTLNF(x, y)
+			#define DEBUG_PRINT(x)
+			#define DEBUG_PRINTF(x, y)
+			#define DEBUG_PRINTLN(x)
+			#define DEBUG_PRINTLNF(x, y)
 		#endif
-}
+};
 
 
 
