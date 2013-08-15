@@ -14,24 +14,9 @@
 TiltyIMU tilty;
 
 void setup() {
-	Serial.begin(115200);
-	while (!Serial) {};
-	Serial.println("Beginning");
 	tilty.init();
 }
 
-float ypr[3];
-float altitude;
-
 void loop() {
-	tilty.readAltitude(&altitude);
-	Serial.println(altitude);
-	/*
-	tilty.readAngles(ypr);
-	for (int i = 0; i < 3; i++) {
-		Serial.print(ypr[i]);
-		Serial.print("\t\t");
-	}
-	*/
-	Serial.println();
+	
 }

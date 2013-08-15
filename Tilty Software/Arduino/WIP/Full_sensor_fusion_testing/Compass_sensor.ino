@@ -1,4 +1,4 @@
-//#define OUTPUT_HEADING
+#define OUTPUT_HEADING
 
 float yaw_bias = 0.5;
 
