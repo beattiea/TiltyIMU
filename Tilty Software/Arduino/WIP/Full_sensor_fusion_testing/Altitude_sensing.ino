@@ -1,4 +1,4 @@
-//#define OUTPUT_ALTITUDE
+#define OUTPUT_ALTITUDE
 
 float bias = 0.98;
 
