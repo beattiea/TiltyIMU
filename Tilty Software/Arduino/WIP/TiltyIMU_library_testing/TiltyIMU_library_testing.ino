@@ -7,10 +7,9 @@
 #include <I2Cdev.h>
 //#include <MPU6050_6Axis_MotionApps20.h> // Comment this line if not using DMP angle measurement
 #define INCLUDE_DMP
-#include <MPU6050.h>
-#include <MPL3115A2.h>
-
-#include <HMC5883.h>
+//#include <MPU6050.h>
+//#include <MPL3115A2.h>
+//#include <HMC5883.h>
 
 TiltyIMU tilty;
 

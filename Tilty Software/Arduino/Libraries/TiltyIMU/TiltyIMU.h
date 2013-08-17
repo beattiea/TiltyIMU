@@ -19,76 +19,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef TILTYIMU_H
 #define TILTYIMU_H
 
-
-//	Setting defines
-//#define DEBUG
-#define USE_DMP
-#define USE_FAST_SERVO
-
-
 #include "Arduino.h"
-//#include "TiltyIMU.h"
 
-//	I2C library
-#include <i2c_t3.h>
+#define USE_DMP
+#include "MPU6050.h"
 
-//	Servo libraries
-#ifdef USE_FAST_SERVO
-	#include <FastServo.h>
-#else
-	#include <Servo.h>
-#endif
+#include "MPL3115A2.h"
 
-// MPU-6050 IMU libraries
-#include <I2Cdev.h>
-#ifdef USE_DMP
-	#include <MPU6050_6Axis_MotionApps20.h>
-#else
-	#include <MPU6050.h>
-#endif
-
-//	Altimeter library
-#include <MPL3115A2.h>
-
-//	Compass library
-#include <HMC5883.h>
-
+#include "HMC5883.h"
 
 class TiltyIMU {
 	public:
-	// Class constructors
 		TiltyIMU();
-		~TiltyIMU();
-	// Sensor declarations
-		MPU6050 imu; // IMU motion sensor
-		HMC5883 magn; // Compass sensor
-		MPL3115A2 alt; // Altitude/pressure sensor
-	
-	// Sensor initializers
 		void init();
-	
-	private:
-	// Sensor initializations
+		void readAngles(float *data);
+		void initializeIMU();
+		void readAltitude(float *data);
 		
+		bool hasAlt;
 		bool hasIMU;
 		bool hasMagn;
-		bool hasAlt;
 		
-		//	Debug defines
-		#ifdef DEBUG
-			#define DEBUG_PRINT(x) Serial.print(x)
-			#define DEBUG_PRINTF(x, y) Serial.print(x, y)
-			#define DEBUG_PRINTLN(x) Serial.println(x)
-			#define DEBUG_PRINTLNF(x, y) Serial.println(x, y)
-		#else
-			#define DEBUG_PRINT(x)
-			#define DEBUG_PRINTF(x, y)
-			#define DEBUG_PRINTLN(x)
-			#define DEBUG_PRINTLNF(x, y)
-		#endif
+		MPU6050 imu;
+		HMC5883 magn;
+		MPL3115A2 alt;
+
+		uint16_t packetSize;
+		uint16_t fifoCount;
+		uint8_t fifoBuffer[64]; // FIFO storage buffer
+		Quaternion q;		   // [w, x, y, z]		 quaternion container
+		VectorFloat gravity;	// [x, y, z]			gravity vector
 };
-
-
-
 
 #endif
