@@ -28,8 +28,11 @@ void computeAltitude() {
 	#ifdef OUTPUT_ALTITUDE
 		Serial.print("Altitude fusion: ");
 		Serial.print(altitude);
-		Serial.print("\t\tSensor reading: ");
+		Serial.print("m\t\tSensor reading: ");
 		//Serial.print(", ");
-		Serial.println(sensor_alt);
+		Serial.print(sensor_alt);
+                Serial.print("\t\tZ Acceleration: ");
+                Serial.print(axyz[2]);
+                Serial.println();
 	#endif
 }

@@ -10,10 +10,17 @@
 // Compass includes
 #include <HMC5883.h>
 
+// SPI mem includes
+#include <SpiFlash.h>
+#include <SPI.h>
+
 // Sensor constructors
 MPU6050 imu;
 MPL3115A2 alt;
 HMC5883 magn;
+
+// Memory Constructor
+SpiFlash mem;
 
 // Sensor variables
 #define YAW_INDEX 0 // ypr[] data index
@@ -22,9 +29,11 @@ HMC5883 magn;
 float ypr[3]; // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 float yaw = 0;
 float axyz[3]; // Real world reference acceleration minus gravity
+float az_offset = 0.375;
 int ix,iy,iz; // compass sensor raw values
 
-float altitude;
+float altitude = 0;
+float heading;
 
 
 void setup() {
@@ -43,11 +52,14 @@ void setup() {
 		for (int i = 0; i < 1000; i++) {
 			readDMP();
 		}
+                
 		while (myPort.available()) {	myPort.read();}
 	#else
 		Serial.begin(115200);
 		#define myPort Serial
 		//while (!myPort) {	readDMP();}
+                mem.begin(10, 2);
+                mem.eraseChip();
 		for (int i = 0; i < 1000; i++) {
 			readDMP();
 			if (Serial) {
@@ -59,10 +71,35 @@ void setup() {
 	altitude = alt.readAltitudeM();
 }
 
+bool save = false;
+
 void loop() {
 	readDMP();
 	computeAltitude();
 	calculateYaw();
+        
+        if (save) {
+          mem.bufferData(altitude);
+          mem.bufferData(heading);
+          mem.bufferData(axyz[2]);
+          mem.bufferData(ypr[PITCH_INDEX]);
+        }
+        save = !save;
+        
+        while (Serial) {
+          Serial.println("Altitude, Heading, Z Accel, Pitch");
+          for (int i = 0; i < mem.getWrittenPages() * 256; i+= 16) {
+            Serial.print(mem.readFloat(i));
+	    Serial.print(", ");
+            Serial.print(mem.readFloat(i+4));
+	    Serial.print(", ");
+            Serial.print(mem.readFloat(i+8));
+	    Serial.print(", ");
+            Serial.println(mem.readFloat(i+12));
+          }
+          Serial.println(az_offset);
+          while (true) {}
+        }
 	/*
 	Serial.print("P");
 	Serial.println(ypr[PITCH_INDEX]);

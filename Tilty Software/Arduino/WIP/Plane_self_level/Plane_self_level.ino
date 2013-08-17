@@ -18,18 +18,18 @@ int ix,iy,iz; // X, Y, and Z magnetometer values
 #define ROLL_PIN 2 // Servo header 1
 #define ROLL_INDEX 2 // ypr[] data index
 float roll_offset = 0;
-float roll_kP = 75;
-float roll_kI = 110;
-float roll_kD = 0.05;
+float roll_kP = 75;// was 75
+float roll_kI = 80;// was 110
+float roll_kD = 0.1;// was 0.05
 float roll_value = 1500;
 PID roll_pid = PID(&ypr[ROLL_INDEX], &roll_value, roll_kP, roll_kI, roll_kD, 0);
 
 #define PITCH_PIN 3 // Servo header 2
 #define PITCH_INDEX 1
 float pitch_offset = 3.25;
-float pitch_kP = 75;
-float pitch_kI =110;
-float pitch_kD = 0.05;
+float pitch_kP = 75;// was 75
+float pitch_kI =80;// was 110
+float pitch_kD = 0.1;// was 0.05
 float pitch_value = 1500;
 PID pitch_pid = PID(&ypr[PITCH_INDEX], &pitch_value, pitch_kP, pitch_kI, pitch_kD, 1);
 
@@ -37,7 +37,7 @@ PID pitch_pid = PID(&ypr[PITCH_INDEX], &pitch_value, pitch_kP, pitch_kI, pitch_k
 #define YAW_INDEX 0
 float yaw_kP = 0;
 float yaw_kI = 0;
-float yaw_kD = 10;
+float yaw_kD = 15;// was 10
 float yaw_value = 1500;
 PID yaw_pid = PID(&ypr[YAW_INDEX], &yaw_value, yaw_kP, yaw_kI, yaw_kD, 1);
 
@@ -62,10 +62,10 @@ void setup() {
 	roll_pid.setInputTriggers(-2, 2);
 	pitch_servo.attach(PITCH_PIN); // Attach elevator servo to elevator servo header
 	pitch_pid.setLimits(-500, 500); // Sets servo output limits for PID
-	pitch_pid.setInputTriggers(0, 3);
+	pitch_pid.setInputTriggers(0, 15);
 	yaw_servo.attach(YAW_PIN); // Attach elevator servo to elevator servo header
 	yaw_pid.setLimits(-250, 250); // Sets servo output limits for PID
-	throttle_servo.attach(PITCH_PIN); // Attach ESC to throttle servo header
+	//throttle_servo.attach(PITCH_PIN); // Attach ESC to throttle servo header
 	//throttle_pid.setLimits(0, 125); // Sets servo output limits for PID
 	//throttle_pid.setInputConstraints(0, 3);
 	//throttle_servo.writeMicroseconds(throttle_value);

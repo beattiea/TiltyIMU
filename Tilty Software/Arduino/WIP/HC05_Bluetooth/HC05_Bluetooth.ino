@@ -7,7 +7,7 @@ void setup() {
   Serial.begin(115200);
   while (!Serial) {}
   //int baud = findBaud();
-  //Serial.println(init());
+  Serial.println(init());
   Serial.println("begin...");
   delay(5);
   //setBaud(115200);
@@ -15,32 +15,6 @@ void setup() {
 }
 
 void loop() {
-  
- 	 for (int i = 0; i < sizeof(_bauds) / 4; i++) {
- 	 	Serial1.begin(_bauds[i]);
-	  	Serial.print("Baud: ");
-	  	Serial.println(_bauds[i]);
-		digitalWrite(_key, HIGH);
-		delay(100);
-		Serial1.write("AT\r\n");
-		delay(100);
-		digitalWrite(_key, LOW);
-		delay(50);
-		
-		if (Serial1.available()) {
-			while (Serial1.available())
-			{	Serial.print(char(Serial1.read()));
-				 delay(1);}
-			Serial.println();
-		}
-		
-		delay(50);
-		Serial1.end();
-		delay(100);
-	}
-  /*
- 
-  
   if (Serial.available()) {
     digitalWrite(_key, HIGH);
     delay(50);
@@ -50,7 +24,7 @@ void loop() {
     delay(50);
     digitalWrite(_key, LOW);
   }
-  */
+  
   if (Serial1.available()) {
     while (Serial1.available())
     {  Serial.print(char(Serial1.read()));

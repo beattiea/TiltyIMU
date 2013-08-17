@@ -1,8 +1,6 @@
-#define OUTPUT_HEADING
+//#define OUTPUT_HEADING
 
 float yaw_bias = 0.5;
-
-float heading;
 
 long magn_now;
 long magn_dt_us;

@@ -1,9 +1,6 @@
 //#define OUTPUT_READABLE_YAWPITCHROLL
 //#define OUTPUT_READABLE_WORLDACCEL
 
-#define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
-bool blinkState = false;
-
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
 uint8_t imuIntStatus;   // holds actual interrupt status byte from MPU
@@ -91,9 +88,6 @@ void setupDMP() {
 	while (abs(ypr[1]) > 3 || abs(ypr[2]) > 3 ) {
 		readDMP();
 	}
-
-	// configure LED for output
-	pinMode(LED_PIN, OUTPUT);
 }
 
 
@@ -160,19 +154,19 @@ void readDMP() {
 			myPort.println(ypr[ROLL_INDEX]);
 		#endif
 		
+                imu.dmpGetQuaternion(&q, fifoBuffer);
+		imu.dmpGetAccel(&aa, fifoBuffer);
+		imu.dmpGetGravity(&gravity, &q);
+		imu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
+		imu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
+			
+		axyz[0] = 9.81 * (aaWorld.x / 8192.0);
+		axyz[1] = 9.81 * (aaWorld.y / 8192.0);
+		axyz[2] = 9.81 * (aaWorld.z / 8192.0) - az_offset;
+
 		#ifdef OUTPUT_READABLE_WORLDACCEL
 			// display initial world-frame acceleration, adjusted to remove gravity
 			// and rotated based on known orientation from quaternion
-			imu.dmpGetQuaternion(&q, fifoBuffer);
-			imu.dmpGetAccel(&aa, fifoBuffer);
-			imu.dmpGetGravity(&gravity, &q);
-			imu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-			imu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-			
-			axyz[0] = 9.81 * (aaWorld.x / 8192.0);
-			axyz[1] = 9.81 * (aaWorld.y / 8192.0);
-			axyz[2] = 9.81 * (aaWorld.z / 8192.0);
-			
 			Serial.print("aworld\t");
 			Serial.print(aaWorld.x);
 			Serial.print("\t");
@@ -181,9 +175,5 @@ void readDMP() {
 			Serial.println(aaWorld.z);
 			
 		#endif
-
-		// blink LED to indicate activity
-		blinkState = !blinkState;
-		digitalWrite(LED_PIN, blinkState);
 	}
 }
