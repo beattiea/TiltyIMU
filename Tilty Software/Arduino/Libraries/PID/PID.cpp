@@ -76,6 +76,7 @@ float PID::update(float _value)
 	#ifdef USE_TIME
 		_dT = (millis() - _timer) / 1000.0;
 		_timer = millis();
+		if (_dT == 0) _dT++;
 	#endif
 	
 	_value = checkInputOK(_value);
