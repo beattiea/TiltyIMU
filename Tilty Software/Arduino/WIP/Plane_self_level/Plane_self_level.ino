@@ -4,12 +4,12 @@
 #include <i2c_t3.h>
 #include <I2Cdev.h>
 #include <MPU6050_6Axis_MotionApps20.h>
-#include <HMC5883.h>
+//#include <HMC5883.h>
 
 //#define USE_BT // Uncomment to use Bluetooth instead of USB serial
 
 MPU6050 imu;
-HMC5883 compass;
+//HMC5883 compass;
 Servo roll_servo, pitch_servo, yaw_servo, throttle_servo;
 
 float ypr[3]; // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
@@ -18,9 +18,9 @@ int ix,iy,iz; // X, Y, and Z magnetometer values
 #define ROLL_PIN 2 // Servo header 1
 #define ROLL_INDEX 2 // ypr[] data index
 float roll_offset = 0;
-float roll_kP = 75;// was 75
-float roll_kI = 80;// was 110
-float roll_kD = 0.1;// was 0.05
+float roll_kP = 30;// was 75
+float roll_kI = 5;// was 110
+float roll_kD = 0.05;// was 0.05
 float roll_value = 1500;
 PID roll_pid = PID(&ypr[ROLL_INDEX], &roll_value, roll_kP, roll_kI, roll_kD, 0);
 
@@ -29,7 +29,7 @@ PID roll_pid = PID(&ypr[ROLL_INDEX], &roll_value, roll_kP, roll_kI, roll_kD, 0);
 float pitch_offset = 3.25;
 float pitch_kP = 75;// was 75
 float pitch_kI =80;// was 110
-float pitch_kD = 0.1;// was 0.05
+float pitch_kD = 0.005;// was 0.05
 float pitch_value = 1500;
 PID pitch_pid = PID(&ypr[PITCH_INDEX], &pitch_value, pitch_kP, pitch_kI, pitch_kD, 1);
 
@@ -55,16 +55,20 @@ void setup() {
 	setupDMP();
 	imu.setI2CBypassEnabled(true);
 	
-	compass.init();
+	//compass.init();
 	
 	roll_servo.attach(ROLL_PIN); // Attach aileron servo to aileron servo header
 	roll_pid.setLimits(-500, 500); // Sets servo output limits for PID
-	roll_pid.setInputTriggers(-2, 2);
+	roll_pid.setDLimits(0, 0);
+	//roll_pid.setInputTriggers(-2, 2);
+	
 	pitch_servo.attach(PITCH_PIN); // Attach elevator servo to elevator servo header
 	pitch_pid.setLimits(-500, 500); // Sets servo output limits for PID
-	pitch_pid.setInputTriggers(0, 15);
+	pitch_pid.setInputTriggers(0, 3);
+	
 	yaw_servo.attach(YAW_PIN); // Attach elevator servo to elevator servo header
 	yaw_pid.setLimits(-250, 250); // Sets servo output limits for PID
+	
 	//throttle_servo.attach(PITCH_PIN); // Attach ESC to throttle servo header
 	//throttle_pid.setLimits(0, 125); // Sets servo output limits for PID
 	//throttle_pid.setInputConstraints(0, 3);
@@ -92,12 +96,20 @@ void setup() {
 void loop() {
 	readDMP();
 	
-	compass.getValues(&ix, &iy, &iz);
-	Serial.print(ix); Serial.print("\t\t"); Serial.print(iy);
-	ix = map(ix, 347, 817, -130, 341);
-	Serial.print("\t\t"); Serial.println(atan2(ix, iy) * 180/M_PI);
+	//compass.getValues(&ix, &iy, &iz);
+	//Serial.print(ix); Serial.print("\t\t"); Serial.print(iy);
+	//ix = map(ix, 347, 817, -130, 341);
+	//Serial.print("\t\t"); Serial.println(atan2(ix, iy) * 180/M_PI);
 	
 	roll_pid.update();
+	myPort.print("PID: ");
+	myPort.print(roll_pid.Pvalue);
+	myPort.print("\t\t");
+	myPort.print(roll_pid.Ivalue);
+	myPort.print("\t\t");
+	myPort.print(roll_pid.Dvalue);
+	myPort.println();
+	
 	pitch_pid.update();
 	yaw_pid.update();
 	throttle_pid.update();

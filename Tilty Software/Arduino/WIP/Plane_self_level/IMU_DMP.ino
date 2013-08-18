@@ -135,7 +135,7 @@ void readDMP() {
 		#ifdef OUTPUT_READABLE_YAWPITCHROLL
 			// display Euler angles in degrees
 			imu.dmpGetQuaternion(&q, fifoBuffer);
-			Serial.println(imu.dmpGetGravity(&gravity, &q));
+			imu.dmpGetGravity(&gravity, &q);
 			imu.dmpGetYawPitchRoll(ypr, &q, &gravity);
 			ypr[0] *= 180/M_PI;
 			ypr[1] *= 180/M_PI;
@@ -150,8 +150,7 @@ void readDMP() {
 			myPort.print(ypr[PITCH_INDEX]);
 			myPort.print("\t");
 			myPort.print(ypr[ROLL_INDEX]);
-			myPort.print("\t");
-			myPort.println(pitch_offset);
+			myPort.println();
 		#endif
 
 		// blink LED to indicate activity

@@ -92,10 +92,10 @@ float PID::update(float _value)
 		Dvalue = constrain((kD * (_value - _old_value)) / _dT, lowerDLimit, upperDLimit);
 	}
 	
-	else
+	if (!_direction)
 	{
 		Pvalue = -constrain(kP * _value, lowerPLimit, upperPLimit);
-		Ivalue = -constrain(Ivalue + kI * _value * _dT, lowerILimit, upperILimit);
+		Ivalue = constrain(Ivalue - kI * _value * _dT, lowerILimit, upperILimit);
 		Dvalue = -constrain((kD * (_value - _old_value)) / _dT, lowerDLimit, upperDLimit);
 	}
 
