@@ -22,6 +22,8 @@ Software Library work:
 	Altimeter library Doxygen formatting
 	Update altimeter library to take pointers to variables like compass and IMU
 	
+	MPU6050 should check if IMU is already enabled upon initialization
+	
 	PID library Doxygen formatting
 	
 	R/C receiver Teensy compatability

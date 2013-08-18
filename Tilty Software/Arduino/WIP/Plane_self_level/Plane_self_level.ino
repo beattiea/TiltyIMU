@@ -19,17 +19,17 @@ int ix,iy,iz; // X, Y, and Z magnetometer values
 #define ROLL_INDEX 2 // ypr[] data index
 float roll_offset = 0;
 float roll_kP = 30;// was 75
-float roll_kI = 5;// was 110
-float roll_kD = 0.05;// was 0.05
+float roll_kI = 25;// was 110
+float roll_kD = 0.25;// was 0.05
 float roll_value = 1500;
 PID roll_pid = PID(&ypr[ROLL_INDEX], &roll_value, roll_kP, roll_kI, roll_kD, 0);
 
 #define PITCH_PIN 3 // Servo header 2
 #define PITCH_INDEX 1
 float pitch_offset = 3.25;
-float pitch_kP = 75;// was 75
-float pitch_kI =80;// was 110
-float pitch_kD = 0.005;// was 0.05
+float pitch_kP = 30;// was 75
+float pitch_kI =25;// was 110
+float pitch_kD = 0.25;// was 0.05
 float pitch_value = 1500;
 PID pitch_pid = PID(&ypr[PITCH_INDEX], &pitch_value, pitch_kP, pitch_kI, pitch_kD, 1);
 
@@ -59,12 +59,11 @@ void setup() {
 	
 	roll_servo.attach(ROLL_PIN); // Attach aileron servo to aileron servo header
 	roll_pid.setLimits(-500, 500); // Sets servo output limits for PID
-	roll_pid.setDLimits(0, 0);
 	//roll_pid.setInputTriggers(-2, 2);
 	
-	pitch_servo.attach(PITCH_PIN); // Attach elevator servo to elevator servo header
-	pitch_pid.setLimits(-500, 500); // Sets servo output limits for PID
-	pitch_pid.setInputTriggers(0, 3);
+	//pitch_servo.attach(PITCH_PIN); // Attach elevator servo to elevator servo header
+	//pitch_pid.setLimits(-500, 500); // Sets servo output limits for PID
+	//pitch_pid.setInputTriggers(0, 3);
 	
 	yaw_servo.attach(YAW_PIN); // Attach elevator servo to elevator servo header
 	yaw_pid.setLimits(-250, 250); // Sets servo output limits for PID
@@ -102,14 +101,6 @@ void loop() {
 	//Serial.print("\t\t"); Serial.println(atan2(ix, iy) * 180/M_PI);
 	
 	roll_pid.update();
-	myPort.print("PID: ");
-	myPort.print(roll_pid.Pvalue);
-	myPort.print("\t\t");
-	myPort.print(roll_pid.Ivalue);
-	myPort.print("\t\t");
-	myPort.print(roll_pid.Dvalue);
-	myPort.println();
-	
 	pitch_pid.update();
 	yaw_pid.update();
 	throttle_pid.update();
