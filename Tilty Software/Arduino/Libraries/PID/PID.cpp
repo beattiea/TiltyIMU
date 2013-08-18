@@ -123,6 +123,15 @@ void PID::setLimits(float _lower, float _upper)
 {
 	upperLimit = _upper;
 	lowerLimit = _lower;
+	
+	if (upperPLimit > _upper) upperPLimit = _upper;
+	if (lowerPLimit < _lower) lowerPLimit = _lower;
+	
+	if (upperILimit > _upper) upperILimit = _upper;
+	if (lowerILimit < _lower) lowerILimit = _lower;
+	
+	if (upperDLimit > _upper) upperDLimit = _upper;
+	if (lowerDLimit < _lower) lowerDLimit = _lower;
 }
 
 void PID::setPLimits(float _lower, float _upper)
