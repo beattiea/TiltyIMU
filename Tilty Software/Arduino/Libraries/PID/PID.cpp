@@ -181,6 +181,15 @@ void PID::reset()
 bool PID::limited() { return (Pvalue + Ivalue + Dvalue >= upperLimit || Pvalue + Ivalue + Dvalue <= lowerLimit) ? true : false;}
 
 
+bool PID::PLimited() { return (Pvalue >= upperPLimit || Pvalue <= lowerPLimit) ? true : false;}
+
+
+bool PID::ILimited() { return (Ivalue >= upperILimit || Ivalue <= lowerILimit) ? true : false;}
+
+
+bool PID::DLimited() { return (Dvalue >= upperDLimit || Dvalue <= lowerDLimit) ? true : false;}
+
+
 
 int8_t PID::getDirection() { return _direction ? 1 : -1;}
 float PID::getkP() { return kP;}

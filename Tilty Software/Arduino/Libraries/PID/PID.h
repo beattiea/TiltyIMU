@@ -70,6 +70,9 @@ class PID {
 	
 		//	Check whether PID has exceeded its limited values
 	bool limited();
+	bool PLimited();
+	bool ILimited();
+	bool DLimited();
 	
 		//	Display PID settings functions
 	int8_t getDirection();

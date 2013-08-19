@@ -29,7 +29,7 @@ SpiFlash mem;
 float ypr[3]; // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 float yaw = 0;
 float axyz[3]; // Real world reference acceleration minus gravity
-float az_offset = 0.375;
+float az_offset = 1.195;
 int ix,iy,iz; // compass sensor raw values
 
 float altitude = 0;
@@ -58,8 +58,8 @@ void setup() {
 		Serial.begin(115200);
 		#define myPort Serial
 		//while (!myPort) {	readDMP();}
-                mem.begin(10, 2);
-                mem.eraseChip();
+                //mem.begin(10, 2);
+                //mem.eraseChip();
 		for (int i = 0; i < 1000; i++) {
 			readDMP();
 			if (Serial) {
@@ -84,8 +84,8 @@ void loop() {
           mem.bufferData(axyz[2]);
           mem.bufferData(ypr[PITCH_INDEX]);
         }
-        save = !save;
-        
+        //save = !save;
+        /*
         while (Serial) {
           Serial.println("Altitude, Heading, Z Accel, Pitch");
           for (int i = 0; i < mem.getWrittenPages() * 256; i+= 16) {
@@ -100,6 +100,7 @@ void loop() {
           Serial.println(az_offset);
           while (true) {}
         }
+        */
 	/*
 	Serial.print("P");
 	Serial.println(ypr[PITCH_INDEX]);
