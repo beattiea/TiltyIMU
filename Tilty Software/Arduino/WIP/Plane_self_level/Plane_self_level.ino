@@ -15,7 +15,7 @@ Servo roll_servo, pitch_servo, yaw_servo, throttle_servo;
 float ypr[3]; // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 int ix,iy,iz; // X, Y, and Z magnetometer values
 
-#define ROLL_PIN 2 // Servo header 1
+#define ROLL_PIN 3 // Servo header 2
 #define ROLL_INDEX 2 // ypr[] data index
 float roll_offset = 0;
 float roll_kP = 30;// was 75
@@ -24,7 +24,7 @@ float roll_kD = 0.25;// was 0.05
 float roll_value = 1500;
 PID roll_pid = PID(&ypr[ROLL_INDEX], &roll_value, roll_kP, roll_kI, roll_kD, 0);
 
-#define PITCH_PIN 3 // Servo header 2
+#define PITCH_PIN 2 // Servo header 1
 #define PITCH_INDEX 1
 float pitch_offset = 3.25;
 float pitch_kP = 30;// was 75
@@ -37,7 +37,7 @@ PID pitch_pid = PID(&ypr[PITCH_INDEX], &pitch_value, pitch_kP, pitch_kI, pitch_k
 #define YAW_INDEX 0
 float yaw_kP = 0;
 float yaw_kI = 0;
-float yaw_kD = 15;// was 10
+float yaw_kD = 3.5;// was 10
 float yaw_value = 1500;
 PID yaw_pid = PID(&ypr[YAW_INDEX], &yaw_value, yaw_kP, yaw_kI, yaw_kD, 1);
 
