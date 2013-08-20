@@ -19,7 +19,8 @@ void setup() {
 
 void loop() {
 	tilty.updateIMU();
-	tilty.readNormalAccelerations(ypr);
+	//tilty.readNormalAccelerations(ypr);
+	tilty.readAngles(ypr);
 	
 	Serial.print(ypr[0]);
 	Serial.print("\t\t");

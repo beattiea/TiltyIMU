@@ -24,11 +24,10 @@ Software Library work:
 	
 	MPU6050 should check if IMU is already enabled upon initialization
 	
-	PID library Doxygen formatting
-	
-	R/C receiver Teensy compatability
+	R/C receiver Teensy compatability, spektrum/generic/cppm?
 	
 	GPS settings/control library
+	Check out GPS parser library
 	
 	TiltyIMU library to integrate everything together
 	
