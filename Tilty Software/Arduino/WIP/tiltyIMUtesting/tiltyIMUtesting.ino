@@ -8,9 +8,9 @@
 #include "Servo.h"
 #include "RCsignal.h"
 
-#define kP 25
-#define kI 50
-#define kD 0.5
+#define kP 8
+#define kI 0.5
+#define kD 0.1
 
 TiltyIMU tiltyIMU;
 
@@ -27,8 +27,8 @@ float ypr[3];
 float pitchValue;
 float rollValue;
 
-float pitchOffset = 2.5;
-float rollOffset = 0;
+float pitchOffset = 3.08;
+float rollOffset = .85;
 
 volatile int throttle;
 RCsignal throttleRC(21, updateThrottle);
@@ -58,10 +58,10 @@ void setup(){
   pitchPID = PID(&ypr[1], &pitchValue, kP, kI, kD, REVERSE);
   rollPID = PID(&ypr[3], &rollValue, kP, kI, kD, REVERSE);
   
-  pitchPID.setLimits(-250, 250);
-  rollPID.setLimits(-250, 250);
-  pitchPID.setILimits(-100, 100);
-  rollPID.setILimits(-100, 100);
+  pitchPID.setLimits(-20, 20);
+  rollPID.setLimits(-20, 20);
+  pitchPID.setILimits(-7.5, 7.5);
+  rollPID.setILimits(-7.5, 7.5);
   
   for(int i = 0; i < 1000; i++){
 	 tiltyIMU.updateIMU();
@@ -75,15 +75,19 @@ void setup(){
   //rollOffset = ypr[2];
   
   digitalWrite(13, HIGH);
+   while(throttle > 1150){};
+
 }
 
 void updateThrottle() {
   throttle = throttleRC.read();
+  
 }
 
 void loop(){
   
-  Serial.println(ypr[1]);
+  //Serial.println(ypr[1]);
+  //Serial.println(ypr[2]);
   
   tiltyIMU.updateIMU();
   tiltyIMU.readAngles(ypr);
@@ -93,7 +97,8 @@ void loop(){
   
   Serial.println(throttle);
   
-  if(throttle > 1200 && throttle != 0 && abs(ypr[1]) < 15 && abs(ypr[2]) < 15 ){ 
+  if((throttle > 1200 && throttle != 0 && throttle < 2000) && (abs(ypr[1]) < 15 && abs(ypr[2]) < 15)) //check to make sure that we have a "real" throttle value, and that we're not changing at too much of an angle
+  { 
   pitchPID.update();
   rollPID.update();
   	
