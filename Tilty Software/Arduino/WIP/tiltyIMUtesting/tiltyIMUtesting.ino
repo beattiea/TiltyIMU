@@ -1,4 +1,4 @@
-//#define DEBUG_INITS
+#define DEBUG_INITS
 #define INCLUDE_DMP
 
 #include "TiltyIMU.h"
@@ -8,9 +8,9 @@
 #include "Servo.h"
 #include "RCsignal.h"
 
-#define kP 20
-#define kI 0
-#define kD 0
+#define kP 25
+#define kI 50
+#define kD 0.5
 
 TiltyIMU tiltyIMU;
 
@@ -27,7 +27,7 @@ float ypr[3];
 float pitchValue;
 float rollValue;
 
-float pitchOffset = 0;
+float pitchOffset = 2.5;
 float rollOffset = 0;
 
 volatile int throttle;
@@ -37,6 +37,10 @@ void setup(){
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
   Serial.begin(115200);
+  
+  delay(25);
+  
+  //while (!Serial) {}
   
   tiltyIMU = TiltyIMU();
   tiltyIMU.init();
@@ -52,20 +56,25 @@ void setup(){
   ESC4.writeMicroseconds(1000);
   
   pitchPID = PID(&ypr[1], &pitchValue, kP, kI, kD, REVERSE);
-  rollPID = PID(&ypr[3], &rollValue, kP, kI, kD);
+  rollPID = PID(&ypr[3], &rollValue, kP, kI, kD, REVERSE);
   
-  for(int i = 0; i < 500; i++){
-     tiltyIMU.updateIMU();
-     digitalWrite(13, LOW);
-     Serial.println("Zeroing...");
-     if (i % 100 == 0) {digitalWrite(13, !digitalRead(13));}
+  pitchPID.setLimits(-250, 250);
+  rollPID.setLimits(-250, 250);
+  pitchPID.setILimits(-100, 100);
+  rollPID.setILimits(-100, 100);
+  
+  for(int i = 0; i < 1000; i++){
+	 tiltyIMU.updateIMU();
+	 digitalWrite(13, LOW);
+	 Serial.println("Zeroing...");
+	 if (i % 100 == 0) {digitalWrite(13, !digitalRead(13));}
   }
   tiltyIMU.readAngles(ypr);
   
-  pitchOffset = ypr[1];
-  rollOffset = ypr[2];
+  //pitchOffset = ypr[1];
+  //rollOffset = ypr[2];
   
-  digitalWrite(13, LOW);
+  digitalWrite(13, HIGH);
 }
 
 void updateThrottle() {
@@ -74,7 +83,7 @@ void updateThrottle() {
 
 void loop(){
   
-  Serial.println(ypr[2]);
+  Serial.println(ypr[1]);
   
   tiltyIMU.updateIMU();
   tiltyIMU.readAngles(ypr);
@@ -82,12 +91,12 @@ void loop(){
   ypr[1] -= pitchOffset;
   ypr[2] -= rollOffset;
   
+  Serial.println(throttle);
+  
+  if(throttle > 1200 && throttle != 0 && abs(ypr[1]) < 15 && abs(ypr[2]) < 15 ){ 
   pitchPID.update();
   rollPID.update();
-  
-  //Serial.println(throttle);
-  
-  if(throttle > 1150){ 
+  	
   ESC1.writeMicroseconds(throttle + pitchValue + rollValue);
   ESC2.writeMicroseconds(throttle + pitchValue - rollValue);
   ESC3.writeMicroseconds(throttle - pitchValue - rollValue);
