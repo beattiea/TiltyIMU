@@ -29,7 +29,7 @@ SpiFlash mem;
 float ypr[3]; // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 float yaw = 0;
 float axyz[3]; // Real world reference acceleration minus gravity
-float az_offset = 1.195;
+float az_offset = 1.225;
 int ix,iy,iz; // compass sensor raw values
 
 float altitude = 0;
@@ -68,6 +68,7 @@ void setup() {
 		}
 	#endif
 	
+	while (!alt.getDataReady()) {}
 	altitude = alt.readAltitudeM();
 }
 

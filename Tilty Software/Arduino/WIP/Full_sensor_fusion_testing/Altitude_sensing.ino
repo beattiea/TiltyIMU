@@ -1,6 +1,6 @@
 #define OUTPUT_ALTITUDE
 
-float bias = 0.98;
+float bias = 0.99;
 
 float sensor_alt;
 

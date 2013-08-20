@@ -19,35 +19,60 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef TILTYIMU_H
 #define TILTYIMU_H
 
+// Setting Defines
+#define DEBUG_INITS
+#define USE_DMP // Must use this for now, no alternative
+#define myPort Serial
+#define I2C_RATE I2C_RATE_1000
+
 #include "Arduino.h"
 
-#define USE_DMP
+// Sensor includes
+// IMU files
+#include <I2Cdev.h>
 #include "MPU6050.h"
-
+// Altimeter files
 #include "MPL3115A2.h"
-
+// Compass files
 #include "HMC5883.h"
 
 class TiltyIMU {
 	public:
-		TiltyIMU();
-		void init();
-		void readAngles(float *data);
-		void initializeIMU();
-		void readAltitude(float *data);
+		TiltyIMU(void);
+		~TiltyIMU();
 		
-		bool hasAlt;
-		bool hasIMU;
-		bool hasMagn;
-		
+		// Sensor objects
 		MPU6050 imu;
 		HMC5883 magn;
 		MPL3115A2 alt;
-
+		
+		// Functionality functions
+		void init();
+		
+		bool updateIMU();
+		
+		// Sensor Read Functions
+		void readAngles(float *data);
+		void readNormalAccelerations(float *data);
+		
+		float readAltitude(float *data);
+		
+		// Sensor available variables (true means sensor is initialized and available)
+		bool hasAlt;
+		bool hasIMU;
+		bool hasMagn;
+	
+	private:
+	// IMU stuff
+		void initializeIMU();
+	
 		uint16_t packetSize;
 		uint16_t fifoCount;
 		uint8_t fifoBuffer[64]; // FIFO storage buffer
 		Quaternion q;		   // [w, x, y, z]		 quaternion container
+		VectorInt16 aa;		 // [x, y, z]			accel sensor measurements
+		VectorInt16 aaReal;	// [x, y, z]			world-frame accel sensor measurements
+		VectorInt16 aaWorld;	// [x, y, z]			world-frame accel sensor measurements
 		VectorFloat gravity;	// [x, y, z]			gravity vector
 };
 
