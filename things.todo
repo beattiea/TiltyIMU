@@ -40,6 +40,4 @@ Hardware Work
 	LEDs need to decrease current draw!
 	Look into current boosting the 5V regulator on the Tilty controllers
 	Possible zener/transistor clamp circuits on 3.3v line to prevent 5v shorting
-
-Tyler:
-GPS NMEA Parser
+	Vias around bluetooth chip to break up RF interference
