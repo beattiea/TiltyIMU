@@ -8,9 +8,9 @@
 #include "Servo.h"
 #include "RCsignal.h"
 
-#define kP 8
-#define kI 0.5
-#define kD 0.1
+#define kP 1
+#define kI 0.01
+#define kD 0.2
 
 TiltyIMU tiltyIMU;
 
