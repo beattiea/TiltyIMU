@@ -64,8 +64,8 @@ void setup(){
   ESC3.writeMicroseconds(1000);
   ESC4.writeMicroseconds(1000);
   
-  pitchPID = PID(&ypr[1], &pitchValue, kP, kI, kD, REVERSE);
-  rollPID = PID(&ypr[2], &rollValue, kP, kI, kD, REVERSE);
+  pitchPID = PID(&ypr[1], &pitchValue, kP, kI, kD, FORWARD);
+  rollPID = PID(&ypr[2], &rollValue, kP, kI, kD, FORWARD);
   
   //pitchPID = PID(&ypr[1], &d_pitchValue, kP, kI, kD, REVERSE);
   //rollPID = PID(&ypr[2], &d_rollValue, kP, kI, kD, REVERSE);
@@ -83,6 +83,16 @@ void setup(){
 	voltage = (analogRead(14) / 1024.0) * 51.8294;
 	Serial.println(voltage);
   }
+  /*
+  while (true) {
+  	tiltyIMU.updateIMU();
+  	tiltyIMU.readAngles(ypr);
+  	Serial.print(ypr[1]);
+	Serial.print(", ");
+	Serial.println(ypr[2]);
+  }
+  */
+  
   tiltyIMU.readAngles(ypr);
   
 	digitalWrite(13, HIGH);
@@ -137,10 +147,10 @@ void loop() {
 		  pitchValue *= voltage / 12.3;
 		  rollValue *= voltage / 12.3;
 		  	
-		  ESC1.writeMicroseconds(throttle + pitchValue + rollValue);
+		  ESC1.writeMicroseconds(throttle - pitchValue + rollValue);
 		  ESC2.writeMicroseconds(throttle - pitchValue - rollValue);
 		  ESC3.writeMicroseconds(throttle + pitchValue - rollValue);
-		  ESC4.writeMicroseconds(throttle - pitchValue + rollValue);
+		  ESC4.writeMicroseconds(throttle + pitchValue + rollValue);
 	  }
 	  else{
 		  ESC1.writeMicroseconds(1000);
