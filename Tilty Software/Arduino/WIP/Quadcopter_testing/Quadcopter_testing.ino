@@ -8,9 +8,9 @@
 #include "Servo.h"
 #include "RCsignal.h"
 
-float kP = 0.4;
+float kP = 5.0;
 float kI = 0.0;
-float kD = 0.45;
+float kD = 0.5;
 
 float iMax = 8;
 
@@ -64,11 +64,11 @@ void setup(){
   ESC3.writeMicroseconds(1000);
   ESC4.writeMicroseconds(1000);
   
-  //pitchPID = PID(&ypr[1], &pitchValue, kP, kI, kD, REVERSE);
-  //rollPID = PID(&ypr[2], &rollValue, kP, kI, kD, REVERSE);
+  pitchPID = PID(&ypr[1], &pitchValue, kP, kI, kD, REVERSE);
+  rollPID = PID(&ypr[2], &rollValue, kP, kI, kD, REVERSE);
   
-  pitchPID = PID(&ypr[1], &d_pitchValue, kP, kI, kD, REVERSE);
-  rollPID = PID(&ypr[2], &d_rollValue, kP, kI, kD, REVERSE);
+  //pitchPID = PID(&ypr[1], &d_pitchValue, kP, kI, kD, REVERSE);
+  //rollPID = PID(&ypr[2], &d_rollValue, kP, kI, kD, REVERSE);
   
   //pitchPID.setLimits(-20, 20);
   //rollPID.setLimits(-20, 20);
@@ -138,8 +138,8 @@ void loop() {
 		  rollValue *= voltage / 12.3;
 		  	
 		  ESC1.writeMicroseconds(throttle + pitchValue + rollValue);
-		  ESC2.writeMicroseconds(throttle + pitchValue - rollValue);
-		  ESC3.writeMicroseconds(throttle - pitchValue - rollValue);
+		  ESC2.writeMicroseconds(throttle - pitchValue - rollValue);
+		  ESC3.writeMicroseconds(throttle + pitchValue - rollValue);
 		  ESC4.writeMicroseconds(throttle - pitchValue + rollValue);
 	  }
 	  else{
