@@ -1546,8 +1546,8 @@ Please make sure your boards conform to these design rules.</description>
 <element name="U2" library="on-semiconductor" package="TO263" value="LM2931" x="19.05" y="44.5135" smashed="yes" rot="MR0">
 <attribute name="COST" value="0.53" x="19.05" y="44.5135" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
-<element name="C4" library="resistor" package="C0603" value="0.1uF" x="22.987" y="40.259" smashed="yes" rot="MR90"/>
-<element name="C5" library="resistor" package="C0603" value="0.1uF" x="15.113" y="40.259" smashed="yes" rot="MR90"/>
+<element name="C2" library="resistor" package="C0603" value="0.1uF" x="22.987" y="40.259" smashed="yes" rot="MR90"/>
+<element name="C3" library="resistor" package="C0603" value="0.1uF" x="15.113" y="40.259" smashed="yes" rot="MR90"/>
 <element name="JP1" library="pinhead" package="1X08_NO_SS_LOCKING" value="" x="7.62" y="40.513" smashed="yes" rot="R90">
 <attribute name="VALUE" x="10.795" y="30.353" size="1.27" layer="27" rot="R90"/>
 </element>
@@ -1566,17 +1566,19 @@ Please make sure your boards conform to these design rules.</description>
 <element name="U3" library="SparkFun-PowerIC" package="SOT23-5" value="V_REG_LDOSMD" x="-2.54" y="2.54">
 <attribute name="PART#" value="TLV71333PDBVR" x="-2.54" y="2.54" size="1.778" layer="27" display="off"/>
 </element>
+<element name="C1" library="resistor" package="C0603" value="0.1uF" x="-2.54" y="-2.54"/>
 </elements>
 <signals>
 <signal name="GND">
 <contactref element="U2" pad="P$1"/>
-<contactref element="C5" pad="2"/>
-<contactref element="C4" pad="2"/>
+<contactref element="C3" pad="2"/>
+<contactref element="C2" pad="2"/>
 <contactref element="JP5" pad="7"/>
 <contactref element="JP2" pad="1"/>
 <contactref element="JP6" pad="1"/>
 <contactref element="U1" pad="10"/>
 <contactref element="U3" pad="2"/>
+<contactref element="C1" pad="2"/>
 <wire x1="22.987" y1="41.109" x2="30.353" y2="46.863" width="0" layer="19" extent="16-16"/>
 <wire x1="19.05" y1="47.3075" x2="22.987" y2="41.109" width="0" layer="19" extent="16-16"/>
 <wire x1="15.113" y1="41.109" x2="19.05" y2="47.3075" width="0" layer="19" extent="16-16"/>
@@ -1584,6 +1586,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="8.2278" y1="8.35" x2="35.433" y2="11.303" width="0" layer="19" extent="1-1"/>
 <wire x1="2.413" y1="11.303" x2="8.2278" y2="8.35" width="0" layer="19" extent="1-1"/>
 <wire x1="-2.54" y1="1.2399" x2="2.413" y2="11.303" width="0" layer="19" extent="1-1"/>
+<wire x1="-1.69" y1="-2.54" x2="-2.54" y2="1.2399" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="SCL" class="4">
 <contactref element="JP5" pad="2"/>
@@ -1600,14 +1603,14 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="VBATT">
 <contactref element="U2" pad="P$2"/>
-<contactref element="C4" pad="1"/>
+<contactref element="C2" pad="1"/>
 <contactref element="JP2" pad="2"/>
 <wire x1="21.336" y1="40.1193" x2="22.987" y2="39.409" width="0" layer="19" extent="16-16"/>
 <wire x1="2.667" y1="13.843" x2="21.336" y2="40.1193" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="5V">
 <contactref element="U2" pad="P$3"/>
-<contactref element="C5" pad="1"/>
+<contactref element="C3" pad="1"/>
 <contactref element="JP5" pad="8"/>
 <contactref element="U3" pad="1"/>
 <contactref element="U3" pad="3"/>
@@ -1628,7 +1631,9 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="3V3" class="3">
 <contactref element="U3" pad="5"/>
 <contactref element="JP1" pad="8"/>
+<contactref element="C1" pad="1"/>
 <wire x1="-3.49" y1="3.8401" x2="7.747" y2="49.403" width="0" layer="19" extent="1-1"/>
+<wire x1="-3.39" y1="-2.54" x2="-3.49" y2="3.8401" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>

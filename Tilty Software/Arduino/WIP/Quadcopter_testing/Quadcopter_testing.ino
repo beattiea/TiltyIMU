@@ -10,7 +10,7 @@
 
 float kP = 5.0;
 float kI = 0.0;
-float kD = 0.5;
+float kD = 0.0;
 
 float iMax = 8;
 
