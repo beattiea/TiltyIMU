@@ -32,6 +32,7 @@ float axyz[3]; // Real world reference acceleration minus gravity
 float az_offset = 1.225;
 int ix,iy,iz; // compass sensor raw values
 
+float sensor_alt;
 float altitude = 0;
 float heading;
 
@@ -42,7 +43,7 @@ void setup() {
 	
 	setupDMP();
 	alt.init();
-	alt.setOversampling(0);
+	alt.setOversampling(7);
 	magn.init();
 	
 	#ifdef USE_BT
@@ -70,6 +71,8 @@ void setup() {
 	
 	while (!alt.getDataReady()) {}
 	altitude = alt.readAltitudeM();
+	
+	imu.setZAccelOffset(771);
 }
 
 bool save = false;
@@ -78,6 +81,17 @@ void loop() {
 	readDMP();
 	computeAltitude();
 	calculateYaw();
+	
+	if (Serial.available()) {
+		Serial.read();
+		long start = millis();
+		while (millis() - start < 30000) {
+			readDMP();
+			if (alt.getDataReady()) Serial.println(alt.readAltitudeM()); alt.forceMeasurement();
+		}
+	}
+	
+	//if (alt.getDataReady()) Serial.println(alt.readAltitudeM()); alt.forceMeasurement();
         
         if (save) {
           mem.bufferData(altitude);
