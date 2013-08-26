@@ -2624,7 +2624,7 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="PROD_ID" value="IC-09069" x="11.43" y="-1.27" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="Y1" library="SparkFun-FreqCtrl" package="CRYSTAL-SMD-5X3" value="16MHz" x="16.637" y="34.29" smashed="yes">
-<attribute name="PART#" value="535-10226-1-ND" x="36.957" y="-11.43" size="1.778" layer="27" display="off"/>
+<attribute name="PART#" value="887-1104-1-ND" x="36.957" y="-11.43" size="1.778" layer="27" display="off"/>
 </element>
 <element name="C1" library="resistor" package="C0603" value="22pF" x="14.986" y="31.4325" smashed="yes"/>
 <element name="C2" library="resistor" package="C0603" value="22pF" x="18.034" y="31.4325" smashed="yes" rot="R180"/>

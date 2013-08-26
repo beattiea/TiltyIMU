@@ -903,6 +903,12 @@
 <text x="19.74198125" y="29.20243125" size="1.905" layer="26" font="vector" ratio="17" rot="MR1.7">IMU</text>
 <text x="19.05" y="38.1" size="1.778" layer="26" ratio="12" rot="MR0" align="center">R/C Receiver</text>
 <text x="19.05" y="36.068" size="1.778" layer="26" ratio="12" rot="MR0" align="center">Add-on</text>
+<text x="27.305" y="15.621" size="1.778" layer="26" ratio="12" rot="MR270">A0</text>
+<text x="29.845" y="15.621" size="1.778" layer="26" ratio="12" rot="MR270">A1</text>
+<text x="32.385" y="15.621" size="1.778" layer="26" ratio="12" rot="MR270">A2</text>
+<text x="32.385" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">A3</text>
+<text x="29.845" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">RX</text>
+<text x="27.305" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">TX</text>
 </plain>
 <libraries>
 <library name="pinhead">
@@ -2646,7 +2652,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="JP10" library="SparkFun-Connectors" package="2X3-NS" value="" x="28.956" y="18.288" smashed="yes">
 <attribute name="VALUE" x="25.146" y="13.843" size="1.27" layer="27"/>
 </element>
-<element name="S1" library="SparkFun-Electromechanical" package="TACTILE_SWITCH_SMD" value="SWITCH-MOMENTARY-2SMD" x="3.556" y="-2.794"/>
+<element name="S1" library="SparkFun-Electromechanical" package="TACTILE_SWITCH_SMD" value="SWITCH-MOMENTARY-2SMD" x="3.302" y="34.036" smashed="yes" rot="R90"/>
 </elements>
 <signals>
 <signal name="GND">
@@ -2770,7 +2776,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="5.334" y1="19.558" x2="5.334" y2="24.892" width="0.3175" layer="16"/>
 <wire x1="5.334" y1="24.892" x2="8.636" y2="28.194" width="0.3175" layer="16"/>
 <wire x1="7.62" y1="18.034" x2="7.62" y2="17.78" width="0.3175" layer="1"/>
-<wire x1="5.3415" y1="28.6945" x2="5.842" y2="28.194" width="0.254" layer="1"/>
+<wire x1="5.207" y1="28.829" x2="5.842" y2="28.194" width="0.254" layer="1"/>
 <wire x1="5.842" y1="28.194" x2="8.636" y2="28.194" width="0.254" layer="1"/>
 <contactref element="JP2" pad="1"/>
 <wire x1="2.54" y1="11.303" x2="4.191" y2="11.303" width="0.508" layer="16"/>
@@ -2779,7 +2785,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="35.56" y1="11.303" x2="24.765" y2="11.303" width="0.508" layer="16"/>
 <wire x1="24.765" y1="11.303" x2="23.876" y2="12.192" width="0.508" layer="16"/>
 <contactref element="S1" pad="3"/>
-<wire x1="8.5725" y1="1.778" x2="1.016" y2="-4.699" width="0" layer="19" extent="1-1"/>
+<wire x1="5.207" y1="28.829" x2="5.207" y2="31.496" width="0.254" layer="1"/>
 </signal>
 <signal name="+24V">
 <contactref element="C7" pad="1"/>
@@ -3060,11 +3066,10 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="23.3236" y1="25.781" x2="23.3426" y2="25.8" width="0.2032" layer="1"/>
 <wire x1="6.096" y1="26.504" x2="4.738" y2="26.504" width="0.254" layer="1"/>
 <wire x1="4.738" y1="26.504" x2="4.064" y2="27.178" width="0.254" layer="1"/>
-<wire x1="4.064" y1="27.178" x2="4.064" y2="30.48" width="0.254" layer="1"/>
-<wire x1="4.064" y1="30.48" x2="3.048" y2="31.496" width="0.254" layer="1"/>
-<wire x1="3.048" y1="31.496" x2="0.9035" y2="31.496" width="0.254" layer="1"/>
 <contactref element="S1" pad="1"/>
-<wire x1="1.016" y1="-0.889" x2="4.738" y2="26.504" width="0" layer="19" extent="1-1"/>
+<wire x1="4.064" y1="27.178" x2="4.064" y2="30.988" width="0.254" layer="1"/>
+<wire x1="4.064" y1="30.988" x2="3.556" y2="31.496" width="0.254" layer="1"/>
+<wire x1="3.556" y1="31.496" x2="1.397" y2="31.496" width="0.254" layer="1"/>
 </signal>
 <signal name="ODD_CHAN">
 <contactref element="U4" pad="P$4"/>
@@ -3225,11 +3230,8 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U1" pad="26"/>
 <contactref element="JP10" pad="6"/>
 <wire x1="23.3426" y1="23.4" x2="29.94" y2="23.4" width="0.254" layer="1"/>
-<wire x1="29.686" y1="23.4" x2="30.226" y2="22.86" width="0" layer="19" extent="1-16"/>
-<wire x1="30.226" y1="22.86" x2="30.226" y2="20.828" width="0" layer="19" extent="1-16"/>
 <wire x1="31.496" y1="19.558" x2="31.496" y2="20.828" width="0.254" layer="1"/>
 <wire x1="31.496" y1="20.828" x2="30.48" y2="21.844" width="0.254" layer="1"/>
-<wire x1="29.686" y1="23.4" x2="29.94" y2="23.4" width="0" layer="19" extent="1-16"/>
 <wire x1="29.94" y1="23.4" x2="30.48" y2="22.86" width="0.254" layer="1"/>
 <wire x1="30.48" y1="22.86" x2="30.48" y2="21.844" width="0.254" layer="1"/>
 </signal>
@@ -3273,8 +3275,8 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,02821c1144d8eb8b"/>
 <approved hash="19,1,90fa661bc928ffc3"/>
 <approved hash="5,1,5204c67a539faabb"/>
-<approved hash="19,1,e4f02608260de4f5"/>
 <approved hash="19,1,e11023e8261de4e5"/>
+<approved hash="19,1,e4f02608260de4f5"/>
 <approved hash="19,1,f85427ac2427fbdf"/>
 <approved hash="19,1,c8f4b60cb61bc8e3"/>
 <approved hash="19,1,cd14b3ecb60bc8f3"/>
