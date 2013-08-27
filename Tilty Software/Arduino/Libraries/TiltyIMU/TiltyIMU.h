@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class TiltyIMU {
 	public:
 		TiltyIMU(void);
-		~TiltyIMU();
+		~TiltyIMU(void);
 		
 		// Sensor objects
 		MPU6050 imu;
@@ -47,9 +47,9 @@ class TiltyIMU {
 		MPL3115A2 alt;
 		
 		// Functionality functions
-		void init();
+		void init(void);
 		
-		byte updateSensors();
+		byte updateSensors(void);
 		
 		bool readIMU(byte imuIntStatus);
 		
@@ -70,7 +70,7 @@ class TiltyIMU {
 	
 	private:
 	// IMU stuff
-		void initializeIMU();
+		void initializeIMU(void);
 		
 		int16_t x_accel_offset = -4600;
 		int16_t y_accel_offset = 709;
