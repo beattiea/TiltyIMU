@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEBUG_INITS
 #define USE_DMP // Must use this for now, no alternative
 #define myPort Serial
-#define I2C_RATE I2C_RATE_1000
+#define I2C_RATE I2C_RATE_800
 
 #include "Arduino.h"
 
@@ -49,12 +49,18 @@ class TiltyIMU {
 		// Functionality functions
 		void init();
 		
-		bool updateIMU();
+		byte updateSensors();
 		
-		// Sensor Read Functions
+		bool readIMU(byte imuIntStatus);
+		
+		// IMU Functions
 		void readAngles(float *data);
 		void readNormalAccelerations(float *data);
 		
+		void getGyroRates(int *data);
+		void getAccel(int *data);
+		
+		// Altimeter Functions
 		float readAltitude(float *data);
 		
 		// Sensor available variables (true means sensor is initialized and available)
@@ -65,6 +71,10 @@ class TiltyIMU {
 	private:
 	// IMU stuff
 		void initializeIMU();
+		
+		int16_t x_accel_offset = -4600;
+		int16_t y_accel_offset = 709;
+		int16_t z_accel_offset = 771;
 	
 		uint16_t packetSize;
 		uint16_t fifoCount;

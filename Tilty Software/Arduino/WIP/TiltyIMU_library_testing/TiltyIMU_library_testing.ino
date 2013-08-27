@@ -38,13 +38,22 @@ void setup() {
 	Serial.println(tilty.imu.getZAccelOffset());
 }
 
+long start;
+
 void loop() {
-	tilty.updateIMU();
-	tilty.readNormalAccelerations(float_data);
-	//tilty.readAngles(ypr);
 	/*
+	start = micros();
+	tilty.updateIMU();
+	tilty.readAltitude(&alt);
+	tilty.readNormalAccelerations(float_data);
+	tilty.readAngles(float_data);
 	tilty.getAccel(int_data);
 	
+	Serial.println(micros() - start);
+	*/
+	tilty.updateSensors();
+	
+	/*
 	Serial.print(int_data[0]);
 	Serial.print("\t\t");
 	Serial.print(int_data[1]);
@@ -89,12 +98,13 @@ void loop() {
 		}
 		*/
 	}
-	
+	/*
 	Serial.print(float_data[0]);
 	Serial.print("\t\t");
 	Serial.print(float_data[1]);
 	Serial.print("\t\t");
 	Serial.println(float_data[2]);
+	*/
 	
 	
 	/*

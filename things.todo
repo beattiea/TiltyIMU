@@ -30,6 +30,7 @@ Software Library work:
 	Check out GPS parser library
 	
 	TiltyIMU library to integrate everything together
+	Test TiltyIMU angle reading at 200Hz
 	
 	Servo library should have adjustable refresh rate
 

@@ -77,19 +77,58 @@ void TiltyIMU::initializeIMU()
 }
 
 
-bool TiltyIMU::updateIMU()
+byte TiltyIMU::updateSensors()
+{
+	long start = micros();
+	
+	if (hasIMU)
+	{
+		//Serial.println("Read IMU");
+		byte status = imu.getIntStatus();
+		if (status & 0x12) 
+		{
+			readIMU(status);
+			//Serial.println("Read IMU");
+		}
+	}
+	
+	if (hasAlt)
+	{
+		if (alt.getDataReady()) 
+		{
+			alt.readAltitudeM(); 
+			//Serial.println("Read Altimeter");
+		}
+	}
+	
+	if (hasMagn)
+	{
+		float data[3];
+		if (magn.getDataReady())
+		{
+			magn.getValues(data);
+			//Serial.println("Read Compass");
+		}
+	}
+	
+	Serial.println(micros() - start);
+}
+
+
+bool TiltyIMU::readIMU(byte imuIntStatus)
 {
 	// reset interrupt flag and get INT_STATUS byte
-	bool imuInterrupt = false;
-	bool imuIntStatus = imu.getIntStatus() & 0x12;
-	
+	//bool imuInterrupt = false;
+	//bool imuIntStatus = imu.getIntStatus() & 0x12;
+	/*
 	while (!imuIntStatus) {
 		imuIntStatus = imu.getIntStatus() & 0x12;
 	}
+	*/
 
 	// get current FIFO count
 	fifoCount = imu.getFIFOCount();
-
+	
 	// check for overflow (this should never happen unless our code is too inefficient)
 	if ((imuIntStatus & 0x10) || fifoCount == 1024) {
 		// reset so we can continue cleanly
@@ -142,6 +181,22 @@ void TiltyIMU::readNormalAccelerations(float *data)
 	data[1] = 9.81 * (aaWorld.y / 8192.0);
 	data[2] = 9.81 * (aaWorld.z / 8192.0);
 #endif
+}
+
+
+void TiltyIMU::getGyroRates(int *data)
+{
+	data[0] = int16_t((fifoBuffer[16] << 8) | fifoBuffer[17]);
+	data[1] = int16_t((fifoBuffer[20] << 8) | fifoBuffer[21]);
+	data[2] = int16_t((fifoBuffer[24] << 8) | fifoBuffer[25]);
+}
+
+
+void TiltyIMU::getAccel(int *data)
+{
+	data[0] = int16_t((fifoBuffer[28] << 8) | fifoBuffer[29]);
+	data[1] = int16_t((fifoBuffer[32] << 8) | fifoBuffer[33]);
+	data[2] = int16_t((fifoBuffer[36] << 8) | fifoBuffer[37]);
 }
 
 
