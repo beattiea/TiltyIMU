@@ -17,6 +17,8 @@
 #include <SpiFlash.h>
 #include <SPI.h>
 
+#include <PID.h>
+
 // Sensors
 MPU6050 imu;
 MPL3115A2 alt;
@@ -35,20 +37,33 @@ RCsignal RCInput(2, readRC);
 float ypr[3]; // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 float yaw = 0;
 float axyz[3]; // Real world reference acceleration minus gravity
-float az_offset = 1.225;
+float az_offset = 1.115;
 int ix,iy,iz; // compass sensor raw values
 
 float sensor_alt;
 float altitude = 0;
 float heading;
 
+float maxAlt = 1;
+
 volatile int throttle;
+
+
+float fusedAlt;
+
+float kP = 50;
+float kI = 1;
+float kD = 0.0;
+
+float limiter;
+
+PID altLimit(&fusedAlt, &limiter, kP, kI, kD);
 
 #include "Servo.h"
 
 Servo throttleOutput;
 
-int altitudeOffset = 0;
+float altitudeOffset = 0;
 
 void setup() {
 	Wire.begin(I2C_MASTER, 0x00, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_400);//  Starts I2C on Teensy
@@ -85,7 +100,7 @@ void setup() {
 	while (!alt.getDataReady()) {}
 	altitude = alt.readAltitudeM();
 	
-	imu.setZAccelOffset(771);
+	//imu.setZAccelOffset(771);
 
         throttleOutput.attach(23);
         throttleOutput.writeMicroseconds(1000);
@@ -97,12 +112,12 @@ bool altSet = false;
 
 void loop(){
   
-        if(throttle > 1200 && !altSet)
+        if(throttle > 1100 && !altSet)
         {
           altitudeOffset = altitude;
           altSet = true;
         }
-        else if(throttle < 1200)
+        else if(throttle < 1100 && altSet)
         {
           altitudeOffset = 0;
           altSet = false;
@@ -110,59 +125,29 @@ void loop(){
         
 	readDMP();
 	computeAltitude();
-	calculateYaw();
 
-        if(altitude > 5)
-        {
-          throttleOutput.writeMicroseconds(1200);
-        }else throttleOutput.writeMicroseconds(throttle);
-	
-	if (Serial.available()) {
-		Serial.read();
-		long start = millis();
-		while (millis() - start < 30000) {
-			readDMP();
-			if (alt.getDataReady()) Serial.println(alt.readAltitudeM()); alt.forceMeasurement();
-		}
-	}
-	
-	//if (alt.getDataReady()) Serial.println(alt.readAltitudeM()); alt.forceMeasurement();
+        fusedAlt = altitude - altitudeOffset;
         
-        if (save) {
-          mem.bufferData(altitude);
-          mem.bufferData(heading);
-          mem.bufferData(axyz[2]);
-          mem.bufferData(ypr[PITCH_INDEX]);
+        altLimit.setInputTriggers (-2000000, maxAlt);
+
+        if(altitude - altitudeOffset > maxAlt && altSet)
+        {
+          //altLimit.setLimits(0, throttle - 1150);
+          altLimit.update();
+          
+          if (throttle - limiter > 1150) { throttleOutput.writeMicroseconds(throttle - limiter);}
+          else {throttleOutput.writeMicroseconds(1150);}
+          Serial.print("Limited: ");
+          Serial.println(limiter);
         }
-        //save = !save;
-        /*
-        while (Serial) {
-          Serial.println("Altitude, Heading, Z Accel, Pitch");
-          for (int i = 0; i < mem.getWrittenPages() * 256; i+= 16) {
-            Serial.print(mem.readFloat(i));
-	    Serial.print(", ");
-            Serial.print(mem.readFloat(i+4));
-	    Serial.print(", ");
-            Serial.print(mem.readFloat(i+8));
-	    Serial.print(", ");
-            Serial.println(mem.readFloat(i+12));
-          }
-          Serial.println(az_offset);
-          while (true) {}
+        else
+        {
+          altLimit.reset();
+          throttleOutput.writeMicroseconds(throttle);
+          Serial.println(throttle);
         }
-        */
-	/*
-	Serial.print("P");
-	Serial.println(ypr[PITCH_INDEX]);
-	Serial.print("Y");
-	Serial.println(yaw);
-	Serial.print("R");
-	Serial.println(ypr[ROLL_INDEX]);
-	Serial.print("A");
-	Serial.println(altitude);
-	Serial.print("T");
-	Serial.println(alt.readTempF());
-	*/
+        Serial.println(fusedAlt);
+        //Serial.println(axyz[2]);
 }
 
 void readRC()

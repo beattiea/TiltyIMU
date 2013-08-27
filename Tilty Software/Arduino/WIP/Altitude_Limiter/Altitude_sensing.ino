@@ -1,6 +1,6 @@
 //#define OUTPUT_ALTITUDE
 
-float bias = 0.99;
+float bias = 0.8;
 
 long alt_now;
 long alt_dt_us;
@@ -19,11 +19,10 @@ void computeAltitude() {
 	else {
 		alt_now = micros();
 		alt_dt = (alt_now - alt_dt_us) / 1000000.0;
-		altitude += (axyz[2] * alt_dt) * alt_dt;
+		altitude += (axyz[2] * alt_dt);
 		alt_dt_us = alt_now;
 	}
-
-        altitude -= altitudeOffset;
+        
 	
 	#ifdef OUTPUT_ALTITUDE
 		//Serial.print("Altitude fusion: ");
