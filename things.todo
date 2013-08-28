@@ -39,8 +39,4 @@ Hardware Work
 	Update all 8-pin receptacles to new locking pattern!
 
 	Add-on boards
-	Add place to add a diode to prevent Teensy reverse voltage
 	LEDs need to decrease current draw!
-	Look into current boosting the 5V regulator on the Tilty controllers
-	Possible zener/transistor clamp circuits on 3.3v line to prevent 5v shorting
-	Vias around bluetooth chip to break up RF interference

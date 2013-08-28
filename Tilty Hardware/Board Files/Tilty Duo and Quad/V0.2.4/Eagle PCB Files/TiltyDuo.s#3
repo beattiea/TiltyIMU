@@ -7541,7 +7541,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="R5" library="resistor" deviceset="R-US_" device="R0603" value="10k"/>
 <part name="R6" library="resistor" deviceset="R-US_" device="R0603" value="680"/>
 <part name="GND13" library="supply1" deviceset="GND" device=""/>
-<part name="JP4" library="My Parts" deviceset="2-POS_SMD_TERM_BLOCK" device=""/>
+<part name="JP4" library="My Parts" deviceset="2-POS_SMD_TERM_BLOCK" device="">
+<attribute name="PART#" value="277-2337-1-ND"/>
+<attribute name="POSSIBLE_ALT" value="009276002021106"/>
+</part>
 <part name="U4" library="on-semiconductor" deviceset="LM2931" device="">
 <attribute name="COST" value="0.53"/>
 </part>
@@ -7551,6 +7554,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="COST" value="0.28"/>
 <attribute name="PART#" value="AE10004-ND"/>
 <attribute name="PART#2" value="A28-LC-TR-R"/>
+<attribute name="PART#3" value="ED3052-5-ND"/>
 </part>
 <part name="JP1" library="pinhead" deviceset="PINHD-1X8" device="1X08_NO_SILK_LOCK"/>
 <part name="JP2" library="pinhead" deviceset="PINHD-1X8" device="1X08_NO_SILK_LOCK"/>
@@ -7678,7 +7682,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="R5" gate="G$1" x="118.11" y="68.58"/>
 <instance part="R6" gate="G$1" x="123.19" y="63.5" rot="R90"/>
 <instance part="GND13" gate="1" x="123.19" y="55.88"/>
-<instance part="JP4" gate="G$1" x="200.025" y="104.775"/>
+<instance part="JP4" gate="G$1" x="200.025" y="104.775">
+<attribute name="PART#" x="200.025" y="104.775" size="1.778" layer="96" display="off"/>
+<attribute name="POSSIBLE_ALT" x="200.025" y="104.775" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="U4" gate="G$1" x="142.24" y="111.76">
 <attribute name="COST" x="142.24" y="111.76" size="3.81" layer="96" ratio="14" display="off"/>
 </instance>
@@ -7689,6 +7696,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="COST" x="187.96" y="45.72" size="3.81" layer="96" ratio="14" display="off"/>
 <attribute name="PART#" x="187.96" y="45.72" size="1.778" layer="96" display="off"/>
 <attribute name="PART#2" x="187.96" y="45.72" size="1.778" layer="96" display="off"/>
+<attribute name="PART#3" x="187.96" y="45.72" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="JP1" gate="A" x="139.7" y="53.34" rot="R180"/>
 <instance part="JP2" gate="A" x="147.32" y="33.02" rot="R180"/>

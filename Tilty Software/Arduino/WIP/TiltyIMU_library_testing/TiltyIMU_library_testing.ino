@@ -51,7 +51,10 @@ void loop() {
 	
 	Serial.println(micros() - start);
 	*/
-	tilty.updateSensors();
+	//tilty.updateSensors();
+	
+	tilty.alt.readAltitudeM(&float_data[0]);
+	Serial.println(float_data[0]);
 	
 	/*
 	Serial.print(int_data[0]);

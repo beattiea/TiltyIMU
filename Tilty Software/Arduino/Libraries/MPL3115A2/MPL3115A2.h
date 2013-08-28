@@ -50,11 +50,17 @@ class MPL3115A2 {
 		bool getDataReady();
 		
 		//	Read data functions
+		void readAltitude(float* data);
 		float readAltitudeM();
+		void readAltitudeM(float* data);
 		float readAltitudeF();
+		void readAltitudeF(float* data);
 		
+		void readTemp(float* data);
 		float readTempC();
+		void readTempC(float* data);
 		float readTempF();
+		void readTempF(float* data);
 		
 		void forceMeasurement();
 		

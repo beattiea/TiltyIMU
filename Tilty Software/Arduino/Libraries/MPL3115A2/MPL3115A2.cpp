@@ -102,6 +102,32 @@ bool MPL3115A2::getDataReady()
 
 
 //	Reads the current altitude in meters
+void MPL3115A2::readAltitude(float* data)
+{
+	int u_altitude, m_altitude;
+	float l_altitude;
+	
+	readBytes(0x01, 3, _buffer);
+	
+	u_altitude = _buffer[0] << 8;//  The upper 8 bits of the altitude
+	m_altitude = _buffer[1];//  The middle 8 bits of the altitude
+	l_altitude = float(_buffer[2] >> 4) / 16.0;//  The lower 4 bits of the altitude
+	
+	int16_t _temp = u_altitude | m_altitude;
+	
+	if (_temp < 0)
+	{
+		*data = float(_temp) - l_altitude;
+	}
+	else
+	{
+		*data = float(_temp) + l_altitude;
+	}
+}
+
+
+
+//	Reads the current altitude in meters
 float MPL3115A2::readAltitudeM()
 {
 	int u_altitude, m_altitude;
@@ -127,10 +153,60 @@ float MPL3115A2::readAltitudeM()
 
 
 
+//	Reads the current altitude in meters
+void MPL3115A2::readAltitudeM(float* data)
+{
+	int u_altitude, m_altitude;
+	float l_altitude;
+	
+	readBytes(0x01, 3, _buffer);
+	
+	u_altitude = _buffer[0] << 8;//  The upper 8 bits of the altitude
+	m_altitude = _buffer[1];//  The middle 8 bits of the altitude
+	l_altitude = float(_buffer[2] >> 4) / 16.0;//  The lower 4 bits of the altitude
+	
+	int16_t _temp = u_altitude | m_altitude;
+	
+	if (_temp < 0)
+	{
+		*data = float(_temp) - l_altitude;
+	}
+	else
+	{
+		*data = float(_temp) + l_altitude;
+	}
+}
+
+
+
 //	Reads the current altitude in feet
 float MPL3115A2::readAltitudeF() 
 {
 	return 3.381 * readAltitudeM();
+}
+
+
+
+//	Reads the current altitude in feet
+void MPL3115A2::readAltitudeF(float* data) 
+{
+	*data = 3.381 * readAltitudeM();
+}
+
+
+
+//	Reads the current temperature in degrees C
+void MPL3115A2::readTemp(float* data)
+{
+	int8_t u_temp;
+	float l_temp;
+	
+	readBytes(0x04, 2, _buffer);
+
+	u_temp = _buffer[0];//  Upper 8 bits of the temperature, representing the numbers before the decimal
+	l_temp = float(_buffer[1] >> 4) / 16.0;//  Lower 4 bits of the temperature, representing the numbers 
+	
+	*data = float(u_temp) + l_temp;
 }
 
 
@@ -151,10 +227,34 @@ float MPL3115A2::readTempC()
 
 
 
+//	Reads the current temperature in degrees C
+void MPL3115A2::readTempC(float* data)
+{
+	int8_t u_temp;
+	float l_temp;
+	
+	readBytes(0x04, 2, _buffer);
+
+	u_temp = _buffer[0];//  Upper 8 bits of the temperature, representing the numbers before the decimal
+	l_temp = float(_buffer[1] >> 4) / 16.0;//  Lower 4 bits of the temperature, representing the numbers 
+	
+	*data = float(u_temp) + l_temp;
+}
+
+
+
 //	Read the current temperature in degrees F
 float MPL3115A2::readTempF() 
 {
 	return (readTempC() * 9) / 5.0 + 32;
+}
+
+
+
+//	Read the current temperature in degrees F
+void MPL3115A2::readTempF(float* data) 
+{
+	*data = (readTempC() * 9) / 5.0 + 32;
 }
 
 

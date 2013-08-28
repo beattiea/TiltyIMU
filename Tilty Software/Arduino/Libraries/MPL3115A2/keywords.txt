@@ -15,7 +15,9 @@ MPL3115A2	KEYWORD1
 init	KEYWORD2
 reset	KEYWORD2
 checkData	KEYWORD2
+readAltitude   KEYWORD2
 readAltitudeM	KEYWORD2
 readAltitudeF	KEYWORD2
+readTemp       KEYWORD2
 readTempC	KEYWORD2
 readTempF	KEYWORD2
