@@ -29,7 +29,7 @@ SpiFlash mem;
 float ypr[3]; // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 float yaw = 0;
 float axyz[3]; // Real world reference acceleration minus gravity
-float az_offset = 1.225;
+float az_offset = 0.1635;
 int ix,iy,iz; // compass sensor raw values
 
 float sensor_alt;
@@ -43,7 +43,7 @@ void setup() {
 	
 	setupDMP();
 	alt.init();
-	alt.setOversampling(7);
+	alt.setOversampling(0);
 	magn.init();
 	
 	#ifdef USE_BT
@@ -52,6 +52,7 @@ void setup() {
 		//while (!myPort.available()) {	readDMP();}
 		for (int i = 0; i < 1000; i++) {
 			readDMP();
+			altitude = alt.readAltitudeM();
 		}
                 
 		while (myPort.available()) {	myPort.read();}

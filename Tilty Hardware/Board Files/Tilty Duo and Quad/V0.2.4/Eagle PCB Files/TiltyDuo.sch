@@ -7922,6 +7922,10 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <part name="SJ4" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE"/>
 <part name="SJ5" library="SparkFun-Passives" deviceset="JUMPER-2" device="SMD-NC"/>
 <part name="D4" library="SparkFun-DiscreteSemi" deviceset="DIODE" device="SOT23"/>
+<part name="D5" library="SparkFun-DiscreteSemi" deviceset="DIODE" device="SOT23">
+<attribute name="PART#" value="BZX84C3V3LT1GOSCT-ND"/>
+</part>
+<part name="GND23" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7961,6 +7965,8 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <wire x1="252.222" y1="192.786" x2="252.222" y2="134.366" width="0.635" layer="94"/>
 <wire x1="182.88" y1="193.04" x2="252.222" y2="193.04" width="0.635" layer="94"/>
 <text x="190.5" y="185.42" size="5.08" layer="91" ratio="14">Flash Memory</text>
+<text x="254" y="60.96" size="1.778" layer="91">Zener diode to prevent</text>
+<text x="254" y="58.42" size="1.778" layer="91">3v3 line overvoltage</text>
 </plain>
 <instances>
 <instance part="U5" gate="G$1" x="48.26" y="104.14"/>
@@ -8076,6 +8082,12 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 </instance>
 <instance part="SJ5" gate="A" x="129.54" y="10.16" rot="R270"/>
 <instance part="D4" gate="G$1" x="218.44" y="60.96" rot="R180"/>
+<instance part="D5" gate="G$1" x="251.46" y="66.04" smashed="yes" rot="R90">
+<attribute name="NAME" x="256.54" y="68.0974" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="253.7714" y="68.58" size="1.778" layer="96" rot="R90"/>
+<attribute name="PART#" x="251.46" y="66.04" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="GND23" gate="1" x="251.46" y="58.42"/>
 </instances>
 <busses>
 </busses>
@@ -8283,6 +8295,11 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <wire x1="190.5" y1="175.26" x2="190.5" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="190.5" y1="160.02" x2="200.66" y2="160.02" width="0.1524" layer="91"/>
 <junction x="200.66" y="160.02"/>
+</segment>
+<segment>
+<pinref part="D5" gate="G$1" pin="A"/>
+<pinref part="GND23" gate="1" pin="GND"/>
+<wire x1="251.46" y1="60.96" x2="251.46" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SCL" class="4">
@@ -8563,6 +8580,12 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <label x="233.68" y="175.26" size="1.778" layer="95"/>
 <pinref part="C13" gate="G$1" pin="2"/>
 <junction x="200.66" y="175.26"/>
+</segment>
+<segment>
+<pinref part="D5" gate="G$1" pin="C"/>
+<wire x1="251.46" y1="68.58" x2="251.46" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="251.46" y1="71.12" x2="233.68" y2="71.12" width="0.1524" layer="91"/>
+<label x="233.68" y="71.12" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="5V" class="0">

@@ -21,6 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Setting Defines
 #define DEBUG_INITS
+
+
 #define USE_DMP // Must use this for now, no alternative
 #define myPort Serial
 #define I2C_RATE I2C_RATE_800
@@ -30,16 +32,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Sensor includes
 // IMU files
 #include <I2Cdev.h>
-#include "MPU6050.h"
+#include "Tilty_MPU6050.h"
 // Altimeter files
-#include "MPL3115A2.h"
+#include "Tilty_MPL3115A2.h"
 // Compass files
-#include "HMC5883.h"
+#include "Tilty_HMC5883.h"
 
 class TiltyIMU {
 	public:
 		TiltyIMU(void);
-		~TiltyIMU(void);
+		~TiltyIMU();
 		
 		// Sensor objects
 		MPU6050 imu;
@@ -47,9 +49,9 @@ class TiltyIMU {
 		MPL3115A2 alt;
 		
 		// Functionality functions
-		void init(void);
+		void init();
 		
-		byte updateSensors(void);
+		void updateSensors();
 		
 		bool readIMU(byte imuIntStatus);
 		
@@ -57,20 +59,29 @@ class TiltyIMU {
 		void readAngles(float *data);
 		void readNormalAccelerations(float *data);
 		
-		void getGyroRates(int *data);
-		void getAccel(int *data);
+		void getRawGyro(int *data);
+		void getRawAccel(int *data);
 		
 		// Altimeter Functions
 		float readAltitude(float *data);
+		
+		// AHRS data
+		float ypr[3];
+		float altitude;
 		
 		// Sensor available variables (true means sensor is initialized and available)
 		bool hasAlt;
 		bool hasIMU;
 		bool hasMagn;
+		
+		// Sensors updated, allows you to keep track of which sensors update in updateSensors()
+		bool imu_updated;
+		bool altimeter_updated;
+		bool compass_updated;
 	
 	private:
 	// IMU stuff
-		void initializeIMU(void);
+		void initializeIMU();
 		
 		int16_t x_accel_offset = -4600;
 		int16_t y_accel_offset = 709;
@@ -84,6 +95,13 @@ class TiltyIMU {
 		VectorInt16 aaReal;	// [x, y, z]			world-frame accel sensor measurements
 		VectorInt16 aaWorld;	// [x, y, z]			world-frame accel sensor measurements
 		VectorFloat gravity;	// [x, y, z]			gravity vector
+		
+	// Altimeter stuff
+		float altimeter_data;
+		float altimeter_temp;
+		
+	// Compass stuff
+		float compass_data[3];
 };
 
 #endif

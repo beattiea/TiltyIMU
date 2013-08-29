@@ -34,7 +34,7 @@ THE SOFTWARE.
 ===============================================
 */
 
-#include "MPU6050.h"
+#include "Tilty_MPU6050.h"
 
 /** Default constructor, uses default I2C address.
  * @see MPU6050_DEFAULT_ADDRESS

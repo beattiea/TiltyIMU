@@ -4,7 +4,7 @@
 * 
 */
 
-#include "HMC5883.h"
+#include "Tilty_HMC5883.h"
 
 const int counts_per_milligauss[8]={  
 	1370,

@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#include "WProgram.h"
 #include "Arduino.h"
-#include "MPL3115A2.h"
+#include "Tilty_MPL3115A2.h"
 #include <stdint.h>
 //#include "i2c_t3.h"
 

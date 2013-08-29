@@ -55,6 +55,7 @@ void TiltyIMU::init()
 }
 
 
+// Initializes the IMU sensor
 void TiltyIMU::initializeIMU()
 {
 #ifdef USE_DMP
@@ -77,18 +78,21 @@ void TiltyIMU::initializeIMU()
 }
 
 
-byte TiltyIMU::updateSensors()
+// Reads the various available sensors to determine if there is new data available.
+// If new data is available it is downloaded from the sensor into the appropriate variable.
+void TiltyIMU::updateSensors()
 {
-	long start = micros();
+	imu_updated = false;
+	altimeter_updated = false;
+	compass_updated = false;
 	
 	if (hasIMU)
 	{
-		//Serial.println("Read IMU");
 		byte status = imu.getIntStatus();
 		if (status & 0x12) 
 		{
 			readIMU(status);
-			//Serial.println("Read IMU");
+			imu_updated = true;
 		}
 	}
 	
@@ -96,8 +100,9 @@ byte TiltyIMU::updateSensors()
 	{
 		if (alt.getDataReady()) 
 		{
-			alt.readAltitudeM(); 
-			//Serial.println("Read Altimeter");
+			alt.readAltitudeM(&altimeter_data);
+			alt.readTempC(&altimeter_temp);
+			altimeter_updated = true;
 		}
 	}
 	
@@ -106,26 +111,17 @@ byte TiltyIMU::updateSensors()
 		float data[3];
 		if (magn.getDataReady())
 		{
-			magn.getValues(data);
-			//Serial.println("Read Compass");
+			magn.getValues(compass_data);
+			compass_updated = true;
 		}
 	}
-	
-	Serial.println(micros() - start);
 }
 
 
+// Reads data from the IMU sensor
 bool TiltyIMU::readIMU(byte imuIntStatus)
 {
-	// reset interrupt flag and get INT_STATUS byte
-	//bool imuInterrupt = false;
-	//bool imuIntStatus = imu.getIntStatus() & 0x12;
-	/*
-	while (!imuIntStatus) {
-		imuIntStatus = imu.getIntStatus() & 0x12;
-	}
-	*/
-
+#ifdef USE_DMP
 	// get current FIFO count
 	fifoCount = imu.getFIFOCount();
 	
@@ -152,9 +148,11 @@ bool TiltyIMU::readIMU(byte imuIntStatus)
 	}
 	
 	return true;
+#endif
 }
 
 
+// Uses data read from the IMU sensor to calculate yaw, pitch, and roll
 void TiltyIMU::readAngles(float *data)
 {
 #ifdef USE_DMP
@@ -168,6 +166,7 @@ void TiltyIMU::readAngles(float *data)
 }
 
 
+// Uses data read from the IMU sensor to determine acceleration relative to gravity
 void TiltyIMU::readNormalAccelerations(float *data)
 {
 #ifdef USE_DMP
@@ -184,7 +183,7 @@ void TiltyIMU::readNormalAccelerations(float *data)
 }
 
 
-void TiltyIMU::getGyroRates(int *data)
+void TiltyIMU::getRawGyro(int *data)
 {
 	data[0] = int16_t((fifoBuffer[16] << 8) | fifoBuffer[17]);
 	data[1] = int16_t((fifoBuffer[20] << 8) | fifoBuffer[21]);
@@ -192,7 +191,7 @@ void TiltyIMU::getGyroRates(int *data)
 }
 
 
-void TiltyIMU::getAccel(int *data)
+void TiltyIMU::getRawAccel(int *data)
 {
 	data[0] = int16_t((fifoBuffer[28] << 8) | fifoBuffer[29]);
 	data[1] = int16_t((fifoBuffer[32] << 8) | fifoBuffer[33]);
