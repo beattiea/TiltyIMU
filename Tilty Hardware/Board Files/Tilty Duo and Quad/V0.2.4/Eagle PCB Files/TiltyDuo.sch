@@ -7921,7 +7921,9 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="68"/>
 <part name="SJ4" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE"/>
 <part name="SJ5" library="SparkFun-Passives" deviceset="JUMPER-2" device="SMD-NC"/>
-<part name="D4" library="SparkFun-DiscreteSemi" deviceset="DIODE" device="SOT23"/>
+<part name="D4" library="SparkFun-DiscreteSemi" deviceset="DIODE" device="SOT23">
+<attribute name="PART#" value="BAT54FSTR-ND"/>
+</part>
 <part name="D5" library="SparkFun-DiscreteSemi" deviceset="DIODE" device="SOT23">
 <attribute name="PART#" value="BZX84C3V3LT1GOSCT-ND"/>
 </part>
@@ -8081,7 +8083,9 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <attribute name="NAME" x="105.41" y="71.12" size="1.778" layer="95"/>
 </instance>
 <instance part="SJ5" gate="A" x="129.54" y="10.16" rot="R270"/>
-<instance part="D4" gate="G$1" x="218.44" y="60.96" rot="R180"/>
+<instance part="D4" gate="G$1" x="218.44" y="60.96" rot="R180">
+<attribute name="PART#" x="218.44" y="60.96" size="1.778" layer="96" rot="R180" display="off"/>
+</instance>
 <instance part="D5" gate="G$1" x="251.46" y="66.04" smashed="yes" rot="R90">
 <attribute name="NAME" x="256.54" y="68.0974" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="253.7714" y="68.58" size="1.778" layer="96" rot="R90"/>

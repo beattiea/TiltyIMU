@@ -153,27 +153,5 @@ void readDMP() {
 			myPort.print("\t");
 			myPort.println(ypr[ROLL_INDEX]);
 		#endif
-		
-                imu.dmpGetQuaternion(&q, fifoBuffer);
-		imu.dmpGetAccel(&aa, fifoBuffer);
-		imu.dmpGetGravity(&gravity, &q);
-		imu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-		imu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-			
-		axyz[0] = 9.81 * (aaWorld.x / 8192.0);
-		axyz[1] = 9.81 * (aaWorld.y / 8192.0);
-		axyz[2] = 9.81 * (aaWorld.z / 8192.0) - az_offset;
-
-		#ifdef OUTPUT_READABLE_WORLDACCEL
-			// display initial world-frame acceleration, adjusted to remove gravity
-			// and rotated based on known orientation from quaternion
-			Serial.print("aworld\t");
-			Serial.print(aaWorld.x);
-			Serial.print("\t");
-			Serial.print(aaWorld.y);
-			Serial.print("\t");
-			Serial.println(aaWorld.z);
-			
-		#endif
 	}
 }

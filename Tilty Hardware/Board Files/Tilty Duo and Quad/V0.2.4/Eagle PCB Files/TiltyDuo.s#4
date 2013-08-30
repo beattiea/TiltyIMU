@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.4">
+<eagle version="6.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="yes"/>
@@ -7748,7 +7748,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="GND21" gate="1" x="228.6" y="7.62"/>
 <instance part="D3" gate="G$1" x="73.914" y="42.164" smashed="yes">
 <attribute name="NAME" x="77.47" y="37.592" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="79.629" y="37.592" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="GND7" gate="1" x="73.914" y="24.384"/>
 <instance part="R8" gate="G$1" x="73.914" y="32.004" rot="R90"/>
@@ -8508,22 +8507,12 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="R3" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="RED_LED" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="PIO9"/>
-<wire x1="66.04" y1="52.07" x2="81.28" y2="52.07" width="0.1524" layer="91"/>
-<label x="69.596" y="52.07" size="1.778" layer="95"/>
-<pinref part="D1" gate="G$1" pin="A"/>
-<wire x1="81.28" y1="25.4" x2="81.28" y2="52.07" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="YEL_LED" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="PIO8"/>
-<wire x1="66.04" y1="49.53" x2="73.914" y2="49.53" width="0.1524" layer="91"/>
-<label x="69.596" y="49.53" size="1.778" layer="95"/>
 <pinref part="D3" gate="G$1" pin="A"/>
-<wire x1="73.914" y1="49.53" x2="73.914" y2="44.704" width="0.1524" layer="91"/>
+<wire x1="73.914" y1="52.07" x2="73.914" y2="44.704" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$1" pin="PIO9"/>
+<wire x1="73.914" y1="52.07" x2="66.04" y2="52.07" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$24" class="0">
@@ -8661,6 +8650,14 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <pinref part="R5" gate="G$1" pin="1"/>
 <pinref part="SJ4" gate="1" pin="2"/>
+</segment>
+</net>
+<net name="N$14" class="0">
+<segment>
+<pinref part="D1" gate="G$1" pin="A"/>
+<wire x1="81.28" y1="25.4" x2="81.28" y2="49.53" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$1" pin="PIO8"/>
+<wire x1="81.28" y1="49.53" x2="66.04" y2="49.53" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

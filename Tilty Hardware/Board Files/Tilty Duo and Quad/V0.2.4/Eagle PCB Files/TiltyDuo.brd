@@ -2882,6 +2882,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="D4" library="SparkFun-DiscreteSemi" package="SOT23-3" value="" x="24.13" y="48.768" smashed="yes" rot="MR0">
 <attribute name="VALUE" x="25.146" y="48.5775" size="0.4064" layer="28" rot="MR0"/>
+<attribute name="PART#" value="BAT54FSTR-ND" x="24.13" y="48.768" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
 <element name="D5" library="SparkFun-DiscreteSemi" package="SOT23-3" value="" x="13.97" y="48.768" smashed="yes" rot="MR0">
 <attribute name="VALUE" x="14.986" y="48.5775" size="0.4064" layer="28" rot="MR0"/>

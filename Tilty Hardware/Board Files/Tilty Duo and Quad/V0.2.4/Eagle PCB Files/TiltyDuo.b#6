@@ -3758,7 +3758,7 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="N$8">
 <contactref element="JP2" pad="5"/>
 <contactref element="U1" pad="P$12"/>
-<wire x1="2.413" y1="21.463" x2="11.43" y2="21.463" width="0" layer="19" extent="1-1"/>
+<wire x1="2.413" y1="21.463" x2="11.43" y2="21.463" width="0.381" layer="1"/>
 </signal>
 </signals>
 <errors>
