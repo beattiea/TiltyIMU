@@ -20,6 +20,7 @@ int16_t z_offset = 771;
 
 void setup() {
 	while (!Serial) {}
+	
 	tilty.init();
 
 	x_offset = tilty.imu.getXAccelOffset();
