@@ -41,20 +41,19 @@ void setup() {
 long start;
 
 void loop() {
-	/*
-	start = micros();
-	tilty.updateIMU();
-	tilty.readAltitude(&alt);
+	//start = micros();
+	tilty.updateSensors();
+	//tilty.readAltitude(&alt);
 	tilty.readNormalAccelerations(float_data);
-	tilty.readAngles(float_data);
-	tilty.getAccel(int_data);
+	//tilty.readAngles(float_data);
+	//tilty.getAccel(int_data);
 	
-	Serial.println(micros() - start);
-	*/
+	//Serial.println(micros() - start);
+	
 	//tilty.updateSensors();
 	
-	tilty.alt.readAltitudeM(&float_data[0]);
-	Serial.println(float_data[0]);
+	//tilty.alt.readAltitudeM(&float_data[0]);
+	//Serial.println(float_data[0]);
 	
 	/*
 	Serial.print(int_data[0]);
@@ -101,13 +100,13 @@ void loop() {
 		}
 		*/
 	}
-	/*
+	
 	Serial.print(float_data[0]);
 	Serial.print("\t\t");
 	Serial.print(float_data[1]);
 	Serial.print("\t\t");
 	Serial.println(float_data[2]);
-	*/
+	
 	
 	
 	/*

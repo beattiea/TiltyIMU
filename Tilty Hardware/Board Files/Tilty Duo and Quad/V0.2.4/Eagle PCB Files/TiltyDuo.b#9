@@ -2988,7 +2988,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="15.494" y1="24.7015" x2="15.494" y2="23.583" width="0.1524" layer="16"/>
 <via x="25.4" y="33.0835" extent="1-16" drill="0.3302"/>
 <via x="8.636" y="30.607" extent="1-16" drill="0.3302"/>
-<via x="14.224" y="33.8455" extent="1-16" drill="0.3302"/>
+<via x="17.018" y="34.163" extent="1-16" drill="0.3302"/>
 <polygon width="0.1524" layer="16" isolate="0.2032" orphans="yes">
 <vertex x="15.367" y="22.098"/>
 <vertex x="22.733" y="22.225"/>
@@ -3161,12 +3161,16 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="MPU_INT">
 <contactref element="MPU_INT" pad="1"/>
-<wire x1="18.415" y1="31.623" x2="18.923" y2="31.115" width="0.1524" layer="1"/>
+<wire x1="18.034" y1="32.004" x2="18.923" y2="31.115" width="0.1524" layer="1"/>
 <wire x1="18.923" y1="31.115" x2="18.923" y2="29.279" width="0.1524" layer="1"/>
 <contactref element="U1" pad="P$7"/>
 <contactref element="JP1" pad="2"/>
 <wire x1="11.43" y1="34.163" x2="7.747" y2="34.163" width="0.381" layer="16"/>
-<wire x1="11.43" y1="34.163" x2="18.415" y2="31.623" width="0" layer="19" extent="1-1"/>
+<via x="15.24" y="32.004" extent="1-16" drill="0.3302"/>
+<via x="15.24" y="34.163" extent="1-16" drill="0.3302"/>
+<wire x1="18.034" y1="32.004" x2="15.24" y2="32.004" width="0.1524" layer="1"/>
+<wire x1="15.24" y1="32.004" x2="15.24" y2="34.163" width="0.1524" layer="16"/>
+<wire x1="15.24" y1="34.163" x2="11.43" y2="34.163" width="0.1524" layer="1"/>
 </signal>
 <signal name="VBATT">
 <contactref element="JP4" pad="P$3"/>

@@ -112,14 +112,14 @@ float PID::update(float _value)
 	#ifdef USE_TIME
 		_dT = (millis() - _timer) / 1000.0;
 		_timer = millis();
-		if (_dT == 0) _dT++;
+		if (_dT == 0) { _dT++;}
 	#endif
 	
 	_value = checkInputOK(_value);
 	
-	if (_value == 0)
+	if (_value == -214783647)
 	{
-		reset();
+		return constrain(Pvalue + Ivalue + Dvalue, lowerLimit, upperLimit);
 	}
 	
 	if (_direction)
@@ -276,20 +276,21 @@ float PID::checkInputOK(float _value)
 {
 	if (_value >= upperInputTrigger)
 	{
-		if (_value <= upperInputConstraint || _value >= lowerInputConstraint)
+		if (_value <= upperInputConstraint && _value >= lowerInputConstraint)
 		{
 			return _value - upperInputTrigger;
 		}
 	}
 	else if (_value <= lowerInputTrigger)
 	{
-		if (_value <= upperInputConstraint || _value >= lowerInputConstraint)
+		if (_value <= upperInputConstraint && _value >= lowerInputConstraint)
 		{
 			return _value - lowerInputTrigger;
 		}
 	}
 	
-	return 0;
+	Serial.println("Input NOT OK!!!!");
+	return -214783647;
 }
 
 

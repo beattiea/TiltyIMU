@@ -2804,7 +2804,7 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="COST" value="0.53" x="19.05" y="44.5135" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
 <element name="C4" library="resistor" package="C0603" value="0.1uF" x="22.987" y="40.259" smashed="yes" rot="MR90"/>
-<element name="C5" library="resistor" package="C0603" value="0.1uF" x="15.113" y="40.259" smashed="yes" rot="MR90"/>
+<element name="C5" library="resistor" package="C0603" value="4.7uF" x="15.113" y="40.259" smashed="yes" rot="MR90"/>
 <element name="U1" library="My Parts" package="28-DIP" value="TEENSY_3.0_OUTER-PINS28-DIP_SOCKET" x="19.05" y="32.893">
 <attribute name="COST" value="0.28" x="19.05" y="32.893" size="1.778" layer="27" display="off"/>
 <attribute name="PART#" value="AE10004-ND" x="19.05" y="32.893" size="1.778" layer="27" display="off"/>

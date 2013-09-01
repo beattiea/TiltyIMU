@@ -2988,7 +2988,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="15.494" y1="24.7015" x2="15.494" y2="23.583" width="0.1524" layer="16"/>
 <via x="25.4" y="33.0835" extent="1-16" drill="0.3302"/>
 <via x="8.636" y="30.607" extent="1-16" drill="0.3302"/>
-<via x="14.986" y="35.179" extent="1-16" drill="0.3302"/>
+<via x="17.018" y="34.163" extent="1-16" drill="0.3302"/>
 <polygon width="0.1524" layer="16" isolate="0.2032" orphans="yes">
 <vertex x="15.367" y="22.098"/>
 <vertex x="22.733" y="22.225"/>
@@ -3758,7 +3758,7 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="N$8">
 <contactref element="JP2" pad="5"/>
 <contactref element="U1" pad="P$12"/>
-<wire x1="2.413" y1="21.463" x2="11.43" y2="21.463" width="0" layer="19" extent="1-1"/>
+<wire x1="2.413" y1="21.463" x2="11.43" y2="21.463" width="0.381" layer="1"/>
 </signal>
 </signals>
 <errors>

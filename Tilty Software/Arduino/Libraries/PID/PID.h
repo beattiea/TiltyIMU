@@ -1,5 +1,5 @@
 /*
-MPL3115A2.h - A easy to use interface for creating and calculating values for a PID control loop
+PID.h - A easy to use interface for creating and calculating values for a PID control loop
 Copyright (C) 2013-2014 Alex Beattie <alexbeattie at tiltyimu dot com>
 
 This program is free software: you can redistribute it and/or modify
@@ -106,8 +106,8 @@ class PID {
 	
 	//	Input limits
 		//	PID input trigger limits
-	float upperInputTrigger = 0;
-	float lowerInputTrigger = 0;
+	float upperInputTrigger = 0.0;
+	float lowerInputTrigger = 0.0;
 		//	PID input constraint limits
 	float upperInputConstraint = 2147483647;
 	float lowerInputConstraint = -214783647;

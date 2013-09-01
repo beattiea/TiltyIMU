@@ -3,17 +3,21 @@
 int channel[6];
 
 void setup() {
-	delay(10);
 	Serial.begin(115200);
-	delay(10);
+	
+	//startBind();
+	
+	//while (!Serial) {}
+	
+	pinMode(7, INPUT);
+	
+	//delay(10);
+	
 	Serial3.begin(115200);
-	
-	Serial3.clear();
-	
-	while (Serial3.read() != 0x03) {}
 }
 
 void loop() {
+	/*
 	if (Serial3.available() == 16) {
 		//Serial3.read();
 		//Serial3.read();
@@ -36,43 +40,68 @@ void loop() {
 			Serial3.read();
 		}
 	}
+	*/
+	if (Serial3.available()) {
+		if (Serial3.read() == 0x03) {
+			byte data[14];
+			Serial.println("\tNew Data");
+			while (Serial3.available() < 15) {
+				delayMicroseconds(100);
+			}
+			Serial.print("0x");
+			Serial.println(Serial3.read(), HEX);
+			for (int i = 0; i < 14; i++) {
+				data[i] = Serial3.read();
+			}
+			/*
+			for (int i = 0; i < 13; i += 2) {
+				Serial.print("Data: 0x");
+				Serial.print(data[i], HEX);
+				Serial.print(" + 0x");
+				Serial.println(data[i + 1], HEX);
+			}
+			Serial.println();
+			*/
+			
+			for (int i = 0; i < 13; i += 2) {
+				int value = data[i] << 8 | data[i + 1];
+				channel[i] = value >> 10;
+				value = value & 0b000001111111111;
+				
+				Serial.print("Channel: ");
+				Serial.print(channel[i]);
+				Serial.print(" = ");
+				Serial.println(value);
+			}
+			Serial.println();
+			
+			/*
+			for (int i = 0; i < 7; i++) {
+				int value;
+				channel[i] |= (data[i] & 0b11111000) >> 3;
+				value |= (data[i] << 8) | data[i * 2 - 1];
+				Serial.print("Channel: ");
+				Serial.print(channel[i]);
+				Serial.print(" = ");
+				Serial.println(value, HEX);
+			}
+			*/
+		}
+	}
 	//delay(5);
 }
 
-bool readRx() {
-	if (Serial3.available() >= 16) {
-		Serial.println("READING FUCKING SERIAL DATA!");
-		Serial3.read();
-		delay(1);
-		Serial3.read();
-		delay(1);
-		for (int i = 0; i < 6; i++) {
-			int data = Serial3.read() << 8;
-			Serial.println("Read byte 1");
-			delay(1);
-			data |= Serial3.read();
-			Serial.println("Read byte 2");
-			int ch_number = data & 0x7b00;
-			channel[ch_number] = data & 0x03FF;
-			Serial.println("Calculated data");
-		}
-		Serial3.clear();
-		//printRx();
-		return true;
-	}
-	else {
-		Serial.print("Available: ");
-		Serial.println(Serial3.available());
-	}
+void startBind() {
+	pinMode(7, OUTPUT);
 	
-	return false;
-}
-
-void printRx() {
-	for (int i = 0; i < 6; i++) {
-		Serial.print("Channel ");
-		Serial.print(i + 1);
-		Serial.print(": ");
-		Serial.println(channel[i]);
+	digitalWrite(7, HIGH);
+	delay(100);
+	
+	for (int i = 0; i < 4; i++) {
+		digitalWrite(7, !digitalReadFast(7));
+		delayMicroseconds(120);
+		
+		digitalWrite(7, !digitalReadFast(7));
+		delayMicroseconds(120); 
 	}
 }

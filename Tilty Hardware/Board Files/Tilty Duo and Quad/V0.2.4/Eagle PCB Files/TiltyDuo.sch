@@ -6643,6 +6643,17 @@ www.scr.com</description>
 </device>
 </devices>
 </deviceset>
+<deviceset name="JST_ZH_PTH_CONNECTOR">
+<gates>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 <library name="on-semiconductor">
@@ -7853,7 +7864,7 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <attribute name="COST" value="0.53"/>
 </part>
 <part name="C4" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
-<part name="C5" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
+<part name="C5" library="resistor" deviceset="C-US" device="C0603" value="4.7uF"/>
 <part name="U1" library="My Parts" deviceset="TEENSY_3.0_OUTER-PINS" device="28-DIP_SOCKET">
 <attribute name="COST" value="0.28"/>
 <attribute name="PART#" value="AE10004-ND"/>
@@ -7928,6 +7939,11 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <attribute name="PART#" value="BZX84C3V3LT1GOSCT-ND"/>
 </part>
 <part name="GND23" library="supply1" deviceset="GND" device=""/>
+<part name="U$1" library="My Parts" deviceset="JST_ZH_PTH_CONNECTOR" device=""/>
+<part name="U$2" library="My Parts" deviceset="JST_ZH_PTH_CONNECTOR" device=""/>
+<part name="U$3" library="My Parts" deviceset="JST_ZH_PTH_CONNECTOR" device=""/>
+<part name="U$4" library="My Parts" deviceset="JST_ZH_PTH_CONNECTOR" device=""/>
+<part name="U$5" library="My Parts" deviceset="JST_ZH_PTH_CONNECTOR" device=""/>
 </parts>
 <sheets>
 <sheet>
