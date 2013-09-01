@@ -55,11 +55,14 @@ bool SatelliteRX::init()
 
 bool SatelliteRX::init(bool _bind)
 {	
-	if (_bind)  return bind();
+	bool _bound;
+	if (_bind) { _bound = bind();}
+	_serialPort.begin(115200);
+	return _bound;
 }
 
 
-void SatelliteRX::readData()
+bool SatelliteRX::readData()
 {	
 	while (_serialPort.available() && !_synced) // Synchronize with start of data packet
 	{
@@ -90,15 +93,53 @@ void SatelliteRX::readData()
 			Serial.println();
 		#endif
 		
-		for (int i = 2; i < 15; i += 2) {
+		for (int i = 2; i < 15; i += 2)
+		{
 			uint16_t temp = _buffer[i] << 8 | _buffer[i + 1];
 			uint8_t _channel = temp >> 10;
 			channel_data[_channel] = temp & 0x3FF;
 		}
+		
+		updatePointers();
+		
 		_buffer_index = 0;
 		_synced = false;
+		
+		return true;
 	}
+	
+	return false;
 }
+
+
+bool SatelliteRX::calibrate() // Should read all channels to determine highs and lows and wait till 
+{
+	/*
+	if (channel_data[_channel] > channel_max[_channel]) channel_max[_channel] = channel_data[_channel];
+	if (channel_data[_channel] < channel_min[_channel]) channel_min[_channel] = channel_data[_channel];
+	*/
+}
+
+
+void SatelliteRX::updatePointers()
+{
+	if (_set_aileron) { *_aileron = channel_data[AILERON];}
+	if (_set_elevator) { *_elevator = channel_data[ELEVATOR];}
+	if (_set_rudder) { *_rudder = channel_data[RUDDER];}
+	if (_set_throttle) { *_throttle = channel_data[THROTTLE];}
+	if (_set_aux1) { *_aux1 = channel_data[AUX1];}
+	if (_set_aux2) { *_aux2 = channel_data[AUX2];}
+	if (_set_aux3) { *_aux3 = channel_data[AUX3];}
+}
+
+
+void SatelliteRX::setAileron(int* _data) { _set_aileron = true;	_aileron = _data;}
+void SatelliteRX::setElevator(int* _data) { _set_elevator= true;	_elevator = _data;}
+void SatelliteRX::setRudder(int* _data) { _set_rudder = true;	_rudder = _data;}
+void SatelliteRX::setThrottle(int* _data) { _set_throttle = true;	_throttle = _data;}
+void SatelliteRX::setAux1(int* _data) { _set_aux1 = true;	_aux1 = _data;}
+void SatelliteRX::setAux2(int* _data) { _set_aux2 = true;	_aux2 = _data;}
+void SatelliteRX::setAux3(int* _data) { _set_aux3 = true;	_aux3 = _data;}
 
 
 bool SatelliteRX::bind()
@@ -118,13 +159,4 @@ bool SatelliteRX::bind()
 			delayMicroseconds(120); 
 		}
 	}
-}
-
-
-bool SatelliteRX::calibrate() // Should read all channels to determine highs and lows and wait till 
-{
-	/*
-	if (channel_data[_channel] > channel_max[_channel]) channel_max[_channel] = channel_data[_channel];
-	if (channel_data[_channel] < channel_min[_channel]) channel_min[_channel] = channel_data[_channel];
-	*/
 }

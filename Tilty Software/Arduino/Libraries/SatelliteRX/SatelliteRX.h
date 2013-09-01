@@ -53,9 +53,9 @@ class SatelliteRX {
 		bool init(); // Starts the serial port
 		bool init(bool _bind); // If true, binds the receiver, then starts the serial port. Just starts serial if false.
 		
-		void readData();
-		void readData(int* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
-		void readData(int16_t* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
+		bool readData();
+		bool readData(int* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
+		bool readData(int16_t* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
 		
 		void readRawData(); // NOT IMPLEMENTED, NON-RAW SHOULD SCALE TO +- A NUMBER
 		void readRawData(int* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
@@ -63,21 +63,24 @@ class SatelliteRX {
 		
 		bool calibrate(); // NOT IMPLEMENTED
 		
+		void setAileron(int* _data);
+		void setElevator(int* _data);
+		void setRudder(int* _data);
+		void setThrottle(int* _data);
+		void setAux1(int* _data);
+		void setAux2(int* _data);
+		void setAux3(int* _data);
+		
+		
 	// Variables
 		uint16_t channel_data[7];
-		/*
-		int16_t channel_1;
-		int16_t channel_2;
-		int16_t channel_3;
-		int16_t channel_4;
-		int16_t channel_5;
-		int16_t channel_6;
-		int16_t channel_7;
-		*/
+		
 		
 	private:
 	// Functions
 		bool bind();
+		void updatePointers();
+		
 	// Variables
 		bool _synced = false;
 		HardwareSerial3& _serialPort; // Serial port to read data from
@@ -85,6 +88,22 @@ class SatelliteRX {
 		
 		int16_t channel_max[7] = {0, 0, 0, 0, 0, 0, 0};
 		int16_t channel_min[7] = {1024, 1024, 1024, 1024, 1024, 1024, 1024};
+		
+		int* _aileron;
+		int* _elevator;
+		int* _rudder;
+		int* _throttle;
+		int* _aux1;
+		int* _aux2;
+		int* _aux3;
+		
+		bool _set_aileron = false;
+		bool _set_elevator = false;
+		bool _set_rudder = false;
+		bool _set_throttle = false;
+		bool _set_aux1 = false;
+		bool _set_aux2 = false;
+		bool _set_aux3 = false;
 		
 		uint8_t _buffer_index = 0;
 		byte _buffer[16]; // Buffer for serial data
