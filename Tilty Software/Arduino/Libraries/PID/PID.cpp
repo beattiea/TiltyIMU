@@ -289,7 +289,6 @@ float PID::checkInputOK(float _value)
 		}
 	}
 	
-	Serial.println("Input NOT OK!!!!");
 	return -214783647;
 }
 
