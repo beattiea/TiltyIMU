@@ -89,7 +89,8 @@ void TiltyIMU::updateSensors()
 	if (hasIMU)
 	{
 		byte status = imu.getIntStatus();
-		if (status & 0x12) 
+		//Serial.println(status, HEX);
+		if (status & 0x13)// Used to be 0x12, but new data register is 0x01, so set to 0x13 to meet both conditions 
 		{
 			readIMU(status);
 			imu_updated = true;
@@ -135,7 +136,7 @@ bool TiltyIMU::readIMU(byte imuIntStatus)
 		return false;
 
 	// otherwise, check for DMP data ready interrupt (this should happen frequently)
-	} else if (imuIntStatus & 0x01) {
+	} else if (imuIntStatus & 0x03) {// used to sometimes work with 0x01, sometimes 0x02. Set to 0x03 to meet both conditions
 		// wait for correct available data length, should be a VERY short wait
 		while (fifoCount < packetSize) fifoCount = imu.getFIFOCount();
 

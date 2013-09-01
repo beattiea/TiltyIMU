@@ -53,6 +53,8 @@ class SatelliteRX {
 		bool init(); // Starts the serial port
 		bool init(bool _bind); // If true, binds the receiver, then starts the serial port. Just starts serial if false.
 		
+		bool bind();
+		
 		bool readData();
 		bool readData(int* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
 		bool readData(int16_t* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
@@ -78,7 +80,6 @@ class SatelliteRX {
 		
 	private:
 	// Functions
-		bool bind();
 		void updatePointers();
 		
 	// Variables

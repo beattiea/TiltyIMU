@@ -48,47 +48,51 @@ int min_throttle = 75;
 
 float voltage;
 
+float dT = 0.005;
+int then;
+int now;
+
 volatile int throttle;
 //RCsignal throttleRC(21, updateThrottle);
 
 void setup(){
-  pinMode(13, OUTPUT);
-  digitalWrite(13, HIGH);
-  Serial.begin(115200);
-  
-  delay(25);
-  
-  //while (!Serial) {}
-  
-  tiltyIMU = TiltyIMU();
-  tiltyIMU.init();
-  
-  ESC1.attach(2);
-  ESC2.attach(3);
-  ESC3.attach(22);
-  ESC4.attach(23);
-  
-  ESC1.writeMicroseconds(1000);
-  ESC2.writeMicroseconds(1000);
-  ESC3.writeMicroseconds(1000);
-  ESC4.writeMicroseconds(1000);
-  
-  pitchPID = PID(&dPitch, &pitchValue, kP, kI, kD, FORWARD);
-  rollPID = PID(&dRoll, &rollValue, kP, kI, kD, FORWARD);
-  
-  //pitchPID = PID(&ypr[1], &d_pitchValue, kP, kI, kD, REVERSE);
-  //rollPID = PID(&ypr[2], &d_rollValue, kP, kI, kD, REVERSE);
-  
-  pitchPID.setLimits(-25, 25);
-  rollPID.setLimits(-25, 25);
-  pitchPID.setILimits(-iMax, iMax);
-  rollPID.setILimits(-iMax, iMax);
-  pitchPID.setInputConstraints(-2.5, 2.5);
-  rollPID.setInputConstraints(-2.5, 2.5); 
-  
-  rx.init();
-  
-  for(int i = 0; i < 1000; i++){
+pinMode(13, OUTPUT);
+digitalWrite(13, HIGH);
+Serial.begin(115200);
+
+delay(25);
+
+//while (!Serial) {}
+
+tiltyIMU = TiltyIMU();
+tiltyIMU.init();
+
+ESC1.attach(2);
+ESC2.attach(3);
+ESC3.attach(22);
+ESC4.attach(23);
+
+ESC1.writeMicroseconds(1000);
+ESC2.writeMicroseconds(1000);
+ESC3.writeMicroseconds(1000);
+ESC4.writeMicroseconds(1000);
+
+pitchPID = PID(&dPitch, &pitchValue, kP, kI, kD, FORWARD);
+rollPID = PID(&dRoll, &rollValue, kP, kI, kD, FORWARD);
+
+//pitchPID = PID(&ypr[1], &d_pitchValue, kP, kI, kD, REVERSE);
+//rollPID = PID(&ypr[2], &d_rollValue, kP, kI, kD, REVERSE);
+
+pitchPID.setLimits(-25, 25);
+rollPID.setLimits(-25, 25);
+pitchPID.setILimits(-iMax, iMax);
+rollPID.setILimits(-iMax, iMax);
+pitchPID.setInputConstraints(-2.5, 2.5);
+rollPID.setInputConstraints(-2.5, 2.5); 
+
+rx.init();
+
+for(int i = 0; i < 1000; i++){
 	 tiltyIMU.updateSensors();
 	 delay(5);
 	 digitalWrite(13, LOW);
@@ -98,10 +102,10 @@ void setup(){
 	 if (i % 100 == 0) {digitalWrite(13, !digitalRead(13));}
 	voltage = (analogRead(14) / 1024.0) * 51.8294;
 	Serial.println(voltage);
-  }
-  
+}
+
 	tiltyIMU.readAngles(ypr);
-  
+
 	digitalWrite(13, HIGH);
 	while(throttle > 150){};
 	d_throttle = throttle;
@@ -115,24 +119,24 @@ void setup(){
 
 /*
 void updateThrottle() {
-  throttle = throttleRC.read();
+throttle = throttleRC.read();
 }
 */
 
 void loop() {
 	
-  rx.readData();
-  
-  throttle = constrain(rx.channel_data[THROTTLE] - 153, 0, 500);
+rx.readData();
+
+throttle = constrain(rx.channel_data[THROTTLE] - 153, 0, 500);
 	
-  tiltyIMU.updateSensors();
-  
-  if (tiltyIMU.imu_updated) {
-  	dPitch = ypr[1];
+tiltyIMU.updateSensors();
+
+if (tiltyIMU.imu_updated) {
+	dPitch = ypr[1];
  	dRoll = ypr[2];
-  	
-  	delay(5);
-  	
+	
+	delay(5);
+	
 	tiltyIMU.readAngles(ypr);
 	 
 	ypr[1] -= pitchOffset;
@@ -141,15 +145,24 @@ void loop() {
  	dPitch -= ypr[1];
  	dRoll -= ypr[2];
  	
- 	dPitch += (rx.channel_data[ELEVATOR] - 511) / 1000.0;
-	dRoll += (rx.channel_data[AILERON] - 511) / 1000.0;
+ 	dPitch += (rx.channel_data[ELEVATOR] - 511) / 1750.0;
+	dRoll += (rx.channel_data[AILERON] - 511) / 1750.0;
+	
+	now = millis();
+	
+	dT = (now - then) / 1000.0;
+	
+	then = now;
+	
+	dPitch /= dT;
+	dRoll /= dT;
  	
  	//pitchPID.update();
  	//rollPID.update();
  	/*
  	Serial.print("Throttle: ");
-  	Serial.print(throttle);
-  
+	Serial.print(throttle);
+
 	Serial.print("\t\t");
 	Serial.print(dPitch);
 	Serial.print("\t");
@@ -159,69 +172,96 @@ void loop() {
 	Serial.print(rollPID.Ivalue);
 	Serial.println();
 	*/
-  }
-  
-  voltage = (analogRead(14) / 1024.0) * 51.8294;
-  
-	  if((throttle > min_throttle && throttle != 0 && throttle < 1000) && (abs(ypr[1]) < 45 && abs(ypr[2]) < 45) && rx.channel_data[AUX1] > 300) //check to make sure that we have a "real" throttle value, and that we're not changing at too much of an angle
-	  { 
-		  pitchPID.update();
-		  rollPID.update();
-		  
-		  //Serial.print(dPitch);
-		  //Serial.print(", ");
-		  //Serial.print(pitchPID.Pvalue);
-		  //Serial.print(", ");
-		  //Serial.print(pitchPID.Ivalue, 5);
-		  //Serial.print(", ");
-		  //Serial.print(pitchPID.Dvalue);
-		  //Serial.print("\tr\t\t");
-		  Serial.print(dRoll, 2);
-		  //Serial.print(", ");
-		  //Serial.print(rollPID.Pvalue);
-		  Serial.print(", ");
-		  Serial.print(rollPID.Ivalue, 5);
-		  //Serial.print(", ");
-		  //Serial.print(rollPID.Dvalue);
-		  Serial.println();
-		  
-		  
-		  pitchValue *= voltage / 12.3;
-		  rollValue *= voltage / 12.3;
-		  
-		  /*
-		  Serial.print("Pitch PID: ");
-		  Serial.print(pitchValue);
-		  Serial.print("\t\tRoll PID: ");
-		  Serial.print(rollValue);
-		  Serial.println();
-		  */
-		  
-		  /*
-		  Serial.print("Remote Data: ");
-		  Serial.print(pitchValue);
-		  Serial.print("\t");
-		  Serial.print(rollValue);
-		  Serial.println();
-		  */
-		  	
-		  ESC1.writeMicroseconds(1000 + throttle - pitchValue - rollValue);
-		  ESC2.writeMicroseconds(1000 + throttle + pitchValue - rollValue);
-		  ESC3.writeMicroseconds(1000 + throttle + pitchValue + rollValue);
-		  ESC4.writeMicroseconds(1000 + throttle - pitchValue + rollValue);
-	  }
-	  else{
-		  ESC1.writeMicroseconds(1000);
-		  ESC2.writeMicroseconds(1000);
-		  ESC3.writeMicroseconds(1000);
-		  ESC4.writeMicroseconds(1000);
-		  if (rx.channel_data[AUX2] >= 300) {
-		  	
-		  	Serial.println("Reset!");
-			  pitchPID.reset();
-			  rollPID.reset();
-		  }
-	  }
+}
+
+voltage = (analogRead(14) / 1024.0) * 51.8294;
+
+	if((throttle > min_throttle && throttle != 0 && throttle < 1000) && (abs(ypr[1]) < 30 && abs(ypr[2]) < 30)) //check to make sure that we have a "real" throttle value, and that we're not changing at too much of an angle
+	{ 
+		pitchPID.update();
+		rollPID.update();
+		
+		//Serial.print(dPitch);
+		//Serial.print(", ");
+		//Serial.print(pitchPID.Pvalue);
+		//Serial.print(", ");
+		//Serial.print(pitchPID.Ivalue, 5);
+		//Serial.print(", ");
+		//Serial.print(pitchPID.Dvalue);
+		//Serial.print("\tr\t\t");
+		//Serial.print(dRoll, 2);
+		//Serial.print(", ");
+		//Serial.print(rollPID.Pvalue);
+		//Serial.print(", ");
+		//Serial.print(rollPID.Ivalue, 5);
+		//Serial.print(", ");
+		//Serial.print(rollPID.Dvalue);
+		//Serial.println();
+		
+		
+		pitchValue *= voltage / 12.6;
+		rollValue *= voltage / 12.6;
+		
+		/*
+		Serial.print("Pitch PID: ");
+		Serial.print(pitchValue);
+		Serial.print("\t\tRoll PID: ");
+		Serial.print(rollValue);
+		Serial.println();
+		*/
+		
+		/*
+		Serial.print("Remote Data: ");
+		Serial.print(pitchValue);
+		Serial.print("\t");
+		Serial.print(rollValue);
+		Serial.println();
+		*/
+		
+		Serial.print(-pitchValue - rollValue);
+		Serial.print(", ");
+		Serial.print(pitchValue - rollValue);
+		Serial.print(", ");
+		Serial.print(pitchValue + rollValue);
+		Serial.print(", ");
+		Serial.print(-pitchValue + rollValue);
+		Serial.println();
+		
+		if (rx.channel_data[AUX1] > 300) {	
+			ESC1.writeMicroseconds(1000 + throttle - pitchValue - rollValue);
+			ESC2.writeMicroseconds(1000 + throttle + pitchValue - rollValue);
+			ESC3.writeMicroseconds(1000 + throttle + pitchValue + rollValue);
+			ESC4.writeMicroseconds(1000 + throttle - pitchValue + rollValue);
+		}
+		
+		else {
+			ESC1.writeMicroseconds(1000);
+			ESC2.writeMicroseconds(1000);
+			ESC3.writeMicroseconds(1000);
+			ESC4.writeMicroseconds(1000);
+		}
+	}
+	else{
+		ESC1.writeMicroseconds(1000);
+		ESC2.writeMicroseconds(1000);
+		ESC3.writeMicroseconds(1000);
+		ESC4.writeMicroseconds(1000);
+	}
+	
+	if (rx.channel_data[AUX2] >= 300) {
+		Serial.println("Reset!");
+		pitchPID.reset();
+		rollPID.reset();
+		
+		while (rx.channel_data[AUX2] >= 300) {
+			rx.readData();
+			
+			ESC1.writeMicroseconds(1000);
+			ESC2.writeMicroseconds(1000);
+			ESC3.writeMicroseconds(1000);
+			ESC4.writeMicroseconds(1000);
+		}
+	}
 }
 
 

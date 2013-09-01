@@ -1,9 +1,9 @@
 #include <SatelliteRX.h>
 /*
 // Initialize SatelliteRX with hardware serial port
-SatelliteRX::SatelliteRX(HardwareSerial& _serial)
+SatelliteRX::SatelliteRX(HardwareSerial& _serial) : _serialPort(_serial)
 {
-	_serialPort = _serial;
+	_serialPort = HardwareSerial();
 }
 */
 
@@ -11,7 +11,7 @@ SatelliteRX::SatelliteRX(HardwareSerial& _serial)
 // Initialize SatelliteRX with hardware serial port
 SatelliteRX::SatelliteRX(HardwareSerial3& _serial) : _serialPort(_serial)
 {
-	//_serialPort(_serial);
+	// Do nothing
 }
 
 /*
@@ -48,8 +48,6 @@ SatelliteRX::~SatelliteRX()
 bool SatelliteRX::init()
 {
 	_serialPort.begin(115200);
-	//_serialPort = Serial3;
-	//Serial3.begin(115200);
 }
 
 
