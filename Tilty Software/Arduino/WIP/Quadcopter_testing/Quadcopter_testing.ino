@@ -141,6 +141,9 @@ void loop() {
  	dPitch -= ypr[1];
  	dRoll -= ypr[2];
  	
+ 	dPitch += (rx.channel_data[ELEVATOR] - 511) / 1000.0;
+	dRoll += (rx.channel_data[AILERON] - 511) / 1000.0;
+ 	
  	//pitchPID.update();
  	//rollPID.update();
  	/*
@@ -194,8 +197,6 @@ void loop() {
 		  Serial.println();
 		  */
 		  
-		  pitchValue += (rx.channel_data[ELEVATOR] - 511) / 5.0;
-		  rollValue += (rx.channel_data[AILERON] - 511) / 5.0;
 		  /*
 		  Serial.print("Remote Data: ");
 		  Serial.print(pitchValue);
