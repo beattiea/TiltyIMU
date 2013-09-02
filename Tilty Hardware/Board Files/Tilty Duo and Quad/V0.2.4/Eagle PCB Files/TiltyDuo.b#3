@@ -3104,7 +3104,7 @@ Please make sure your boards conform to these design rules.</description>
 <via x="29.083" y="10.541" extent="1-16" drill="0.3302"/>
 <contactref element="U1" pad="P$16"/>
 <wire x1="20.32" y1="23.38" x2="20.955" y2="22.86" width="0.1524" layer="16"/>
-<via x="17.272" y="15.24" extent="1-16" drill="0.3302"/>
+<via x="17.399" y="15.24" extent="1-16" drill="0.3302"/>
 <via x="10.541" y="15.494" extent="1-16" drill="0.3302"/>
 <via x="20.701" y="20.7645" extent="1-16" drill="0.3302"/>
 <via x="19.05" y="20.8915" extent="1-16" drill="0.3302"/>
@@ -3882,6 +3882,11 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,06f2660e662206de"/>
 <approved hash="19,1,851bb854a18f6121"/>
 <approved hash="19,1,0d273203e6ee26e7"/>
+<approved hash="19,1,9a37dde52740197f"/>
+<approved hash="19,1,193f5b4450ce6899"/>
+<approved hash="19,1,fd7a21862165fd99"/>
+<approved hash="19,1,1058adbd9aeb5d22"/>
+<approved hash="19,1,b9a307eed7ca106a"/>
 <approved hash="19,1,261170da8ab41c06"/>
 <approved hash="19,1,1bae1d9b066047a8"/>
 <approved hash="19,1,586aa3b33fa8838c"/>

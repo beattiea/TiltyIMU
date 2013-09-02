@@ -35,8 +35,6 @@ Hardware Work
 	Update all 8-pin receptacles to new locking pattern!
 	
 	Add attachment points for interrupt pins of sensors to advanced IMU board
-	
-	Possible zener diode on voltage input to ease the power dissipated by the voltage regulator
 
 	Add-on boards
 	LEDs need to decrease current draw!
