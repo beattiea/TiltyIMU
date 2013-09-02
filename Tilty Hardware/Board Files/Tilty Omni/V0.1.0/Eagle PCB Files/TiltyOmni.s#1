@@ -8037,6 +8037,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <part name="P+4" library="supply1" deviceset="+5V" device=""/>
 <part name="P+5" library="supply1" deviceset="+5V" device=""/>
 <part name="JP6" library="SparkFun-Connectors" deviceset="M20" device=""/>
+<part name="JP7" library="SparkFun-Connectors" deviceset="M20" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8202,6 +8203,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <attribute name="VALUE" x="76.454" y="72.644" size="1.778" layer="96"/>
 </instance>
 <instance part="JP6" gate="G$1" x="266.7" y="48.26"/>
+<instance part="JP7" gate="G$1" x="284.48" y="48.26"/>
 </instances>
 <busses>
 </busses>

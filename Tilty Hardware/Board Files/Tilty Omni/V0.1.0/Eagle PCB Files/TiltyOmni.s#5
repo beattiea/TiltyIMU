@@ -7233,7 +7233,6 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 </part>
 <part name="C4" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="C5" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
-<part name="GND5" library="supply1" deviceset="GND" device=""/>
 <part name="MPU_INT" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NO"/>
 <part name="D1" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK" value="RED"/>
 <part name="D2" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK" value="GREEN"/>
@@ -7375,7 +7374,6 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 </instance>
 <instance part="C4" gate="G$1" x="121.92" y="104.14"/>
 <instance part="C5" gate="G$1" x="162.56" y="104.14"/>
-<instance part="GND5" gate="1" x="287.02" y="25.4"/>
 <instance part="MPU_INT" gate="1" x="12.7" y="109.22" smashed="yes">
 <attribute name="NAME" x="7.874" y="105.664" size="1.778" layer="95"/>
 </instance>
