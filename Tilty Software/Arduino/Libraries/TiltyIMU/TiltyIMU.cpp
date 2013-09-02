@@ -109,10 +109,9 @@ void TiltyIMU::updateSensors()
 	
 	if (hasMagn)
 	{
-		float data[3];
 		if (magn.getDataReady())
 		{
-			magn.getValues(compass_data);
+			magn.getValues(raw_compass_data);
 			compass_updated = true;
 		}
 	}
@@ -167,7 +166,18 @@ void TiltyIMU::readAngles(float *data)
 }
 
 
-// Uses data read from the IMU sensor to determine acceleration relative to gravity
+// Uses data read from the IMU sensor to calculate yaw, pitch, and roll in radians
+void TiltyIMU::readAnglesRadians(float *data)
+{
+#ifdef USE_DMP
+	imu.dmpGetQuaternion(&q, fifoBuffer);
+	imu.dmpGetGravity(&gravity, &q);
+	imu.dmpGetYawPitchRoll(data, &q, &gravity);
+#endif
+}
+
+
+// Uses data read from the IMU sensor to determine acceleration relative to gravity, in m/s^2
 void TiltyIMU::readNormalAccelerations(float *data)
 {
 #ifdef USE_DMP
@@ -184,6 +194,7 @@ void TiltyIMU::readNormalAccelerations(float *data)
 }
 
 
+// Returns the raw gyro data
 void TiltyIMU::getRawGyro(int *data)
 {
 	data[0] = int16_t((fifoBuffer[16] << 8) | fifoBuffer[17]);
@@ -192,6 +203,7 @@ void TiltyIMU::getRawGyro(int *data)
 }
 
 
+// Returns the raw accelerometer data
 void TiltyIMU::getRawAccel(int *data)
 {
 	data[0] = int16_t((fifoBuffer[28] << 8) | fifoBuffer[29]);
@@ -200,6 +212,7 @@ void TiltyIMU::getRawAccel(int *data)
 }
 
 
+// Reads the altitude from the altimeter sensor
 float TiltyIMU::readAltitude(float *data)
 {
 	if (alt.getDataReady())

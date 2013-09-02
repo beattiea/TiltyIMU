@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Setting Defines
 #define DEBUG_INITS
 
-
 #define USE_DMP // Must use this for now, no alternative
 #define myPort Serial
 #define I2C_RATE I2C_RATE_800
@@ -97,11 +96,11 @@ class TiltyIMU {
 		VectorFloat gravity;	// [x, y, z]			gravity vector
 		
 	// Altimeter stuff
-		float altimeter_data;
+		float raw_altimeter_data;
 		float altimeter_temp;
 		
 	// Compass stuff
-		float compass_data[3];
+		float raw_compass_data[3];
 };
 
 #endif
