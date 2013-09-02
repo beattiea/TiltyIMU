@@ -20,23 +20,23 @@ Software Library work:
 	Compass sensor calibration and testing out of a magnetic environment
 	
 	Altimeter library Doxygen formatting
-	Update altimeter library to take pointers to variables like compass and IMU
 	
 	MPU6050 should check if IMU is already enabled upon initialization
-	
-	R/C receiver Teensy compatability, spektrum/generic/cppm?
 	
 	GPS settings/control library
 	Check out GPS parser library
 	
 	TiltyIMU library to integrate everything together
-	Test TiltyIMU angle reading at 200Hz
 	
 	Servo library should have adjustable refresh rate
 
 Hardware Work
 =============
 	Update all 8-pin receptacles to new locking pattern!
+	
+	Add attachment points for interrupt pins of sensors to advanced IMU board
+	
+	Possible zener diode on voltage input to ease the power dissipated by the voltage regulator
 
 	Add-on boards
 	LEDs need to decrease current draw!
