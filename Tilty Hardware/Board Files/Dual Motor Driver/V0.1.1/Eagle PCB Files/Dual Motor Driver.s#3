@@ -9249,6 +9249,10 @@ QFN is non-stock</description>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="JP7" library="pinhead" deviceset="PINHD-2X3" device="/90"/>
 <part name="JP9" library="pinhead" deviceset="PINHD-2X3" device="/90"/>
+<part name="R2" library="resistor" deviceset="R-US_" device="R0603" value="1"/>
+<part name="R3" library="resistor" deviceset="R-US_" device="R0603" value="1"/>
+<part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="1"/>
+<part name="R5" library="resistor" deviceset="R-US_" device="R0603" value="1"/>
 </parts>
 <sheets>
 <sheet>
@@ -9263,32 +9267,32 @@ Sparkfun button</text>
 <instance part="JP3" gate="A" x="243.84" y="48.26" rot="MR0"/>
 <instance part="JP4" gate="A" x="243.84" y="20.32" rot="MR0"/>
 <instance part="GND1" gate="1" x="114.3" y="88.9"/>
-<instance part="D1" gate="G$1" x="124.46" y="104.14" rot="R90">
-<attribute name="PART#" x="124.46" y="104.14" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="D1" gate="G$1" x="137.16" y="104.14" rot="R90">
+<attribute name="PART#" x="137.16" y="104.14" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="GND3" gate="1" x="149.86" y="93.98"/>
+<instance part="GND3" gate="1" x="162.56" y="93.98"/>
 <instance part="P+1" gate="1" x="53.34" y="111.76"/>
 <instance part="P+2" gate="1" x="104.14" y="96.52" rot="R180"/>
-<instance part="D2" gate="G$1" x="132.08" y="104.14" rot="R90">
-<attribute name="PART#" x="132.08" y="104.14" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="D2" gate="G$1" x="144.78" y="104.14" rot="R90">
+<attribute name="PART#" x="144.78" y="104.14" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="D3" gate="G$1" x="139.7" y="104.14" rot="R90">
-<attribute name="PART#" x="139.7" y="104.14" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="D3" gate="G$1" x="152.4" y="104.14" rot="R90">
+<attribute name="PART#" x="152.4" y="104.14" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="D4" gate="G$1" x="147.32" y="104.14" rot="R90">
-<attribute name="PART#" x="147.32" y="104.14" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="D4" gate="G$1" x="160.02" y="104.14" rot="R90">
+<attribute name="PART#" x="160.02" y="104.14" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="D5" gate="G$1" x="147.32" y="119.38" rot="R90">
-<attribute name="PART#" x="147.32" y="119.38" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="D5" gate="G$1" x="160.02" y="119.38" rot="R90">
+<attribute name="PART#" x="160.02" y="119.38" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="D6" gate="G$1" x="139.7" y="119.38" rot="R90">
-<attribute name="PART#" x="139.7" y="119.38" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="D6" gate="G$1" x="152.4" y="119.38" rot="R90">
+<attribute name="PART#" x="152.4" y="119.38" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="D7" gate="G$1" x="132.08" y="119.38" rot="R90">
-<attribute name="PART#" x="132.08" y="119.38" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="D7" gate="G$1" x="144.78" y="119.38" rot="R90">
+<attribute name="PART#" x="144.78" y="119.38" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="D8" gate="G$1" x="124.46" y="119.38" rot="R90">
-<attribute name="PART#" x="124.46" y="119.38" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="D8" gate="G$1" x="137.16" y="119.38" rot="R90">
+<attribute name="PART#" x="137.16" y="119.38" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="JP5" gate="1" x="190.5" y="91.44" smashed="yes" rot="R180">
 <attribute name="PART#" x="190.5" y="91.44" size="1.778" layer="96" rot="R180" display="off"/>
@@ -9298,7 +9302,7 @@ Sparkfun button</text>
 <attribute name="PART#" x="190.5" y="114.3" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="NAME" x="195.58" y="105.918" size="1.778" layer="95" rot="R180"/>
 </instance>
-<instance part="P+4" gate="1" x="116.84" y="127"/>
+<instance part="P+4" gate="1" x="129.54" y="127"/>
 <instance part="JP8" gate="G$1" x="203.2" y="114.3"/>
 <instance part="J1" gate="G$1" x="160.02" y="5.08" smashed="yes">
 <attribute name="NAME" x="155.702" y="10.922" size="1.778" layer="95"/>
@@ -9343,6 +9347,10 @@ Sparkfun button</text>
 <instance part="GND4" gate="1" x="261.62" y="22.86"/>
 <instance part="JP7" gate="A" x="142.24" y="71.12"/>
 <instance part="JP9" gate="A" x="144.78" y="55.88"/>
+<instance part="R2" gate="G$1" x="22.86" y="114.3" rot="R90"/>
+<instance part="R3" gate="G$1" x="30.48" y="114.3" rot="R90"/>
+<instance part="R4" gate="G$1" x="111.76" y="114.3" rot="R90"/>
+<instance part="R5" gate="G$1" x="119.38" y="114.3" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -9360,18 +9368,18 @@ Sparkfun button</text>
 </segment>
 <segment>
 <pinref part="D1" gate="G$1" pin="A"/>
-<wire x1="124.46" y1="101.6" x2="124.46" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="99.06" x2="132.08" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="132.08" y1="99.06" x2="139.7" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="139.7" y1="99.06" x2="147.32" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="147.32" y1="99.06" x2="147.32" y2="101.6" width="0.1524" layer="91"/>
-<wire x1="139.7" y1="101.6" x2="139.7" y2="99.06" width="0.1524" layer="91"/>
-<junction x="139.7" y="99.06"/>
-<wire x1="132.08" y1="101.6" x2="132.08" y2="99.06" width="0.1524" layer="91"/>
-<junction x="132.08" y="99.06"/>
-<wire x1="147.32" y1="99.06" x2="149.86" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="149.86" y1="99.06" x2="149.86" y2="96.52" width="0.1524" layer="91"/>
-<junction x="147.32" y="99.06"/>
+<wire x1="137.16" y1="101.6" x2="137.16" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="99.06" x2="144.78" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="99.06" x2="152.4" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="99.06" x2="160.02" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="99.06" x2="160.02" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="101.6" x2="152.4" y2="99.06" width="0.1524" layer="91"/>
+<junction x="152.4" y="99.06"/>
+<wire x1="144.78" y1="101.6" x2="144.78" y2="99.06" width="0.1524" layer="91"/>
+<junction x="144.78" y="99.06"/>
+<wire x1="160.02" y1="99.06" x2="162.56" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="162.56" y1="99.06" x2="162.56" y2="96.52" width="0.1524" layer="91"/>
+<junction x="160.02" y="99.06"/>
 <pinref part="GND3" gate="1" pin="GND"/>
 <pinref part="D2" gate="G$1" pin="A"/>
 <pinref part="D3" gate="G$1" pin="A"/>
@@ -9467,11 +9475,11 @@ Sparkfun button</text>
 <net name="M1A" class="0">
 <segment>
 <pinref part="D1" gate="G$1" pin="C"/>
-<wire x1="124.46" y1="106.68" x2="124.46" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="111.76" x2="124.46" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="111.76" x2="119.38" y2="111.76" width="0.1524" layer="91"/>
-<junction x="124.46" y="111.76"/>
-<label x="119.38" y="111.76" size="1.778" layer="95"/>
+<wire x1="137.16" y1="106.68" x2="137.16" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="111.76" x2="137.16" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="111.76" x2="132.08" y2="111.76" width="0.1524" layer="91"/>
+<junction x="137.16" y="111.76"/>
+<label x="132.08" y="111.76" size="1.778" layer="95"/>
 <pinref part="D8" gate="G$1" pin="A"/>
 </segment>
 <segment>
@@ -9492,11 +9500,11 @@ Sparkfun button</text>
 </net>
 <net name="M1B" class="0">
 <segment>
-<wire x1="132.08" y1="106.68" x2="132.08" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="132.08" y1="111.76" x2="132.08" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="132.08" y1="111.76" x2="127" y2="111.76" width="0.1524" layer="91"/>
-<junction x="132.08" y="111.76"/>
-<label x="127" y="111.76" size="1.778" layer="95"/>
+<wire x1="144.78" y1="106.68" x2="144.78" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="111.76" x2="144.78" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="111.76" x2="139.7" y2="111.76" width="0.1524" layer="91"/>
+<junction x="144.78" y="111.76"/>
+<label x="139.7" y="111.76" size="1.778" layer="95"/>
 <pinref part="D2" gate="G$1" pin="C"/>
 <pinref part="D7" gate="G$1" pin="A"/>
 </segment>
@@ -9518,11 +9526,11 @@ Sparkfun button</text>
 </net>
 <net name="M2A" class="0">
 <segment>
-<wire x1="139.7" y1="106.68" x2="139.7" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="139.7" y1="111.76" x2="139.7" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="139.7" y1="111.76" x2="134.62" y2="111.76" width="0.1524" layer="91"/>
-<junction x="139.7" y="111.76"/>
-<label x="134.62" y="111.76" size="1.778" layer="95"/>
+<wire x1="152.4" y1="106.68" x2="152.4" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="111.76" x2="152.4" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="111.76" x2="147.32" y2="111.76" width="0.1524" layer="91"/>
+<junction x="152.4" y="111.76"/>
+<label x="147.32" y="111.76" size="1.778" layer="95"/>
 <pinref part="D3" gate="G$1" pin="C"/>
 <pinref part="D6" gate="G$1" pin="A"/>
 </segment>
@@ -9544,11 +9552,11 @@ Sparkfun button</text>
 </net>
 <net name="M2B" class="0">
 <segment>
-<wire x1="147.32" y1="106.68" x2="147.32" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="147.32" y1="111.76" x2="147.32" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="147.32" y1="111.76" x2="142.24" y2="111.76" width="0.1524" layer="91"/>
-<junction x="147.32" y="111.76"/>
-<label x="142.24" y="111.76" size="1.778" layer="95"/>
+<wire x1="160.02" y1="106.68" x2="160.02" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="111.76" x2="160.02" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="111.76" x2="154.94" y2="111.76" width="0.1524" layer="91"/>
+<junction x="160.02" y="111.76"/>
+<label x="154.94" y="111.76" size="1.778" layer="95"/>
 <pinref part="D4" gate="G$1" pin="C"/>
 <pinref part="D5" gate="G$1" pin="A"/>
 </segment>
@@ -9575,17 +9583,17 @@ Sparkfun button</text>
 <pinref part="P+1" gate="1" pin="+24V"/>
 </segment>
 <segment>
-<wire x1="124.46" y1="121.92" x2="124.46" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="124.46" x2="132.08" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="132.08" y1="124.46" x2="139.7" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="139.7" y1="124.46" x2="147.32" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="147.32" y1="124.46" x2="147.32" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="139.7" y1="121.92" x2="139.7" y2="124.46" width="0.1524" layer="91"/>
-<junction x="139.7" y="124.46"/>
-<wire x1="132.08" y1="121.92" x2="132.08" y2="124.46" width="0.1524" layer="91"/>
-<junction x="132.08" y="124.46"/>
-<wire x1="124.46" y1="124.46" x2="116.84" y2="124.46" width="0.1524" layer="91"/>
-<junction x="124.46" y="124.46"/>
+<wire x1="137.16" y1="121.92" x2="137.16" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="124.46" x2="144.78" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="124.46" x2="152.4" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="124.46" x2="160.02" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="124.46" x2="160.02" y2="121.92" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="121.92" x2="152.4" y2="124.46" width="0.1524" layer="91"/>
+<junction x="152.4" y="124.46"/>
+<wire x1="144.78" y1="121.92" x2="144.78" y2="124.46" width="0.1524" layer="91"/>
+<junction x="144.78" y="124.46"/>
+<wire x1="137.16" y1="124.46" x2="129.54" y2="124.46" width="0.1524" layer="91"/>
+<junction x="137.16" y="124.46"/>
 <pinref part="D5" gate="G$1" pin="C"/>
 <pinref part="D6" gate="G$1" pin="C"/>
 <pinref part="D7" gate="G$1" pin="C"/>
@@ -9674,6 +9682,14 @@ Sparkfun button</text>
 <segment>
 <pinref part="J1" gate="G$1" pin="5"/>
 <wire x1="152.4" y1="2.54" x2="147.32" y2="2.54" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R1" gate="G$1" pin="1"/>
+<pinref part="U1" gate="G$1" pin="PC6(/RESET)"/>
+<wire x1="50.8" y1="68.58" x2="50.8" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="50.8" y1="66.04" x2="53.34" y2="66.04" width="0.1524" layer="91"/>
+<pinref part="S1" gate="G$1" pin="2"/>
+<junction x="50.8" y="66.04"/>
 </segment>
 </net>
 <net name="SCK" class="0">
@@ -9870,16 +9886,6 @@ Sparkfun button</text>
 <pinref part="U1" gate="G$1" pin="PD6(AIN0)"/>
 <wire x1="101.6" y1="27.94" x2="111.76" y2="27.94" width="0.1524" layer="91"/>
 <label x="104.14" y="27.94" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$1" class="0">
-<segment>
-<pinref part="R1" gate="G$1" pin="1"/>
-<pinref part="U1" gate="G$1" pin="PC6(/RESET)"/>
-<wire x1="50.8" y1="68.58" x2="50.8" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="50.8" y1="66.04" x2="53.34" y2="66.04" width="0.1524" layer="91"/>
-<pinref part="S1" gate="G$1" pin="2"/>
-<junction x="50.8" y="66.04"/>
 </segment>
 </net>
 </nets>

@@ -8041,6 +8041,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <part name="+3V7" library="supply1" deviceset="+3V3" device=""/>
 <part name="P+6" library="supply1" deviceset="+5V" device=""/>
 <part name="P+7" library="supply1" deviceset="VCC" device=""/>
+<part name="P+8" library="supply1" deviceset="VCC" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8210,6 +8211,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <instance part="+3V7" gate="G$1" x="20.32" y="119.38"/>
 <instance part="P+6" gate="1" x="76.2" y="177.8"/>
 <instance part="P+7" gate="VCC" x="101.6" y="177.8"/>
+<instance part="P+8" gate="VCC" x="121.92" y="119.38"/>
 </instances>
 <busses>
 </busses>
@@ -8408,15 +8410,6 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="JP5" gate="G$1" pin="P$1"/>
 <wire x1="194.945" y1="109.855" x2="181.61" y2="109.855" width="0.1524" layer="91"/>
 <label x="181.61" y="109.855" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="U4" gate="G$1" pin="VIN"/>
-<wire x1="127" y1="114.3" x2="121.92" y2="114.3" width="0.1524" layer="91"/>
-<label x="116.84" y="114.3" size="1.778" layer="95"/>
-<pinref part="C4" gate="G$1" pin="1"/>
-<wire x1="121.92" y1="114.3" x2="116.84" y2="114.3" width="0.1524" layer="91"/>
-<wire x1="121.92" y1="106.68" x2="121.92" y2="114.3" width="0.1524" layer="91"/>
-<junction x="121.92" y="114.3"/>
 </segment>
 </net>
 <net name="CMD" class="0">
@@ -8980,6 +8973,15 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="P+7" gate="VCC" pin="VCC"/>
 <wire x1="102.87" y1="170.18" x2="101.6" y2="170.18" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="170.18" x2="101.6" y2="175.26" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="U4" gate="G$1" pin="VIN"/>
+<wire x1="127" y1="114.3" x2="121.92" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="C4" gate="G$1" pin="1"/>
+<wire x1="121.92" y1="106.68" x2="121.92" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="P+8" gate="VCC" pin="VCC"/>
+<wire x1="121.92" y1="114.3" x2="121.92" y2="116.84" width="0.1524" layer="91"/>
+<junction x="121.92" y="114.3"/>
 </segment>
 </net>
 <net name="N$10" class="0">

@@ -9253,6 +9253,8 @@ QFN is non-stock</description>
 <part name="R3" library="resistor" deviceset="R-US_" device="R0603" value="1"/>
 <part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="1"/>
 <part name="R5" library="resistor" deviceset="R-US_" device="R0603" value="1"/>
+<part name="GND5" library="supply1" deviceset="GND" device=""/>
+<part name="GND13" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -9347,10 +9349,24 @@ Sparkfun button</text>
 <instance part="GND4" gate="1" x="261.62" y="22.86"/>
 <instance part="JP7" gate="A" x="142.24" y="71.12"/>
 <instance part="JP9" gate="A" x="144.78" y="55.88"/>
-<instance part="R2" gate="G$1" x="22.86" y="114.3" rot="R90"/>
-<instance part="R3" gate="G$1" x="30.48" y="114.3" rot="R90"/>
-<instance part="R4" gate="G$1" x="111.76" y="114.3" rot="R90"/>
-<instance part="R5" gate="G$1" x="119.38" y="114.3" rot="R90"/>
+<instance part="R2" gate="G$1" x="38.1" y="114.3" smashed="yes" rot="R90">
+<attribute name="NAME" x="36.83" y="117.8814" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="36.83" y="115.062" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="R3" gate="G$1" x="45.72" y="114.3" smashed="yes" rot="R90">
+<attribute name="NAME" x="44.45" y="117.8814" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="44.45" y="115.062" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="R4" gate="G$1" x="111.76" y="114.3" smashed="yes" rot="R90">
+<attribute name="NAME" x="110.49" y="117.8814" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="110.49" y="115.062" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="R5" gate="G$1" x="119.38" y="114.3" smashed="yes" rot="R90">
+<attribute name="NAME" x="118.11" y="117.8814" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="118.11" y="115.062" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="GND5" gate="1" x="119.38" y="104.14"/>
+<instance part="GND13" gate="1" x="38.1" y="104.14"/>
 </instances>
 <busses>
 </busses>
@@ -9470,6 +9486,24 @@ Sparkfun button</text>
 <wire x1="246.38" y1="86.36" x2="266.7" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="266.7" y1="86.36" x2="266.7" y2="58.42" width="0.1524" layer="91"/>
 <junction x="266.7" y="58.42"/>
+</segment>
+<segment>
+<pinref part="R4" gate="G$1" pin="1"/>
+<wire x1="111.76" y1="109.22" x2="111.76" y2="106.68" width="0.1524" layer="91"/>
+<pinref part="R5" gate="G$1" pin="1"/>
+<wire x1="111.76" y1="106.68" x2="119.38" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="106.68" x2="119.38" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="GND5" gate="1" pin="GND"/>
+<junction x="119.38" y="106.68"/>
+</segment>
+<segment>
+<pinref part="R2" gate="G$1" pin="1"/>
+<wire x1="38.1" y1="109.22" x2="38.1" y2="106.68" width="0.1524" layer="91"/>
+<pinref part="R3" gate="G$1" pin="1"/>
+<wire x1="38.1" y1="106.68" x2="45.72" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="45.72" y1="106.68" x2="45.72" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="GND13" gate="1" pin="GND"/>
+<junction x="38.1" y="106.68"/>
 </segment>
 </net>
 <net name="M1A" class="0">
@@ -9886,6 +9920,28 @@ Sparkfun button</text>
 <pinref part="U1" gate="G$1" pin="PD6(AIN0)"/>
 <wire x1="101.6" y1="27.94" x2="111.76" y2="27.94" width="0.1524" layer="91"/>
 <label x="104.14" y="27.94" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SENSE_2" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="SENSE_B"/>
+<pinref part="R4" gate="G$1" pin="2"/>
+<wire x1="99.06" y1="119.38" x2="111.76" y2="119.38" width="0.1524" layer="91"/>
+<pinref part="R5" gate="G$1" pin="2"/>
+<wire x1="111.76" y1="119.38" x2="119.38" y2="119.38" width="0.1524" layer="91"/>
+<junction x="111.76" y="119.38"/>
+<label x="99.06" y="119.38" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SENSE_1" class="0">
+<segment>
+<pinref part="R2" gate="G$1" pin="2"/>
+<pinref part="R3" gate="G$1" pin="2"/>
+<wire x1="38.1" y1="119.38" x2="45.72" y2="119.38" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$1" pin="SENSE_A"/>
+<wire x1="45.72" y1="119.38" x2="63.5" y2="119.38" width="0.1524" layer="91"/>
+<junction x="45.72" y="119.38"/>
+<label x="48.26" y="119.38" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

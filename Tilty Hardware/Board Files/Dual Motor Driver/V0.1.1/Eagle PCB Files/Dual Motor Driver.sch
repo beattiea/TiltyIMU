@@ -9261,6 +9261,7 @@ QFN is non-stock</description>
 <plain>
 <text x="2.54" y="5.08" size="1.778" layer="91">Change to a non-
 Sparkfun button</text>
+<text x="182.88" y="40.64" size="2.54" layer="91" ratio="15">headers need to be updated!</text>
 </plain>
 <instances>
 <instance part="U2" gate="G$1" x="81.28" y="109.22"/>

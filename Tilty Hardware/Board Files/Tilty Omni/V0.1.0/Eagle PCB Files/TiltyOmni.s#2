@@ -5909,8 +5909,8 @@ www.scr.com</description>
 </packages>
 <symbols>
 <symbol name="2-POS_SMD_TERMINAL_BLOCK">
-<pin name="P$1" x="-5.08" y="5.08" length="middle"/>
-<pin name="P$2" x="-5.08" y="-5.08" length="middle"/>
+<pin name="1" x="-5.08" y="5.08" visible="pin" length="middle"/>
+<pin name="2" x="-5.08" y="-5.08" visible="pin" length="middle"/>
 <wire x1="0" y1="-7.62" x2="0" y2="7.62" width="0.254" layer="94"/>
 <wire x1="0" y1="7.62" x2="10.16" y2="7.62" width="0.254" layer="94"/>
 <wire x1="10.16" y1="7.62" x2="10.16" y2="-7.62" width="0.254" layer="94"/>
@@ -5942,8 +5942,8 @@ www.scr.com</description>
 <devices>
 <device name="" package="2-POS_SMD_TERMINAL_BLOCK">
 <connects>
-<connect gate="G$1" pin="P$1" pad="P$3"/>
-<connect gate="G$1" pin="P$2" pad="P$4"/>
+<connect gate="G$1" pin="1" pad="P$3"/>
+<connect gate="G$1" pin="2" pad="P$4"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -8042,6 +8042,8 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <part name="P+6" library="supply1" deviceset="+5V" device=""/>
 <part name="P+7" library="supply1" deviceset="VCC" device=""/>
 <part name="P+8" library="supply1" deviceset="VCC" device=""/>
+<part name="P+9" library="supply1" deviceset="VCC" device=""/>
+<part name="GND5" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8121,9 +8123,9 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <instance part="R5" gate="G$1" x="118.11" y="170.18"/>
 <instance part="R6" gate="G$1" x="123.19" y="165.1" rot="R90"/>
 <instance part="GND13" gate="1" x="123.19" y="157.48"/>
-<instance part="JP5" gate="G$1" x="200.025" y="104.775">
-<attribute name="PART#" x="200.025" y="104.775" size="1.778" layer="96" display="off"/>
-<attribute name="POSSIBLE_ALT" x="200.025" y="104.775" size="1.778" layer="96" display="off"/>
+<instance part="JP5" gate="G$1" x="198.12" y="104.14">
+<attribute name="PART#" x="198.12" y="104.14" size="1.778" layer="96" display="off"/>
+<attribute name="POSSIBLE_ALT" x="198.12" y="104.14" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U4" gate="G$1" x="142.24" y="111.76">
 <attribute name="COST" x="142.24" y="111.76" size="3.81" layer="96" ratio="14" display="off"/>
@@ -8212,6 +8214,8 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <instance part="P+6" gate="1" x="76.2" y="177.8"/>
 <instance part="P+7" gate="VCC" x="101.6" y="177.8"/>
 <instance part="P+8" gate="VCC" x="121.92" y="119.38"/>
+<instance part="P+9" gate="VCC" x="187.96" y="116.84"/>
+<instance part="GND5" gate="1" x="187.96" y="91.44"/>
 </instances>
 <busses>
 </busses>
@@ -8290,11 +8294,6 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <wire x1="121.92" y1="93.98" x2="142.24" y2="93.98" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="JP5" gate="G$1" pin="P$2"/>
-<wire x1="194.945" y1="99.695" x2="181.61" y2="99.695" width="0.1524" layer="91"/>
-<label x="181.61" y="99.695" size="1.778" layer="95"/>
-</segment>
-<segment>
 <wire x1="96.52" y1="172.72" x2="96.52" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="GND17" gate="1" pin="GND"/>
 <pinref part="R4" gate="G$1" pin="2"/>
@@ -8366,6 +8365,12 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="GND10" gate="1" pin="GND"/>
 <wire x1="251.46" y1="58.42" x2="251.46" y2="55.88" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="JP5" gate="G$1" pin="2"/>
+<wire x1="193.04" y1="99.06" x2="187.96" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="187.96" y1="99.06" x2="187.96" y2="93.98" width="0.1524" layer="91"/>
+<pinref part="GND5" gate="1" pin="GND"/>
+</segment>
 </net>
 <net name="N$1" class="0">
 <segment>
@@ -8403,13 +8408,6 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <wire x1="7.62" y1="109.22" x2="7.62" y2="127" width="0.1524" layer="91"/>
 <wire x1="7.62" y1="127" x2="20.32" y2="127" width="0.1524" layer="91"/>
 <label x="10.16" y="127" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="VBATT" class="0">
-<segment>
-<pinref part="JP5" gate="G$1" pin="P$1"/>
-<wire x1="194.945" y1="109.855" x2="181.61" y2="109.855" width="0.1524" layer="91"/>
-<label x="181.61" y="109.855" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="CMD" class="0">
@@ -8982,6 +8980,12 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="P+8" gate="VCC" pin="VCC"/>
 <wire x1="121.92" y1="114.3" x2="121.92" y2="116.84" width="0.1524" layer="91"/>
 <junction x="121.92" y="114.3"/>
+</segment>
+<segment>
+<pinref part="JP5" gate="G$1" pin="1"/>
+<wire x1="193.04" y1="109.22" x2="187.96" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="187.96" y1="109.22" x2="187.96" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="P+9" gate="VCC" pin="VCC"/>
 </segment>
 </net>
 <net name="N$10" class="0">

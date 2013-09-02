@@ -6947,71 +6947,71 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <pad name="A12" x="0" y="1.27" drill="0.9652"/>
 </package>
 <package name="TEENSY_3.0_ALLPINS-SMD">
-<wire x1="-8.89" y1="19.05" x2="8.89" y2="19.05" width="0.127" layer="51"/>
-<wire x1="8.89" y1="19.05" x2="8.89" y2="-16.51" width="0.127" layer="51"/>
-<wire x1="8.89" y1="-16.51" x2="-8.89" y2="-16.51" width="0.127" layer="51"/>
-<wire x1="-8.89" y1="-16.51" x2="-8.89" y2="19.05" width="0.127" layer="51"/>
-<wire x1="-1.27" y1="17.78" x2="1.27" y2="17.78" width="0.2032" layer="21"/>
-<wire x1="1.27" y1="17.78" x2="1.27" y2="19.05" width="0.2032" layer="21"/>
-<wire x1="1.27" y1="19.05" x2="8.89" y2="19.05" width="0.2032" layer="21"/>
-<wire x1="8.89" y1="19.05" x2="8.89" y2="-16.51" width="0.2032" layer="21"/>
-<wire x1="8.89" y1="-16.51" x2="-8.89" y2="-16.51" width="0.2032" layer="21"/>
-<wire x1="-8.89" y1="-16.51" x2="-8.89" y2="19.05" width="0.2032" layer="21"/>
-<wire x1="-8.89" y1="19.05" x2="-1.27" y2="19.05" width="0.2032" layer="21"/>
-<wire x1="-1.27" y1="19.05" x2="-1.27" y2="17.78" width="0.2032" layer="21"/>
-<text x="-3.81" y="15.24" size="1.27" layer="25" font="vector">&gt;NAME</text>
-<text x="-3.81" y="6.35" size="1.27" layer="27" font="vector">&gt;VALUE</text>
-<smd name="A12" x="-1.27" y="2.54" dx="3.556" dy="1.397" layer="1"/>
-<smd name="GND2" x="-1.27" y="0" dx="3.556" dy="1.397" layer="1"/>
-<smd name="24" x="-1.27" y="-2.54" dx="3.556" dy="1.397" layer="1"/>
-<smd name="25" x="-1.27" y="-5.08" dx="3.556" dy="1.397" layer="1"/>
-<smd name="26" x="-1.27" y="-7.62" dx="3.556" dy="1.397" layer="1"/>
-<smd name="27" x="-1.27" y="-10.16" dx="3.556" dy="1.397" layer="1"/>
-<smd name="28" x="-1.27" y="-12.7" dx="3.556" dy="1.397" layer="1"/>
-<smd name="29" x="3.81" y="-12.7" dx="3.556" dy="1.397" layer="1"/>
-<smd name="30" x="3.81" y="-10.16" dx="3.556" dy="1.397" layer="1"/>
-<smd name="31" x="3.81" y="-7.62" dx="3.556" dy="1.397" layer="1"/>
-<smd name="32" x="3.81" y="-5.08" dx="3.556" dy="1.397" layer="1"/>
-<smd name="33" x="3.81" y="-2.54" dx="3.556" dy="1.397" layer="1"/>
-<smd name="3.3V2" x="3.81" y="0" dx="3.556" dy="1.397" layer="1"/>
-<smd name="A13" x="3.81" y="2.54" dx="3.556" dy="1.397" layer="1"/>
-<smd name="GND" x="-7.62" y="17.78" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="0" x="-7.62" y="15.24" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="1" x="-7.62" y="12.7" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="2" x="-7.62" y="10.16" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="3" x="-7.62" y="7.62" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="4" x="-7.62" y="5.08" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="5" x="-7.62" y="2.54" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="6" x="-7.62" y="0" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="7" x="-7.62" y="-2.54" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="8" x="-7.62" y="-5.08" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="9" x="-7.62" y="-7.62" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="10" x="-7.62" y="-10.16" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="11" x="-7.62" y="-12.7" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="12" x="-7.62" y="-15.24" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="VBAT" x="-5.08" y="-15.24" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="3.3V1" x="-2.54" y="-15.24" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="GND1" x="0" y="-15.24" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="PGM" x="2.54" y="-15.24" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="RESET" x="5.08" y="-15.24" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="13" x="7.62" y="-15.24" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="14/A0" x="7.62" y="-12.7" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="15/A1" x="7.62" y="-10.16" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="16/A2" x="7.62" y="-7.62" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="17/A3" x="7.62" y="-5.08" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="18/A4" x="7.62" y="-2.54" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="19/A5" x="7.62" y="0" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="20/A6" x="7.62" y="2.54" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="21/A7" x="7.62" y="5.08" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="22/A8" x="7.62" y="7.62" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="23/A9" x="7.62" y="10.16" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="3.3V" x="7.62" y="12.7" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="AGND" x="7.62" y="15.24" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="VIN" x="7.62" y="17.78" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="VUSB" x="5.08" y="15.24" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="AREF" x="5.08" y="10.16" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="A10" x="5.08" y="7.62" dx="1.524" dy="1.524" layer="1" roundness="100"/>
-<smd name="A11" x="5.08" y="5.08" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<wire x1="-8.89" y1="17.78" x2="8.89" y2="17.78" width="0.127" layer="51"/>
+<wire x1="8.89" y1="17.78" x2="8.89" y2="-17.78" width="0.127" layer="51"/>
+<wire x1="8.89" y1="-17.78" x2="-8.89" y2="-17.78" width="0.127" layer="51"/>
+<wire x1="-8.89" y1="-17.78" x2="-8.89" y2="17.78" width="0.127" layer="51"/>
+<wire x1="-1.27" y1="16.51" x2="1.27" y2="16.51" width="0.2032" layer="21"/>
+<wire x1="1.27" y1="16.51" x2="1.27" y2="17.78" width="0.2032" layer="21"/>
+<wire x1="1.27" y1="17.78" x2="8.89" y2="17.78" width="0.2032" layer="21"/>
+<wire x1="8.89" y1="17.78" x2="8.89" y2="-17.78" width="0.2032" layer="21"/>
+<wire x1="8.89" y1="-17.78" x2="-8.89" y2="-17.78" width="0.2032" layer="21"/>
+<wire x1="-8.89" y1="-17.78" x2="-8.89" y2="17.78" width="0.2032" layer="21"/>
+<wire x1="-8.89" y1="17.78" x2="-1.27" y2="17.78" width="0.2032" layer="21"/>
+<wire x1="-1.27" y1="17.78" x2="-1.27" y2="16.51" width="0.2032" layer="21"/>
+<text x="-3.81" y="13.97" size="1.27" layer="25" font="vector">&gt;NAME</text>
+<text x="-3.81" y="5.08" size="1.27" layer="27" font="vector">&gt;VALUE</text>
+<smd name="A12" x="-1.27" y="1.27" dx="3.556" dy="1.397" layer="1"/>
+<smd name="GND2" x="-1.27" y="-1.27" dx="3.556" dy="1.397" layer="1"/>
+<smd name="24" x="-1.27" y="-3.81" dx="3.556" dy="1.397" layer="1"/>
+<smd name="25" x="-1.27" y="-6.35" dx="3.556" dy="1.397" layer="1"/>
+<smd name="26" x="-1.27" y="-8.89" dx="3.556" dy="1.397" layer="1"/>
+<smd name="27" x="-1.27" y="-11.43" dx="3.556" dy="1.397" layer="1"/>
+<smd name="28" x="-1.27" y="-13.97" dx="3.556" dy="1.397" layer="1"/>
+<smd name="29" x="3.81" y="-13.97" dx="3.556" dy="1.397" layer="1"/>
+<smd name="30" x="3.81" y="-11.43" dx="3.556" dy="1.397" layer="1"/>
+<smd name="31" x="3.81" y="-8.89" dx="3.556" dy="1.397" layer="1"/>
+<smd name="32" x="3.81" y="-6.35" dx="3.556" dy="1.397" layer="1"/>
+<smd name="33" x="3.81" y="-3.81" dx="3.556" dy="1.397" layer="1"/>
+<smd name="3.3V2" x="3.81" y="-1.27" dx="3.556" dy="1.397" layer="1"/>
+<smd name="A13" x="3.81" y="1.27" dx="3.556" dy="1.397" layer="1"/>
+<smd name="GND" x="-7.62" y="16.51" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="0" x="-7.62" y="13.97" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="1" x="-7.62" y="11.43" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="2" x="-7.62" y="8.89" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="3" x="-7.62" y="6.35" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="4" x="-7.62" y="3.81" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="5" x="-7.62" y="1.27" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="6" x="-7.62" y="-1.27" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="7" x="-7.62" y="-3.81" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="8" x="-7.62" y="-6.35" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="9" x="-7.62" y="-8.89" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="10" x="-7.62" y="-11.43" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="11" x="-7.62" y="-13.97" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="12" x="-7.62" y="-16.51" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="VBAT" x="-5.08" y="-16.51" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="3.3V1" x="-2.54" y="-16.51" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="GND1" x="0" y="-16.51" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="PGM" x="2.54" y="-16.51" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="RESET" x="5.08" y="-16.51" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="13" x="7.62" y="-16.51" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="14/A0" x="7.62" y="-13.97" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="15/A1" x="7.62" y="-11.43" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="16/A2" x="7.62" y="-8.89" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="17/A3" x="7.62" y="-6.35" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="18/A4" x="7.62" y="-3.81" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="19/A5" x="7.62" y="-1.27" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="20/A6" x="7.62" y="1.27" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="21/A7" x="7.62" y="3.81" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="22/A8" x="7.62" y="6.35" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="23/A9" x="7.62" y="8.89" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="3.3V" x="7.62" y="11.43" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="AGND" x="7.62" y="13.97" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="VIN" x="7.62" y="16.51" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="VUSB" x="5.08" y="13.97" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="AREF" x="5.08" y="8.89" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="A10" x="5.08" y="6.35" dx="1.524" dy="1.524" layer="1" roundness="100"/>
+<smd name="A11" x="5.08" y="3.81" dx="1.524" dy="1.524" layer="1" roundness="100"/>
 </package>
 </packages>
 <symbols>
@@ -8018,7 +8018,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <attribute name="PART#" value="BZX84C3V3LT1GOSCT-ND"/>
 </part>
 <part name="GND23" library="supply1" deviceset="GND" device=""/>
-<part name="U1" library="Teensy3.0" deviceset="TEENSY_3.0_ALLPINS" device="" value="TEENSY_3.0_ALLPINS"/>
+<part name="U1" library="Teensy3.0" deviceset="TEENSY_3.0_ALLPINS" device="TEENSY_3.0_ALLPINS-SMD" value="TEENSY_3.0_ALLPINSTEENSY_3.0_ALLPINS-SMD"/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
 <part name="JP1" library="My Parts" deviceset="8-PIN_HEADER" device=""/>
