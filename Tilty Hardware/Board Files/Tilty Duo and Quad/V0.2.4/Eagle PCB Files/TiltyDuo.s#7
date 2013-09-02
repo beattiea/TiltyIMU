@@ -7699,7 +7699,7 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <part name="C11" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="GND24" library="supply1" deviceset="GND" device=""/>
 <part name="SJ3" library="SparkFun-Passives" deviceset="SOLDERJUMPER_2WAY" device="S"/>
-<part name="SJ2" library="SparkFun-Passives" deviceset="SOLDERJUMPER_2WAY" device="S"/>
+<part name="SJ2" library="SparkFun-Passives" deviceset="SOLDERJUMPER_2WAY" device="PASTE1&amp;2"/>
 <part name="C12" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="GND25" library="SparkFun" deviceset="GND" device=""/>
 <part name="U7" library="SparkFun-DigitalIC" deviceset="SPI_FLASH-X25XX" device="SMD">
@@ -8238,15 +8238,6 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <pinref part="JP5" gate="G$1" pin="P$1"/>
 <wire x1="194.945" y1="109.855" x2="181.61" y2="109.855" width="0.1524" layer="91"/>
 <label x="181.61" y="109.855" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="U4" gate="G$1" pin="VIN"/>
-<wire x1="127" y1="114.3" x2="121.92" y2="114.3" width="0.1524" layer="91"/>
-<label x="116.84" y="114.3" size="1.778" layer="95"/>
-<pinref part="C4" gate="G$1" pin="1"/>
-<wire x1="121.92" y1="114.3" x2="116.84" y2="114.3" width="0.1524" layer="91"/>
-<wire x1="121.92" y1="106.68" x2="121.92" y2="114.3" width="0.1524" layer="91"/>
-<junction x="121.92" y="114.3"/>
 </segment>
 <segment>
 <wire x1="157.48" y1="15.24" x2="167.64" y2="15.24" width="0.1524" layer="91"/>
@@ -8801,6 +8792,14 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <pinref part="D4" gate="G$1" pin="C"/>
 <pinref part="U1" gate="G$1" pin="VIN"/>
 <wire x1="215.9" y1="60.96" x2="203.2" y2="60.96" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$17" class="0">
+<segment>
+<pinref part="U4" gate="G$1" pin="VIN"/>
+<wire x1="127" y1="114.3" x2="121.92" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="C4" gate="G$1" pin="1"/>
+<wire x1="121.92" y1="114.3" x2="121.92" y2="106.68" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

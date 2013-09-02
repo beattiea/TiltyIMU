@@ -56,6 +56,7 @@ class TiltyIMU {
 		
 		// IMU Functions
 		void readAngles(float *data);
+		void readAnglesRadians(float *data);
 		void readNormalAccelerations(float *data);
 		
 		void getRawGyro(int *data);
@@ -96,7 +97,7 @@ class TiltyIMU {
 		VectorFloat gravity;	// [x, y, z]			gravity vector
 		
 	// Altimeter stuff
-		float raw_altimeter_data;
+		float altimeter_data;
 		float altimeter_temp;
 		
 	// Compass stuff

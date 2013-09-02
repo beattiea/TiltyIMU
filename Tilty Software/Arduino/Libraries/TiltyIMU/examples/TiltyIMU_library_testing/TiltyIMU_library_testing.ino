@@ -47,6 +47,7 @@ void loop() {
 	//tilty.readAltitude(&alt);
 	if (tilty.imu_updated) {
 		tilty.readNormalAccelerations(float_data);
+		tilty.readAngles(float_data);
 		
 		Serial.print(float_data[0]);
 		Serial.print("\t\t");

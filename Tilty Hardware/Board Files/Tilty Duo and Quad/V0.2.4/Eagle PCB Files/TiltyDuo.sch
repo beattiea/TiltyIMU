@@ -6250,8 +6250,8 @@ www.scr.com</description>
 </packages>
 <symbols>
 <symbol name="2-POS_SMD_TERMINAL_BLOCK">
-<pin name="P$1" x="-5.08" y="5.08" length="middle"/>
-<pin name="P$2" x="-5.08" y="-5.08" length="middle"/>
+<pin name="1" x="-5.08" y="5.08" visible="pin" length="middle"/>
+<pin name="2" x="-5.08" y="-5.08" visible="pin" length="middle"/>
 <wire x1="0" y1="-7.62" x2="0" y2="7.62" width="0.254" layer="94"/>
 <wire x1="0" y1="7.62" x2="10.16" y2="7.62" width="0.254" layer="94"/>
 <wire x1="10.16" y1="7.62" x2="10.16" y2="-7.62" width="0.254" layer="94"/>
@@ -6319,8 +6319,8 @@ www.scr.com</description>
 <devices>
 <device name="" package="2-POS_SMD_TERMINAL_BLOCK">
 <connects>
-<connect gate="G$1" pin="P$1" pad="P$3"/>
-<connect gate="G$1" pin="P$2" pad="P$4"/>
+<connect gate="G$1" pin="1" pad="P$3"/>
+<connect gate="G$1" pin="2" pad="P$4"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -10043,7 +10043,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <wire x1="121.92" y1="93.98" x2="142.24" y2="93.98" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="JP5" gate="G$1" pin="P$2"/>
+<pinref part="JP5" gate="G$1" pin="2"/>
 <wire x1="194.945" y1="99.695" x2="181.61" y2="99.695" width="0.1524" layer="91"/>
 <label x="181.61" y="99.695" size="1.778" layer="95"/>
 </segment>
@@ -10305,7 +10305,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </net>
 <net name="VBATT" class="0">
 <segment>
-<pinref part="JP5" gate="G$1" pin="P$1"/>
+<pinref part="JP5" gate="G$1" pin="1"/>
 <wire x1="194.945" y1="109.855" x2="181.61" y2="109.855" width="0.1524" layer="91"/>
 <label x="181.61" y="109.855" size="1.778" layer="95"/>
 </segment>

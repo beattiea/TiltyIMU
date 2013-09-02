@@ -7887,13 +7887,13 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <attribute name="NAME" x="237.49" y="64.135" size="1.778" layer="95"/>
 </instance>
 <instance part="JP3" gate="G$1" x="233.68" y="30.48" smashed="yes">
-<attribute name="NAME" x="229.87" y="41.275" size="1.778" layer="95"/>
+<attribute name="NAME" x="233.172" y="15.367" size="1.778" layer="95"/>
 </instance>
 <instance part="JP2" gate="G$1" x="149.86" y="30.48" smashed="yes" rot="R180">
-<attribute name="NAME" x="153.67" y="19.685" size="1.778" layer="95" rot="R180"/>
+<attribute name="NAME" x="151.13" y="19.685" size="1.778" layer="95" rot="R180"/>
 </instance>
 <instance part="JP1" gate="G$1" x="142.24" y="50.8" smashed="yes" rot="R180">
-<attribute name="NAME" x="146.05" y="40.005" size="1.778" layer="95" rot="R180"/>
+<attribute name="NAME" x="143.51" y="65.405" size="1.778" layer="95" rot="R180"/>
 </instance>
 </instances>
 <busses>
