@@ -2457,14 +2457,14 @@ We've spent an enormous amount of time creating and checking these footprints an
 <text x="-0.908" y="-1.651" size="0.4064" layer="27">&gt;VALUE</text>
 </package>
 <package name="SJ_3_PASTE1&amp;2">
-<wire x1="1.27" y1="-1.016" x2="-1.27" y2="-1.016" width="0.1524" layer="21"/>
-<wire x1="1.27" y1="1.016" x2="1.524" y2="0.762" width="0.1524" layer="21" curve="-90"/>
-<wire x1="-1.524" y1="0.762" x2="-1.27" y2="1.016" width="0.1524" layer="21" curve="-90"/>
-<wire x1="-1.524" y1="-0.762" x2="-1.27" y2="-1.016" width="0.1524" layer="21" curve="90"/>
-<wire x1="1.27" y1="-1.016" x2="1.524" y2="-0.762" width="0.1524" layer="21" curve="90"/>
-<wire x1="1.524" y1="-0.762" x2="1.524" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="-1.524" y1="-0.762" x2="-1.524" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="-1.27" y1="1.016" x2="1.27" y2="1.016" width="0.1524" layer="21"/>
+<wire x1="1.27" y1="-1.016" x2="-1.27" y2="-1.016" width="0.1524" layer="23"/>
+<wire x1="1.27" y1="1.016" x2="1.524" y2="0.762" width="0.1524" layer="23" curve="-90"/>
+<wire x1="-1.524" y1="0.762" x2="-1.27" y2="1.016" width="0.1524" layer="23" curve="-90"/>
+<wire x1="-1.524" y1="-0.762" x2="-1.27" y2="-1.016" width="0.1524" layer="23" curve="90"/>
+<wire x1="1.27" y1="-1.016" x2="1.524" y2="-0.762" width="0.1524" layer="23" curve="90"/>
+<wire x1="1.524" y1="-0.762" x2="1.524" y2="0.762" width="0.1524" layer="23"/>
+<wire x1="-1.524" y1="-0.762" x2="-1.524" y2="0.762" width="0.1524" layer="23"/>
+<wire x1="-1.27" y1="1.016" x2="1.27" y2="1.016" width="0.1524" layer="23"/>
 <wire x1="0.1905" y1="0.508" x2="-1.016" y2="0.508" width="0.127" layer="51"/>
 <wire x1="-1.016" y1="0.508" x2="-1.016" y2="-0.508" width="0.127" layer="51"/>
 <wire x1="-1.016" y1="-0.508" x2="0.1905" y2="-0.508" width="0.127" layer="51"/>
@@ -3877,11 +3877,16 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,586aa3b33fa8838c"/>
 <approved hash="19,1,2f025979a53924bf"/>
 <approved hash="19,1,6b9006c46892623a"/>
+<approved hash="19,1,45b57fc720e8ffae"/>
+<approved hash="19,1,ed46cf51111dcffe"/>
+<approved hash="19,1,43221b0d1245b69e"/>
+<approved hash="19,1,1134e5cd77449cd3"/>
+<approved hash="5,1,6fa326e47fbb0b1a"/>
 <approved hash="19,16,dc76610e670dda75"/>
 <approved hash="19,16,dce4619c6180dcf8"/>
 <approved hash="19,16,0a55e8ade62604de"/>
-<approved hash="19,16,6e75bd0dbb1d6865"/>
 <approved hash="19,16,6ee7bd9fbd906ee8"/>
+<approved hash="19,16,6e75bd0dbb1d6865"/>
 </errors>
 </board>
 </drawing>

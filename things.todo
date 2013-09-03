@@ -16,7 +16,6 @@ Documentation:
 Software Library work:
 ======================
 	Compass sensor temperature compensation
-	Compass sensor tilt compensation
 	Compass sensor calibration and testing out of a magnetic environment
 	
 	Altimeter library Doxygen formatting
@@ -26,7 +25,7 @@ Software Library work:
 	GPS settings/control library
 	Check out GPS parser library
 	
-	TiltyIMU library to integrate everything together
+	TiltyIMU library to integrate everything together (WIP)
 	
 	Servo library should have adjustable refresh rate
 	
