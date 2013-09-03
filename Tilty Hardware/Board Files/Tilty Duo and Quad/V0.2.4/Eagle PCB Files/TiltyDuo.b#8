@@ -2611,6 +2611,36 @@ We've spent an enormous amount of time creating and checking these footprints an
 </package>
 </packages>
 </library>
+<library name="diode">
+<description>&lt;b&gt;Diodes&lt;/b&gt;&lt;p&gt;
+Based on the following sources:
+&lt;ul&gt;
+&lt;li&gt;Motorola : www.onsemi.com
+&lt;li&gt;Fairchild : www.fairchildsemi.com
+&lt;li&gt;Philips : www.semiconductors.com
+&lt;li&gt;Vishay : www.vishay.de
+&lt;/ul&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="DO214AA">
+<description>&lt;b&gt;DIODE&lt;/b&gt;</description>
+<wire x1="-2.4" y1="1.1" x2="2.4" y2="1.1" width="0.254" layer="51"/>
+<wire x1="2.4" y1="1.1" x2="2.4" y2="-1.1" width="0.254" layer="51"/>
+<wire x1="2.4" y1="-1.1" x2="-2.4" y2="-1.1" width="0.254" layer="51"/>
+<wire x1="-2.4" y1="-1.1" x2="-2.4" y2="1.1" width="0.254" layer="51"/>
+<wire x1="-1.2" y1="0" x2="0.05" y2="0.7" width="0.254" layer="21"/>
+<wire x1="0.05" y1="0.7" x2="0.05" y2="-0.7" width="0.254" layer="21"/>
+<wire x1="0.05" y1="-0.7" x2="-1.2" y2="0" width="0.254" layer="21"/>
+<smd name="C" x="-2.55" y="0" dx="1.8" dy="2.2" layer="1"/>
+<smd name="A" x="2.55" y="0" dx="1.8" dy="2.2" layer="1"/>
+<text x="-2.64" y="1.436" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-2.64" y="-2.706" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
+<rectangle x1="-2.75" y1="-0.7" x2="-2.5" y2="0.65" layer="51"/>
+<rectangle x1="2.5" y1="-0.7" x2="2.75" y2="0.65" layer="51"/>
+<rectangle x1="-1.4" y1="-1.05" x2="-1.1" y2="1.05" layer="21"/>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -2894,6 +2924,10 @@ Please make sure your boards conform to these design rules.</description>
 <element name="JP3" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="35.56" y="20.193" rot="R270"/>
 <element name="JP2" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="2.54" y="20.193" rot="R90"/>
 <element name="JP1" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="7.62" y="40.513" rot="R90"/>
+<element name="D6" library="diode" package="DO214AA" value="" x="12.192" y="13.716" smashed="yes">
+<attribute name="VALUE" x="9.552" y="11.01" size="1.27" layer="27" ratio="10"/>
+</element>
+<element name="SJ6" library="SparkFun-Passives" package="SJ_2S-TRACE" value="SOLDERJUMPERTRACE" x="12.192" y="13.716"/>
 </elements>
 <signals>
 <signal name="GND">
@@ -3224,7 +3258,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="17.399" y1="32.893" x2="19.05" y2="34.544" width="0.508" layer="1"/>
 <via x="19.05" y="40.132" extent="1-16" drill="0.3302"/>
 <wire x1="19.05" y1="34.544" x2="19.05" y2="40.132" width="0.508" layer="1"/>
-<wire x1="19.05" y1="40.132" x2="21.2852" y2="40.132" width="0.508" layer="16"/>
 <contactref element="SJ4" pad="1"/>
 <wire x1="22.86" y1="12.954" x2="18.542" y2="12.954" width="0.2032" layer="1"/>
 <wire x1="18.542" y1="12.954" x2="18.288" y2="12.7" width="0.2032" layer="1"/>
@@ -3234,6 +3267,17 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="15.748" y1="13.843" x2="2.413" y2="13.843" width="0.508" layer="1"/>
 <wire x1="2.413" y1="13.843" x2="1.651" y2="13.843" width="0.508" layer="1"/>
 <wire x1="1.651" y1="13.843" x2="1.016" y2="14.478" width="0.508" layer="1"/>
+<contactref element="SJ6" pad="2"/>
+<contactref element="D6" pad="A"/>
+<contactref element="SJ6" pad="1"/>
+<contactref element="U4" pad="P$2"/>
+<contactref element="D6" pad="C"/>
+<wire x1="19.05" y1="40.132" x2="21.336" y2="40.132" width="0.508" layer="16"/>
+<wire x1="21.336" y1="40.132" x2="21.336" y2="40.1193" width="0.508" layer="16"/>
+<wire x1="11.684" y1="13.716" x2="12.7" y2="13.716" width="0" layer="19" extent="1-1"/>
+<wire x1="14.742" y1="13.716" x2="12.7" y2="13.716" width="0" layer="19" extent="1-1"/>
+<wire x1="15.748" y1="13.843" x2="14.742" y2="13.716" width="0" layer="19" extent="1-1"/>
+<wire x1="9.642" y1="13.716" x2="11.684" y2="13.716" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="CMD">
 <contactref element="U2" pad="P$34"/>
@@ -3822,11 +3866,6 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U1" pad="P$15"/>
 <wire x1="24.13" y1="49.868" x2="26.078" y2="49.868" width="0.381" layer="16"/>
 <wire x1="26.078" y1="49.868" x2="26.543" y2="49.403" width="0.381" layer="16"/>
-</signal>
-<signal name="N$17">
-<contactref element="U4" pad="P$2"/>
-<contactref element="C4" pad="1"/>
-<wire x1="21.336" y1="40.1193" x2="22.987" y2="39.409" width="0" layer="19" extent="16-16"/>
 </signal>
 </signals>
 <errors>

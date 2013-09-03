@@ -19,7 +19,7 @@ void setup() {
   
    println(Serial.list());
    
-   myPort = new Serial(this, "/dev/tty.usbmodem12341", 115200);
+   myPort = new Serial(this, "/dev/tty.HC-05-DevB-1", 115200);
    
    translate(width / 2, height / 2);
    line(-width, 0, width, 0);

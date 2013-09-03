@@ -9782,8 +9782,8 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="JP3" library="My Parts" deviceset="8-PIN_HEADER" device=""/>
 <part name="JP2" library="My Parts" deviceset="8-PIN_HEADER" device=""/>
 <part name="JP1" library="My Parts" deviceset="8-PIN_HEADER" device=""/>
-<part name="D6" library="diode" deviceset="DIODE-" device="DO214AA"/>
 <part name="SJ6" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE"/>
+<part name="D6" library="diode" deviceset="DIODE-" device="DO214AA"/>
 </parts>
 <sheets>
 <sheet>
@@ -9956,12 +9956,12 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <instance part="JP1" gate="G$1" x="142.24" y="50.8" smashed="yes" rot="R180">
 <attribute name="NAME" x="143.51" y="65.405" size="1.778" layer="95" rot="R180"/>
 </instance>
-<instance part="D6" gate="G$1" x="121.92" y="119.38" smashed="yes" rot="R270">
-<attribute name="NAME" x="123.6726" y="120.904" size="1.778" layer="95" rot="R270"/>
-<attribute name="VALUE" x="119.6086" y="116.84" size="1.778" layer="96" rot="R270"/>
-</instance>
 <instance part="SJ6" gate="1" x="116.84" y="116.84" smashed="yes" rot="R90">
 <attribute name="NAME" x="114.3" y="114.3" size="1.778" layer="95" rot="R90"/>
+</instance>
+<instance part="D6" gate="G$1" x="121.92" y="119.38" smashed="yes" rot="R90">
+<attribute name="NAME" x="127" y="121.4374" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="124.2314" y="121.92" size="1.778" layer="96" rot="R90"/>
 </instance>
 </instances>
 <busses>
@@ -10320,10 +10320,10 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <label x="93.98" y="68.58" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="116.84" y1="121.92" x2="121.92" y2="121.92" width="0.1524" layer="91"/>
 <label x="132.08" y="121.92" size="1.778" layer="95"/>
 <pinref part="SJ6" gate="1" pin="2"/>
-<pinref part="D6" gate="G$1" pin="A"/>
+<wire x1="116.84" y1="121.92" x2="121.92" y2="121.92" width="0.1524" layer="91"/>
+<pinref part="D6" gate="G$1" pin="C"/>
 <wire x1="121.92" y1="121.92" x2="139.7" y2="121.92" width="0.1524" layer="91"/>
 <junction x="121.92" y="121.92"/>
 </segment>
@@ -10333,10 +10333,10 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <wire x1="116.84" y1="111.76" x2="119.38" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="U4" gate="G$1" pin="VIN"/>
 <wire x1="119.38" y1="114.3" x2="121.92" y2="114.3" width="0.1524" layer="91"/>
-<pinref part="D6" gate="G$1" pin="C"/>
 <wire x1="121.92" y1="114.3" x2="127" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="121.92" y1="116.84" x2="121.92" y2="114.3" width="0.1524" layer="91"/>
 <junction x="121.92" y="114.3"/>
+<pinref part="D6" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="CMD" class="0">

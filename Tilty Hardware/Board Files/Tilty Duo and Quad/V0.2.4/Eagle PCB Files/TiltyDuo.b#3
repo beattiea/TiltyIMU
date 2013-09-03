@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
+<grid distance="0.01" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.0025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -207,10 +207,6 @@
 <wire x1="17.78" y1="25.146" x2="17.272" y2="25.654" width="0.254" layer="25"/>
 <wire x1="17.272" y1="25.654" x2="17.78" y2="26.162" width="0.254" layer="25"/>
 <circle x="19.05" y="24.892" radius="0.457903125" width="0.1778" layer="25"/>
-<wire x1="19.05" y1="24.892" x2="18.7325" y2="25.2095" width="0.2032" layer="25"/>
-<wire x1="19.3675" y1="25.2095" x2="19.05" y2="24.892" width="0.2032" layer="25"/>
-<wire x1="19.05" y1="24.892" x2="19.3675" y2="24.5745" width="0.2032" layer="25"/>
-<wire x1="18.7325" y1="24.5745" x2="19.05" y2="24.892" width="0.2032" layer="25"/>
 <text x="18.0975" y="25.9715" size="1.27" layer="25" ratio="15">X</text>
 <text x="20.1295" y="23.9395" size="1.27" layer="25" ratio="15">Y</text>
 <text x="17.4625" y="23.1775" size="1.27" layer="25" ratio="15">Z</text>
@@ -1000,7 +996,7 @@
 <rectangle x1="12.377940625" y1="2.65509375" x2="12.499859375" y2="2.6754125" layer="25" rot="R285"/>
 <rectangle x1="12.4457375" y1="2.670165625" x2="12.46605625" y2="2.690484375" layer="25" rot="R285"/>
 <text x="5.140959375" y="2.96671875" size="1.905" layer="25" font="vector" ratio="17" rot="R320">IMU</text>
-<text x="15.367" y="38.608" size="1.016" layer="25" font="vector" ratio="12">Aug 2013</text>
+<text x="15.367" y="38.608" size="1.016" layer="25" font="vector" ratio="12">Sep 2013</text>
 <text x="5.7785" y="41.783" size="1.27" layer="26" ratio="15" rot="MR0" align="center">S</text>
 <text x="5.7785" y="39.37" size="1.27" layer="26" ratio="15" rot="MR0" align="center">+</text>
 <text x="5.7785" y="36.703" size="1.27" layer="26" ratio="15" rot="MR0" align="center">-</text>
@@ -1010,6 +1006,7 @@
 <text x="18.923" y="37.846" size="1.27" layer="26" ratio="15" rot="MR0" align="center">3v3</text>
 <text x="18.923" y="35.941" size="1.27" layer="26" ratio="15" rot="MR0" align="center">5v</text>
 <text x="9.525" y="47.879" size="1.016" layer="26" ratio="12" rot="MR90" align="center-left">3v3</text>
+<circle x="19.05" y="24.892" radius="0.0635" width="0.254" layer="25"/>
 </plain>
 <libraries>
 <library name="SparkFun-Sensors">
@@ -2919,6 +2916,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="D5" library="SparkFun-DiscreteSemi" package="SOT23-3" value="" x="13.97" y="48.768" smashed="yes" rot="MR0">
 <attribute name="VALUE" x="14.986" y="48.5775" size="0.4064" layer="28" rot="MR0"/>
 <attribute name="PART#" value="BZX84C3V3LT1GOSCT-ND" x="13.97" y="48.768" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="PART#2" value="MMBZ5226B-FDICT-ND" x="13.97" y="48.768" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
 <element name="JP4" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="30.48" y="40.513" rot="R270"/>
 <element name="JP3" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="35.56" y="20.193" rot="R270"/>
@@ -3277,6 +3275,9 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="12.7" y1="13.843" x2="10.912" y2="13.843" width="0.508" layer="1"/>
 <wire x1="10.912" y1="13.843" x2="2.413" y2="13.843" width="0.508" layer="1"/>
 <wire x1="12.7" y1="13.843" x2="13.716" y2="13.843" width="0.508" layer="1"/>
+<contactref element="C4" pad="1"/>
+<wire x1="22.987" y1="39.409" x2="22.0463" y2="39.409" width="0.254" layer="16"/>
+<wire x1="22.0463" y1="39.409" x2="21.336" y2="40.1193" width="0.254" layer="16"/>
 </signal>
 <signal name="CMD">
 <contactref element="U2" pad="P$34"/>

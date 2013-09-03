@@ -1000,7 +1000,7 @@
 <rectangle x1="12.377940625" y1="2.65509375" x2="12.499859375" y2="2.6754125" layer="25" rot="R285"/>
 <rectangle x1="12.4457375" y1="2.670165625" x2="12.46605625" y2="2.690484375" layer="25" rot="R285"/>
 <text x="5.140959375" y="2.96671875" size="1.905" layer="25" font="vector" ratio="17" rot="R320">IMU</text>
-<text x="15.367" y="38.608" size="1.016" layer="25" font="vector" ratio="12">Aug 2013</text>
+<text x="15.367" y="38.608" size="1.016" layer="25" font="vector" ratio="12">Sep 2013</text>
 <text x="5.7785" y="41.783" size="1.27" layer="26" ratio="15" rot="MR0" align="center">S</text>
 <text x="5.7785" y="39.37" size="1.27" layer="26" ratio="15" rot="MR0" align="center">+</text>
 <text x="5.7785" y="36.703" size="1.27" layer="26" ratio="15" rot="MR0" align="center">-</text>
@@ -3104,7 +3104,7 @@ Please make sure your boards conform to these design rules.</description>
 <via x="29.083" y="10.541" extent="1-16" drill="0.3302"/>
 <contactref element="U1" pad="P$16"/>
 <wire x1="20.32" y1="23.38" x2="20.955" y2="22.86" width="0.1524" layer="16"/>
-<via x="17.272" y="15.24" extent="1-16" drill="0.3302"/>
+<via x="17.399" y="15.24" extent="1-16" drill="0.3302"/>
 <via x="10.541" y="15.494" extent="1-16" drill="0.3302"/>
 <via x="20.701" y="20.7645" extent="1-16" drill="0.3302"/>
 <via x="19.05" y="20.8915" extent="1-16" drill="0.3302"/>
@@ -3277,6 +3277,9 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="12.7" y1="13.843" x2="10.912" y2="13.843" width="0.508" layer="1"/>
 <wire x1="10.912" y1="13.843" x2="2.413" y2="13.843" width="0.508" layer="1"/>
 <wire x1="12.7" y1="13.843" x2="13.716" y2="13.843" width="0.508" layer="1"/>
+<contactref element="C4" pad="1"/>
+<wire x1="22.987" y1="39.409" x2="22.0463" y2="39.409" width="0.254" layer="16"/>
+<wire x1="22.0463" y1="39.409" x2="21.336" y2="40.1193" width="0.254" layer="16"/>
 </signal>
 <signal name="CMD">
 <contactref element="U2" pad="P$34"/>
@@ -3882,6 +3885,11 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,06f2660e662206de"/>
 <approved hash="19,1,851bb854a18f6121"/>
 <approved hash="19,1,0d273203e6ee26e7"/>
+<approved hash="19,1,9a37dde52740197f"/>
+<approved hash="19,1,193f5b4450ce6899"/>
+<approved hash="19,1,fd7a21862165fd99"/>
+<approved hash="19,1,1058adbd9aeb5d22"/>
+<approved hash="19,1,b9a307eed7ca106a"/>
 <approved hash="19,1,261170da8ab41c06"/>
 <approved hash="19,1,1bae1d9b066047a8"/>
 <approved hash="19,1,586aa3b33fa8838c"/>
