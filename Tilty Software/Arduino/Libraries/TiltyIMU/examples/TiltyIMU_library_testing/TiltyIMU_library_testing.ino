@@ -48,12 +48,13 @@ void loop() {
 	if (tilty.imu_updated) {
 		tilty.readNormalAccelerations(float_data);
 		tilty.readAngles(float_data);
-		
+		/*
 		Serial.print(float_data[0]);
 		Serial.print("\t\t");
 		Serial.print(float_data[1]);
 		Serial.print("\t\t");
 		Serial.println(float_data[2]);
+		*/
 	}
 	//tilty.readAngles(float_data);
 	//tilty.getAccel(int_data);
