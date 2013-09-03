@@ -9,37 +9,46 @@
 #include <i2c_t3.h> // Uncomment to use I2C_t3 Wire library on Teensy 3.0
 #include <SPI.h>
 
+#include <SpiFlash.h>
+
 int raw_values[9];
 
-//Places to store the compass reading
+// Places to store the compass reading
 int compass_x, compass_y, compass_z;
 
-//Places to store MPU6050 IMU readings
+// Places to store MPU6050 IMU readings
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
 // Places to store altimeter readings
 float altitude, temperature;
 
-//instantiate a compass 
+// Instantiate a compass 
 HMC5883 compass;
 
-//instantiate the IMU
+// Instantiate the IMU
 MPU6050 imu;
 
 // Instantiate the altimeter
 MPL3115A2 altimeter;
+
+// Instantiate the flash memory
+SpiFlash flash;
 
 bool compass_avail, imu_avail, alt_avail; // variabless to indicate whether sensor is available
 
 // Constant variable #defines
 #define VOLTAGE_SENSE_PIN 14
 #define VOLTAGE_DIVIDER 0.05061465
+#define SS_PIN 10
 
 void setup()
 {
 	//Open up some serial communications with the computer
 	Serial.begin(115200);
+	
+	flash.begin(SS_PIN, 2);
+	
 	while (!Serial) {}
 	
 	//Start the internal I2C Bus for the sensors 
@@ -65,6 +74,15 @@ void setup()
 		altimeter.setOversampling(0);
 	}
 	Serial.println("ALTIMETER Detected!");
+	
+	if (flash.getManufacturer() == 1) {
+		Serial.println("Flash chip detected!");
+	}
+	
+	Serial.println("Enter any character to continue...");
+	
+	while (!Serial.available()) {}
+	while (Serial.available()) { Serial.read();}
 }
 
 void loop()

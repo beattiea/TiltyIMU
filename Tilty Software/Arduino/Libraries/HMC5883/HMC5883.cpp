@@ -193,7 +193,7 @@ float HMC5883::getTiltCompensatedHeading(int x, int y, int z, float pitch, float
 *@param[in] y Y magnetometer value.
 *@param[in] z Z magnetometer value.
 *@param[in] pitch  Pitch angle in radians.
-*@param[in] roll Y Roll angle in radians.
+*@param[in] roll Roll angle in radians.
 */
 float HMC5883::getTiltCompensatedHeadingRadians(int x, int y, int z, float pitch, float roll)
 {	
@@ -231,6 +231,13 @@ void HMC5883::getID(char id[3])
 	Wire.endTransmission();
 }
 
+/** \brief undocumented function
+
+	\param[in] param description of parameter
+	\param[out] param description of parameter	
+
+	\return return description of return value
+**/
 bool HMC5883::getDataReady()
 {
 	Wire.beginTransmission(HMC5883_ADDR);

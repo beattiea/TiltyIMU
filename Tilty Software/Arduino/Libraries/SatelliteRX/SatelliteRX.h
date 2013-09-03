@@ -44,7 +44,7 @@ class SatelliteRX {
 	public:
 	// Constructors
 		SatelliteRX(HardwareSerial& _serial);
-		SatelliteRX(HardwareSerial3& _serial);
+		//SatelliteRX(HardwareSerial3& _serial);
 		//SatelliteRX(HardwareSerial _serial, uint8_t _pin);
 		//SatelliteRX(uint8_t _pin);
 		~SatelliteRX();
@@ -84,7 +84,7 @@ class SatelliteRX {
 		
 	// Variables
 		bool _synced = false;
-		HardwareSerial3& _serialPort; // Serial port to read data from
+		HardwareSerial& _serialPort; // Serial port to read data from
 		uint8_t rx_pin = 255;
 		
 		int16_t channel_max[7] = {0, 0, 0, 0, 0, 0, 0};

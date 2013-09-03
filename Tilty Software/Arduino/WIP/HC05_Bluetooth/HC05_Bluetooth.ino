@@ -7,7 +7,7 @@ void setup() {
   Serial.begin(115200);
   while (!Serial) {}
   //int baud = findBaud();
-  Serial.println(init());
+  Serial.println(init(9600));
   Serial.println("begin...");
   delay(5);
   //setBaud(115200);

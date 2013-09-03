@@ -19,12 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef TILTYIMU_H
 #define TILTYIMU_H
 
-// Setting Defines
+// Setting #defines
 #define DEBUG_INITS
 
 #define USE_DMP // Must use this for now, no alternative
 #define myPort Serial
 #define I2C_RATE I2C_RATE_800
+
 
 #include "Arduino.h"
 
@@ -36,6 +37,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Tilty_MPL3115A2.h"
 // Compass files
 #include "Tilty_HMC5883.h"
+
+// Memory Map
+#include "MemoryMap.h"
+
+// Constant variable #defines
+#define VOLTAGE_SENSE_PIN 14
+#define VOLTAGE_DIVIDER 0.05061465
 
 class TiltyIMU {
 	public:
@@ -68,6 +76,10 @@ class TiltyIMU {
 		// AHRS data
 		float ypr[3];
 		float altitude;
+		
+		// Other sensing
+		void readVoltage(float *data);
+		float readVoltage();
 		
 		// Sensor available variables (true means sensor is initialized and available)
 		bool hasAlt;

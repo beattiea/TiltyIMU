@@ -318,6 +318,10 @@ bool SpiFlash::eraseChip()
 }
 
 
+byte SpiFlash::getManufacturer() { readID(); return manufacturer;}
+byte SpiFlash::getType() { readID(); return type;}
+unsigned long SpiFlash::getCapacity() { readID(); return capacity;}
+
 void SpiFlash::readID()
 {
 	if (!checkWriteInProgress())

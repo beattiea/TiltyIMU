@@ -1,18 +1,19 @@
 #include <SatelliteRX.h>
-/*
+
 // Initialize SatelliteRX with hardware serial port
 SatelliteRX::SatelliteRX(HardwareSerial& _serial) : _serialPort(_serial)
 {
 	_serialPort = HardwareSerial();
 }
-*/
 
 
+/*
 // Initialize SatelliteRX with hardware serial port
 SatelliteRX::SatelliteRX(HardwareSerial3& _serial) : _serialPort(_serial)
 {
 	// Do nothing
 }
+*/
 
 /*
 // Initialize SatelliteRX with hardware serial port and RX pin

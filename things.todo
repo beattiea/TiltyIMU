@@ -29,6 +29,8 @@ Software Library work:
 	TiltyIMU library to integrate everything together
 	
 	Servo library should have adjustable refresh rate
+	
+	SatelliteRX library needs Serial fixed (making all HardwareSerial functions virtual works)
 
 Hardware Work
 =============

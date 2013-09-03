@@ -65,7 +65,7 @@ void HMC5883::setMode(unsigned char mode)
 }
 
 /**
-* @param[in] rate Change the data output rate.
+* @param[in] rate Change the data output rate. Value from 0-6 (6 being fastest?)
 */
 void HMC5883::setRate(unsigned char rate)
 {
@@ -75,7 +75,7 @@ void HMC5883::setRate(unsigned char rate)
 }
 
 /**
-* @param[in] gain Set the gain.
+* @param[in] gain Set the gain. Value from 0-7 (0 is most sensitive).
 */
 void HMC5883::setGain(unsigned char gain)
 { 
@@ -86,9 +86,9 @@ void HMC5883::setGain(unsigned char gain)
 }
 
 /**
-*@param[out] *x Pointer to where you want the x component of the reading.
-*@param[out] *y Pointer to where you want the y component of the reading.
-*@param[out] *z Pointer to where you want the z component of the reading.
+*@param[in,out] *x Pointer to where you want the x component of the reading.
+*@param[in,out] *y Pointer to where you want the y component of the reading.
+*@param[in,out] *z Pointer to where you want the z component of the reading.
 */
 void HMC5883::getValues(int *x,int *y,int *z)
 {
@@ -100,9 +100,9 @@ void HMC5883::getValues(int *x,int *y,int *z)
 }
 
 /**
-*@param[out] *x Pointer to where you want the x component of the reading.
-*@param[out] *y Pointer to where you want the y component of the reading.
-*@param[out] *z Pointer to where you want the z component of the reading.
+*@param[in,out] *x Pointer to where you want the x component of the reading.
+*@param[in,out] *y Pointer to where you want the y component of the reading.
+*@param[in,out] *z Pointer to where you want the z component of the reading.
 */
 void HMC5883::getValues(float *x,float *y,float *z)
 {
@@ -115,7 +115,7 @@ void HMC5883::getValues(float *x,float *y,float *z)
 }
 
 /**
-*@param[out] *xyz Pointer to where you want the xyz raw values.
+*@param[in,out] *xyz Pointer to where you want the xyz raw values.
 */
 void HMC5883::getValues(float *xyz)
 {
@@ -155,6 +155,7 @@ void HMC5883::getRaw(int *x,int *y,int *z)
 /**
 *@param[in] x X magnetometer value.
 *@param[in] y Y magnetometer value.
+*@param[out] Heading Heading obtained from x and y sensor values in degrees
 */
 float HMC5883::getHeading(int x, int y)
 {	
@@ -164,6 +165,7 @@ float HMC5883::getHeading(int x, int y)
 /**
 *@param[in] x X magnetometer value.
 *@param[in] y Y magnetometer value.
+*@param[out] Heading Heading obtained from x and y sensor values in radians
 */
 float HMC5883::getHeadingRadians(int x, int y)
 {	
@@ -176,6 +178,7 @@ float HMC5883::getHeadingRadians(int x, int y)
 *@param[in] z Z magnetometer value.
 *@param[in] pitch  Pitch angle in degrees.
 *@param[in] roll Y Roll angle in degrees.
+*@param[out] Heading Tilt compensated heading value
 */
 float HMC5883::getTiltCompensatedHeading(int x, int y, int z, float pitch, float roll)
 {
@@ -231,6 +234,10 @@ void HMC5883::getID(char id[3])
 	Wire.endTransmission();
 }
 
+/** \brief Reads the Data Ready register to dtermine if new data is available to be read from the sensor
+
+	\param[out] True/False returns True if new data is available to be read from the sensor
+**/
 bool HMC5883::getDataReady()
 {
 	Wire.beginTransmission(HMC5883_ADDR);
@@ -242,6 +249,10 @@ bool HMC5883::getDataReady()
 	return Wire.read() == 17;
 }
 
+/** \brief Reads the Data Ready register to dtermine if new data is available to be read from the sensor
+
+	\param[out] Gain A value from 0-7 (0 being most sensitive, 7 being least sensitive) representing the sensor sensitivity
+**/
 uint8_t HMC5883::getGain()
 {
 	return _gain;

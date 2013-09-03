@@ -72,6 +72,14 @@ class SpiFlash {
 		// Erase the entire chip
 		bool eraseChip();
 		
+	// Chip information commands
+		// Get device manufacturer
+		byte getManufacturer();
+		// Get device type
+		byte getType();
+		// Get device capacity
+		unsigned long getCapacity();
+		
 	private:
 		uint8_t SS; // Slave Select pin
 		int written_pages = 0;

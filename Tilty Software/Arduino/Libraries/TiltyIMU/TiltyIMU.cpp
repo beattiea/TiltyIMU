@@ -225,3 +225,23 @@ float TiltyIMU::readAltitude(float *data)
 		return 0;
 	}
 }
+
+/** \brief Reads the voltage on the Tilty's power inputs
+	
+	\param[in] *data Pointer to the voltage variable
+	\param[out] Voltage
+**/
+void TiltyIMU::readVoltage(float *data)
+{
+	*data = analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER;
+}
+
+
+float TiltyIMU::readVoltage()
+{
+	return analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER;
+}
+
+
+
+
