@@ -83,6 +83,7 @@ class SatelliteRX {
 		void updatePointers();
 		
 	// Variables
+		long lastRead = 0;
 		bool _synced = false;
 		HardwareSerial& _serialPort; // Serial port to read data from
 		uint8_t rx_pin = 255;

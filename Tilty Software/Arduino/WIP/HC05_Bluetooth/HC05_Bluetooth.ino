@@ -1,3 +1,5 @@
+#include <HC_Bluetooth.h>
+
 #define _key 15
 
 int _bauds[] = {9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600};

@@ -7685,7 +7685,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="P+1" library="supply1" deviceset="+5V" device=""/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
 <part name="Y1" library="SparkFun-FreqCtrl" deviceset="CRYSTAL" device="5X3" value="16MHz">
-<attribute name="PART#" value="535-10226-1-ND"/>
+<attribute name="PART#" value="887-1104-1-ND"/>
 </part>
 <part name="C1" library="resistor" deviceset="C-US" device="C0603" value="22pF"/>
 <part name="C2" library="resistor" deviceset="C-US" device="C0603" value="22pF"/>

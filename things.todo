@@ -30,6 +30,7 @@ Software Library work:
 	Servo library should have adjustable refresh rate
 	
 	SatelliteRX library needs Serial fixed (making all HardwareSerial functions virtual works)
+	SatelliteRX needs to recognize loss of Serial
 
 Hardware Work
 =============

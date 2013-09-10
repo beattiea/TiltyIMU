@@ -2617,7 +2617,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="JP2" library="pinhead" package="1X08_NO_SS" value="" x="2.54" y="20.193" rot="R90"/>
 <element name="JP3" library="pinhead" package="1X08_NO_SS" value="" x="35.56" y="20.193" rot="R90"/>
 <element name="JP4" library="pinhead" package="1X08_NO_SS" value="" x="30.48" y="40.513" rot="R90"/>
-<element name="C6" library="resistor" package="C0603" value="0.1uF" x="9.017" y="8.128" smashed="yes" rot="R180"/>
+<element name="C6" library="resistor" package="C0603" value="4.7uF" x="9.017" y="8.128" smashed="yes" rot="R180"/>
 <element name="C7" library="resistor" package="C0603" value="0.1uF" x="5.334" y="7.747" smashed="yes" rot="R270"/>
 <element name="SJ1" library="SparkFun-Passives" package="SJ_2S" value="SOLDERJUMPERNC" x="2.54" y="8.636" smashed="yes"/>
 <element name="U1" library="SparkFun-DigitalIC" package="TQFP32-08" value="ATMEGA328P" x="19.05" y="25.4" smashed="yes" rot="R270">

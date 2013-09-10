@@ -11,9 +11,10 @@ void setup() {
 	rx.setAileron(&aileron);
 }
 
+long start = 0;
+
 void loop() {
 	if (rx.readData()) {// readData returns true when a full set of data is actually read
-	
 		// Channels can be read by setting pointers to a user-defined variable
 		Serial.print("Pointer: ");
 		Serial.print(aileron);

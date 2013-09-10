@@ -909,6 +909,13 @@
 <text x="32.385" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">A3</text>
 <text x="29.845" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">RX</text>
 <text x="27.305" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">TX</text>
+<text x="9.144" y="29.718" size="1.778" layer="25" ratio="12">ISP</text>
+<wire x1="24.638" y1="11.684" x2="24.638" y2="24.892" width="0.635" layer="26"/>
+<wire x1="24.638" y1="24.892" x2="33.274" y2="24.892" width="0.635" layer="26"/>
+<wire x1="33.274" y1="24.892" x2="33.274" y2="11.684" width="0.635" layer="26"/>
+<wire x1="33.274" y1="11.684" x2="24.638" y2="11.684" width="0.635" layer="26"/>
+<text x="31.496" y="26.924" size="1.27" layer="26" ratio="15" rot="MR0">Extra</text>
+<text x="30.988" y="25.4" size="1.27" layer="26" ratio="15" rot="MR0">Pins</text>
 </plain>
 <libraries>
 <library name="pinhead">
@@ -2917,11 +2924,11 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="JP3" pad="8"/>
 <contactref element="U1" pad="27"/>
 <contactref element="R2" pad="1"/>
-<via x="33.528" y="24.13" extent="1-16" drill="0.3302"/>
-<wire x1="35.56" y1="29.083" x2="33.909" y2="29.083" width="0.2032" layer="16"/>
-<wire x1="33.909" y1="29.083" x2="33.528" y2="28.702" width="0.2032" layer="16"/>
-<wire x1="33.528" y1="28.702" x2="33.528" y2="24.13" width="0.2032" layer="16"/>
-<wire x1="33.528" y1="24.13" x2="31.789" y2="24.13" width="0.2032" layer="1"/>
+<via x="34.036" y="24.13" extent="1-16" drill="0.3302"/>
+<wire x1="35.56" y1="29.083" x2="34.417" y2="29.083" width="0.2032" layer="16"/>
+<wire x1="34.417" y1="29.083" x2="34.036" y2="28.702" width="0.2032" layer="16"/>
+<wire x1="34.036" y1="28.702" x2="34.036" y2="24.13" width="0.2032" layer="16"/>
+<wire x1="34.036" y1="24.13" x2="31.789" y2="24.13" width="0.2032" layer="1"/>
 <wire x1="31.789" y1="24.13" x2="31.75" y2="24.091" width="0.2032" layer="1"/>
 <wire x1="23.3426" y1="24.2" x2="31.641" y2="24.2" width="0.2032" layer="1"/>
 <wire x1="31.641" y1="24.2" x2="31.75" y2="24.091" width="0.2032" layer="1"/>

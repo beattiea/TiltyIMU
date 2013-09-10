@@ -7676,7 +7676,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="JP4" library="pinhead" deviceset="PINHD-1X8" device="1X08_NO_SILK"/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 <part name="P+12" library="supply1" deviceset="+5V" device=""/>
-<part name="C6" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
+<part name="C6" library="resistor" deviceset="C-US" device="C0603" value="4.7uF"/>
 <part name="C7" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="P+13" library="supply1" deviceset="+24V" device=""/>
 <part name="P+17" library="supply1" deviceset="+24V" device=""/>
