@@ -11359,7 +11359,7 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <attribute name="PART#" value="SM06B-SRSS-TB(LF)(SN)"/>
 </part>
 <part name="P+4" library="supply1" deviceset="+24V" device=""/>
-<part name="J1" library="SparkFun-Connectors" deviceset="AVR_SPI_PRG_6" device="PTH"/>
+<part name="J1" library="SparkFun-Connectors" deviceset="AVR_SPI_PRG_6" device="2X3_LOCK" value="AVR_SPI_PRG_62X3_LOCK"/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
 <part name="P+5" library="supply1" deviceset="+5V" device=""/>
 <part name="R1" library="resistor" deviceset="R-US_" device="R0603" value="10K"/>

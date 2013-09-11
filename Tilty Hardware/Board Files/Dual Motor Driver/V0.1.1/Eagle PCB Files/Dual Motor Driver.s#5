@@ -10859,6 +10859,8 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="P+9" library="supply1" deviceset="+24V" device=""/>
 <part name="GND14" library="supply1" deviceset="GND" device=""/>
 <part name="JP8" library="SparkFun-Connectors" deviceset="M04" device="LOCK"/>
+<part name="P+10" library="supply1" deviceset="+5V" device=""/>
+<part name="GND15" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -10972,7 +10974,9 @@ Sparkfun button</text>
 <instance part="D9" gate="G$1" x="208.28" y="86.36" rot="R90"/>
 <instance part="P+9" gate="1" x="205.74" y="99.06"/>
 <instance part="GND14" gate="1" x="99.06" y="127" rot="R180"/>
-<instance part="JP8" gate="G$1" x="139.7" y="43.18"/>
+<instance part="JP8" gate="G$1" x="142.24" y="45.72" rot="MR180"/>
+<instance part="P+10" gate="1" x="149.86" y="55.88"/>
+<instance part="GND15" gate="1" x="154.94" y="40.64"/>
 </instances>
 <busses>
 </busses>
@@ -11115,6 +11119,12 @@ Sparkfun button</text>
 <pinref part="U2" gate="G$1" pin="GND@20"/>
 <wire x1="99.06" y1="121.92" x2="99.06" y2="124.46" width="0.1524" layer="91"/>
 <pinref part="GND14" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="JP8" gate="G$1" pin="2"/>
+<pinref part="GND15" gate="1" pin="GND"/>
+<wire x1="147.32" y1="45.72" x2="154.94" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="45.72" x2="154.94" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="M1A" class="0">
@@ -11303,6 +11313,12 @@ Sparkfun button</text>
 <pinref part="P+7" gate="1" pin="+5V"/>
 <wire x1="246.38" y1="30.48" x2="256.54" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="256.54" y1="30.48" x2="256.54" y2="33.02" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="JP8" gate="G$1" pin="1"/>
+<pinref part="P+10" gate="1" pin="+5V"/>
+<wire x1="147.32" y1="48.26" x2="149.86" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="48.26" x2="149.86" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="RESET" class="0">
@@ -11581,12 +11597,22 @@ Sparkfun button</text>
 <wire x1="101.6" y1="43.18" x2="111.76" y2="43.18" width="0.1524" layer="91"/>
 <label x="109.22" y="43.18" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="JP8" gate="G$1" pin="3"/>
+<wire x1="147.32" y1="43.18" x2="152.4" y2="43.18" width="0.1524" layer="91"/>
+<label x="149.86" y="43.18" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="TX" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="PD1(TXD)"/>
 <wire x1="101.6" y1="40.64" x2="111.76" y2="40.64" width="0.1524" layer="91"/>
 <label x="109.22" y="40.64" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP8" gate="G$1" pin="4"/>
+<wire x1="147.32" y1="40.64" x2="152.4" y2="40.64" width="0.1524" layer="91"/>
+<label x="149.86" y="40.64" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

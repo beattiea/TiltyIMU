@@ -894,6 +894,22 @@
 <text x="20.004971875" y="17.009321875" size="1.905" layer="26" font="vector" ratio="17" rot="MR2">IMU</text>
 <text x="24.765" y="15.494" size="1.27" layer="26" ratio="12" rot="MR0">Dual Motor</text>
 <text x="26.543" y="13.462" size="1.27" layer="26" ratio="12" rot="MR0">Driver Add-on</text>
+<polygon width="0.2032" layer="29">
+<vertex x="16.002" y="28.194"/>
+<vertex x="22.098" y="28.194"/>
+<vertex x="22.098" y="16.51"/>
+<vertex x="23.114" y="15.494"/>
+<vertex x="23.114" y="13.462"/>
+<vertex x="15.24" y="13.462"/>
+<vertex x="15.24" y="15.748"/>
+<vertex x="16.002" y="16.51"/>
+</polygon>
+<polygon width="0.2032" layer="31">
+<vertex x="16.637" y="17.272"/>
+<vertex x="21.717" y="17.272"/>
+<vertex x="21.717" y="23.876"/>
+<vertex x="16.637" y="23.876"/>
+</polygon>
 </plain>
 <libraries>
 <library name="SparkFun-PowerIC">
@@ -2079,7 +2095,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 &lt;br&gt;&lt;br&gt;
 &lt;b&gt;Licensing:&lt;/b&gt; CC v3.0 Share-Alike You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
 <packages>
-<package name="2X3">
+<package name="2X3_LOCK">
 <wire x1="-1.27" y1="-0.635" x2="-0.635" y2="-1.27" width="0.2032" layer="21"/>
 <wire x1="0.635" y1="-1.27" x2="1.27" y2="-0.635" width="0.2032" layer="21"/>
 <wire x1="1.27" y1="-0.635" x2="1.905" y2="-1.27" width="0.2032" layer="21"/>
@@ -2105,8 +2121,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="0.635" y1="-1.605" x2="-0.635" y2="-1.605" width="0.2032" layer="21"/>
 <pad name="1" x="0" y="0" drill="1.016" diameter="1.8796" shape="octagon"/>
 <pad name="2" x="0" y="2.54" drill="1.016" diameter="1.8796" shape="octagon"/>
-<pad name="3" x="2.54" y="0" drill="1.016" diameter="1.8796" shape="octagon"/>
-<pad name="4" x="2.54" y="2.54" drill="1.016" diameter="1.8796" shape="octagon"/>
+<pad name="3" x="2.54" y="-0.254" drill="1.016" diameter="1.8796" shape="octagon"/>
+<pad name="4" x="2.54" y="2.286" drill="1.016" diameter="1.8796" shape="octagon"/>
 <pad name="5" x="5.08" y="0" drill="1.016" diameter="1.8796" shape="octagon"/>
 <pad name="6" x="5.08" y="2.54" drill="1.016" diameter="1.8796" shape="octagon"/>
 <text x="-1.27" y="4.445" size="1.27" layer="25" ratio="10">&gt;NAME</text>
@@ -2707,7 +2723,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="JP6" library="con-jst" package="6PIN-SH_SERIES_RA" value="6PIN-SH_RIGHT_ANGLE" x="35.179" y="35.052" rot="R90">
 <attribute name="PART#" value="SM06B-SRSS-TB(LF)(SN)" x="35.179" y="35.052" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="J1" library="SparkFun-Connectors" package="2X3" value="AVR_SPI_PRG_6PTH" x="24.892" y="35.306" smashed="yes" rot="R270"/>
+<element name="J1" library="SparkFun-Connectors" package="2X3_LOCK" value="AVR_SPI_PRG_62X3_LOCK" x="24.892" y="35.306" smashed="yes" rot="R270"/>
 <element name="R1" library="resistor" package="R0603" value="10K" x="19.3675" y="46.228" smashed="yes" rot="R90"/>
 <element name="C6" library="resistor" package="C0603" value="4.7uF" x="27.178" y="11.684" smashed="yes" rot="R270"/>
 <element name="C7" library="resistor" package="C0603" value="0.1uF" x="28.448" y="11.684" smashed="yes" rot="R270"/>
@@ -2964,6 +2980,13 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="6.477" y1="9.398" x2="5.461" y2="10.414" width="0.254" layer="1"/>
 <wire x1="5.461" y1="10.414" x2="3.556" y2="10.414" width="0.254" layer="1"/>
 <wire x1="3.556" y1="10.414" x2="2.794" y2="11.303" width="0.254" layer="1"/>
+<polygon width="0.2032" layer="1">
+<vertex x="13.462" y="28.702"/>
+<vertex x="24.892" y="28.702"/>
+<vertex x="24.892" y="13.716"/>
+<vertex x="23.622" y="12.446"/>
+<vertex x="13.462" y="12.446"/>
+</polygon>
 </signal>
 <signal name="M1A">
 <contactref element="D1" pad="1"/>
@@ -3228,7 +3251,7 @@ Please make sure your boards conform to these design rules.</description>
 <via x="24.4856" y="36.83" extent="1-16" drill="0.3302"/>
 <wire x1="24.4856" y1="36.83" x2="23.2216" y2="36.83" width="0.254" layer="1"/>
 <wire x1="23.2216" y1="36.83" x2="23.2156" y2="36.824" width="0.254" layer="1"/>
-<wire x1="24.892" y1="32.766" x2="26.162" y2="34.036" width="0.2032" layer="16"/>
+<wire x1="24.638" y1="32.766" x2="26.162" y2="34.036" width="0.2032" layer="16"/>
 <wire x1="26.162" y1="34.036" x2="26.162" y2="36.195" width="0.2032" layer="16"/>
 <wire x1="26.162" y1="36.195" x2="25.527" y2="36.83" width="0.2032" layer="16"/>
 <wire x1="25.527" y1="36.83" x2="24.4856" y2="36.83" width="0.2032" layer="16"/>
@@ -3239,7 +3262,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="20.923" y1="35.3314" x2="20.923" y2="34.322" width="0.2032" layer="1"/>
 <wire x1="20.923" y1="34.322" x2="21.209" y2="34.036" width="0.2032" layer="1"/>
 <wire x1="21.209" y1="34.036" x2="26.162" y2="34.036" width="0.2032" layer="1"/>
-<wire x1="26.162" y1="34.036" x2="27.432" y2="32.766" width="0.2032" layer="1"/>
+<wire x1="26.162" y1="34.036" x2="27.178" y2="32.766" width="0.2032" layer="1"/>
 </signal>
 <signal name="MISO">
 <contactref element="J1" pad="1"/>
@@ -3551,6 +3574,16 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,114a7ce50349f21b"/>
 <approved hash="19,1,561dc593a540aa33"/>
 <approved hash="19,1,114a7ce50349f21b"/>
+<approved hash="5,1,61ae0be5d091f980"/>
+<approved hash="19,1,ca15bf6dbe55cb2d"/>
+<approved hash="19,1,c7e9b291bf45ca3d"/>
+<approved hash="19,1,343dc945d6cf2bb7"/>
+<approved hash="19,1,e7ec62946fa2eada"/>
+<approved hash="19,1,ea106f686eb2ebca"/>
+<approved hash="19,1,8e04b4ed4efb7450"/>
+<approved hash="19,1,7f42bab39f585aeb"/>
+<approved hash="19,1,8df6d34510295de5"/>
+<approved hash="19,1,8df6d34510295de5"/>
 </errors>
 </board>
 </drawing>
