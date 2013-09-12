@@ -126,7 +126,7 @@
 <text x="20.955" y="48.1965" size="1.524" layer="26" ratio="10" rot="MR270">Rx</text>
 <text x="18.415" y="48.1965" size="1.524" layer="26" ratio="10" rot="MR270">Tx</text>
 <text x="17.907" y="29.464" size="1.651" layer="25" ratio="12">ICSP</text>
-<text x="6.477" y="1.778" size="1.651" layer="25" ratio="12">PWR</text>
+<text x="6.985" y="4.318" size="1.651" layer="25" ratio="12">PWR</text>
 <rectangle x1="23.13594375" y1="18.232378125" x2="23.27818125" y2="18.252696875" layer="26" rot="R213"/>
 <rectangle x1="23.10455" y1="18.249421875" x2="23.28743125" y2="18.269740625" layer="26" rot="R213"/>
 <rectangle x1="23.0902125" y1="18.27753125" x2="23.31373125" y2="18.29785" layer="26" rot="R213"/>
@@ -889,8 +889,6 @@
 <rectangle x1="14.32683125" y1="21.623878125" x2="14.55035" y2="21.644196875" layer="26" rot="R213"/>
 <rectangle x1="14.3174" y1="21.635384375" x2="14.5206" y2="21.655703125" layer="26" rot="R213"/>
 <rectangle x1="14.3096125" y1="21.641359375" x2="14.472175" y2="21.661678125" layer="26" rot="R213"/>
-<rectangle x1="46.195865625" y1="25.53190625" x2="46.317784375" y2="25.552225" layer="26" rot="R213"/>
-<rectangle x1="46.24411875" y1="25.554478125" x2="46.2644375" y2="25.574796875" layer="26" rot="R213"/>
 <text x="20.004971875" y="17.009321875" size="1.905" layer="26" font="vector" ratio="17" rot="MR2">IMU</text>
 <text x="24.765" y="15.494" size="1.27" layer="26" ratio="12" rot="MR0">Dual Motor</text>
 <text x="26.543" y="13.462" size="1.27" layer="26" ratio="12" rot="MR0">Driver Add-on</text>
@@ -2777,8 +2775,8 @@ Please make sure your boards conform to these design rules.</description>
 <element name="JP10" library="SparkFun-Connectors" package="1X02" value="" x="1.397" y="41.148" smashed="yes" rot="R90">
 <attribute name="VALUE" x="4.572" y="39.878" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="D10" library="SparkFun-LED" package="LED-0805" value="" x="12.065" y="2.54" smashed="yes" rot="R270">
-<attribute name="VALUE" x="9.144" y="3.302" size="1.27" layer="27" rot="R270"/>
+<element name="D10" library="SparkFun-LED" package="LED-0805" value="" x="11.176" y="2.921" smashed="yes" rot="R180">
+<attribute name="VALUE" x="11.938" y="5.842" size="1.27" layer="27" rot="R180"/>
 </element>
 <element name="R6" library="resistor" package="R0603" value="" x="12.065" y="6.096" smashed="yes" rot="R270">
 <attribute name="VALUE" x="10.033" y="6.985" size="1.27" layer="27" rot="R270"/>
@@ -2972,9 +2970,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="22.733" y1="47.625" x2="23.495" y2="46.863" width="0.3175" layer="16"/>
 <wire x1="23.495" y1="46.863" x2="30.734" y2="46.863" width="0.3175" layer="16"/>
 <contactref element="D10" pad="2"/>
-<wire x1="12.065" y1="1.69" x2="11.137" y2="1.69" width="0.254" layer="1"/>
-<wire x1="11.137" y1="1.69" x2="10.795" y2="2.032" width="0.254" layer="1"/>
-<wire x1="10.795" y1="2.032" x2="10.795" y2="9.144" width="0.254" layer="1"/>
 <wire x1="10.795" y1="9.144" x2="10.541" y2="9.398" width="0.254" layer="1"/>
 <wire x1="10.541" y1="9.398" x2="6.477" y2="9.398" width="0.254" layer="1"/>
 <wire x1="6.477" y1="9.398" x2="5.461" y2="10.414" width="0.254" layer="1"/>
@@ -2987,6 +2982,8 @@ Please make sure your boards conform to these design rules.</description>
 <vertex x="23.622" y="12.446"/>
 <vertex x="13.462" y="12.446"/>
 </polygon>
+<wire x1="10.795" y1="9.144" x2="10.795" y2="3.39" width="0.254" layer="1"/>
+<wire x1="10.795" y1="3.39" x2="10.326" y2="2.921" width="0.254" layer="1"/>
 </signal>
 <signal name="M1A">
 <contactref element="D1" pad="1"/>
@@ -3554,7 +3551,7 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="N$1">
 <contactref element="D10" pad="1"/>
 <contactref element="R6" pad="2"/>
-<wire x1="12.065" y1="5.246" x2="12.065" y2="3.39" width="0.254" layer="1"/>
+<wire x1="12.065" y1="5.246" x2="12.026" y2="2.921" width="0.254" layer="1"/>
 </signal>
 </signals>
 <errors>

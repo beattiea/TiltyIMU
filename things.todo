@@ -36,7 +36,7 @@ Hardware Work
 =============
 	Update all 8-pin receptacles to new locking pattern!
 	
-	Add attachment points for interrupt pins of sensors to advanced IMU board
+	Add attachment points for interrupt pins of sensors to advanced IMU and Duo/Quad boards
 
 	Add-on boards
 	LEDs need to decrease current draw!
