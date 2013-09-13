@@ -1,9 +1,3 @@
 ISP header needs more room
 
-Servo outputs are improperly labeled
-
 Error/status LEDs?
-
-Reset button should be moved up
-
-OR gate needs to be completely redone!
