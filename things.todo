@@ -37,9 +37,6 @@ Hardware Work
 	Add jumper to disable on-board magnetometer!!!
 
 	Update all 8-pin receptacles to new locking pattern!
-	
-	Add attachment points for interrupt pins of sensors to advanced IMU and Duo/Quad boards
-	Add solder headers to allow for choosing aux/main I2C to Advanced IMU
 
 	Add-on boards
 	LEDs need to decrease current draw!

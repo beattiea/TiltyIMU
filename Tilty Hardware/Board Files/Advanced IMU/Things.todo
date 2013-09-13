@@ -1,0 +1,5 @@
+Change board-side header to a connector?
+
+Add solder jumpers to allow for aux/main I2C selection
+
+Add solder jumpers to allow for sensor interrupt connections
