@@ -1,0 +1,5 @@
+LEDs need to decrease current draw
+
+Add a jumper to disable on-board magnetometer
+
+Jumpers to allow sensor interrupt connections(?)

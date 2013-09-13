@@ -1,3 +1,0 @@
-ISP header needs more room
-
-Error/status LEDs?
