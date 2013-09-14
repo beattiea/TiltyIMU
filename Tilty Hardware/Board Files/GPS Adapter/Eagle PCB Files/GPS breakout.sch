@@ -4182,7 +4182,7 @@ SMT header is CONN-09042.</description>
 <text x="114.3" y="127" size="5.08" layer="91" ratio="14">LDO Regulator</text>
 </plain>
 <instances>
-<instance part="GND10" gate="1" x="205.74" y="71.12" rot="R180"/>
+<instance part="GND10" gate="1" x="231.14" y="63.5" rot="R180"/>
 <instance part="GND12" gate="1" x="142.24" y="86.36"/>
 <instance part="U2" gate="G$1" x="142.24" y="111.76">
 <attribute name="COST" x="142.24" y="111.76" size="3.81" layer="96" ratio="14" display="off"/>
@@ -4216,16 +4216,6 @@ SMT header is CONN-09042.</description>
 <wire x1="121.92" y1="93.98" x2="142.24" y2="93.98" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="GND10" gate="1" pin="GND"/>
-<wire x1="205.74" y1="55.88" x2="203.2" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="205.74" y1="55.88" x2="205.74" y2="68.58" width="0.1524" layer="91"/>
-<junction x="205.74" y="55.88"/>
-<wire x1="205.74" y1="55.88" x2="210.82" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="210.82" y1="55.88" x2="210.82" y2="58.42" width="0.1524" layer="91"/>
-<pinref part="JP5" gate="A" pin="7"/>
-<wire x1="210.82" y1="58.42" x2="241.3" y2="58.42" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="JP2" gate="A" pin="1"/>
 <wire x1="149.86" y1="22.86" x2="154.94" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="154.94" y1="22.86" x2="154.94" y2="15.24" width="0.1524" layer="91"/>
@@ -4237,23 +4227,25 @@ SMT header is CONN-09042.</description>
 <wire x1="228.6" y1="20.32" x2="228.6" y2="10.16" width="0.1524" layer="91"/>
 <pinref part="GND21" gate="1" pin="GND"/>
 </segment>
+<segment>
+<pinref part="JP5" gate="A" pin="7"/>
+<pinref part="GND10" gate="1" pin="GND"/>
+<wire x1="241.3" y1="58.42" x2="231.14" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="231.14" y1="58.42" x2="231.14" y2="60.96" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="SCL" class="4">
 <segment>
-<wire x1="203.2" y1="38.1" x2="217.17" y2="38.1" width="0.1524" layer="91"/>
-<wire x1="217.17" y1="38.1" x2="217.17" y2="45.72" width="0.1524" layer="91"/>
 <pinref part="JP5" gate="A" pin="2"/>
-<wire x1="217.17" y1="45.72" x2="241.3" y2="45.72" width="0.1524" layer="91"/>
-<label x="203.2" y="38.1" size="1.778" layer="95"/>
+<wire x1="224.79" y1="45.72" x2="241.3" y2="45.72" width="0.1524" layer="91"/>
+<label x="226.06" y="45.72" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SDA" class="4">
 <segment>
-<wire x1="203.2" y1="35.56" x2="218.44" y2="35.56" width="0.1524" layer="91"/>
-<label x="203.2" y="35.56" size="1.778" layer="95"/>
 <pinref part="JP5" gate="A" pin="1"/>
-<wire x1="218.44" y1="35.56" x2="218.44" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="218.44" y1="43.18" x2="241.3" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="43.18" x2="241.3" y2="43.18" width="0.1524" layer="91"/>
+<label x="228.6" y="43.18" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RX3" class="0">
@@ -4288,14 +4280,6 @@ SMT header is CONN-09042.</description>
 <pinref part="JP2" gate="A" pin="2"/>
 </segment>
 </net>
-<net name="TEENSY_3V3" class="3">
-<segment>
-<wire x1="203.2" y1="58.42" x2="208.28" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="208.28" y1="58.42" x2="208.28" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="208.28" y1="66.04" x2="223.52" y2="66.04" width="0.1524" layer="91"/>
-<label x="208.28" y="66.04" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="5V" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="5V"/>
@@ -4305,27 +4289,6 @@ SMT header is CONN-09042.</description>
 <wire x1="162.56" y1="114.3" x2="175.26" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="162.56" y1="106.68" x2="162.56" y2="114.3" width="0.1524" layer="91"/>
 <junction x="162.56" y="114.3"/>
-</segment>
-<segment>
-<pinref part="JP5" gate="A" pin="8"/>
-<wire x1="203.2" y1="60.96" x2="241.3" y2="60.96" width="0.1524" layer="91"/>
-<label x="210.82" y="60.96" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$23" class="0">
-<segment>
-<wire x1="203.2" y1="30.48" x2="220.98" y2="30.48" width="0.1524" layer="91"/>
-<pinref part="JP6" gate="A" pin="7"/>
-<wire x1="220.98" y1="30.48" x2="220.98" y2="35.56" width="0.1524" layer="91"/>
-<wire x1="220.98" y1="35.56" x2="233.68" y2="35.56" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$10" class="0">
-<segment>
-<wire x1="203.2" y1="33.02" x2="219.71" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="219.71" y1="33.02" x2="219.71" y2="38.1" width="0.1524" layer="91"/>
-<pinref part="JP6" gate="A" pin="8"/>
-<wire x1="219.71" y1="38.1" x2="233.68" y2="38.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="3V3" class="3">
