@@ -5902,9 +5902,9 @@ www.scr.com</description>
 <pad name="P$3" x="-3.81" y="-0.127" drill="0.8"/>
 <pad name="P$4" x="-1.27" y="0.127" drill="0.8"/>
 <pad name="P$5" x="1.27" y="-0.127" drill="0.8"/>
-<pad name="P$6" x="3.81" y="0" drill="0.8"/>
+<pad name="P$6" x="3.81" y="0.127" drill="0.8"/>
 <pad name="P$7" x="6.35" y="-0.127" drill="0.8"/>
-<pad name="P$8" x="8.89" y="0" drill="0.8"/>
+<pad name="P$8" x="8.89" y="0.127" drill="0.8"/>
 </package>
 </packages>
 <symbols>

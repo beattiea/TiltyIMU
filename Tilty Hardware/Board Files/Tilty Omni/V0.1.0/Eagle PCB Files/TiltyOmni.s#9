@@ -8691,9 +8691,9 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 </net>
 <net name="IMU_INT" class="0">
 <segment>
-<pinref part="JP1" gate="G$1" pin="7"/>
-<wire x1="99.06" y1="50.8" x2="119.38" y2="50.8" width="0.1524" layer="91"/>
-<label x="104.14" y="50.8" size="1.778" layer="95"/>
+<pinref part="U1" gate="G$1" pin="33"/>
+<wire x1="193.04" y1="7.62" x2="182.88" y2="7.62" width="0.1524" layer="91"/>
+<label x="182.88" y="7.62" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="4/PWM" class="0">
@@ -9119,13 +9119,6 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <label x="182.88" y="10.16" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="33" class="0">
-<segment>
-<pinref part="U1" gate="G$1" pin="33"/>
-<wire x1="193.04" y1="7.62" x2="182.88" y2="7.62" width="0.1524" layer="91"/>
-<label x="182.88" y="7.62" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="A10" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="A10"/>
@@ -9181,6 +9174,11 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="U1" gate="G$1" pin="5/PWM"/>
 <wire x1="193.04" y1="53.34" x2="172.72" y2="53.34" width="0.1524" layer="91"/>
 <label x="172.72" y="53.34" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP1" gate="G$1" pin="7"/>
+<wire x1="99.06" y1="50.8" x2="119.38" y2="50.8" width="0.1524" layer="91"/>
+<label x="104.14" y="50.8" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="6/PWM" class="0">
