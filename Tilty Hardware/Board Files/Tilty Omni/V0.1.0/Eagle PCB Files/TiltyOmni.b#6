@@ -2120,8 +2120,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="32.346" y1="8.382" x2="34.036" y2="8.724" width="0" layer="19" extent="1-1"/>
 <wire x1="27.432" y1="8.724" x2="32.346" y2="8.382" width="0" layer="19" extent="1-1"/>
 <wire x1="26.67" y1="12.7" x2="27.432" y2="8.724" width="0" layer="19" extent="1-1"/>
-<wire x1="22.606" y1="13.5645" x2="26.67" y2="12.7" width="0" layer="19" extent="1-1"/>
-<wire x1="22.205" y1="9.863" x2="22.606" y2="13.5645" width="0" layer="19" extent="1-1"/>
 <wire x1="20.955" y1="17.78" x2="22.606" y2="13.5645" width="0" layer="19" extent="1-1"/>
 <wire x1="14.478" y1="15.074" x2="20.955" y2="17.78" width="0" layer="19" extent="1-1"/>
 <wire x1="44.577" y1="5.842" x2="38.1" y2="8.724" width="0" layer="19" extent="1-1"/>
@@ -2134,6 +2132,10 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="13.404" y1="59.436" x2="13.335" y2="50.8" width="0" layer="19" extent="1-1"/>
 <wire x1="12.2682" y1="14.859" x2="14.263" y2="14.859" width="0.2032" layer="1"/>
 <wire x1="14.263" y1="14.859" x2="14.478" y2="15.074" width="0.2032" layer="1"/>
+<wire x1="22.606" y1="13.5645" x2="22.606" y2="10.264" width="0.381" layer="1"/>
+<wire x1="22.606" y1="10.264" x2="22.205" y2="9.863" width="0.381" layer="1"/>
+<wire x1="22.606" y1="13.5645" x2="25.8055" y2="13.5645" width="0.381" layer="1"/>
+<wire x1="25.8055" y1="13.5645" x2="26.67" y2="12.7" width="0.381" layer="1"/>
 </signal>
 <signal name="AGND">
 <contactref element="U1" pad="AGND"/>
@@ -2381,7 +2383,12 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U7" pad="1"/>
 <contactref element="U1" pad="27"/>
 <contactref element="JP6" pad="1"/>
-<wire x1="12.2682" y1="11.049" x2="19.685" y2="22.86" width="0" layer="19" extent="1-1"/>
+<via x="19.685" y="22.86" extent="1-16" drill="0.3302"/>
+<wire x1="19.685" y1="22.86" x2="17.526" y2="22.86" width="0.2032" layer="16"/>
+<wire x1="17.526" y1="22.86" x2="17.145" y2="22.479" width="0.2032" layer="16"/>
+<via x="17.145" y="11.049" extent="1-16" drill="0.3302"/>
+<wire x1="17.145" y1="22.479" x2="17.145" y2="11.049" width="0.2032" layer="16"/>
+<wire x1="12.2682" y1="11.049" x2="17.145" y2="11.049" width="0.2032" layer="1"/>
 <wire x1="1.3335" y1="1.905" x2="12.2682" y2="11.049" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="IMU_INT">

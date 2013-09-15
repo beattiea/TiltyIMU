@@ -2379,6 +2379,8 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="MEMORY_CS">
 <contactref element="U7" pad="1"/>
+<contactref element="JP6" pad="1"/>
+<wire x1="1.3335" y1="1.905" x2="12.2682" y2="11.049" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="IMU_INT">
 <contactref element="U1" pad="33"/>
@@ -2762,9 +2764,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="11.557" y1="32.893" x2="11.684" y2="33.02" width="0.254" layer="1"/>
 <wire x1="11.684" y1="33.02" x2="13.335" y2="33.02" width="0.254" layer="1"/>
 <wire x1="1.3335" y1="32.385" x2="9.525" y2="32.893" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="28">
-<contactref element="JP6" pad="1"/>
 </signal>
 </signals>
 <errors>

@@ -7983,7 +7983,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 </part>
 <part name="C4" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="C5" library="resistor" deviceset="C-US" device="C0603" value="4.7uF"/>
-<part name="MPU_INT" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NO"/>
+<part name="MPU_INT" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE" value="SOLDERJUMPERTRACE"/>
 <part name="D1" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK" value="RED"/>
 <part name="D2" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK" value="GREEN"/>
 <part name="GND16" library="supply1" deviceset="GND" device=""/>
@@ -8417,14 +8417,6 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <label x="144.78" y="25.4" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="MPU_INT" class="0">
-<segment>
-<pinref part="MPU_INT" gate="1" pin="1"/>
-<wire x1="7.62" y1="109.22" x2="7.62" y2="127" width="0.1524" layer="91"/>
-<wire x1="7.62" y1="127" x2="20.32" y2="127" width="0.1524" layer="91"/>
-<label x="10.16" y="127" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="CMD" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="PIO11"/>
@@ -8694,6 +8686,12 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="U1" gate="G$1" pin="33"/>
 <wire x1="193.04" y1="7.62" x2="182.88" y2="7.62" width="0.1524" layer="91"/>
 <label x="182.88" y="7.62" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="MPU_INT" gate="1" pin="1"/>
+<wire x1="7.62" y1="109.22" x2="7.62" y2="127" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="127" x2="20.32" y2="127" width="0.1524" layer="91"/>
+<label x="10.16" y="127" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="4/PWM" class="0">
