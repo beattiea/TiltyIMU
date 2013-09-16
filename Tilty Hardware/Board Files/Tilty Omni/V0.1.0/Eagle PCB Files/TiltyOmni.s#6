@@ -8440,22 +8440,12 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 </net>
 <net name="RX1" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="UART_TX"/>
-<wire x1="27.94" y1="57.15" x2="16.51" y2="57.15" width="0.1524" layer="91"/>
-<label x="16.51" y="57.15" size="1.778" layer="95"/>
-</segment>
-<segment>
 <wire x1="71.374" y1="67.564" x2="81.534" y2="67.564" width="0.1524" layer="91"/>
 <label x="76.454" y="67.564" size="1.778" layer="95"/>
 <pinref part="JP9" gate="A" pin="2"/>
 </segment>
 </net>
 <net name="TX1" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="UART_RX"/>
-<wire x1="27.94" y1="54.61" x2="16.51" y2="54.61" width="0.1524" layer="91"/>
-<label x="16.51" y="54.61" size="1.778" layer="95"/>
-</segment>
 <segment>
 <wire x1="71.374" y1="65.024" x2="81.534" y2="65.024" width="0.1524" layer="91"/>
 <label x="76.454" y="65.024" size="1.778" layer="95"/>
@@ -8756,6 +8746,11 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <wire x1="279.4" y1="96.52" x2="269.24" y2="96.52" width="0.1524" layer="91"/>
 <label x="259.08" y="96.52" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="UART_RX"/>
+<wire x1="27.94" y1="54.61" x2="6.35" y2="54.61" width="0.1524" layer="91"/>
+<label x="6.35" y="54.61" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="BLUETOOTH_RX" class="0">
 <segment>
@@ -8772,6 +8767,11 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="JP6" gate="G$1" pin="19"/>
 <wire x1="279.4" y1="99.06" x2="269.24" y2="99.06" width="0.1524" layer="91"/>
 <label x="259.08" y="99.06" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="UART_TX"/>
+<wire x1="27.94" y1="57.15" x2="6.35" y2="57.15" width="0.1524" layer="91"/>
+<label x="6.35" y="57.15" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="5V_SDA" class="0">
