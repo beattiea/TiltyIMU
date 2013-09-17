@@ -35,5 +35,6 @@ Software Library work:
 Hardware Work
 =============
 	Update all 8-pin receptacles to new locking pattern!
-
+        Put low power resistor on 3.3v shunt Zener
+        Check duo/quad component spacing to through holes for selective soldering
 	Add-on boards
