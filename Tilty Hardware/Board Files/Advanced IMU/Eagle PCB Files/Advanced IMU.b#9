@@ -119,29 +119,27 @@
 <wire x1="34.2265" y1="29.083" x2="35.56" y2="29.083" width="0.0254" layer="49"/>
 <wire x1="0" y1="0" x2="0" y2="50.8" width="0" layer="20"/>
 <hole x="2.54" y="48.26" drill="3.175"/>
-<wire x1="12.7" y1="12.7" x2="11.43" y2="12.7" width="0" layer="20" curve="180"/>
-<wire x1="26.67" y1="12.7" x2="25.4" y2="12.7" width="0" layer="20" curve="180"/>
 <wire x1="11.43" y1="1.27" x2="12.7" y2="1.27" width="0" layer="20" curve="180"/>
 <wire x1="25.4" y1="1.27" x2="26.67" y2="1.27" width="0" layer="20" curve="180"/>
 <wire x1="0" y1="0" x2="38.1" y2="0" width="0" layer="20"/>
 <wire x1="12.7" y1="1.27" x2="12.7" y2="12.7" width="0" layer="20"/>
-<wire x1="11.43" y1="12.7" x2="11.43" y2="1.27" width="0" layer="20"/>
+<wire x1="11.43" y1="13.462" x2="11.43" y2="1.27" width="0" layer="20"/>
 <wire x1="25.4" y1="1.27" x2="25.4" y2="12.7" width="0" layer="20"/>
-<wire x1="26.67" y1="1.27" x2="26.67" y2="12.7" width="0" layer="20"/>
-<wire x1="13.716" y1="13.97" x2="13.716" y2="12.7" width="0" layer="20" curve="180"/>
+<wire x1="26.67" y1="1.27" x2="26.67" y2="13.462" width="0" layer="20"/>
 <wire x1="17.3355" y1="13.97" x2="17.3355" y2="12.7" width="0" layer="20" curve="-180"/>
-<wire x1="13.716" y1="13.97" x2="17.3355" y2="13.97" width="0" layer="20"/>
-<wire x1="13.716" y1="12.7" x2="17.3355" y2="12.7" width="0" layer="20"/>
+<wire x1="11.938" y1="13.97" x2="17.3355" y2="13.97" width="0" layer="20"/>
+<wire x1="12.7" y1="12.7" x2="17.3355" y2="12.7" width="0" layer="20"/>
 <hole x="14.859" y="6.35" drill="3.175"/>
 <hole x="23.241" y="6.35" drill="3.175"/>
 <wire x1="20.7645" y1="13.97" x2="20.7645" y2="12.7" width="0" layer="20" curve="180"/>
-<wire x1="24.384" y1="13.97" x2="24.384" y2="12.7" width="0" layer="20" curve="-180"/>
-<wire x1="20.7645" y1="13.97" x2="24.384" y2="13.97" width="0" layer="20"/>
-<wire x1="20.7645" y1="12.7" x2="24.384" y2="12.7" width="0" layer="20"/>
+<wire x1="20.7645" y1="13.97" x2="26.162" y2="13.97" width="0" layer="20"/>
+<wire x1="20.7645" y1="12.7" x2="25.4" y2="12.7" width="0" layer="20"/>
 <text x="16.002" y="17.526" size="1.524" layer="25" ratio="10" rot="R90">3v3</text>
 <text x="23.622" y="17.526" size="1.524" layer="25" ratio="10" rot="R90">GND</text>
 <text x="21.082" y="17.526" size="1.524" layer="25" ratio="10" rot="R90">SDA</text>
 <text x="18.542" y="17.526" size="1.524" layer="25" ratio="10" rot="R90">SCL</text>
+<wire x1="11.938" y1="13.97" x2="11.43" y2="13.462" width="0" layer="20" curve="75.963757"/>
+<wire x1="26.67" y1="13.462" x2="26.162" y2="13.97" width="0" layer="20" curve="75.963757"/>
 </plain>
 <libraries>
 <library name="My Parts">

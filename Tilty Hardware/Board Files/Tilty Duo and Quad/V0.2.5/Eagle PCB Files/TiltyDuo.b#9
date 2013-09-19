@@ -2912,8 +2912,8 @@ Please make sure your boards conform to these design rules.</description>
 <element name="SJ5" library="SparkFun-Passives" package="SJ_2S-TRACE" value="SOLDERJUMPERTRACE" x="36.322" y="7.874" smashed="yes" rot="R180">
 <attribute name="VALUE" x="37.2745" y="9.525" size="0.4064" layer="27" rot="R180"/>
 </element>
-<element name="SJ7" library="SparkFun-Passives" package="SJ_2S-TRACE" value="SOLDERJUMPERTRACE" x="17.78" y="19.812" smashed="yes">
-<attribute name="VALUE" x="16.8275" y="18.161" size="0.4064" layer="27"/>
+<element name="SJ7" library="SparkFun-Passives" package="SJ_2S-TRACE" value="SOLDERJUMPERTRACE" x="25.146" y="20.574" smashed="yes">
+<attribute name="VALUE" x="24.1935" y="18.923" size="0.4064" layer="27"/>
 </element>
 </elements>
 <signals>
@@ -2941,7 +2941,6 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U6" pad="9"/>
 <contactref element="U6" pad="11"/>
 <contactref element="C8" pad="2"/>
-<contactref element="C6" pad="2"/>
 <wire x1="20.32" y1="23.38" x2="20.3" y2="23.4" width="0.254" layer="16"/>
 <via x="14.7955" y="29.083" extent="1-16" drill="0.3302"/>
 <via x="20.7518" y="29.5275" extent="1-16" drill="0.3302"/>
@@ -3106,8 +3105,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="35.56" y1="11.303" x2="34.163" y2="12.7" width="0.27431875" layer="16"/>
 <wire x1="34.163" y1="12.7" x2="33.997" y2="12.7" width="0.27431875" layer="16"/>
 <wire x1="33.997" y1="12.7" x2="33.655" y2="13.042" width="0.27431875" layer="16"/>
-<contactref element="SJ7" pad="2"/>
-<wire x1="17.68" y1="18.792" x2="18.288" y2="19.812" width="0" layer="19" extent="1-16"/>
+<contactref element="C6" pad="2"/>
 </signal>
 <signal name="SCL" class="4">
 <contactref element="U5" pad="23"/>
@@ -3416,7 +3414,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="16.51" y1="37.7063" x2="21.5138" y2="37.7063" width="0.381" layer="16"/>
 <wire x1="21.5138" y1="37.7063" x2="21.59" y2="37.7825" width="0.381" layer="16"/>
 <contactref element="SJ7" pad="1"/>
-<wire x1="18.3" y1="20.689" x2="17.272" y2="19.812" width="0" layer="19" extent="1-16"/>
+<wire x1="24.13" y1="19.304" x2="24.638" y2="20.574" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="5V">
 <contactref element="U4" pad="P$3"/>
@@ -3848,9 +3846,11 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U6" pad="4"/>
 <contactref element="U6" pad="13"/>
 <contactref element="U6" pad="2"/>
+<contactref element="SJ7" pad="2"/>
 <contactref element="C6" pad="1"/>
+<wire x1="22.0735" y1="18.2245" x2="25.654" y2="20.574" width="0" layer="19" extent="1-16"/>
+<wire x1="20.42" y1="17.792" x2="22.0735" y2="18.2245" width="0" layer="19" extent="16-16"/>
 <wire x1="20.42" y1="18.792" x2="20.42" y2="17.792" width="0" layer="19" extent="16-16"/>
-<wire x1="22.0735" y1="18.2245" x2="20.42" y2="17.792" width="0" layer="19" extent="16-16"/>
 <wire x1="18.3" y1="19.912" x2="20.42" y2="18.792" width="0" layer="19" extent="16-16"/>
 </signal>
 </signals>

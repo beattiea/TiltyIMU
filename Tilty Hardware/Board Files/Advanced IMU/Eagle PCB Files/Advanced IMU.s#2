@@ -4351,19 +4351,19 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <text x="-3.81" y="83.82" size="2.54" layer="91" ratio="15">~</text>
 <text x="3.81" y="120.65" size="2.54" layer="91" ratio="15">= 3.3v only!</text>
 <text x="0.635" y="119.38" size="2.54" layer="91" ratio="15">~</text>
-<text x="-3.175" y="87.63" size="1.778" layer="91" ratio="15">*</text>
-<text x="-3.175" y="92.71" size="1.778" layer="91" ratio="15">*</text>
-<text x="-3.175" y="95.25" size="1.778" layer="91" ratio="15">*</text>
-<text x="-3.175" y="41.91" size="1.778" layer="91" ratio="15">*</text>
-<text x="-3.175" y="13.97" size="1.778" layer="91" ratio="15">*</text>
-<text x="-3.175" y="11.43" size="1.778" layer="91" ratio="15">*</text>
+<text x="-3.175" y="87.884" size="1.778" layer="91" ratio="15">*</text>
+<text x="-3.175" y="92.964" size="1.778" layer="91" ratio="15">*</text>
+<text x="-3.175" y="95.504" size="1.778" layer="91" ratio="15">*</text>
+<text x="-3.175" y="42.164" size="1.778" layer="91" ratio="15">*</text>
+<text x="-3.175" y="14.224" size="1.778" layer="91" ratio="15">*</text>
+<text x="-3.175" y="11.684" size="1.778" layer="91" ratio="15">*</text>
 <text x="0.635" y="117.475" size="1.778" layer="91" ratio="15">*</text>
-<text x="3.81" y="116.84" size="2.54" layer="91" ratio="15">= 5/3.3v (depends on solder jumpers</text>
-<text x="-3.81" y="99.06" size="2.54" layer="91" ratio="15">~</text>
-<text x="-3.81" y="96.52" size="2.54" layer="91" ratio="15">~</text>
+<text x="3.81" y="116.84" size="2.54" layer="91" ratio="15">= 5/3.3v (depends on solder jumpers or board variant)</text>
 <text x="0.635" y="113.665" size="2.54" layer="91" ratio="15">Recommend only using 3.3v, even though some pins are 5v tolerant</text>
 <text x="68.58" y="95.25" size="6.35" layer="91" ratio="14">Compass Circuitry</text>
 <text x="175.26" y="96.52" size="5.08" layer="91" ratio="14">Altimeter</text>
+<text x="-3.175" y="98.044" size="1.778" layer="91" ratio="15">*</text>
+<text x="-3.175" y="100.584" size="1.778" layer="91" ratio="15">*</text>
 </plain>
 <instances>
 <instance part="GND5" gate="1" x="17.78" y="25.4"/>

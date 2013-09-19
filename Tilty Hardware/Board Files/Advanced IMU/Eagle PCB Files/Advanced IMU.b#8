@@ -1657,6 +1657,79 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="4.572" y1="11.938" x2="4.572" y2="25.654" width="0.3175" layer="16"/>
 <wire x1="4.572" y1="25.654" x2="5.334" y2="26.416" width="0.3175" layer="16"/>
 <wire x1="5.334" y1="26.416" x2="13.716" y2="26.416" width="0.3175" layer="16"/>
+<polygon width="0.1524" layer="1" orphans="yes">
+<vertex x="28.956" y="34.798"/>
+<vertex x="23.876" y="34.798"/>
+<vertex x="22.86" y="33.782"/>
+<vertex x="22.86" y="28.702"/>
+<vertex x="22.098" y="27.94"/>
+<vertex x="20.828" y="27.94"/>
+<vertex x="20.828" y="25.4"/>
+<vertex x="23.876" y="25.4"/>
+<vertex x="24.892" y="26.416"/>
+<vertex x="24.892" y="30.48"/>
+<vertex x="25.4" y="30.988"/>
+<vertex x="28.956" y="30.988"/>
+<vertex x="29.21" y="30.988"/>
+<vertex x="29.972" y="30.226"/>
+<vertex x="30.988" y="30.226"/>
+<vertex x="31.75" y="30.988"/>
+<vertex x="31.75" y="34.544"/>
+<vertex x="30.988" y="35.306"/>
+<vertex x="29.464" y="35.306"/>
+</polygon>
+<polygon width="0.1524" layer="16" orphans="yes">
+<vertex x="20.828" y="27.94"/>
+<vertex x="20.828" y="25.4"/>
+<vertex x="23.876" y="25.4"/>
+<vertex x="24.892" y="26.416"/>
+<vertex x="24.892" y="30.48"/>
+<vertex x="25.4" y="30.988"/>
+<vertex x="29.21" y="30.988"/>
+<vertex x="29.972" y="30.226"/>
+<vertex x="30.988" y="30.226"/>
+<vertex x="31.75" y="30.988"/>
+<vertex x="31.75" y="34.544"/>
+<vertex x="30.988" y="35.306"/>
+<vertex x="29.464" y="35.306"/>
+<vertex x="28.956" y="34.798"/>
+<vertex x="23.876" y="34.798"/>
+<vertex x="22.86" y="33.782"/>
+<vertex x="22.86" y="28.702"/>
+<vertex x="22.098" y="27.94"/>
+</polygon>
+<polygon width="0.1524" layer="16" orphans="yes">
+<vertex x="20.828" y="27.94"/>
+<vertex x="18.796" y="27.94"/>
+<vertex x="18.034" y="27.178"/>
+<vertex x="18.034" y="21.336"/>
+<vertex x="17.018" y="20.32"/>
+<vertex x="17.018" y="17.018"/>
+<vertex x="21.082" y="17.018"/>
+<vertex x="21.082" y="20.32"/>
+<vertex x="20.066" y="21.336"/>
+<vertex x="20.066" y="24.638"/>
+<vertex x="20.828" y="25.4"/>
+</polygon>
+<polygon width="0.1524" layer="1" orphans="yes">
+<vertex x="20.828" y="27.94"/>
+<vertex x="18.796" y="27.94"/>
+<vertex x="18.034" y="27.178"/>
+<vertex x="18.034" y="21.336"/>
+<vertex x="17.018" y="20.32"/>
+<vertex x="17.018" y="17.018"/>
+<vertex x="21.082" y="17.018"/>
+<vertex x="21.082" y="20.32"/>
+<vertex x="20.066" y="21.336"/>
+<vertex x="20.066" y="24.638"/>
+<vertex x="20.828" y="25.4"/>
+</polygon>
+<polygon width="0.1524" layer="16" orphans="yes">
+<vertex x="17.78" y="17.018"/>
+<vertex x="17.78" y="12.446"/>
+<vertex x="20.32" y="12.446"/>
+<vertex x="20.32" y="17.018"/>
+</polygon>
 </signal>
 <signal name="MISO">
 <contactref element="JP2" pad="P$6"/>

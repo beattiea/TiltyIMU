@@ -932,6 +932,7 @@
 <wire x1="11.43" y1="13.716" x2="16.7005" y2="13.716" width="2.54" layer="20"/>
 <wire x1="21.3995" y1="13.716" x2="26.67" y2="13.716" width="2.54" layer="20"/>
 <wire x1="26.67" y1="1.778" x2="26.67" y2="13.716" width="2.54" layer="20"/>
+<text x="19.05" y="33.782" size="1.27" layer="25" ratio="12" align="center">v0.1.0</text>
 </plain>
 <libraries>
 <library name="My Parts">

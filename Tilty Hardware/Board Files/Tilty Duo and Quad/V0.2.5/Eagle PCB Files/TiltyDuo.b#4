@@ -3607,7 +3607,7 @@ Please make sure your boards conform to these design rules.</description>
 <via x="36.957" y="9.525" extent="1-16" drill="0.3302"/>
 <wire x1="36.957" y1="22.86" x2="36.957" y2="9.525" width="0.1524" layer="16"/>
 <contactref element="JP3" pad="P$3"/>
-<wire x1="26.67" y1="21.463" x2="35.433" y2="24.003" width="0.254" layer="16"/>
+<wire x1="26.67" y1="21.463" x2="35.433" y2="24.003" width="0.254" layer="1"/>
 <wire x1="35.433" y1="24.003" x2="35.814" y2="24.003" width="0.1524" layer="16"/>
 <contactref element="SJ5" pad="1"/>
 <wire x1="36.957" y1="9.525" x2="36.957" y2="8.001" width="0.1524" layer="1"/>
@@ -3632,6 +3632,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="28.5115" y1="26.2255" x2="28.702" y2="26.416" width="0.1524" layer="16"/>
 <wire x1="28.702" y1="26.416" x2="28.702" y2="26.8005" width="0.1524" layer="16"/>
 <wire x1="28.702" y1="26.8005" x2="28.772" y2="26.7435" width="0.1524" layer="16"/>
+<via x="27.813" y="25.019" extent="1-16" drill="0.3302"/>
 </signal>
 <signal name="N$3">
 <contactref element="D1" pad="2"/>

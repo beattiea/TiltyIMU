@@ -174,6 +174,7 @@
 <text x="25.527" y="48.514" size="1.778" layer="25" ratio="10">5v</text>
 <text x="13.208" y="8.382" size="1.143" layer="25" ratio="15">3v3</text>
 <text x="21.971" y="8.382" size="1.143" layer="25" ratio="15">GND</text>
+<text x="18.3515" y="6.477" size="1.143" layer="25" ratio="15" rot="R90">SCL</text>
 </plain>
 <libraries>
 <library name="My Parts">

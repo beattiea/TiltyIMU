@@ -9667,6 +9667,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="D6" library="diode" deviceset="DIODE-" device="DO214AA"/>
 <part name="SJ5" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE"/>
 <part name="SJ7" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE"/>
+<part name="R9" library="resistor" deviceset="R-US_" device="R0603"/>
 </parts>
 <sheets>
 <sheet>
@@ -9827,7 +9828,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <attribute name="VALUE" x="253.7714" y="68.58" size="1.778" layer="96" rot="R90"/>
 <attribute name="PART#" x="251.46" y="66.04" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="GND23" gate="1" x="251.46" y="58.42"/>
+<instance part="GND23" gate="1" x="251.46" y="50.8"/>
 <instance part="JP4" gate="G$1" x="241.3" y="53.34" smashed="yes">
 <attribute name="NAME" x="237.49" y="64.135" size="1.778" layer="95"/>
 </instance>
@@ -9853,6 +9854,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <instance part="SJ7" gate="1" x="86.36" y="175.26" smashed="yes" rot="R180">
 <attribute name="NAME" x="88.9" y="172.72" size="1.778" layer="95" rot="R180"/>
 </instance>
+<instance part="R9" gate="G$1" x="251.46" y="58.42" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -10057,14 +10059,13 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <junction x="200.66" y="160.02"/>
 </segment>
 <segment>
-<pinref part="D5" gate="G$1" pin="A"/>
-<pinref part="GND23" gate="1" pin="GND"/>
-<wire x1="251.46" y1="60.96" x2="251.46" y2="63.5" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="C6" gate="G$1" pin="2"/>
 <pinref part="GND15" gate="1" pin="GND"/>
 <wire x1="78.74" y1="167.64" x2="83.82" y2="167.64" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R9" gate="G$1" pin="1"/>
+<pinref part="GND23" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="SCL" class="4">
@@ -10781,6 +10782,12 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <pinref part="C6" gate="G$1" pin="1"/>
 <wire x1="78.74" y1="175.26" x2="71.12" y2="175.26" width="0.1524" layer="91"/>
 <junction x="78.74" y="175.26"/>
+</segment>
+</net>
+<net name="N$22" class="0">
+<segment>
+<pinref part="D5" gate="G$1" pin="A"/>
+<pinref part="R9" gate="G$1" pin="2"/>
 </segment>
 </net>
 </nets>
