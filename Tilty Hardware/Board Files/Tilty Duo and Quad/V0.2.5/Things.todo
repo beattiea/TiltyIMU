@@ -3,3 +3,5 @@ LEDs need to decrease current draw
 Jumpers to allow sensor interrupt connections(?)
 
 Add servo header labels to bottom of board
+
+Remove Teensy Vin schottky diode

@@ -2542,21 +2542,21 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="29.5275" y1="28.8925" x2="37.0205" y2="28.8925" width="0.1524" layer="16"/>
 <wire x1="37.0205" y1="28.8925" x2="37.338" y2="29.21" width="0.1524" layer="16"/>
 <wire x1="37.338" y1="29.21" x2="37.338" y2="30.353" width="0.1524" layer="16"/>
-<contactref element="JP7" pad="10"/>
-<wire x1="37.0205" y1="28.8925" x2="40.5765" y2="24.765" width="0" layer="19" extent="16-16"/>
+<contactref element="JP7" pad="11"/>
+<wire x1="37.338" y1="29.21" x2="40.5765" y2="27.305" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="5V_SCL">
 <contactref element="JP3" pad="P$2"/>
 <contactref element="U1" pad="16/A2"/>
 <via x="29.5275" y="26.3525" extent="1-16" drill="0.3302"/>
 <wire x1="28.575" y1="25.4" x2="29.5275" y2="26.3525" width="0.1524" layer="1"/>
-<contactref element="JP7" pad="11"/>
+<contactref element="JP7" pad="10"/>
 <wire x1="29.5275" y1="26.3525" x2="37.0205" y2="26.3525" width="0.1524" layer="16"/>
 <wire x1="37.0205" y1="26.3525" x2="37.592" y2="26.924" width="0.1524" layer="16"/>
 <wire x1="37.592" y1="26.924" x2="37.592" y2="27.813" width="0.1524" layer="16"/>
-<wire x1="40.5765" y1="27.305" x2="39.243" y2="27.305" width="0.2032" layer="1"/>
 <wire x1="39.243" y1="27.305" x2="38.735" y2="27.813" width="0.2032" layer="1"/>
 <wire x1="38.735" y1="27.813" x2="37.592" y2="27.813" width="0.2032" layer="1"/>
+<wire x1="39.243" y1="27.305" x2="40.5765" y2="24.765" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="SERVO_4">
 <contactref element="JP4" pad="P$3"/>
