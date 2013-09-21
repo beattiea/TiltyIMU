@@ -1,0 +1,3 @@
+Add space between regulator filter caps and current sense resistors
+Add place for I2C pull-up resistors
+Add space between crystal and caps

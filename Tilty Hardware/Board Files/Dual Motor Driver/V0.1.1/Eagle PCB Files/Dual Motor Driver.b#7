@@ -3322,9 +3322,9 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="JP6" pad="P$4"/>
 <contactref element="U1" pad="24"/>
 <wire x1="39.277" y1="35.552" x2="36.33" y2="35.552" width="0.1524" layer="1"/>
-<wire x1="36.33" y1="35.552" x2="35.814" y2="36.068" width="0.1524" layer="1"/>
-<wire x1="35.814" y1="36.068" x2="35.814" y2="41.91" width="0.1524" layer="1"/>
-<wire x1="35.814" y1="41.91" x2="35.306" y2="42.418" width="0.1524" layer="1"/>
+<wire x1="36.33" y1="35.552" x2="35.7505" y2="36.1315" width="0.1524" layer="1"/>
+<wire x1="35.7505" y1="36.1315" x2="35.7505" y2="41.9735" width="0.1524" layer="1"/>
+<wire x1="35.7505" y1="41.9735" x2="35.306" y2="42.418" width="0.1524" layer="1"/>
 <wire x1="35.306" y1="42.418" x2="29.4446" y2="42.418" width="0.1524" layer="1"/>
 <wire x1="29.4446" y1="42.418" x2="29.4386" y2="42.424" width="0.1524" layer="1"/>
 </signal>
@@ -3545,8 +3545,8 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,f8ec67146a3af5c2"/>
 <approved hash="19,1,f5106ae86b2af4d2"/>
 <approved hash="19,1,333dc4c5db4f2cb7"/>
-<approved hash="19,1,c50dbaf5bb31c4c9"/>
 <approved hash="19,1,c8f1b709ba21c5d9"/>
+<approved hash="19,1,c50dbaf5bb31c4c9"/>
 <approved hash="19,1,38fc4d1284047d16"/>
 <approved hash="19,1,79b9f371691a6f2e"/>
 <approved hash="19,1,114a7ce50349f21b"/>

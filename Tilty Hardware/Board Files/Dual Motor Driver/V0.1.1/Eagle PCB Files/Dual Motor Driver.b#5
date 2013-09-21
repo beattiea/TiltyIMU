@@ -894,6 +894,22 @@
 <text x="20.004971875" y="17.009321875" size="1.905" layer="26" font="vector" ratio="17" rot="MR2">IMU</text>
 <text x="24.765" y="15.494" size="1.27" layer="26" ratio="12" rot="MR0">Dual Motor</text>
 <text x="26.543" y="13.462" size="1.27" layer="26" ratio="12" rot="MR0">Driver Add-on</text>
+<polygon width="0.2032" layer="29">
+<vertex x="16.002" y="28.194"/>
+<vertex x="22.098" y="28.194"/>
+<vertex x="22.098" y="16.51"/>
+<vertex x="23.114" y="15.494"/>
+<vertex x="23.114" y="13.462"/>
+<vertex x="15.24" y="13.462"/>
+<vertex x="15.24" y="15.748"/>
+<vertex x="16.002" y="16.51"/>
+</polygon>
+<polygon width="0.2032" layer="31">
+<vertex x="16.637" y="17.272"/>
+<vertex x="21.717" y="17.272"/>
+<vertex x="21.717" y="23.876"/>
+<vertex x="16.637" y="23.876"/>
+</polygon>
 </plain>
 <libraries>
 <library name="SparkFun-PowerIC">
@@ -2964,6 +2980,13 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="6.477" y1="9.398" x2="5.461" y2="10.414" width="0.254" layer="1"/>
 <wire x1="5.461" y1="10.414" x2="3.556" y2="10.414" width="0.254" layer="1"/>
 <wire x1="3.556" y1="10.414" x2="2.794" y2="11.303" width="0.254" layer="1"/>
+<polygon width="0.2032" layer="1">
+<vertex x="13.462" y="28.702"/>
+<vertex x="24.892" y="28.702"/>
+<vertex x="24.892" y="13.716"/>
+<vertex x="23.622" y="12.446"/>
+<vertex x="13.462" y="12.446"/>
+</polygon>
 </signal>
 <signal name="M1A">
 <contactref element="D1" pad="1"/>
@@ -3551,6 +3574,16 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,114a7ce50349f21b"/>
 <approved hash="19,1,561dc593a540aa33"/>
 <approved hash="19,1,114a7ce50349f21b"/>
+<approved hash="5,1,61ae0be5d091f980"/>
+<approved hash="19,1,c7e9b291bf45ca3d"/>
+<approved hash="19,1,ca15bf6dbe55cb2d"/>
+<approved hash="19,1,343dc945d6cf2bb7"/>
+<approved hash="19,1,e7ec62946fa2eada"/>
+<approved hash="19,1,ea106f686eb2ebca"/>
+<approved hash="19,1,7f42bab39f585aeb"/>
+<approved hash="19,1,8e04b4ed4efb7450"/>
+<approved hash="19,1,8df6d34510295de5"/>
+<approved hash="19,1,8df6d34510295de5"/>
 </errors>
 </board>
 </drawing>
