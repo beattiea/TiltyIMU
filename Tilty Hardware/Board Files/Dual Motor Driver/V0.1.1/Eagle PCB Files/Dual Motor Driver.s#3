@@ -11415,7 +11415,6 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <plain>
 <text x="2.54" y="5.08" size="1.778" layer="91">Change to a non-
 Sparkfun button</text>
-<text x="182.88" y="40.64" size="2.54" layer="91" ratio="15">headers need to be updated!</text>
 <text x="210.82" y="86.36" size="1.778" layer="91">Zener</text>
 </plain>
 <instances>

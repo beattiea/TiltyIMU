@@ -11409,6 +11409,12 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <part name="R6" library="resistor" deviceset="R-US_" device="R0603"/>
 <part name="P+13" library="supply1" deviceset="+5V" device=""/>
 <part name="GND16" library="supply1" deviceset="GND" device=""/>
+<part name="R7" library="resistor" deviceset="R-US_" device="R0603"/>
+<part name="R8" library="resistor" deviceset="R-US_" device="R0603"/>
+<part name="P+14" library="supply1" deviceset="+5V" device=""/>
+<part name="R9" library="resistor" deviceset="R-US_" device="R0603"/>
+<part name="D11" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK"/>
+<part name="GND17" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -11541,6 +11547,21 @@ Sparkfun button</text>
 </instance>
 <instance part="P+13" gate="1" x="167.64" y="63.5"/>
 <instance part="GND16" gate="1" x="190.5" y="53.34"/>
+<instance part="R7" gate="G$1" x="119.38" y="60.96" smashed="yes" rot="R90">
+<attribute name="NAME" x="118.11" y="64.5414" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="118.11" y="61.722" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="R8" gate="G$1" x="124.46" y="58.42" smashed="yes" rot="R90">
+<attribute name="NAME" x="123.19" y="62.0014" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="123.19" y="59.182" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="P+14" gate="1" x="121.92" y="71.12"/>
+<instance part="R9" gate="G$1" x="132.08" y="22.86" smashed="yes">
+<attribute name="NAME" x="135.6614" y="24.13" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="132.842" y="24.13" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="D11" gate="G$1" x="142.24" y="22.86" rot="R90"/>
+<instance part="GND17" gate="1" x="149.86" y="20.32"/>
 </instances>
 <busses>
 </busses>
@@ -11916,6 +11937,16 @@ Sparkfun button</text>
 <pinref part="R6" gate="G$1" pin="1"/>
 <wire x1="167.64" y1="58.42" x2="170.18" y2="58.42" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="R7" gate="G$1" pin="2"/>
+<pinref part="R8" gate="G$1" pin="2"/>
+<wire x1="119.38" y1="66.04" x2="121.92" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="121.92" y1="66.04" x2="124.46" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="124.46" y1="66.04" x2="124.46" y2="63.5" width="0.1524" layer="91"/>
+<pinref part="P+14" gate="1" pin="+5V"/>
+<wire x1="121.92" y1="68.58" x2="121.92" y2="66.04" width="0.1524" layer="91"/>
+<junction x="121.92" y="66.04"/>
+</segment>
 </net>
 <net name="RESET" class="0">
 <segment>
@@ -12001,8 +12032,9 @@ Sparkfun button</text>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="PC4(ADC4/SDA)"/>
-<wire x1="101.6" y1="55.88" x2="111.76" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="55.88" x2="119.38" y2="55.88" width="0.1524" layer="91"/>
 <label x="106.68" y="55.88" size="1.778" layer="95"/>
+<pinref part="R7" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="SCL" class="0">
@@ -12013,8 +12045,9 @@ Sparkfun button</text>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="PC5(ADC5/SCL)"/>
-<wire x1="101.6" y1="53.34" x2="111.76" y2="53.34" width="0.1524" layer="91"/>
 <label x="106.68" y="53.34" size="1.778" layer="95"/>
+<pinref part="R8" gate="G$1" pin="1"/>
+<wire x1="101.6" y1="53.34" x2="124.46" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="ENC1B" class="0">

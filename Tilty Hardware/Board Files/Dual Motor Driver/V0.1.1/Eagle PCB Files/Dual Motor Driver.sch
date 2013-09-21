@@ -11556,12 +11556,12 @@ Sparkfun button</text>
 <attribute name="VALUE" x="123.19" y="59.182" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="P+14" gate="1" x="121.92" y="71.12"/>
-<instance part="R9" gate="G$1" x="132.08" y="22.86" smashed="yes">
-<attribute name="NAME" x="135.6614" y="24.13" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="132.842" y="24.13" size="1.778" layer="96" rot="R90"/>
+<instance part="R9" gate="G$1" x="121.92" y="15.24" smashed="yes">
+<attribute name="NAME" x="125.5014" y="16.51" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="122.682" y="16.51" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="D11" gate="G$1" x="142.24" y="22.86" rot="R90"/>
-<instance part="GND17" gate="1" x="149.86" y="20.32"/>
+<instance part="D11" gate="G$1" x="129.54" y="15.24" rot="R90"/>
+<instance part="GND17" gate="1" x="137.16" y="10.16"/>
 </instances>
 <busses>
 </busses>
@@ -11716,6 +11716,12 @@ Sparkfun button</text>
 <pinref part="GND16" gate="1" pin="GND"/>
 <wire x1="187.96" y1="58.42" x2="190.5" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="190.5" y1="58.42" x2="190.5" y2="55.88" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="D11" gate="G$1" pin="C"/>
+<pinref part="GND17" gate="1" pin="GND"/>
+<wire x1="134.62" y1="15.24" x2="137.16" y2="15.24" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="15.24" x2="137.16" y2="12.7" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="M1A" class="0">
@@ -12248,6 +12254,19 @@ Sparkfun button</text>
 <segment>
 <pinref part="D10" gate="G$1" pin="A"/>
 <pinref part="R6" gate="G$1" pin="2"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<pinref part="R9" gate="G$1" pin="2"/>
+<pinref part="D11" gate="G$1" pin="A"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="U1" gate="G$1" pin="PB2(SS/OC1B)"/>
+<pinref part="R9" gate="G$1" pin="1"/>
+<wire x1="101.6" y1="15.24" x2="116.84" y2="15.24" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

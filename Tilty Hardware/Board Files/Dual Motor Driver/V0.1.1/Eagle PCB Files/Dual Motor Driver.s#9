@@ -10345,6 +10345,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="SJ2" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE" value=""/>
 <part name="D9" library="diode" deviceset="DIODE-" device="DO214AA"/>
 <part name="P+9" library="supply1" deviceset="+24V" device=""/>
+<part name="GND14" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -10457,6 +10458,7 @@ Sparkfun button</text>
 <instance part="SJ2" gate="1" x="203.2" y="86.36" rot="R90"/>
 <instance part="D9" gate="G$1" x="208.28" y="86.36" rot="R90"/>
 <instance part="P+9" gate="1" x="205.74" y="99.06"/>
+<instance part="GND14" gate="1" x="99.06" y="127" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -10594,6 +10596,11 @@ Sparkfun button</text>
 <wire x1="175.26" y1="104.14" x2="175.26" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="104.14" x2="175.26" y2="104.14" width="0.1524" layer="91"/>
 <junction x="175.26" y="104.14"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="GND@20"/>
+<wire x1="99.06" y1="121.92" x2="99.06" y2="124.46" width="0.1524" layer="91"/>
+<pinref part="GND14" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="M1A" class="0">
