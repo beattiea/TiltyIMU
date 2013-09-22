@@ -9,9 +9,11 @@ void setup() {
 
 void loop() {
 	
-	Wire.beginTransmission(2);
-	Wire.write(5);
-	Serial.println(Wire.endTransmission(I2C_STOP));
+        Wire.requestFrom(2, 1);
+        delay(100);
+        Serial.print("Read from Add-on: ");
+	Serial.println(Wire.read());
+	//Serial.println(Wire.endTransmission(I2C_STOP));
 	/*
 	Wire.requestFrom(2, 1);
 
@@ -44,5 +46,5 @@ void loop() {
 		Serial.println();
 	}*/
 	
-	delay(1000);
+	//delay(1000);
 }

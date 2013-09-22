@@ -15,7 +15,7 @@
 
 bool synced = false;
 
-int channel;
+//int channel;
 volatile int counter = 0;
 volatile int channels[5] = {100, 100, 100, 100, 100};
 
@@ -25,6 +25,7 @@ bool even_state = false;
 unsigned long odd_start;
 bool odd_state = false;
 
+int channel[6];
 
 void setup()
 {	
@@ -33,6 +34,7 @@ void setup()
 	Wire.begin(2);				// join i2c bus with address #2
 	Wire.onReceive(receiveEvent);
 	Wire.onRequest(requestEvent); // register event
+        Serial.begin(115200);
 	
 	//attachInterrupt(2, evenRead, CHANGE);
 	//attachInterrupt(3, oddRead, CHANGE);
@@ -40,28 +42,30 @@ void setup()
 
 void loop()
 {
-	/*
-	if (micros() - even_start > 7500 || micros() - odd_start > 7500) {
-		synced = true;
-		counter = 0;
+	if (Serial.available()) {
+		if (Serial.read() == 0x03) {
+			byte data[14];
+			while (Serial.available() < 15) {
+}
+			for (int i = 0; i < 14; i++) {
+				data[i] = Serial.read();
+			}
+			
+			for (int i = 0; i < 13; i += 2) {
+				int value = data[i] << 8 | data[i + 1];
+				//channel[i] = value >> 10;
+				value = value & 0b000001111111111;
+                                channel[i] = value;
+			}
+		}
 	}
-	*/
-	/*
-	Serial.print("Channel: ");
-	Serial.print(channel);
-	Serial.println();
-	*/
-	Serial.println("Running...");
-	delay(1000);
-	
 }
 
 // function that executes whenever data is requested by master
 // this function is registered as an event, see setup()
 void requestEvent()
 {
-	int val = 1000;
-	//Wire.write(val >> 8);
+	Wire.write(map(channel[3], 0, 1024, 0, 255));
 	//Wire.write(val & 0xFF);
 	//Wire.write(channels[channel] & 0xFF00);
 	//Wire.write(channels[channel] & 0xFF);
@@ -70,9 +74,8 @@ void requestEvent()
 
 void receiveEvent(int number) {
 	int x = Wire.read();
-	Serial.println(x);
 }
-
+/*
 void evenRead() {
 	//if (synced) {
 	channels[0] = 1000;
@@ -98,3 +101,4 @@ void oddRead() {
 	//}
 	odd_state = !odd_state;
 }
+*/
