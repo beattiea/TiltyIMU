@@ -8800,6 +8800,11 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <wire x1="231.14" y1="12.7" x2="251.46" y2="12.7" width="0.1524" layer="91"/>
 <label x="241.3" y="12.7" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="JP7" gate="G$1" pin="11"/>
+<wire x1="302.26" y1="78.74" x2="312.42" y2="78.74" width="0.1524" layer="91"/>
+<label x="304.8" y="78.74" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="5V_SCL" class="0">
 <segment>
@@ -8811,11 +8816,6 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="U1" gate="G$1" pin="16/A2"/>
 <wire x1="231.14" y1="10.16" x2="251.46" y2="10.16" width="0.1524" layer="91"/>
 <label x="241.3" y="10.16" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="JP7" gate="G$1" pin="11"/>
-<wire x1="302.26" y1="78.74" x2="312.42" y2="78.74" width="0.1524" layer="91"/>
-<label x="304.8" y="78.74" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="JP7" gate="G$1" pin="10"/>

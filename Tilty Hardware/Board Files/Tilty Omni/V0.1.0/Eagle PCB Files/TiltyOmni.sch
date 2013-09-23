@@ -7858,6 +7858,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <part name="P+9" library="supply1" deviceset="VCC" device=""/>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
 <part name="R9" library="resistor" deviceset="R-US_" device="R0603"/>
+<part name="P+5" library="supply1" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8023,6 +8024,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <instance part="P+9" gate="VCC" x="187.96" y="116.84"/>
 <instance part="GND5" gate="1" x="187.96" y="91.44"/>
 <instance part="R9" gate="G$1" x="137.16" y="152.4" rot="R90"/>
+<instance part="P+5" gate="1" x="231.14" y="76.2"/>
 </instances>
 <busses>
 </busses>
@@ -8829,6 +8831,11 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="JP7" gate="G$1" pin="20"/>
 <wire x1="302.26" y1="101.6" x2="312.42" y2="101.6" width="0.1524" layer="91"/>
 <label x="307.34" y="101.6" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="P+5" gate="1" pin="+5V"/>
+<pinref part="U1" gate="G$1" pin="VUSB"/>
+<wire x1="231.14" y1="73.66" x2="231.14" y2="68.58" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VCC" class="0">
