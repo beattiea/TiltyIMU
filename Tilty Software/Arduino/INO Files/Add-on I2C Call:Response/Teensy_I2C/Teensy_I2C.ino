@@ -4,7 +4,7 @@ void setup()
 {
     Serial.begin(115200);
     delay(1000);
-    Wire.begin(I2C_MASTER, 0x00, I2C_PINS_16_17, I2C_PULLUP_EXT, I2C_RATE_800);
+    Wire.begin(I2C_MASTER, 0x00, I2C_PINS_16_17, I2C_PULLUP_EXT, I2C_RATE_400);
     delay(1);
 }
 

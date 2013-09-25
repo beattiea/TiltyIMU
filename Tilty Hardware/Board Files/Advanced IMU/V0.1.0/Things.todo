@@ -1,0 +1,5 @@
+Change board-side compass header to a JST-SH?
+
+Add solder jumpers to allow for aux/main I2C selection
+
+Add solder jumpers to allow for sensor interrupt connections

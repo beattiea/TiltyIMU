@@ -1,0 +1,2 @@
+Test with 4.7K Ω I2C pullups
+Add solder jumper to disable I2C pullups
