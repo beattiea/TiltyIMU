@@ -1,6 +1,6 @@
 #include <SatelliteRX.h>
 
-SatelliteRX rx = SatelliteRX(Serial3);// Use Serial3 with RX pin 7. Must define a pin to be able to bind the receiver.
+SatelliteRX rx = SatelliteRX(Serial);// Use Serial3 with RX pin 7. Must define a pin to be able to bind the receiver.
 
 int aileron;
 

@@ -56,11 +56,11 @@ class SatelliteRX {
 		bool bind();
 		
 		bool readData();
-		bool readData(int* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
+		bool readData(int32_t* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
 		bool readData(int16_t* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
 		
 		void readRawData(); // NOT IMPLEMENTED, NON-RAW SHOULD SCALE TO +- A NUMBER
-		void readRawData(int* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
+		void readRawData(int32_t* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
 		void readRawData(int16_t* _data); // Takes a 7 variable array to store channel data	NOT IMPLEMENTED
 		
 		bool calibrate(); // NOT IMPLEMENTED
@@ -75,7 +75,7 @@ class SatelliteRX {
 		
 		
 	// Variables
-		uint16_t channel_data[7];
+		uint16_t channel_data[9];// Uses 7 for most satellite receivers, but some support more (will need testing)
 		
 		
 	private:
@@ -83,13 +83,13 @@ class SatelliteRX {
 		void updatePointers();
 		
 	// Variables
-		long lastRead = 0;
-		bool _synced = false;
+		long lastRead;
+		bool synced;
 		HardwareSerial& _serialPort; // Serial port to read data from
-		uint8_t rx_pin = 255;
+		uint8_t rx_pin;
 		
-		int16_t channel_max[7] = {0, 0, 0, 0, 0, 0, 0};
-		int16_t channel_min[7] = {1024, 1024, 1024, 1024, 1024, 1024, 1024};
+		int16_t channel_max[7];
+		int16_t channel_min[7];
 		
 		int* _aileron;
 		int* _elevator;
@@ -99,15 +99,15 @@ class SatelliteRX {
 		int* _aux2;
 		int* _aux3;
 		
-		bool _set_aileron = false;
-		bool _set_elevator = false;
-		bool _set_rudder = false;
-		bool _set_throttle = false;
-		bool _set_aux1 = false;
-		bool _set_aux2 = false;
-		bool _set_aux3 = false;
+		bool _set_aileron;
+		bool _set_elevator;
+		bool _set_rudder;
+		bool _set_throttle;
+		bool _set_aux1;
+		bool _set_aux2;
+		bool _set_aux3;
 		
-		uint8_t _buffer_index = 0;
+		uint8_t buffer_index;
 		byte _buffer[16]; // Buffer for serial data
 };
 

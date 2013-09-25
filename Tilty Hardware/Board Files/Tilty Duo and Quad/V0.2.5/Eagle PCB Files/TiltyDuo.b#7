@@ -195,7 +195,7 @@
 <text x="24.892" y="4.2545" size="1.778" layer="26" ratio="10" rot="MR0" align="center-left">TX</text>
 <text x="9.525" y="47.879" size="1.016" layer="25" ratio="12" rot="R90" align="center-left">3v3</text>
 <text x="19.12359375" y="46.051375" size="1.2065" layer="25" ratio="12" align="center">Duo/Quad</text>
-<text x="19.177" y="42.926" size="1.27" layer="25" ratio="12" align="center">V0.2.4</text>
+<text x="19.177" y="42.926" size="1.27" layer="25" ratio="12" align="center">V0.2.5</text>
 <text x="28.956" y="6.985" size="1.2192" layer="25" ratio="12" align="center-left">BT</text>
 <text x="4.445" y="10.16" size="1.016" layer="26" ratio="10" rot="MR75" align="center-left">GND</text>
 <wire x1="0" y1="0" x2="0" y2="50.8" width="0" layer="20"/>

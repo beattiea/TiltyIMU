@@ -1,9 +1,10 @@
 #include <Wire.h>
 
 volatile int x = 0;
+int y = 10;
 
 void setup() {
-  //TWBR = 200000L;
+  TWBR = 400000L;
   pinMode(4, OUTPUT);
   digitalWrite(4, HIGH);
   pinMode(9, OUTPUT);
@@ -21,7 +22,8 @@ void loop() {
 
 
 void requestEvent() {
-  Wire.write(x);
+  byte buff[3] = {byte(x), byte(y), 0x01};
+  Wire.write(buff, 3);
 }
 
 void receiveEvent(int howMany) {

@@ -1007,6 +1007,7 @@
 <text x="18.923" y="35.941" size="1.27" layer="26" ratio="15" rot="MR0" align="center">5v</text>
 <text x="9.525" y="47.879" size="1.016" layer="26" ratio="12" rot="MR90" align="center-left">3v3</text>
 <circle x="19.05" y="24.892" radius="0.0635" width="0.254" layer="25"/>
+<text x="19.304" y="20.066" size="1.143" layer="25" ratio="15">Mag</text>
 </plain>
 <libraries>
 <library name="SparkFun-Sensors">

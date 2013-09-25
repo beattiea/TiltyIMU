@@ -3,7 +3,28 @@
 // Initialize SatelliteRX with hardware serial port
 SatelliteRX::SatelliteRX(HardwareSerial& _serial) : _serialPort(_serial)
 {
+#ifdef CORE_TEENSY && __arm__
 	_serialPort = HardwareSerial();
+#else
+	_serialPort = Serial;
+#endif
+	
+	lastRead = 0;
+	synced = false;
+	rx_pin = 255;
+	
+	int16_t channel_max[7] = {0, 0, 0, 0, 0, 0, 0};
+	int16_t channel_min[7] = {1024, 1024, 1024, 1024, 1024, 1024, 1024};
+	
+	_set_aileron = false;
+	_set_elevator = false;
+ 	_set_rudder = false;
+	_set_throttle = false;
+	_set_aux1 = false;
+	_set_aux2 = false;
+	_set_aux3 = false;
+	
+	buffer_index = 0;
 }
 
 
@@ -63,23 +84,23 @@ bool SatelliteRX::init(bool _bind)
 
 bool SatelliteRX::readData()
 {	
-	while (_serialPort.available() && !_synced) // Synchronize with start of data packet
+	while (_serialPort.available() && !synced) // Synchronize with start of data packet
 	{
 		if (_serialPort.read() == 0x03)
 		{
-			_synced = true;
-			_buffer[_buffer_index] = 0x03;
-			_buffer_index++;
+			synced = true;
+			_buffer[buffer_index] = 0x03;
+			buffer_index++;
 		}
 	}
 	
-	while (_synced && _serialPort.available() && _buffer_index < 16) // Fill the buffer with data
+	while (synced && _serialPort.available() && buffer_index < 16) // Fill the buffer with data
 	{
-		_buffer[_buffer_index] = _serialPort.read();
-		_buffer_index++;
+		_buffer[buffer_index] = _serialPort.read();
+		buffer_index++;
 	}
 	
-	if (_buffer_index == 16) // If buffer is full, process the data
+	if (buffer_index == 16) // If buffer is full, process the data
 	{
 		#ifdef DEBUG_RX
 			for (int i = 0; i < 15; i += 2)
@@ -94,15 +115,15 @@ bool SatelliteRX::readData()
 		
 		for (int i = 2; i < 15; i += 2)
 		{
-			uint16_t temp = _buffer[i] << 8 | _buffer[i + 1];
+			uint32_t temp = _buffer[i] << 8 | _buffer[i + 1];
 			uint8_t _channel = temp >> 10;
-			channel_data[_channel] = temp & 0x3FF;
+			channel_data[_channel] = temp & 0x03FF;
 		}
 		
 		updatePointers();
 		
-		_buffer_index = 0;
-		_synced = false;
+		buffer_index = 0;
+		synced = false;
 		
 		return true;
 	}
@@ -154,7 +175,7 @@ bool SatelliteRX::bind()
 			digitalWrite(rx_pin, !digitalRead(rx_pin));
 			delayMicroseconds(120);
 			
-			digitalWrite(rx_pin, !digitalReadFast(rx_pin));
+			digitalWrite(rx_pin, !digitalRead(rx_pin));
 			delayMicroseconds(120); 
 		}
 	}
