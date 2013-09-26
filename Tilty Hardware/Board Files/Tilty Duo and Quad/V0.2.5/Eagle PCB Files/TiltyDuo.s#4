@@ -6238,14 +6238,14 @@ www.scr.com</description>
 <wire x1="-10.16" y1="1.27" x2="10.16" y2="1.27" width="0.254" layer="23"/>
 <wire x1="10.16" y1="1.27" x2="10.16" y2="-1.27" width="0.254" layer="23"/>
 <wire x1="10.16" y1="-1.27" x2="-10.16" y2="-1.27" width="0.254" layer="23"/>
-<pad name="P$1" x="-8.89" y="-0.127" drill="0.889"/>
-<pad name="P$2" x="-6.35" y="0.127" drill="0.889"/>
-<pad name="P$3" x="-3.81" y="-0.127" drill="0.889"/>
-<pad name="P$4" x="-1.27" y="0.127" drill="0.889"/>
-<pad name="P$5" x="1.27" y="-0.127" drill="0.889"/>
-<pad name="P$6" x="3.81" y="0" drill="0.889"/>
-<pad name="P$7" x="6.35" y="-0.127" drill="0.889"/>
-<pad name="P$8" x="8.89" y="0" drill="0.889"/>
+<pad name="P$1" x="-8.89" y="-0.127" drill="0.8"/>
+<pad name="P$2" x="-6.35" y="0.127" drill="0.8"/>
+<pad name="P$3" x="-3.81" y="-0.127" drill="0.8"/>
+<pad name="P$4" x="-1.27" y="0.127" drill="0.8"/>
+<pad name="P$5" x="1.27" y="-0.127" drill="0.8"/>
+<pad name="P$6" x="3.81" y="0" drill="0.8"/>
+<pad name="P$7" x="6.35" y="-0.127" drill="0.8"/>
+<pad name="P$8" x="8.89" y="0" drill="0.8"/>
 </package>
 </packages>
 <symbols>
@@ -6708,14 +6708,14 @@ We've spent an enormous amount of time creating and checking these footprints an
 <rectangle x1="-0.508" y1="-0.762" x2="0.508" y2="0.762" layer="51"/>
 </package>
 <package name="SJ_3">
-<wire x1="1.27" y1="-1.016" x2="-1.27" y2="-1.016" width="0.1524" layer="51"/>
-<wire x1="1.27" y1="1.016" x2="1.524" y2="0.762" width="0.1524" layer="51" curve="-90"/>
-<wire x1="-1.524" y1="0.762" x2="-1.27" y2="1.016" width="0.1524" layer="51" curve="-90"/>
-<wire x1="-1.524" y1="-0.762" x2="-1.27" y2="-1.016" width="0.1524" layer="51" curve="90"/>
-<wire x1="1.27" y1="-1.016" x2="1.524" y2="-0.762" width="0.1524" layer="51" curve="90"/>
-<wire x1="1.524" y1="-0.762" x2="1.524" y2="0.762" width="0.1524" layer="51"/>
-<wire x1="-1.524" y1="-0.762" x2="-1.524" y2="0.762" width="0.1524" layer="51"/>
-<wire x1="-1.27" y1="1.016" x2="1.27" y2="1.016" width="0.1524" layer="51"/>
+<wire x1="1.27" y1="-1.016" x2="-1.27" y2="-1.016" width="0.1524" layer="23"/>
+<wire x1="1.27" y1="1.016" x2="1.524" y2="0.762" width="0.1524" layer="23" curve="-90"/>
+<wire x1="-1.524" y1="0.762" x2="-1.27" y2="1.016" width="0.1524" layer="23" curve="-90"/>
+<wire x1="-1.524" y1="-0.762" x2="-1.27" y2="-1.016" width="0.1524" layer="23" curve="90"/>
+<wire x1="1.27" y1="-1.016" x2="1.524" y2="-0.762" width="0.1524" layer="23" curve="90"/>
+<wire x1="1.524" y1="-0.762" x2="1.524" y2="0.762" width="0.1524" layer="23"/>
+<wire x1="-1.524" y1="-0.762" x2="-1.524" y2="0.762" width="0.1524" layer="23"/>
+<wire x1="-1.27" y1="1.016" x2="1.27" y2="1.016" width="0.1524" layer="23"/>
 <smd name="1" x="-0.889" y="0" dx="0.635" dy="1.27" layer="1" cream="no"/>
 <smd name="2" x="0" y="0" dx="0.635" dy="1.27" layer="1" cream="no"/>
 <smd name="3" x="0.889" y="0" dx="0.635" dy="1.27" layer="1" cream="no"/>

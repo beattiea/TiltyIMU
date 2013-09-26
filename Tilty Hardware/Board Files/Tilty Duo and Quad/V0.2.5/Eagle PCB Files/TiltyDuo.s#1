@@ -9652,9 +9652,6 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="JP9" library="pinhead" deviceset="PINHD-1X4" device="1X04_NO_SS_LOCKING"/>
 <part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="68"/>
 <part name="SJ4" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE"/>
-<part name="D4" library="SparkFun-DiscreteSemi" deviceset="DIODE" device="SOT23">
-<attribute name="PART#" value="BAT54FSTR-ND"/>
-</part>
 <part name="D5" library="SparkFun-DiscreteSemi" deviceset="DIODE" device="SOT23">
 <attribute name="PART#" value="BZX84C3V3LT1GOSCT-ND"/>
 </part>
@@ -9819,9 +9816,6 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <instance part="R4" gate="G$1" x="114.3" y="43.18"/>
 <instance part="SJ4" gate="1" x="107.95" y="68.58" smashed="yes">
 <attribute name="NAME" x="105.41" y="71.12" size="1.778" layer="95"/>
-</instance>
-<instance part="D4" gate="G$1" x="218.44" y="60.96" rot="R180">
-<attribute name="PART#" x="218.44" y="60.96" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="D5" gate="G$1" x="251.46" y="66.04" smashed="yes" rot="R90">
 <attribute name="NAME" x="256.54" y="68.0974" size="1.778" layer="95" rot="R180"/>
@@ -10385,10 +10379,10 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <label x="246.38" y="121.92" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="D4" gate="G$1" pin="A"/>
-<wire x1="220.98" y1="60.96" x2="241.3" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="203.2" y1="60.96" x2="241.3" y2="60.96" width="0.1524" layer="91"/>
 <label x="226.06" y="60.96" size="1.778" layer="95"/>
 <pinref part="JP4" gate="G$1" pin="1"/>
+<pinref part="U1" gate="G$1" pin="VIN"/>
 </segment>
 </net>
 <net name="N$7" class="0">
@@ -10755,13 +10749,6 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <pinref part="U1" gate="G$1" pin="10"/>
 <wire x1="149.86" y1="33.02" x2="172.72" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="JP2" gate="G$1" pin="5"/>
-</segment>
-</net>
-<net name="N$15" class="0">
-<segment>
-<pinref part="D4" gate="G$1" pin="C"/>
-<pinref part="U1" gate="G$1" pin="VIN"/>
-<wire x1="215.9" y1="60.96" x2="203.2" y2="60.96" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$17" class="3">
