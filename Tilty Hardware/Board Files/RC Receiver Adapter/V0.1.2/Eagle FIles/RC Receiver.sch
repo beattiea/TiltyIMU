@@ -7717,7 +7717,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 </part>
 <part name="+3V1" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
-<part name="U3" library="My Parts" deviceset="AP7313" device="SOT23R"/>
+<part name="U3" library="My Parts" deviceset="AP7313" device="SOT23R">
+<attribute name="PART#" value="AP7313-33SRG-7"/>
+</part>
 <part name="P+7" library="supply1" deviceset="+5V" device=""/>
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
 <part name="C4" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
@@ -7797,7 +7799,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 </instance>
 <instance part="+3V1" gate="G$1" x="175.26" y="129.54"/>
 <instance part="GND8" gate="1" x="162.56" y="114.3"/>
-<instance part="U3" gate="G$1" x="215.9" y="101.6"/>
+<instance part="U3" gate="G$1" x="215.9" y="101.6">
+<attribute name="PART#" x="215.9" y="101.6" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="P+7" gate="1" x="198.12" y="106.68"/>
 <instance part="+3V2" gate="G$1" x="233.68" y="106.68"/>
 <instance part="C4" gate="G$1" x="233.68" y="99.06"/>

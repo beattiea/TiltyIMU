@@ -5787,10 +5787,10 @@ type 0309, grid 2.5 mm</description>
 <smd name="P$1" x="-0.95" y="-1.15" dx="0.65" dy="0.95" layer="1"/>
 <smd name="P$2" x="0.95" y="-1.15" dx="0.65" dy="0.95" layer="1"/>
 <smd name="P$3" x="0" y="1.15" dx="0.65" dy="0.95" layer="1"/>
-<wire x1="-1.5" y1="-1.25" x2="-1.5" y2="1.25" width="0.127" layer="21"/>
-<wire x1="-1.5" y1="1.25" x2="1.5" y2="1.25" width="0.127" layer="21"/>
-<wire x1="1.5" y1="1.25" x2="1.5" y2="-1.25" width="0.127" layer="21"/>
-<wire x1="1.5" y1="-1.25" x2="-1.5" y2="-1.25" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="-1.25" x2="-1.5" y2="1.25" width="0.127" layer="23"/>
+<wire x1="-1.5" y1="1.25" x2="1.5" y2="1.25" width="0.127" layer="23"/>
+<wire x1="1.5" y1="1.25" x2="1.5" y2="-1.25" width="0.127" layer="23"/>
+<wire x1="1.5" y1="-1.25" x2="-1.5" y2="-1.25" width="0.127" layer="23"/>
 <text x="-2.75" y="1.75" size="1.27" layer="25">&gt;NAME</text>
 </package>
 </packages>

@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.0025" altunitdist="inch" altunit="inch"/>
+<grid distance="500" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.0025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -918,6 +918,9 @@
 <text x="30.988" y="25.4" size="1.27" layer="26" ratio="15" rot="MR0">Pins</text>
 <text x="6.096" y="3.556" size="1.778" layer="25" ratio="15">PWR</text>
 <text x="0.635" y="34.544" size="1.27" layer="25" ratio="15">Reset</text>
+<text x="29.21" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">5v</text>
+<text x="34.036" y="44.196" size="1.27" layer="26" ratio="15" rot="MR30">GND</text>
+<text x="11.938" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">3v3</text>
 </plain>
 <libraries>
 <library name="pinhead">

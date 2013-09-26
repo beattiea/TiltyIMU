@@ -909,7 +909,7 @@
 <text x="32.385" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">A3</text>
 <text x="29.845" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">RX</text>
 <text x="27.305" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">TX</text>
-<text x="9.017" y="29.083" size="1.778" layer="25" ratio="12">ICSP</text>
+<text x="9.0805" y="28.956" size="1.778" layer="25" ratio="12">ICSP</text>
 <wire x1="24.638" y1="11.684" x2="24.638" y2="24.892" width="0.635" layer="26"/>
 <wire x1="24.638" y1="24.892" x2="33.274" y2="24.892" width="0.635" layer="26"/>
 <wire x1="33.274" y1="24.892" x2="33.274" y2="11.684" width="0.635" layer="26"/>
@@ -3332,8 +3332,8 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,e9e02b1826d6e42e"/>
 <approved hash="19,1,e560279826d6e42e"/>
 <approved hash="19,1,ef3030c835d7ea2f"/>
-<approved hash="19,1,c5e4bb1cb6c0c838"/>
 <approved hash="19,1,c5d0bb28b633c8cb"/>
+<approved hash="19,1,c5e4bb1cb6c0c838"/>
 </errors>
 </board>
 </drawing>

@@ -909,7 +909,7 @@
 <text x="32.385" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">A3</text>
 <text x="29.845" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">RX</text>
 <text x="27.305" y="24.638" size="1.778" layer="26" ratio="12" rot="MR270">TX</text>
-<text x="9.144" y="28.956" size="1.778" layer="25" ratio="12">ISP</text>
+<text x="9.017" y="29.083" size="1.778" layer="25" ratio="12">ICSP</text>
 <wire x1="24.638" y1="11.684" x2="24.638" y2="24.892" width="0.635" layer="26"/>
 <wire x1="24.638" y1="24.892" x2="33.274" y2="24.892" width="0.635" layer="26"/>
 <wire x1="33.274" y1="24.892" x2="33.274" y2="11.684" width="0.635" layer="26"/>
@@ -2755,10 +2755,7 @@ Please make sure your boards conform to these design rules.</description>
 <via x="15.24" y="18.034" extent="1-16" drill="0.3302"/>
 <wire x1="8.167" y1="12.739" x2="9.906" y2="14.478" width="0.508" layer="1"/>
 <via x="7.62" y="16.764" extent="1-16" drill="0.508"/>
-<via x="13.97" y="30.226" extent="1-16" drill="0.3302"/>
-<wire x1="13.97" y1="30.226" x2="13.97" y2="31.2665" width="0.254" layer="1"/>
-<wire x1="13.97" y1="31.2665" x2="14.136" y2="31.4325" width="0.254" layer="1"/>
-<wire x1="9.144" y1="30.226" x2="13.97" y2="30.226" width="0.254" layer="16"/>
+<via x="14.9225" y="29.337" extent="1-16" drill="0.3302"/>
 <polygon width="0.254" layer="16">
 <vertex x="13.97" y="11.938"/>
 <vertex x="4.826" y="11.938"/>
@@ -2792,8 +2789,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="8.382" y1="6.946" x2="8.421" y2="6.985" width="0.508" layer="1"/>
 <wire x1="5.207" y1="28.067" x2="5.842" y2="27.432" width="0.254" layer="1"/>
 <wire x1="5.842" y1="27.432" x2="8.636" y2="27.432" width="0.254" layer="1"/>
-<wire x1="9.144" y1="30.226" x2="8.636" y2="29.718" width="0.254" layer="16"/>
-<wire x1="8.636" y1="29.718" x2="8.636" y2="27.432" width="0.254" layer="16"/>
 <wire x1="15.24" y1="16.416" x2="15.24" y2="18.034" width="0.2032" layer="1"/>
 <wire x1="20.25" y1="30.677" x2="20.25" y2="42.234" width="0.254" layer="1"/>
 <wire x1="20.25" y1="42.234" x2="19.304" y2="43.18" width="0.254" layer="1"/>
@@ -2804,6 +2799,10 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="8.978" y1="1.778" x2="8.724" y2="2.032" width="0.508" layer="1"/>
 <wire x1="8.724" y1="2.032" x2="8.724" y2="6.682" width="0.508" layer="1"/>
 <wire x1="8.724" y1="6.682" x2="8.421" y2="6.985" width="0.508" layer="1"/>
+<wire x1="14.136" y1="31.4325" x2="14.136" y2="30.1235" width="0.254" layer="1"/>
+<wire x1="14.136" y1="30.1235" x2="14.9225" y2="29.337" width="0.254" layer="1"/>
+<wire x1="14.9225" y1="29.337" x2="10.541" y2="29.337" width="0.254" layer="16"/>
+<wire x1="10.541" y1="29.337" x2="8.636" y2="27.432" width="0.254" layer="16"/>
 </signal>
 <signal name="+24V">
 <contactref element="C7" pad="1"/>

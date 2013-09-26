@@ -921,8 +921,8 @@
 <text x="29.21" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">5v</text>
 <text x="34.036" y="44.196" size="1.27" layer="26" ratio="15" rot="MR30">GND</text>
 <text x="11.938" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">3v3</text>
-<text x="25.527" y="24.384" size="1.778" layer="25" ratio="12" rot="R270">TX</text>
-<text x="28.067" y="24.384" size="1.778" layer="25" ratio="12" rot="R270">RX</text>
+<text x="25.527" y="24.638" size="1.778" layer="25" ratio="12" rot="R270">TX</text>
+<text x="28.067" y="24.638" size="1.778" layer="25" ratio="12" rot="R270">RX</text>
 </plain>
 <libraries>
 <library name="pinhead">

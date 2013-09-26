@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="500" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.0025" altunitdist="inch" altunit="inch"/>
+<grid distance="0.01" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.0025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -2950,13 +2950,13 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U1" pad="27"/>
 <contactref element="R2" pad="1"/>
 <via x="34.036" y="24.13" extent="1-16" drill="0.3302"/>
-<wire x1="35.56" y1="29.083" x2="34.417" y2="29.083" width="0.2032" layer="16"/>
-<wire x1="34.417" y1="29.083" x2="34.036" y2="28.702" width="0.2032" layer="16"/>
-<wire x1="34.036" y1="28.702" x2="34.036" y2="24.13" width="0.2032" layer="16"/>
-<wire x1="34.036" y1="24.13" x2="31.789" y2="24.13" width="0.2032" layer="1"/>
 <wire x1="31.789" y1="24.13" x2="31.75" y2="24.091" width="0.2032" layer="1"/>
-<wire x1="23.3426" y1="24.2" x2="31.641" y2="24.2" width="0.2032" layer="1"/>
 <wire x1="31.641" y1="24.2" x2="31.75" y2="24.091" width="0.2032" layer="1"/>
+<wire x1="35.56" y1="29.083" x2="34.417" y2="29.083" width="0.1524" layer="16"/>
+<wire x1="34.417" y1="29.083" x2="34.036" y2="28.702" width="0.1524" layer="16"/>
+<wire x1="34.036" y1="28.702" x2="34.036" y2="24.13" width="0.1524" layer="16"/>
+<wire x1="34.036" y1="24.13" x2="31.789" y2="24.13" width="0.1524" layer="1"/>
+<wire x1="23.3426" y1="24.2" x2="31.641" y2="24.2" width="0.1524" layer="1"/>
 </signal>
 <signal name="SCL">
 <contactref element="JP3" pad="7"/>

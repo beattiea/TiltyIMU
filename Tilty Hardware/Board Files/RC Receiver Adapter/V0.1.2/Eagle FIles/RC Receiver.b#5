@@ -2962,14 +2962,11 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="JP3" pad="7"/>
 <contactref element="U1" pad="28"/>
 <contactref element="R3" pad="1"/>
-<wire x1="35.56" y1="26.543" x2="35.56" y2="25.654" width="0.2032" layer="1"/>
-<wire x1="35.56" y1="25.654" x2="35.052" y2="25.146" width="0.2032" layer="1"/>
-<wire x1="35.052" y1="25.146" x2="32.043" y2="25.146" width="0.2032" layer="1"/>
 <wire x1="32.043" y1="25.146" x2="31.75" y2="25.439" width="0.2032" layer="1"/>
-<wire x1="23.3426" y1="25" x2="30.969" y2="25" width="0.2032" layer="1"/>
-<wire x1="30.969" y1="25" x2="31.115" y2="25.146" width="0.2032" layer="1"/>
-<wire x1="31.115" y1="25.146" x2="31.457" y2="25.146" width="0.2032" layer="1"/>
-<wire x1="31.457" y1="25.146" x2="31.75" y2="25.439" width="0.2032" layer="1"/>
+<wire x1="32.043" y1="25.146" x2="23.4886" y2="25.146" width="0.1524" layer="1"/>
+<wire x1="23.4886" y1="25.146" x2="23.3426" y2="25" width="0.1524" layer="1"/>
+<wire x1="32.043" y1="25.146" x2="34.163" y2="25.146" width="0.1524" layer="1"/>
+<wire x1="34.163" y1="25.146" x2="35.56" y2="26.543" width="0.1524" layer="1"/>
 </signal>
 <signal name="SIGNAL_1">
 <contactref element="JP7" pad="1"/>

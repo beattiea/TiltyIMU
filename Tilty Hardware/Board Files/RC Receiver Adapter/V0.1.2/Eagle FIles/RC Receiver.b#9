@@ -917,6 +917,7 @@
 <text x="31.496" y="26.924" size="1.27" layer="26" ratio="15" rot="MR0">Extra</text>
 <text x="30.988" y="25.4" size="1.27" layer="26" ratio="15" rot="MR0">Pins</text>
 <text x="6.096" y="3.556" size="1.778" layer="25" ratio="15">PWR</text>
+<text x="0.635" y="34.544" size="1.27" layer="25" ratio="15">Reset</text>
 </plain>
 <libraries>
 <library name="pinhead">
@@ -2246,10 +2247,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <smd name="P$1" x="-0.95" y="-1.15" dx="0.65" dy="0.95" layer="1"/>
 <smd name="P$2" x="0.95" y="-1.15" dx="0.65" dy="0.95" layer="1"/>
 <smd name="P$3" x="0" y="1.15" dx="0.65" dy="0.95" layer="1"/>
-<wire x1="-1.5" y1="-1.25" x2="-1.5" y2="1.25" width="0.127" layer="21"/>
-<wire x1="-1.5" y1="1.25" x2="1.5" y2="1.25" width="0.127" layer="21"/>
-<wire x1="1.5" y1="1.25" x2="1.5" y2="-1.25" width="0.127" layer="21"/>
-<wire x1="1.5" y1="-1.25" x2="-1.5" y2="-1.25" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="-1.25" x2="-1.5" y2="1.25" width="0.127" layer="23"/>
+<wire x1="-1.5" y1="1.25" x2="1.5" y2="1.25" width="0.127" layer="23"/>
+<wire x1="1.5" y1="1.25" x2="1.5" y2="-1.25" width="0.127" layer="23"/>
+<wire x1="1.5" y1="-1.25" x2="-1.5" y2="-1.25" width="0.127" layer="23"/>
 <text x="-2.75" y="1.75" size="1.27" layer="25">&gt;NAME</text>
 </package>
 </packages>
