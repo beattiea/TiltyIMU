@@ -224,6 +224,16 @@
 <wire x1="6.55" y1="3.8" x2="-6.55" y2="3.8" width="0.254" layer="21"/>
 <text x="-3.3" y="-7" size="2.54" layer="21">USB</text>
 </package>
+<package name="SOT23">
+<smd name="P$1" x="-0.95" y="-1.15" dx="0.65" dy="0.95" layer="1"/>
+<smd name="P$2" x="0.95" y="-1.15" dx="0.65" dy="0.95" layer="1"/>
+<smd name="P$3" x="0" y="1.15" dx="0.65" dy="0.95" layer="1"/>
+<wire x1="-1.5" y1="-1.25" x2="-1.5" y2="1.25" width="0.127" layer="23"/>
+<wire x1="-1.5" y1="1.25" x2="1.5" y2="1.25" width="0.127" layer="23"/>
+<wire x1="1.5" y1="1.25" x2="1.5" y2="-1.25" width="0.127" layer="23"/>
+<wire x1="1.5" y1="-1.25" x2="-1.5" y2="-1.25" width="0.127" layer="23"/>
+<text x="-2.75" y="1.75" size="1.27" layer="25">&gt;NAME</text>
+</package>
 </packages>
 <symbols>
 <symbol name="8-PIN_HEADER">
@@ -256,6 +266,16 @@
 <text x="-1.27" y="-3.556" size="1.778" layer="94">Gnd</text>
 <text x="-1.27" y="1.524" size="1.778" layer="94">D-</text>
 <text x="-1.27" y="4.318" size="1.778" layer="94">D+</text>
+</symbol>
+<symbol name="AP7313">
+<pin name="VIN" x="-15.24" y="0" visible="pin" length="middle"/>
+<pin name="VOUT" x="15.24" y="0" visible="pin" length="middle" rot="R180"/>
+<pin name="GND" x="0" y="-12.7" visible="pin" length="middle" rot="R90"/>
+<text x="-5.08" y="5.08" size="2.54" layer="95">&gt;NAME</text>
+<wire x1="-10.16" y1="2.54" x2="10.16" y2="2.54" width="0.254" layer="94"/>
+<wire x1="10.16" y1="2.54" x2="10.16" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-7.62" x2="-10.16" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="-7.62" x2="-10.16" y2="2.54" width="0.254" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -294,6 +314,34 @@
 <connect gate="G$1" pin="P$1" pad="P$5"/>
 <connect gate="G$1" pin="P$2" pad="P$6"/>
 <connect gate="G$1" pin="VBUS" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="AP7313">
+<description>3.3v LDO Voltage Regulator</description>
+<gates>
+<gate name="G$1" symbol="AP7313" x="0" y="2.54"/>
+</gates>
+<devices>
+<device name="" package="SOT23">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$3"/>
+<connect gate="G$1" pin="VIN" pad="P$1"/>
+<connect gate="G$1" pin="VOUT" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="SOT23R" package="SOT23">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$1"/>
+<connect gate="G$1" pin="VIN" pad="P$3"/>
+<connect gate="G$1" pin="VOUT" pad="P$2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -6123,6 +6171,56 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 </deviceset>
 </devicesets>
 </library>
+<library name="on-semiconductor">
+<description>&lt;b&gt;ON Semiconductor&lt;/b&gt;&lt;p&gt;
+&lt;a href="http://onsemi.com"&gt; Home page &lt;/a&gt;&lt;p&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="TO263">
+<smd name="P$1" x="0" y="2.794" dx="5.7912" dy="6.1976" layer="1"/>
+<smd name="P$2" x="-2.286" y="-4.3942" dx="1.6002" dy="2.9972" layer="1"/>
+<smd name="P$3" x="2.286" y="-4.3942" dx="1.6002" dy="2.9972" layer="1"/>
+<wire x1="-3.175" y1="4.953" x2="-3.175" y2="-4.953" width="0.127" layer="51"/>
+<wire x1="-3.175" y1="-4.953" x2="3.175" y2="-4.953" width="0.127" layer="51"/>
+<wire x1="3.175" y1="-4.953" x2="3.175" y2="4.953" width="0.127" layer="51"/>
+<wire x1="3.175" y1="4.953" x2="-3.175" y2="4.953" width="0.127" layer="51"/>
+<text x="-2.54" y="6.35" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.175" y="-7.62" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="LM2931">
+<wire x1="-10.16" y1="-5.08" x2="-10.16" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="5.08" x2="10.16" y2="5.08" width="0.254" layer="94"/>
+<wire x1="10.16" y1="5.08" x2="10.16" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-5.08" x2="-10.16" y2="-5.08" width="0.254" layer="94"/>
+<pin name="VIN" x="-15.24" y="2.54" visible="pin" length="middle"/>
+<pin name="GND" x="0" y="-10.16" visible="pin" length="middle" rot="R90"/>
+<pin name="5V" x="15.24" y="2.54" visible="pin" length="middle" rot="R180"/>
+<text x="-5.08" y="6.35" size="2.54" layer="95">&gt;NAME</text>
+<text x="2.54" y="-10.16" size="2.54" layer="96">&gt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="LM2931">
+<gates>
+<gate name="G$1" symbol="LM2931" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TO263">
+<connects>
+<connect gate="G$1" pin="5V" pad="P$3"/>
+<connect gate="G$1" pin="GND" pad="P$1"/>
+<connect gate="G$1" pin="VIN" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -6167,6 +6265,15 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
 <part name="C5" library="resistor" deviceset="C-US" device="C0603" value="4.7uF"/>
+<part name="U2" library="My Parts" deviceset="AP7313" device="SOT23R"/>
+<part name="C7" library="resistor" deviceset="C-US" device="C0603" value="1uF"/>
+<part name="U3" library="on-semiconductor" deviceset="LM2931" device=""/>
+<part name="C8" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
+<part name="C9" library="resistor" deviceset="C-US" device="C0603" value="4.7uF"/>
+<part name="+3V3" library="supply1" deviceset="+3V3" device=""/>
+<part name="P+4" library="supply1" deviceset="VCC" device=""/>
+<part name="P+5" library="supply1" deviceset="+5V" device=""/>
+<part name="P+6" library="supply1" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6232,6 +6339,17 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <instance part="GND4" gate="1" x="81.28" y="12.7"/>
 <instance part="+3V2" gate="G$1" x="111.76" y="91.44"/>
 <instance part="C5" gate="G$1" x="83.82" y="48.26"/>
+<instance part="U2" gate="G$1" x="177.8" y="91.44"/>
+<instance part="C7" gate="G$1" x="193.04" y="88.9"/>
+<instance part="U3" gate="G$1" x="177.8" y="114.3" smashed="yes">
+<attribute name="NAME" x="172.72" y="120.65" size="2.54" layer="95"/>
+</instance>
+<instance part="C8" gate="G$1" x="160.02" y="114.3"/>
+<instance part="C9" gate="G$1" x="193.04" y="114.3"/>
+<instance part="+3V3" gate="G$1" x="195.58" y="99.06"/>
+<instance part="P+4" gate="VCC" x="157.48" y="121.92"/>
+<instance part="P+5" gate="1" x="160.02" y="96.52"/>
+<instance part="P+6" gate="1" x="195.58" y="124.46"/>
 </instances>
 <busses>
 </busses>
@@ -6519,6 +6637,14 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <wire x1="116.84" y1="86.36" x2="111.76" y2="86.36" width="0.1524" layer="91"/>
 <junction x="111.76" y="86.36"/>
 </segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="VOUT"/>
+<pinref part="C7" gate="G$1" pin="1"/>
+<pinref part="+3V3" gate="G$1" pin="+3V3"/>
+<wire x1="193.04" y1="91.44" x2="195.58" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="195.58" y1="91.44" x2="195.58" y2="96.52" width="0.1524" layer="91"/>
+<junction x="193.04" y="91.44"/>
+</segment>
 </net>
 <net name="+5V" class="0">
 <segment>
@@ -6535,6 +6661,20 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <pinref part="C5" gate="G$1" pin="1"/>
 <junction x="83.82" y="50.8"/>
 </segment>
+<segment>
+<pinref part="U3" gate="G$1" pin="5V"/>
+<pinref part="C9" gate="G$1" pin="1"/>
+<pinref part="P+6" gate="1" pin="+5V"/>
+<wire x1="193.04" y1="116.84" x2="195.58" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="195.58" y1="116.84" x2="195.58" y2="121.92" width="0.1524" layer="91"/>
+<junction x="193.04" y="116.84"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="VIN"/>
+<wire x1="160.02" y1="91.44" x2="162.56" y2="91.44" width="0.1524" layer="91"/>
+<pinref part="P+5" gate="1" pin="+5V"/>
+<wire x1="160.02" y1="91.44" x2="160.02" y2="93.98" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="VCC" class="0">
 <segment>
@@ -6542,6 +6682,15 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <wire x1="5.08" y1="60.96" x2="30.48" y2="60.96" width="0.1524" layer="91"/>
 <pinref part="P+2" gate="VCC" pin="VCC"/>
 <wire x1="30.48" y1="60.96" x2="30.48" y2="63.5" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C8" gate="G$1" pin="1"/>
+<pinref part="U3" gate="G$1" pin="VIN"/>
+<wire x1="160.02" y1="116.84" x2="162.56" y2="116.84" width="0.1524" layer="91"/>
+<pinref part="P+4" gate="VCC" pin="VCC"/>
+<wire x1="160.02" y1="116.84" x2="157.48" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="157.48" y1="116.84" x2="157.48" y2="119.38" width="0.1524" layer="91"/>
+<junction x="160.02" y="116.84"/>
 </segment>
 </net>
 <net name="GO0" class="0">
@@ -6728,6 +6877,26 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <pinref part="U1" gate="G$1" pin="RES"/>
 <wire x1="124.46" y1="73.66" x2="124.46" y2="81.28" width="0.1524" layer="91"/>
 <label x="124.46" y="76.2" size="1.778" layer="95" rot="R90"/>
+</segment>
+</net>
+<net name="N$15" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="GND"/>
+<pinref part="C7" gate="G$1" pin="2"/>
+<wire x1="177.8" y1="78.74" x2="193.04" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="193.04" y1="78.74" x2="193.04" y2="83.82" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$16" class="0">
+<segment>
+<pinref part="U3" gate="G$1" pin="GND"/>
+<pinref part="C8" gate="G$1" pin="2"/>
+<wire x1="177.8" y1="104.14" x2="160.02" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="104.14" x2="160.02" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="C9" gate="G$1" pin="2"/>
+<wire x1="177.8" y1="104.14" x2="193.04" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="193.04" y1="104.14" x2="193.04" y2="109.22" width="0.1524" layer="91"/>
+<junction x="177.8" y="104.14"/>
 </segment>
 </net>
 </nets>

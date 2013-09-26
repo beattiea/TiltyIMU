@@ -888,7 +888,7 @@
 <text x="13.462" y="42.418" size="1.524" layer="25" ratio="12">USB Host</text>
 <text x="16.764" y="40.64" size="1.27" layer="25" ratio="12">v0.1.0</text>
 <text x="5.588" y="7.366" size="1.524" layer="25" ratio="15" rot="R90">Outputs</text>
-<text x="32.004" y="15.494" size="1.524" layer="25" ratio="15" rot="R270">Inputs</text>
+<text x="32.004" y="18.796" size="1.524" layer="25" ratio="15" rot="R270">Inputs</text>
 <text x="9.398" y="19.558" size="1.524" layer="25" ratio="15">0</text>
 <text x="9.398" y="17.018" size="1.524" layer="25" ratio="15">1</text>
 <text x="9.398" y="14.478" size="1.524" layer="25" ratio="15">2</text>
@@ -905,6 +905,7 @@
 <text x="27.686" y="14.478" size="1.524" layer="25" ratio="15">2</text>
 <text x="27.686" y="17.018" size="1.524" layer="25" ratio="15">1</text>
 <text x="27.686" y="19.558" size="1.524" layer="25" ratio="15">0</text>
+<text x="32.766" y="5.334" size="1.524" layer="25" ratio="15">PWR</text>
 </plain>
 <libraries>
 <library name="My Parts">
@@ -2234,6 +2235,29 @@ We've spent an enormous amount of time creating and checking these footprints an
 </package>
 </packages>
 </library>
+<library name="SparkFun-LED">
+<description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
+In this library you'll find discrete LEDs for illumination or indication, but no displays.&lt;br&gt;&lt;br&gt;
+We've spent an enormous amount of time creating and checking these footprints and parts, but it is the end user's responsibility to ensure correctness and suitablity for a given componet or application. If you enjoy using this library, please buy one of our products at www.sparkfun.com.
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Licensing:&lt;/b&gt; CC v3.0 Share-Alike You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
+<packages>
+<package name="LED-0805">
+<smd name="1" x="-0.85" y="0" dx="1.3" dy="1.5" layer="1"/>
+<smd name="2" x="0.85" y="0" dx="1.3" dy="1.5" layer="1"/>
+<text x="-0.762" y="1.651" size="1.27" layer="25">&gt;NAME</text>
+<text x="-0.762" y="-2.921" size="1.27" layer="27">&gt;VALUE</text>
+<wire x1="-0.365" y1="1" x2="-1.765" y2="1" width="0.2032" layer="23"/>
+<wire x1="-1.765" y1="1" x2="-1.765" y2="-1" width="0.2032" layer="23"/>
+<wire x1="-1.765" y1="-1" x2="-0.365" y2="-1" width="0.2032" layer="23"/>
+<wire x1="0.365" y1="1" x2="1.765" y2="1" width="0.2032" layer="23"/>
+<wire x1="1.765" y1="1" x2="1.765" y2="-1" width="0.2032" layer="23"/>
+<wire x1="1.765" y1="-1" x2="0.365" y2="-1" width="0.2032" layer="23"/>
+<wire x1="2.205" y1="0" x2="2.205" y2="-0.7" width="0.2032" layer="21"/>
+<wire x1="2.205" y1="0.7" x2="2.205" y2="0" width="0.2032" layer="21"/>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -2477,6 +2501,12 @@ Please make sure your boards conform to these design rules.</description>
 <element name="JP6" library="SparkFun-Connectors" package="1X08" value="" x="7.62" y="20.32" smashed="yes" rot="R270">
 <attribute name="VALUE" x="4.445" y="21.59" size="1.27" layer="27" rot="R270"/>
 </element>
+<element name="D1" library="SparkFun-LED" package="LED-0805" value="" x="34.544" y="8.382" smashed="yes">
+<attribute name="VALUE" x="33.782" y="5.461" size="1.27" layer="27"/>
+</element>
+<element name="R4" library="resistor" package="R0603" value="" x="26.67" y="5.588" smashed="yes" rot="R90">
+<attribute name="VALUE" x="28.702" y="4.699" size="1.27" layer="27" rot="R90"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
@@ -2591,6 +2621,9 @@ Please make sure your boards conform to these design rules.</description>
 <vertex x="21.59" y="27.686"/>
 <vertex x="6.35" y="27.686"/>
 </polygon>
+<contactref element="D1" pad="2"/>
+<wire x1="35.687" y1="11.303" x2="35.687" y2="8.675" width="0.2032" layer="1"/>
+<wire x1="35.687" y1="8.675" x2="35.394" y2="8.382" width="0.2032" layer="1"/>
 </signal>
 <signal name="MISO">
 <contactref element="JP2" pad="P$6"/>
@@ -2762,6 +2795,11 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="19.304" y1="28.956" x2="18.034" y2="30.226" width="0.2032" layer="16"/>
 <via x="18.034" y="30.226" extent="1-16" drill="0.3302"/>
 <wire x1="18.034" y1="30.226" x2="18.034" y2="31.63" width="0.2032" layer="1"/>
+<contactref element="R4" pad="1"/>
+<wire x1="15.55" y1="12.108" x2="15.55" y2="5.786" width="0.2032" layer="1"/>
+<wire x1="15.55" y1="5.786" x2="16.256" y2="5.08" width="0.2032" layer="1"/>
+<wire x1="16.256" y1="5.08" x2="26.328" y2="5.08" width="0.2032" layer="1"/>
+<wire x1="26.328" y1="5.08" x2="26.67" y2="4.738" width="0.2032" layer="1"/>
 </signal>
 <signal name="VCC">
 <contactref element="JP2" pad="P$7"/>
@@ -3016,13 +3054,23 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="RST">
 <contactref element="U1" pad="12"/>
 </signal>
+<signal name="N$9">
+<contactref element="D1" pad="1"/>
+<contactref element="R4" pad="2"/>
+<wire x1="26.67" y1="6.438" x2="26.836" y2="6.438" width="0.2032" layer="1"/>
+<wire x1="26.836" y1="6.438" x2="26.924" y2="6.35" width="0.2032" layer="1"/>
+<wire x1="26.924" y1="6.35" x2="32.766" y2="6.35" width="0.2032" layer="1"/>
+<wire x1="32.766" y1="6.35" x2="33.274" y2="6.858" width="0.2032" layer="1"/>
+<wire x1="33.274" y1="6.858" x2="33.274" y2="7.962" width="0.2032" layer="1"/>
+<wire x1="33.274" y1="7.962" x2="33.694" y2="8.382" width="0.2032" layer="1"/>
+</signal>
 </signals>
 <errors>
-<approved hash="19,1,f717c9efd6d3e82b"/>
 <approved hash="19,1,ecd7d22fd123efdb"/>
+<approved hash="19,1,f717c9efd6d3e82b"/>
 <approved hash="19,1,0c6bff93fbd5082d"/>
-<approved hash="19,1,50dfc227c12b53d3"/>
 <approved hash="19,1,4b1fd9e7c6db5423"/>
+<approved hash="19,1,50dfc227c12b53d3"/>
 </errors>
 </board>
 </drawing>
