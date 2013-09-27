@@ -3910,12 +3910,22 @@ type 0309, grid 2.5 mm</description>
 <wire x1="5.08" y1="5.08" x2="22.86" y2="5.08" width="0.1524" layer="91"/>
 <label x="10.16" y="5.08" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="DIO1"/>
+<wire x1="119.38" y1="73.66" x2="132.08" y2="73.66" width="0.1524" layer="91"/>
+<label x="121.92" y="73.66" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="3V_SDA" class="0">
 <segment>
 <pinref part="JP4" gate="G$1" pin="8"/>
 <wire x1="5.08" y1="2.54" x2="22.86" y2="2.54" width="0.1524" layer="91"/>
 <label x="10.16" y="2.54" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="DIO0"/>
+<wire x1="119.38" y1="76.2" x2="132.08" y2="76.2" width="0.1524" layer="91"/>
+<label x="121.92" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+3V3" class="0">

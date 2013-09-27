@@ -2341,9 +2341,13 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="3V_SCL">
 <contactref element="JP4" pad="P$7"/>
+<contactref element="U$1" pad="19"/>
+<wire x1="30.2278" y1="24.35" x2="30.353" y2="34.163" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="3V_SDA">
 <contactref element="JP4" pad="P$8"/>
+<contactref element="U$1" pad="20"/>
+<wire x1="29.8722" y1="26.35" x2="30.48" y2="31.623" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+3V3">
 <contactref element="JP1" pad="P$1"/>

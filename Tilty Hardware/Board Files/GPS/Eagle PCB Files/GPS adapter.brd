@@ -903,6 +903,16 @@
 <pad name="P$7" x="6.35" y="-0.127" drill="0.889"/>
 <pad name="P$8" x="8.89" y="0" drill="0.889"/>
 </package>
+<package name="SOT23">
+<smd name="P$1" x="-0.95" y="-1.15" dx="0.65" dy="0.95" layer="1"/>
+<smd name="P$2" x="0.95" y="-1.15" dx="0.65" dy="0.95" layer="1"/>
+<smd name="P$3" x="0" y="1.15" dx="0.65" dy="0.95" layer="1"/>
+<wire x1="-1.5" y1="-1.25" x2="-1.5" y2="1.25" width="0.127" layer="23"/>
+<wire x1="-1.5" y1="1.25" x2="1.5" y2="1.25" width="0.127" layer="23"/>
+<wire x1="1.5" y1="1.25" x2="1.5" y2="-1.25" width="0.127" layer="23"/>
+<wire x1="1.5" y1="-1.25" x2="-1.5" y2="-1.25" width="0.127" layer="23"/>
+<text x="-2.75" y="1.75" size="1.27" layer="25">&gt;NAME</text>
+</package>
 </packages>
 </library>
 <library name="SparkFun-RF">
@@ -2062,6 +2072,41 @@ chip</description>
 <rectangle x1="-0.8382" y1="-0.4318" x2="-0.4318" y2="0.4318" layer="51"/>
 <rectangle x1="-0.1999" y1="-0.4001" x2="0.1999" y2="0.4001" layer="35"/>
 </package>
+<package name="C0603">
+<description>&lt;b&gt;CAPACITOR&lt;/b&gt;&lt;p&gt;
+chip</description>
+<wire x1="-1.473" y1="0.983" x2="1.473" y2="0.983" width="0.0508" layer="39"/>
+<wire x1="1.473" y1="0.983" x2="1.473" y2="-0.983" width="0.0508" layer="39"/>
+<wire x1="1.473" y1="-0.983" x2="-1.473" y2="-0.983" width="0.0508" layer="39"/>
+<wire x1="-1.473" y1="-0.983" x2="-1.473" y2="0.983" width="0.0508" layer="39"/>
+<wire x1="-0.356" y1="0.432" x2="0.356" y2="0.432" width="0.1016" layer="51"/>
+<wire x1="-0.356" y1="-0.419" x2="0.356" y2="-0.419" width="0.1016" layer="51"/>
+<smd name="1" x="-0.85" y="0" dx="1.1" dy="1" layer="1"/>
+<smd name="2" x="0.85" y="0" dx="1.1" dy="1" layer="1"/>
+<text x="-0.889" y="0.762" size="1.27" layer="25">&gt;NAME</text>
+<text x="-0.889" y="-2.032" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-0.8382" y1="-0.4699" x2="-0.3381" y2="0.4801" layer="51"/>
+<rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
+<rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
+</package>
+</packages>
+</library>
+<library name="on-semiconductor">
+<description>&lt;b&gt;ON Semiconductor&lt;/b&gt;&lt;p&gt;
+&lt;a href="http://onsemi.com"&gt; Home page &lt;/a&gt;&lt;p&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="TO263">
+<smd name="P$1" x="0" y="2.794" dx="5.7912" dy="6.1976" layer="1"/>
+<smd name="P$2" x="-2.286" y="-4.3942" dx="1.6002" dy="2.9972" layer="1"/>
+<smd name="P$3" x="2.286" y="-4.3942" dx="1.6002" dy="2.9972" layer="1"/>
+<wire x1="-3.175" y1="4.953" x2="-3.175" y2="-4.953" width="0.127" layer="51"/>
+<wire x1="-3.175" y1="-4.953" x2="3.175" y2="-4.953" width="0.127" layer="51"/>
+<wire x1="3.175" y1="-4.953" x2="3.175" y2="4.953" width="0.127" layer="51"/>
+<wire x1="3.175" y1="4.953" x2="-3.175" y2="4.953" width="0.127" layer="51"/>
+<text x="-2.54" y="6.35" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.175" y="-7.62" size="1.27" layer="27">&gt;VALUE</text>
+</package>
 </packages>
 </library>
 </libraries>
@@ -2254,15 +2299,20 @@ Please make sure your boards conform to these design rules.</description>
 <element name="JP2" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="2.54" y="20.193" rot="R270"/>
 <element name="JP3" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="35.56" y="20.193" rot="R270"/>
 <element name="JP4" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="30.48" y="40.513" rot="R270"/>
-<element name="U$1" library="SparkFun-RF" package="XBEE-1_LOCK" value="XBEE-1XBEE-1_LOCK" x="19.05" y="6.35"/>
+<element name="U1" library="SparkFun-RF" package="XBEE-1_LOCK" value="XBEE-1XBEE-1_LOCK" x="19.05" y="6.35"/>
 <element name="R1" library="resistor" package="R0603" value="4.7K" x="2.54" y="-3.81"/>
+<element name="U3" library="My Parts" package="SOT23" value="AP7313SOT23R" x="3.81" y="-10.16"/>
+<element name="U2" library="on-semiconductor" package="TO263" value="LM2931" x="-5.08" y="-2.54"/>
+<element name="C1" library="resistor" package="C0603" value="4.7uF" x="-6.35" y="-15.24"/>
+<element name="C2" library="resistor" package="C0603" value="0.1uF" x="-6.35" y="-19.05"/>
+<element name="C3" library="resistor" package="C0603" value="0.1uF" x="-6.35" y="-22.86"/>
 </elements>
 <signals>
 <signal name="GND">
 <contactref element="JP2" pad="P$8"/>
 <contactref element="JP3" pad="P$8"/>
 <contactref element="JP4" pad="P$2"/>
-<contactref element="U$1" pad="10"/>
+<contactref element="U1" pad="10"/>
 <wire x1="35.56" y1="11.303" x2="30.607" y2="46.863" width="0" layer="19" extent="1-1"/>
 <wire x1="8.2278" y1="8.35" x2="35.56" y2="11.303" width="0" layer="19" extent="1-1"/>
 <wire x1="2.54" y1="11.303" x2="8.2278" y2="8.35" width="0" layer="19" extent="1-1"/>
@@ -2341,37 +2391,62 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="3V_SCL">
 <contactref element="JP4" pad="P$7"/>
-<contactref element="U$1" pad="19"/>
+<contactref element="U1" pad="19"/>
 <wire x1="30.2278" y1="24.35" x2="30.353" y2="34.163" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="3V_SDA">
 <contactref element="JP4" pad="P$8"/>
-<contactref element="U$1" pad="20"/>
+<contactref element="U1" pad="20"/>
 <wire x1="29.8722" y1="26.35" x2="30.48" y2="31.623" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+3V3">
 <contactref element="JP1" pad="P$1"/>
-<contactref element="U$1" pad="1"/>
+<contactref element="U1" pad="1"/>
 <contactref element="R1" pad="1"/>
+<contactref element="U3" pad="P$2"/>
+<contactref element="C3" pad="1"/>
 <wire x1="7.8722" y1="26.35" x2="7.493" y2="49.403" width="0" layer="19" extent="1-1"/>
 <wire x1="1.69" y1="-3.81" x2="7.8722" y2="26.35" width="0" layer="19" extent="1-1"/>
+<wire x1="4.76" y1="-11.31" x2="1.69" y2="-3.81" width="0" layer="19" extent="1-1"/>
+<wire x1="-7.2" y1="-22.86" x2="4.76" y2="-11.31" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="JP4" pad="P$1"/>
+<contactref element="U2" pad="P$3"/>
+<contactref element="C1" pad="1"/>
+<contactref element="U3" pad="P$3"/>
+<wire x1="3.81" y1="-9.01" x2="30.353" y2="49.403" width="0" layer="19" extent="1-1"/>
+<wire x1="-2.794" y1="-6.9342" x2="3.81" y2="-9.01" width="0" layer="19" extent="1-1"/>
+<wire x1="-7.2" y1="-15.24" x2="-2.794" y2="-6.9342" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VCC">
 <contactref element="JP2" pad="P$7"/>
+<contactref element="C2" pad="1"/>
+<contactref element="U2" pad="P$2"/>
+<wire x1="-7.366" y1="-6.9342" x2="-7.2" y2="-19.05" width="0" layer="19" extent="1-1"/>
+<wire x1="2.413" y1="13.843" x2="-7.366" y2="-6.9342" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RX3">
-<contactref element="U$1" pad="2"/>
+<contactref element="U1" pad="2"/>
 </signal>
 <signal name="TX3">
-<contactref element="U$1" pad="3"/>
+<contactref element="U1" pad="3"/>
 </signal>
 <signal name="N$2">
-<contactref element="U$1" pad="5"/>
+<contactref element="U1" pad="5"/>
 <contactref element="R1" pad="2"/>
 <wire x1="3.39" y1="-3.81" x2="7.8722" y2="18.35" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$3">
+<contactref element="U2" pad="P$1"/>
+<contactref element="U3" pad="P$1"/>
+<contactref element="C2" pad="2"/>
+<contactref element="C1" pad="2"/>
+<contactref element="C3" pad="2"/>
+<wire x1="-5.5" y1="-19.05" x2="-5.5" y2="-22.86" width="0" layer="19" extent="1-1"/>
+<wire x1="-5.5" y1="-15.24" x2="-5.5" y2="-19.05" width="0" layer="19" extent="1-1"/>
+<wire x1="2.86" y1="-11.31" x2="-5.5" y2="-15.24" width="0" layer="19" extent="1-1"/>
+<wire x1="-5.08" y1="0.254" x2="2.86" y2="-11.31" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>

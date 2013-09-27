@@ -1165,7 +1165,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="JP2" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="2.54" y="20.193" rot="R270"/>
 <element name="JP3" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="35.56" y="20.193" rot="R270"/>
 <element name="JP4" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="30.48" y="40.513" rot="R270"/>
-<element name="U$1" library="SparkFun-RF" package="XBEE-1_LOCK" value="XBEE-1XBEE-1_LOCK" x="-12.7" y="7.62"/>
+<element name="U$1" library="SparkFun-RF" package="XBEE-1_LOCK" value="XBEE-1XBEE-1_LOCK" x="19.05" y="6.35"/>
 </elements>
 <signals>
 <signal name="GND">
@@ -1175,7 +1175,7 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U$1" pad="10"/>
 <wire x1="35.56" y1="11.303" x2="30.607" y2="46.863" width="0" layer="19" extent="1-1"/>
 <wire x1="2.54" y1="11.303" x2="35.56" y2="11.303" width="0" layer="19" extent="1-1"/>
-<wire x1="-23.5222" y1="9.62" x2="2.54" y2="11.303" width="0" layer="19" extent="1-1"/>
+<wire x1="8.2278" y1="8.35" x2="2.54" y2="11.303" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="MISO">
 <contactref element="JP2" pad="P$6"/>
@@ -1257,6 +1257,8 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="+3V3">
 <contactref element="JP1" pad="P$1"/>
+<contactref element="U$1" pad="1"/>
+<wire x1="7.8722" y1="26.35" x2="7.493" y2="49.403" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="JP4" pad="P$1"/>
@@ -1264,8 +1266,11 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="VCC">
 <contactref element="JP2" pad="P$7"/>
 </signal>
-<signal name="VDD">
-<contactref element="U$1" pad="1"/>
+<signal name="RX3">
+<contactref element="U$1" pad="2"/>
+</signal>
+<signal name="TX3">
+<contactref element="U$1" pad="3"/>
 </signal>
 </signals>
 </board>

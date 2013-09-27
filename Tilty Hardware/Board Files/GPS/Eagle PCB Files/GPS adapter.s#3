@@ -684,7 +684,7 @@ SMT header is CONN-09042.</description>
 <instance part="P+1" gate="1" x="25.4" y="27.94"/>
 <instance part="P+2" gate="VCC" x="30.48" y="66.04"/>
 <instance part="U$1" gate="G$1" x="99.06" y="66.04"/>
-<instance part="+3V2" gate="G$1" x="76.2" y="81.28"/>
+<instance part="+3V2" gate="G$1" x="76.2" y="83.82"/>
 </instances>
 <busses>
 </busses>
@@ -893,7 +893,7 @@ SMT header is CONN-09042.</description>
 <segment>
 <pinref part="U$1" gate="G$1" pin="VDD"/>
 <wire x1="78.74" y1="76.2" x2="76.2" y2="76.2" width="0.1524" layer="91"/>
-<wire x1="76.2" y1="76.2" x2="76.2" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="76.2" x2="76.2" y2="81.28" width="0.1524" layer="91"/>
 <pinref part="+3V2" gate="G$1" pin="+3V3"/>
 </segment>
 </net>
