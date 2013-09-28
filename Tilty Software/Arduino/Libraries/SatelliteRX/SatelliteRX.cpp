@@ -1,5 +1,10 @@
 #include <SatelliteRX.h>
 
+SatelliteRX::SatelliteRX() : _serialPort(Serial)
+{
+	_serialPort = Serial;
+}
+
 // Initialize SatelliteRX with hardware serial port
 SatelliteRX::SatelliteRX(HardwareSerial& _serial) : _serialPort(_serial)
 {
@@ -70,14 +75,23 @@ SatelliteRX::~SatelliteRX()
 bool SatelliteRX::init()
 {
 	_serialPort.begin(115200);
+	long start = millis();
+	while (start - millis() < RX_CONNECTION_TIMEOUT && !_serialPort.available())
+	{
+		delay(1);
+	}
 }
 
 
 bool SatelliteRX::init(bool _bind)
 {	
 	bool _bound;
-	if (_bind) { _bound = bind();}
-	_serialPort.begin(115200);
+	if (_bind)
+	{
+		long start = millis();
+		while (!_bound && millis() - start < RX_BINDING_TIMEOUT) { _bound = bind();}
+	}
+	if (_bound) { init();}
 	return _bound;
 }
 

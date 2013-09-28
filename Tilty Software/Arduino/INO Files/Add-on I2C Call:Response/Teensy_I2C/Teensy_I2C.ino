@@ -21,13 +21,13 @@ void loop()
       delayMicroseconds(10);
     }
     */
-    Wire.beginTransmission(0x15);
+    Wire.beginTransmission(0x02);
     Wire.write(random(0, 255));
     Wire.endTransmission();
     
     //delayMicroseconds(0);
     
-    Wire.requestFrom(0x15, 6);
+    Wire.requestFrom(0x02, 6);
     
     if (Wire.available() >= 6) {
       //Serial.print("Read data: ");

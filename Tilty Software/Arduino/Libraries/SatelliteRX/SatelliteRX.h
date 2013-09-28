@@ -26,9 +26,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Setting defines
 //#define DEBUG_RX
-#define RX_BINDING_TIMEOUT // Amount of time to wait for binding to occur in milliseconds
+#define RX_BINDING_TIMEOUT 30000// Amount of time to wait for binding to occur in milliseconds
 //#define TX_MODE_1
 #define TX_MODE_2
+#define RX_CONNECTION_TIMEOUT 5000
 
 #ifdef TX_MODE_2
 	#define AILERON 1
@@ -43,6 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class SatelliteRX {
 	public:
 	// Constructors
+		SatelliteRX(); // NOT IMPLEMENTED
 		SatelliteRX(HardwareSerial& _serial);
 		//SatelliteRX(HardwareSerial3& _serial);
 		//SatelliteRX(HardwareSerial _serial, uint8_t _pin);
