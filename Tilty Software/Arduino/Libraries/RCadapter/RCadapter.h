@@ -41,9 +41,10 @@
 #define SAT_RX_BOUND_ADDRESS 1
 
 // Command identifiers
-#define READ_COMMAND 0b10000000 // 0xC0
-#define WRITE_COMMAND 0b01000000 // 0x80
-#define SETTING_COMMAND 0b11000000 // 0x40
+#define READ_RC_COMMAND 0x00
+#define READ_SERVO_COMMAND 0x40 // 0xC0
+#define WRITE_COMMAND 0x80 // 0x80
+#define SETTING_COMMAND 0xC0 // 0x40
 
 class RCadapter {
 	public:
@@ -68,12 +69,10 @@ class RCadapter {
 		// write servo functions
 		int writeServo(char servo, int value);
 		int writeServo(Servo &servo, int value);
+	private:
+		// I2C data buffers
 		char rxBuffer[BUFFER_SIZE];
 		char txBuffer[BUFFER_SIZE];
-	private:
-		// I2C data buffer
-		
-		
 		
 		int parseServoWrite();
 		

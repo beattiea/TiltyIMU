@@ -74,22 +74,30 @@ void RCadapter::initServo(char servo)
 /** \brief Parses incoming I2C commands
 	\param[out] boolean Returns true if command is recognized, false if command is invalid
 **/
-int RCadapter::parseCommand(int bytes)
+int RCadapter::getData(int bytes)
 {
 	if (bytes > BUFFER_SIZE) { return false;}
 	else
 	{
 		for (int i = 0; i < bytes; i++) { rxBuffer[i] = Wire.read();}
 	}
-	
+}
+
+int RCadapter::parseCommand()
+{
 	if (rxBuffer[0] & SETTING_COMMAND)
 	{
 		// settings commands parser goes here
 	}
 	
-	else if (rxBuffer[0] & READ_COMMAND)
+	else if (rxBuffer[0] & READ_RC_COMMAND)
 	{
-		// read command parser goes here
+		// read R/C command parser goes here
+	}
+	
+	else if (rxBuffer[0] & READ_SERVO_COMMAND)
+	{
+		// read servo command parser goes here
 	}
 	
 	else if (rxBuffer[0] & WRITE_COMMAND)
