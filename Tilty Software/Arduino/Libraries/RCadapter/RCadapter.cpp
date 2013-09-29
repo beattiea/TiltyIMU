@@ -18,6 +18,18 @@
 
 RCadapter::RCadapter() : satRX(Serial)
 {
+	
+}
+
+RCadapter::~RCadapter() 
+{
+	// Do nothing
+}
+
+
+
+void RCadapter::init()
+{
 	#ifndef I2C_ADDRESS
 		char I2C_ADDRESS = EEPROM.read(I2C_EEPROM_ADDRESS);
 		if (I2C_ADDRESS == 255)
@@ -27,15 +39,10 @@ RCadapter::RCadapter() : satRX(Serial)
 		}
 	#endif
 	TWBR = 400000L;// Set up I2C for 400kHz
-	Wire.begin(I2C_ADDRESS); // Begin I2C at slave address I2C_ADDRESS (defaults to 0x02)
+	Wire.begin(0x02); // Begin I2C at slave address I2C_ADDRESS (defaults to 0x02)
+	delay(5);
 	satRX.init(); // setup satellite receiver
 }
-
-RCadapter::~RCadapter() 
-{
-	// Do nothing
-}
-
 
 
 /** \brief Call this function before using a servo to initialize 
@@ -64,12 +71,48 @@ void RCadapter::initServo(char servo)
 
 
 
+/** \brief Parses incoming I2C commands
+	\param[out] boolean Returns true if command is recognized, false if command is invalid
+**/
+int RCadapter::parseCommand(int bytes)
+{
+	if (bytes > BUFFER_SIZE) { return false;}
+	else
+	{
+		for (int i = 0; i < bytes; i++) { rxBuffer[i] = Wire.read();}
+	}
+	
+	if (rxBuffer[0] & SETTING_COMMAND)
+	{
+		// settings commands parser goes here
+	}
+	
+	else if (rxBuffer[0] & READ_COMMAND)
+	{
+		// read command parser goes here
+	}
+	
+	else if (rxBuffer[0] & WRITE_COMMAND)
+	{
+		return parseServoWrite();	
+	}
+}
+
+
+
 /** \brief Checks to see if Satellite receiver has uploaded new data
 	\param[out] boolean Returns true if new data has been read, false if data isn't ready yet
 **/
-bool RCadapter::readSatRX()
+int RCadapter::readSatRX()
 {
-	return satRX.readData();
+	bool new_data = satRX.readData();
+	if (new_data) {
+		last_data_timer = millis();
+		return NEW_SAT_RX_DATA;
+	}
+	else if (millis() - last_data_timer >= SATELLITE_RX_TIMEOUT) { return NO_SAT_RX_CONNECTION;}
+	
+	return NO_NEW_SAT_RX_DATA;
 }
 
 
@@ -93,7 +136,7 @@ int RCadapter::writeServo(Servo &servo, int value)
 **/
 int RCadapter::writeServo(char servo, int value) 
 {
-	value = map(value, -500, 500, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+	value = map(value, -512, 512, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
 	switch (servo) {
 		case 1: return writeServo(servo_1, value); break;
 		case 2: return writeServo(servo_2, value); break;
@@ -102,6 +145,21 @@ int RCadapter::writeServo(char servo, int value)
 		case 5: return writeServo(servo_5, value); break;
 		case 6: return writeServo(servo_6, value); break;
 	}
+}
+
+
+
+/** \brief Parses a write data command from I2C
+	\param[in] servo Servo connection number (1-6)
+	\param[in] value Value from -500 to 500 representing the full range of the servo or ESC
+	\param[out] boolean Returns 1 if servo successfulyy written, or 0 if servo is not initialized
+**/
+int RCadapter::parseServoWrite()
+{
+	char servo = 0b00111100 & rxBuffer[1] >> 2;
+	int value = (((rxBuffer[0] & 0x03) << 8) | (rxBuffer[1] & 0xFF)) - 512;
+	//writeServo(servo, value);
+	return value;
 }
 
 // End add-on class information

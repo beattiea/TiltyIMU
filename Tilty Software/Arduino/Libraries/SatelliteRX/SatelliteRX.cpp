@@ -76,7 +76,7 @@ bool SatelliteRX::init()
 {
 	_serialPort.begin(115200);
 	long start = millis();
-	while (start - millis() < RX_CONNECTION_TIMEOUT && !_serialPort.available())
+	while (start - millis() < RX_INIT_TIMEOUT && !_serialPort.available())
 	{
 		delay(1);
 	}

@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RX_BINDING_TIMEOUT 30000// Amount of time to wait for binding to occur in milliseconds
 //#define TX_MODE_1
 #define TX_MODE_2
-#define RX_CONNECTION_TIMEOUT 5000
+#define RX_INIT_TIMEOUT 5000
 
 #ifdef TX_MODE_2
 	#define AILERON 1
