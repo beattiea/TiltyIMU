@@ -303,6 +303,7 @@
 <text x="0.635" y="113.665" size="2.54" layer="91" ratio="15">Recommend only using 3.3v, even though some pins are 5v tolerant</text>
 <text x="-3.175" y="98.044" size="1.778" layer="91" ratio="15">*</text>
 <text x="-3.175" y="100.584" size="1.778" layer="91" ratio="15">*</text>
+<text x="25.4" y="91.44" size="1.778" layer="91">&lt;-used by add-on</text>
 </plain>
 <instances>
 <instance part="GND5" gate="1" x="17.78" y="25.4"/>
@@ -397,10 +398,11 @@
 <label x="10.16" y="88.9" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$10" class="0">
+<net name="USB_CS" class="0">
 <segment>
 <pinref part="JP1" gate="G$1" pin="6"/>
 <wire x1="5.08" y1="91.44" x2="25.4" y2="91.44" width="0.1524" layer="91"/>
+<label x="15.24" y="91.44" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SERVO_2" class="0">

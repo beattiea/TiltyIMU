@@ -326,12 +326,106 @@ Please make sure your boards conform to these design rules.</description>
 </pass>
 </autorouter>
 <elements>
-<element name="JP1" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="7.62" y="40.513" rot="R90"/>
-<element name="JP2" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="2.54" y="20.193" rot="R90"/>
-<element name="JP3" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="35.56" y="20.193" rot="R90"/>
-<element name="JP4" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="30.48" y="40.513" rot="R90"/>
+<element name="JP1" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="7.62" y="40.513" rot="R270"/>
+<element name="JP2" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="2.54" y="20.193" rot="R270"/>
+<element name="JP3" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="35.56" y="20.193" rot="R270"/>
+<element name="JP4" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="30.48" y="40.513" rot="R270"/>
 </elements>
 <signals>
+<signal name="GND">
+<contactref element="JP2" pad="P$8"/>
+<contactref element="JP3" pad="P$8"/>
+<contactref element="JP4" pad="P$2"/>
+<wire x1="35.56" y1="11.303" x2="30.607" y2="46.863" width="0" layer="19" extent="1-1"/>
+<wire x1="2.54" y1="11.303" x2="35.56" y2="11.303" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$2">
+<contactref element="JP2" pad="P$6"/>
+</signal>
+<signal name="N$3">
+<contactref element="JP2" pad="P$5"/>
+</signal>
+<signal name="N$4">
+<contactref element="JP2" pad="P$4"/>
+</signal>
+<signal name="N$5">
+<contactref element="JP2" pad="P$3"/>
+</signal>
+<signal name="N$6">
+<contactref element="JP2" pad="P$2"/>
+</signal>
+<signal name="N$7">
+<contactref element="JP2" pad="P$1"/>
+</signal>
+<signal name="N$8">
+<contactref element="JP1" pad="P$8"/>
+</signal>
+<signal name="N$9">
+<contactref element="JP1" pad="P$7"/>
+</signal>
+<signal name="N$10">
+<contactref element="JP1" pad="P$6"/>
+</signal>
+<signal name="N$11">
+<contactref element="JP1" pad="P$5"/>
+</signal>
+<signal name="N$12">
+<contactref element="JP1" pad="P$4"/>
+</signal>
+<signal name="N$13">
+<contactref element="JP1" pad="P$3"/>
+</signal>
+<signal name="N$14">
+<contactref element="JP1" pad="P$2"/>
+</signal>
+<signal name="N$16">
+<contactref element="JP3" pad="P$1"/>
+</signal>
+<signal name="N$17">
+<contactref element="JP3" pad="P$2"/>
+</signal>
+<signal name="N$18">
+<contactref element="JP3" pad="P$3"/>
+</signal>
+<signal name="N$19">
+<contactref element="JP3" pad="P$4"/>
+</signal>
+<signal name="N$20">
+<contactref element="JP3" pad="P$5"/>
+</signal>
+<signal name="N$21">
+<contactref element="JP3" pad="P$6"/>
+</signal>
+<signal name="N$22">
+<contactref element="JP3" pad="P$7"/>
+</signal>
+<signal name="SERVO_4">
+<contactref element="JP4" pad="P$3"/>
+</signal>
+<signal name="SERVO_3">
+<contactref element="JP4" pad="P$4"/>
+</signal>
+<signal name="N$26">
+<contactref element="JP4" pad="P$5"/>
+</signal>
+<signal name="N$27">
+<contactref element="JP4" pad="P$6"/>
+</signal>
+<signal name="N$28">
+<contactref element="JP4" pad="P$7"/>
+</signal>
+<signal name="N$29">
+<contactref element="JP4" pad="P$8"/>
+</signal>
+<signal name="+3V3">
+<contactref element="JP1" pad="P$1"/>
+</signal>
+<signal name="+5V">
+<contactref element="JP4" pad="P$1"/>
+</signal>
+<signal name="VCC">
+<contactref element="JP2" pad="P$7"/>
+</signal>
 </signals>
 </board>
 </drawing>

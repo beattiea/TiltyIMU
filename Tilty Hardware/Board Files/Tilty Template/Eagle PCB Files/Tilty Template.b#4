@@ -326,106 +326,12 @@ Please make sure your boards conform to these design rules.</description>
 </pass>
 </autorouter>
 <elements>
-<element name="JP1" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="7.62" y="40.513" rot="R270"/>
-<element name="JP2" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="2.54" y="20.193" rot="R270"/>
-<element name="JP3" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="35.56" y="20.193" rot="R270"/>
-<element name="JP4" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="30.48" y="40.513" rot="R270"/>
+<element name="JP1" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="7.62" y="40.513" rot="R90"/>
+<element name="JP2" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="2.54" y="20.193" rot="R90"/>
+<element name="JP3" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="35.56" y="20.193" rot="R90"/>
+<element name="JP4" library="My Parts" package="8-PIN_RECEPTACLE_LOCK_NO-SS" value="8-PIN_HEADER" x="30.48" y="40.513" rot="R90"/>
 </elements>
 <signals>
-<signal name="GND">
-<contactref element="JP2" pad="P$8"/>
-<contactref element="JP3" pad="P$8"/>
-<contactref element="JP4" pad="P$2"/>
-<wire x1="35.56" y1="11.303" x2="30.607" y2="46.863" width="0" layer="19" extent="1-1"/>
-<wire x1="2.54" y1="11.303" x2="35.56" y2="11.303" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="MISO">
-<contactref element="JP2" pad="P$6"/>
-</signal>
-<signal name="MOSI">
-<contactref element="JP2" pad="P$5"/>
-</signal>
-<signal name="N$4">
-<contactref element="JP2" pad="P$4"/>
-</signal>
-<signal name="N$5">
-<contactref element="JP2" pad="P$3"/>
-</signal>
-<signal name="N$6">
-<contactref element="JP2" pad="P$2"/>
-</signal>
-<signal name="N$7">
-<contactref element="JP2" pad="P$1"/>
-</signal>
-<signal name="MEMORY_CS">
-<contactref element="JP1" pad="P$8"/>
-</signal>
-<signal name="IMU_INT">
-<contactref element="JP1" pad="P$7"/>
-</signal>
-<signal name="N$10">
-<contactref element="JP1" pad="P$6"/>
-</signal>
-<signal name="SERVO_2">
-<contactref element="JP1" pad="P$5"/>
-</signal>
-<signal name="SERVO_1">
-<contactref element="JP1" pad="P$4"/>
-</signal>
-<signal name="BLUETOOTH_TX">
-<contactref element="JP1" pad="P$3"/>
-</signal>
-<signal name="BLUETOOTH_RX">
-<contactref element="JP1" pad="P$2"/>
-</signal>
-<signal name="5V_SDA">
-<contactref element="JP3" pad="P$1"/>
-</signal>
-<signal name="5V_SCL">
-<contactref element="JP3" pad="P$2"/>
-</signal>
-<signal name="BT_CMD">
-<contactref element="JP3" pad="P$3"/>
-</signal>
-<signal name="BATT_SENSE">
-<contactref element="JP3" pad="P$4"/>
-</signal>
-<signal name="SCK">
-<contactref element="JP3" pad="P$5"/>
-</signal>
-<signal name="AUX_SDA">
-<contactref element="JP3" pad="P$6"/>
-</signal>
-<signal name="AUX_SCL">
-<contactref element="JP3" pad="P$7"/>
-</signal>
-<signal name="SERVO_4">
-<contactref element="JP4" pad="P$3"/>
-</signal>
-<signal name="SERVO_3">
-<contactref element="JP4" pad="P$4"/>
-</signal>
-<signal name="N$26">
-<contactref element="JP4" pad="P$5"/>
-</signal>
-<signal name="N$27">
-<contactref element="JP4" pad="P$6"/>
-</signal>
-<signal name="3V_SCL">
-<contactref element="JP4" pad="P$7"/>
-</signal>
-<signal name="3V_SDA">
-<contactref element="JP4" pad="P$8"/>
-</signal>
-<signal name="+3V3">
-<contactref element="JP1" pad="P$1"/>
-</signal>
-<signal name="+5V">
-<contactref element="JP4" pad="P$1"/>
-</signal>
-<signal name="VCC">
-<contactref element="JP2" pad="P$7"/>
-</signal>
 </signals>
 </board>
 </drawing>

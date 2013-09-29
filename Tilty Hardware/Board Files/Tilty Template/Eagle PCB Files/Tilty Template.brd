@@ -1128,7 +1128,7 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="IMU_INT">
 <contactref element="JP1" pad="P$7"/>
 </signal>
-<signal name="N$10">
+<signal name="USB_CS">
 <contactref element="JP1" pad="P$6"/>
 </signal>
 <signal name="SERVO_2">
