@@ -2377,14 +2377,14 @@ www.scr.com</description>
 <wire x1="-10.16" y1="1.27" x2="10.16" y2="1.27" width="0.254" layer="23"/>
 <wire x1="10.16" y1="1.27" x2="10.16" y2="-1.27" width="0.254" layer="23"/>
 <wire x1="10.16" y1="-1.27" x2="-10.16" y2="-1.27" width="0.254" layer="23"/>
-<pad name="P$1" x="-8.89" y="-0.127" drill="0.889"/>
-<pad name="P$2" x="-6.35" y="0.127" drill="0.889"/>
-<pad name="P$3" x="-3.81" y="-0.127" drill="0.889"/>
-<pad name="P$4" x="-1.27" y="0.127" drill="0.889"/>
-<pad name="P$5" x="1.27" y="-0.127" drill="0.889"/>
-<pad name="P$6" x="3.81" y="0" drill="0.889"/>
-<pad name="P$7" x="6.35" y="-0.127" drill="0.889"/>
-<pad name="P$8" x="8.89" y="0" drill="0.889"/>
+<pad name="P$1" x="-8.89" y="-0.127" drill="0.8"/>
+<pad name="P$2" x="-6.35" y="0.127" drill="0.8"/>
+<pad name="P$3" x="-3.81" y="-0.127" drill="0.8"/>
+<pad name="P$4" x="-1.27" y="0.127" drill="0.8"/>
+<pad name="P$5" x="1.27" y="-0.127" drill="0.8"/>
+<pad name="P$6" x="3.81" y="0" drill="0.8"/>
+<pad name="P$7" x="6.35" y="-0.127" drill="0.8"/>
+<pad name="P$8" x="8.89" y="0" drill="0.8"/>
 </package>
 </packages>
 </library>
@@ -3632,7 +3632,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="28.5115" y1="26.2255" x2="28.702" y2="26.416" width="0.1524" layer="16"/>
 <wire x1="28.702" y1="26.416" x2="28.702" y2="26.8005" width="0.1524" layer="16"/>
 <wire x1="28.702" y1="26.8005" x2="28.772" y2="26.7435" width="0.1524" layer="16"/>
-<wire x1="27.813" y1="25.019" x2="27.813" y2="25.019" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="N$3">
 <contactref element="D1" pad="2"/>
@@ -3893,8 +3892,8 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,96145a6e7b9ea583"/>
 <approved hash="19,1,d7618d003215d4fb"/>
 <approved hash="19,1,23bb9765fea8fd8a"/>
-<approved hash="19,1,1bae1d9b066047a8"/>
 <approved hash="19,1,586aa3b33fa8838c"/>
+<approved hash="19,1,1bae1d9b066047a8"/>
 <approved hash="19,1,2f025979a53924bf"/>
 <approved hash="19,1,6b9006c46892623a"/>
 <approved hash="19,1,45b57fc720e8ffae"/>
