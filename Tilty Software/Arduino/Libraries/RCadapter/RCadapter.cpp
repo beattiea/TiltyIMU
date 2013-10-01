@@ -58,7 +58,7 @@ void RCadapter::init()
 		I2C_ADDRESS = RC_I2C_ADDRESS;
 	#endif
 	TWBR = 400000L;// Set up I2C for 400kHz
-	Wire.begin(I2C_ADDRESS); // Begin I2C at slave address I2C_ADDRESS (defaults to 0x02)
+	Wire.begin(0x02); // Begin I2C at slave address I2C_ADDRESS (defaults to 0x02)
 	delay(5);
 	satRX.init(); // setup satellite receiver
 }

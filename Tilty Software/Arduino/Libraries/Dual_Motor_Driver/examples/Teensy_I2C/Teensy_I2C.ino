@@ -12,7 +12,7 @@ void setup()
 
 void loop()
 {
-	/*
+	
 	Wire.requestFrom(0x03, 8);
 	if (Wire.available()) {
 		long value = 0;
@@ -32,7 +32,7 @@ void loop()
 		Serial.println(value);
 		Serial.println();
 	}
-	*/
+	
     
 	Wire.requestFrom(0x02, 6);
 	if (Wire.available()) {
@@ -40,8 +40,17 @@ void loop()
 			Serial.print("Channel ");
 			Serial.print(i + 1);
 			Serial.print(": ");
-			Serial.println(Wire.read());
+			buff[i] = Wire.read();
+			Serial.println(int(buff[i]));
 		}
 		Serial.println();
 	}
+	
+	Wire.beginTransmission(0x03);
+	Wire.write(buff[2]);
+	Wire.write(buff[1]);
+	Wire.endTransmission();
+	Serial.println("New Cycle...");
+	
+	delay(5);
 }

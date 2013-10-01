@@ -39,6 +39,11 @@ void setup() {
 	Wire.onRequest(requestEvent);
 	
 	Serial.begin(115200);
+	
+	digitalWrite(M1A, HIGH);
+	digitalWrite(M1B, LOW);
+	digitalWrite(M2A, HIGH);
+	digitalWrite(M2B, LOW);
 }
 
 uint8_t enc1;
@@ -48,6 +53,8 @@ uint8_t enc4;
 uint8_t enc5, enc6, enc7, enc8;
 
 void loop() {
+	analogWrite(M1, motor1);
+	analogWrite(M2, motor2);
 	motors.update();// This function should be called as frequently as possible to keep everything up to speed
 
 	enc1 = (motors.encoder1 >> 24) & 0xFF;
