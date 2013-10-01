@@ -52,5 +52,5 @@ void loop()
 	Wire.endTransmission();
 	Serial.println("New Cycle...");
 	
-	delay(5);
+	delay(20);
 }

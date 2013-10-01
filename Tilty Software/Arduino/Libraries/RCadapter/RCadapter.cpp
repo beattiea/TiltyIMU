@@ -151,7 +151,15 @@ int RCadapter::readSatRX()
 		last_data_timer = millis();
 		return NEW_SAT_RX_DATA;
 	}
-	else if (millis() - last_data_timer >= SATELLITE_RX_TIMEOUT) { return NO_SAT_RX_CONNECTION;}
+	else if (millis() - last_data_timer >= SATELLITE_RX_TIMEOUT)
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			if (i == THROTTLE) { satRX.channel_data[i] = 0;}
+			else { satRX.channel_data[i] = 127;}
+		}
+		return NO_SAT_RX_CONNECTION;
+	}
 	
 	return NO_NEW_SAT_RX_DATA;
 }
