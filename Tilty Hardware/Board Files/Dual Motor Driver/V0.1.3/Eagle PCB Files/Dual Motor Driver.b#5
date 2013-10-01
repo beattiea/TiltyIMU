@@ -155,7 +155,7 @@
 <rectangle x1="22.694196875" y1="18.671940625" x2="23.730515625" y2="18.692259375" layer="26" rot="R213"/>
 <rectangle x1="24.92741875" y1="19.961690625" x2="25.394775" y2="19.982009375" layer="26" rot="R213"/>
 <rectangle x1="22.662809375" y1="18.688978125" x2="23.739765625" y2="18.709296875" layer="26" rot="R213"/>
-<rectangle x1="16.003228125" y1="20.133675" x2="16.023546875" y2="20.15399375" layer="25" rot="R327"/>
+<rectangle x1="16.003228125" y1="20.133675" x2="16.023546875" y2="20.15399375" layer="26" rot="R327"/>
 <rectangle x1="24.914709375" y1="19.984265625" x2="25.402390625" y2="20.004584375" layer="26" rot="R213"/>
 <rectangle x1="22.6484625" y1="18.7170875" x2="23.7660625" y2="18.73740625" layer="26" rot="R213"/>
 <rectangle x1="24.881684375" y1="20.00684375" x2="25.430321875" y2="20.0271625" layer="26" rot="R213"/>
@@ -2990,7 +2990,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="33.094" y1="37.592" x2="33.054" y2="37.552" width="0.1524" layer="1"/>
 <wire x1="5.30635" y1="32.552" x2="6.644" y2="32.552" width="0.2032" layer="1"/>
 <wire x1="6.644" y1="32.552" x2="6.985" y2="32.893" width="0.2032" layer="1"/>
-<polygon width="0.2032" layer="16" pour="cutout">
+<polygon width="0.2032" layer="16">
 <vertex x="17.78" y="39.116"/>
 <vertex x="17.78" y="43.18"/>
 <vertex x="17.78" y="44.45"/>
@@ -3020,6 +3020,12 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="9.652" y1="36.83" x2="8.89" y2="37.592" width="0.2032" layer="1"/>
 <wire x1="8.89" y1="37.592" x2="8.89" y2="42.672" width="0.2032" layer="1"/>
 <wire x1="8.89" y1="42.672" x2="11.43" y2="45.212" width="0.2032" layer="1"/>
+<polygon width="0.1524" layer="16">
+<vertex x="0.508" y="0.508"/>
+<vertex x="37.846" y="0.508"/>
+<vertex x="37.846" y="50.292"/>
+<vertex x="0.508" y="50.292"/>
+</polygon>
 </signal>
 <signal name="M1A">
 <contactref element="D1" pad="1"/>

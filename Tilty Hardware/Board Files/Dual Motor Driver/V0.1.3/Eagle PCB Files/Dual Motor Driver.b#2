@@ -3027,6 +3027,19 @@ Please make sure your boards conform to these design rules.</description>
 <vertex x="37.846" y="50.292"/>
 <vertex x="0.508" y="50.292"/>
 </polygon>
+<via x="21.082" y="27.432" extent="1-16" drill="0.381"/>
+<via x="18.288" y="27.432" extent="1-16" drill="0.381"/>
+<via x="18.288" y="24.892" extent="1-16" drill="0.381"/>
+<via x="21.082" y="24.892" extent="1-16" drill="0.381"/>
+<via x="21.082" y="18.034" extent="1-16" drill="0.381"/>
+<via x="20.066" y="14.986" extent="1-16" drill="0.381"/>
+<polygon width="0.1524" layer="1">
+<vertex x="15.494" y="43.18"/>
+<vertex x="22.606" y="43.18"/>
+<vertex x="22.606" y="36.068"/>
+<vertex x="15.494" y="36.068"/>
+</polygon>
+<via x="18.034" y="36.83" extent="1-16" drill="0.3302"/>
 </signal>
 <signal name="M1A">
 <contactref element="D1" pad="1"/>
