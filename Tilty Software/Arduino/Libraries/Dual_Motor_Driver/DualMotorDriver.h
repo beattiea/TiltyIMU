@@ -1,5 +1,5 @@
 /*
-RCadapter.h - Software library to program and control the TiltyIMU DR/C Receiver Adapter Shield
+DualMotorDriver.h - Software library to program and control the TiltyIMU Dual Motor Driver Shield
 Copyright (C) 2013-2014 Alex Beattie <alexbeattie at tiltyimu dot com>
 
 This program is free software: you can redistribute it and/or modify
@@ -15,8 +15,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef RCadapter_h
-#define RCadapter_h
+#ifndef DualMotorDriver_h
+#define DualMotorDriver_h
 
 #include "Arduino.h"
 
@@ -25,8 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Teensy class data
 #include <i2c_t3.h>
 
-#ifndef RC_I2C_ADDRESS
-	char I2C_ADDRESS = 0x02;
+#ifndef MOTOR_DRIVER_I2C_ADDRESS
+	#define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
+	char I2C_ADDRESS = 0x03;
 #endif
 
 // End Teensy/Master class information
@@ -34,76 +35,68 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #else
 //==========================================================================================//
 // Add-on/shield class information
+
+// ========== Library includes ==========
 #include "Wire.h"
 #include "EEPROM.h"
-
-//#define FAST_SERVO
-#ifdef FAST_SERVO
-	#include "FastServo.h"
-#else
-	#include "Servo.h"
+#ifndef NO_ENCODERS
+	#include "Encoder.h"
 #endif
+// ========== Library includes ==========
 
-#include "SatelliteRX.h"	
-#define SATELLITE_RX_TIMEOUT 100 // Satellite RX connection is assumed lost after SATELLITE_RX_TIMEOUT milliseconds
-// Satellite Rx readData() error codes
-#define NO_NEW_SAT_RX_DATA 0
-#define NEW_SAT_RX_DATA 1
-#define NO_SAT_RX_CONNECTION 2
-
+// ========== I2C Settings ==========
 #define BUFFER_SIZE 14
+#define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
+// ========== I2C Settings ==========
 
-// EEPROM data addresses
-#define RC_ADAPTER_I2C_EEPROM_ADDRESS 0
-#define SAT_RX_BOUND_ADDRESS 1
+// ========== EEPROM data addresses ==========
+#define MOTOR_DRIVER_I2C_EEPROM_ADDRESS 0
+// ========== EEPROM data addresses ==========
 
-// Command identifiers
-#define READ_RC_COMMAND 0x00
-#define READ_SERVO_COMMAND 0x40 // 0xC0
-#define WRITE_COMMAND 0x80 // 0x80
-#define SETTING_COMMAND 0xC0 // 0x40
+// ========== Motor control pins ==========
+// Motor PWM pins
+#define M1 6
+#define M2 5
+// Motor direction control pins
+#define M1A 4
+#define M1B 9
+#define M2A 7
+#define M2B 8
+// ========== Motor control pins ==========
 
-class RCadapter {
+// ========== Encoder pins ==========
+#define ENC1A 2 // Interrupt pin
+#define ENC1B A1
+#define ENC2A A0
+#define ENC2B 3 // Interrupt pin
+// ========== Encoder pins ==========
+
+// ========== Command identifiers ==========
+
+// ========== Command identifiers ==========
+
+
+class MotorDriver {
 	public:
 		// Constructors
-		RCadapter();
-		~RCadapter();
+		MotorDriver();
+		~MotorDriver();
 		
-		// Satellite RX object
-		SatelliteRX satRX;
+	#ifndef NO_ENCODERS
+		Encoder m1Encoder;
+		Encoder m2Encoder;
+	#endif
 		
 		// Initialization functions
 		void init();
-		void initServo(Servo &servo, char servo_pin);
-		void initServo(char servo);
 		
 		int getData(int bytes);
-		int parseCommand();
-		
-		// Read signal functions
-		int readSatRX();
-		
-		// write servo functions
-		int writeServo(char servo, int value);
-		int writeServo(Servo &servo, int value);
+		int parseCommand(int bytes);
+
 	private:
 		// I2C data buffers
 		char rxBuffer[BUFFER_SIZE];
 		char txBuffer[BUFFER_SIZE];
-		
-		int parseServoWrite();
-		
-		int servo_trims[6]; // Trim values for individual servos NOT IMPLEMENTED
-		
-		Servo servo_1;
-		Servo servo_2;
-		Servo servo_3;
-		Servo servo_4;
-		Servo servo_5;
-		Servo servo_6;
-		
-		// Satellite RX variables
-		unsigned long last_data_timer;
 	
 };
 // End add-on class information

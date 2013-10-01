@@ -36,12 +36,12 @@ void loop() {
 	
 	delay(2);
 	digitalWrite(9, LOW);
-	servo_value = (((rx.rxBuffer[0] & 0x03) << 8) | (rx.rxBuffer[1] & 0xFF)) - 512;
+	//servo_value = (((rx.rxBuffer[0] & 0x03) << 8) | (rx.rxBuffer[1] & 0xFF)) - 512;
 }
 
 void requestEvent() {
-	Wire.write(0x03 & rx.rxBuffer[0]);
-	Wire.write(rx.rxBuffer[1]);
+	//Wire.write(0x03 & rx.rxBuffer[0]);
+	//Wire.write(rx.rxBuffer[1]);
 	/*
 	byte buff[6];// = {rx.channel_data[AILERON], rx.channel_data[ELEVATOR], rx.channel_data[RUDDER], rx.channel_data[THROTTLE], \
 		rx.channel_data[AUX1], rx.channel_data[AUX2]};

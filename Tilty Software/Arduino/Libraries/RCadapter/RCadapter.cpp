@@ -1,3 +1,20 @@
+/*
+RCadapter.cpp - Software library to program and control the TiltyIMU DR/C Receiver Adapter Shield
+Copyright (C) 2013-2014 Alex Beattie <alexbeattie at tiltyimu dot com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the version 2 GNU General Public License as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "Arduino.h"
 #include "RCadapter.h"
 
@@ -30,16 +47,18 @@ RCadapter::~RCadapter()
 
 void RCadapter::init()
 {
-	#ifndef I2C_ADDRESS
-		char I2C_ADDRESS = EEPROM.read(I2C_EEPROM_ADDRESS);
+	#ifndef RC_I2C_ADDRESS
+		char I2C_ADDRESS = EEPROM.read(RC_ADAPTER_I2C_EEPROM_ADDRESS);
 		if (I2C_ADDRESS == 255)
 		{
 			I2C_ADDRESS = 0x02;
-			EEPROM.write(I2C_EEPROM_ADDRESS, I2C_ADDRESS);
+			EEPROM.write(RC_ADAPTER_I2C_EEPROM_ADDRESS, I2C_ADDRESS);
 		}
+	#else
+		I2C_ADDRESS = RC_I2C_ADDRESS;
 	#endif
 	TWBR = 400000L;// Set up I2C for 400kHz
-	Wire.begin(0x02); // Begin I2C at slave address I2C_ADDRESS (defaults to 0x02)
+	Wire.begin(I2C_ADDRESS); // Begin I2C at slave address I2C_ADDRESS (defaults to 0x02)
 	delay(5);
 	satRX.init(); // setup satellite receiver
 }
