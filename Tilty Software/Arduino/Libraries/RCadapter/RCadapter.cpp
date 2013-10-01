@@ -96,7 +96,7 @@ void RCadapter::initServo(char servo)
 int RCadapter::getData(int bytes)
 {
 	if (bytes > BUFFER_SIZE) { return false;}
-	else
+
 	{
 		for (int i = 0; i < bytes; i++) { rxBuffer[i] = Wire.read();}
 	}

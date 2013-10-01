@@ -82,6 +82,7 @@ class MotorDriver {
 		MotorDriver();
 		~MotorDriver();
 		
+		// Encoder objects
 	#ifndef NO_ENCODERS
 		Encoder m1Encoder;
 		Encoder m2Encoder;
@@ -90,13 +91,25 @@ class MotorDriver {
 		// Initialization functions
 		void init();
 		
+		// I2C data handlers
 		int getData(int bytes);
-		int parseCommand(int bytes);
+		int parseCommand();
+		
+		// Update functions
+		int update();
+		
+		// Encoder values
+		long encoder1;
+		long encoder2;
 
 	private:
 		// I2C data buffers
-		char rxBuffer[BUFFER_SIZE];
+		uint8_t rxBuffer[BUFFER_SIZE];
 		char txBuffer[BUFFER_SIZE];
+		
+		// I2C data buffer indexes
+		uint8_t rxBufferIndex;
+		uint8_t txbufferIndex;
 	
 };
 // End add-on class information
