@@ -12,23 +12,12 @@ void setup()
 
 void loop()
 {
+	/*
 	Wire.requestFrom(0x03, 8);
-	delay(5);
 	if (Wire.available()) {
-		/*
-		long value = (Wire.read() << 24);
-		value |= (Wire.read() << 16);
-		value |= (Wire.read() << 8);
-		value |= Wire.read();
-		Serial.println(value);
-		*/
 		long value = 0;
 		for (int i = 0; i < 4; i++) {
 			char data = Wire.read();
-			Serial.print("Data ");
-			Serial.print(i);
-			Serial.print(": ");
-			Serial.println(data, HEX);
 			value |= (data << ((3 - i) * 8));
 		}
 		Serial.print("Encoder 1: ");
@@ -37,21 +26,22 @@ void loop()
 		value = 0;
 		for (int i = 0; i < 4; i++) {
 			char data = Wire.read();
-			Serial.print("Data ");
-			Serial.print(i);
-			Serial.print(": ");
-			Serial.println(data, HEX);
 			value |= (data << ((3 - i) * 8));
 		}
 		Serial.print("Encoder 2: ");
 		Serial.println(value);
-		
-		/*
-		for (int i = 0; i < 4; i++) {
+		Serial.println();
+	}
+	*/
+    
+	Wire.requestFrom(0x02, 6);
+	if (Wire.available()) {
+		for (int i = 0; i < 6; i++) {
+			Serial.print("Channel ");
+			Serial.print(i + 1);
+			Serial.print(": ");
 			Serial.println(Wire.read());
 		}
-		*/
 		Serial.println();
-	}   
-    delay(10);
+	}
 }

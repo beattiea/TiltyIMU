@@ -90,15 +90,29 @@ void RCadapter::initServo(char servo)
 
 
 
-/** \brief Parses incoming I2C commands
+/** \brief Takes incoming I2C data into the rxBuffer
+	\param[in] bytes The number of incoming bytes
 	\param[out] boolean Returns true if command is recognized, false if command is invalid
 **/
 int RCadapter::getData(int bytes)
 {
-	if (bytes > BUFFER_SIZE) { return false;}
-
+	if (bytes + rxBufferIndex > RC_ADAPTER_RX_BUFFER_SIZE)
 	{
-		for (int i = 0; i < bytes; i++) { rxBuffer[i] = Wire.read();}
+		for (int i = rxBufferIndex; i < RC_ADAPTER_RX_BUFFER_SIZE; i++)
+		{
+			rxBuffer[i] = Wire.read();
+		}
+		rxBufferIndex = RC_ADAPTER_RX_BUFFER_SIZE;
+		return false;
+	}
+	else
+	{
+		for (int i = rxBufferIndex; i < bytes + rxBufferIndex; i++) 
+		{
+			rxBuffer[i] = Wire.read();
+		}
+		rxBufferIndex += bytes;
+		return true;
 	}
 }
 

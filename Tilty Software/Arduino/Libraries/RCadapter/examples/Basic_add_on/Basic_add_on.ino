@@ -42,14 +42,16 @@ void loop() {
 void requestEvent() {
 	//Wire.write(0x03 & rx.rxBuffer[0]);
 	//Wire.write(rx.rxBuffer[1]);
-	/*
+	
+	Wire.write(0x01);
+	
 	byte buff[6];// = {rx.channel_data[AILERON], rx.channel_data[ELEVATOR], rx.channel_data[RUDDER], rx.channel_data[THROTTLE], \
 		rx.channel_data[AUX1], rx.channel_data[AUX2]};
 	for (int i = 0; i < 6; i++) {
 		buff[i] = map(rx.satRX.channel_data[i], 0, 1024, 0, 255);
 	}
 	Wire.write(buff, 6);
-	*/
+	
 }
 
 void receiveEvent(int howMany) {

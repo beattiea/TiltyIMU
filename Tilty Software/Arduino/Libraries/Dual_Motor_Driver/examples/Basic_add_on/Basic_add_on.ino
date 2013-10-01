@@ -29,6 +29,9 @@ However this is a global change and will affect all Arduino code, not just this 
 
 MotorDriver motors;
 
+int motor1 = 0;
+int motor2 = 0;
+
 void setup() {
 	motors.init();
 	
@@ -59,7 +62,9 @@ void loop() {
 }
 
 void receiveEvent(int bytes) {
-	motors.getData(bytes);
+	motor1 = Wire.read();
+	motor2 = Wire.read();
+	//motors.getData(bytes);
 }
 
 void requestEvent() {

@@ -51,7 +51,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NEW_SAT_RX_DATA 1
 #define NO_SAT_RX_CONNECTION 2
 
-#define BUFFER_SIZE 14
+// ========== I2C Settings ==========
+#define RC_ADAPTER_RX_BUFFER_SIZE 14
+#define RC_ADAPTER_TX_BUFFER_SIZE 14
+#define DEFAULT_RC_ADAPTER_I2C_ADDRESS 0x02
+// ========== I2C Settings ==========
 
 // EEPROM data addresses
 #define RC_ADAPTER_I2C_EEPROM_ADDRESS 0
@@ -88,8 +92,12 @@ class RCadapter {
 		int writeServo(Servo &servo, int value);
 	private:
 		// I2C data buffers
-		char rxBuffer[BUFFER_SIZE];
-		char txBuffer[BUFFER_SIZE];
+		uint8_t rxBuffer[RC_ADAPTER_RX_BUFFER_SIZE];
+		uint8_t txBuffer[RC_ADAPTER_TX_BUFFER_SIZE];
+		
+		// I2C data buffer indexes
+		uint8_t rxBufferIndex;
+		uint8_t txbufferIndex;
 		
 		int parseServoWrite();
 		

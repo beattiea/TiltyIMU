@@ -77,10 +77,23 @@ void MotorDriver::init()
 **/
 int MotorDriver::getData(int bytes)
 {
-	if (bytes > BUFFER_SIZE) { return false;}
+	if (bytes + rxBufferIndex > MOTOR_DRIVER_RX_BUFFER_SIZE)
+	{
+		for (int i = rxBufferIndex; i < MOTOR_DRIVER_RX_BUFFER_SIZE; i++)
+		{
+			rxBuffer[i] = Wire.read();
+		}
+		rxBufferIndex = MOTOR_DRIVER_RX_BUFFER_SIZE;
+		return false;
+	}
 	else
 	{
-		for (int i = 0; i < bytes; i++) { rxBuffer[i] = Wire.read();}
+		for (int i = rxBufferIndex; i < bytes + rxBufferIndex; i++) 
+		{
+			rxBuffer[i] = Wire.read();
+		}
+		rxBufferIndex += bytes;
+		return true;
 	}
 }
 

@@ -45,7 +45,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // ========== Library includes ==========
 
 // ========== I2C Settings ==========
-#define BUFFER_SIZE 14
+#define MOTOR_DRIVER_RX_BUFFER_SIZE 14
+#define MOTOR_DRIVER_TX_BUFFER_SIZE 14
 #define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
 // ========== I2C Settings ==========
 
@@ -104,8 +105,8 @@ class MotorDriver {
 
 	private:
 		// I2C data buffers
-		uint8_t rxBuffer[BUFFER_SIZE];
-		char txBuffer[BUFFER_SIZE];
+		uint8_t rxBuffer[MOTOR_DRIVER_RX_BUFFER_SIZE];
+		uint8_t txBuffer[MOTOR_DRIVER_TX_BUFFER_SIZE];
 		
 		// I2C data buffer indexes
 		uint8_t rxBufferIndex;
