@@ -3420,9 +3420,9 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U2" pad="9"/>
 <contactref element="U1" pad="13"/>
 <wire x1="25.908" y1="25.019" x2="24.13" y2="25.019" width="0.254" layer="1"/>
-<wire x1="24.13" y1="25.019" x2="23.495" y2="25.654" width="0.254" layer="1"/>
-<wire x1="23.495" y1="25.654" x2="23.495" y2="33.02" width="0.254" layer="1"/>
-<wire x1="23.495" y1="33.02" x2="22.987" y2="33.528" width="0.254" layer="1"/>
+<wire x1="24.13" y1="25.019" x2="23.4315" y2="25.7175" width="0.254" layer="1"/>
+<wire x1="23.4315" y1="25.7175" x2="23.368" y2="33.147" width="0.254" layer="1"/>
+<wire x1="23.368" y1="33.147" x2="22.987" y2="33.528" width="0.254" layer="1"/>
 <wire x1="19.323" y1="35.3314" x2="19.323" y2="33.89" width="0.254" layer="1"/>
 <wire x1="19.323" y1="33.89" x2="19.685" y2="33.528" width="0.254" layer="1"/>
 <wire x1="19.685" y1="33.528" x2="22.987" y2="33.528" width="0.254" layer="1"/>
@@ -3575,14 +3575,15 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,561dc593a540aa33"/>
 <approved hash="19,1,114a7ce50349f21b"/>
 <approved hash="5,1,61ae0be5d091f980"/>
-<approved hash="19,1,ca15bf6dbe55cb2d"/>
 <approved hash="19,1,c7e9b291bf45ca3d"/>
+<approved hash="19,1,ca15bf6dbe55cb2d"/>
 <approved hash="19,1,343dc945d6cf2bb7"/>
 <approved hash="19,1,e7ec62946fa2eada"/>
 <approved hash="19,1,ea106f686eb2ebca"/>
-<approved hash="19,1,8e04b4ed4efb7450"/>
 <approved hash="19,1,7f42bab39f585aeb"/>
+<approved hash="19,1,8e04b4ed4efb7450"/>
 <approved hash="19,1,8df6d34510295de5"/>
+<approved hash="19,1,f9a359330aa0b94f"/>
 <approved hash="19,1,8df6d34510295de5"/>
 </errors>
 </board>

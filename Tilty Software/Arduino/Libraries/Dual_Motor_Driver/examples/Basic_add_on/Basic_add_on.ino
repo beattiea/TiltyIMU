@@ -53,8 +53,9 @@ uint8_t enc4;
 uint8_t enc5, enc6, enc7, enc8;
 
 void loop() {
-	analogWrite(M1, motor1);
-	analogWrite(M2, motor2);
+	// motor1 is throttle, motor2 is turn
+	analogWrite(M1, motor1 + motor2);
+	analogWrite(M2, motor1 - motor2);
 	motors.update();// This function should be called as frequently as possible to keep everything up to speed
 
 	enc1 = (motors.encoder1 >> 24) & 0xFF;
@@ -70,7 +71,7 @@ void loop() {
 
 void receiveEvent(int bytes) {
 	motor1 = Wire.read();
-	motor2 = Wire.read();
+	motor2 = Wire.read() - 127;
 	//motors.getData(bytes);
 }
 

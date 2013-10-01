@@ -2951,11 +2951,10 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="5.461" y1="10.414" x2="3.556" y2="10.414" width="0.254" layer="1"/>
 <wire x1="3.556" y1="10.414" x2="2.794" y2="11.303" width="0.254" layer="1"/>
 <polygon width="0.2032" layer="1">
-<vertex x="13.462" y="28.702"/>
-<vertex x="24.892" y="28.702"/>
-<vertex x="24.892" y="13.716"/>
-<vertex x="23.622" y="12.446"/>
-<vertex x="13.462" y="12.446"/>
+<vertex x="4.064" y="28.702"/>
+<vertex x="34.29" y="28.702"/>
+<vertex x="34.29" y="12.446"/>
+<vertex x="4.064" y="12.446"/>
 </polygon>
 <wire x1="30.988" y1="14.556" x2="30.988" y2="13.374" width="0.508" layer="1"/>
 <wire x1="30.988" y1="13.374" x2="30.568" y2="12.954" width="0.508" layer="1"/>
@@ -3033,6 +3032,13 @@ Please make sure your boards conform to these design rules.</description>
 <via x="21.082" y="24.892" extent="1-16" drill="0.381"/>
 <via x="21.082" y="18.034" extent="1-16" drill="0.381"/>
 <via x="20.066" y="14.986" extent="1-16" drill="0.381"/>
+<polygon width="0.1524" layer="1">
+<vertex x="15.494" y="43.18"/>
+<vertex x="22.606" y="43.18"/>
+<vertex x="22.606" y="36.068"/>
+<vertex x="15.494" y="36.068"/>
+</polygon>
+<via x="18.034" y="36.83" extent="1-16" drill="0.3302"/>
 </signal>
 <signal name="M1A">
 <contactref element="D1" pad="1"/>

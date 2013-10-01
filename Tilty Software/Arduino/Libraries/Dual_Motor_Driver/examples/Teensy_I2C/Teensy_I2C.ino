@@ -47,7 +47,7 @@ void loop()
 	}
 	
 	Wire.beginTransmission(0x03);
-	Wire.write(buff[2]);
+	Wire.write(buff[0]);
 	Wire.write(buff[1]);
 	Wire.endTransmission();
 	Serial.println("New Cycle...");

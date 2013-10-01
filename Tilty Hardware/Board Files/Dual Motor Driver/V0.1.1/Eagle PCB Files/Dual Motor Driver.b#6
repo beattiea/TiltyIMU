@@ -889,8 +889,6 @@
 <rectangle x1="14.32683125" y1="21.623878125" x2="14.55035" y2="21.644196875" layer="26" rot="R213"/>
 <rectangle x1="14.3174" y1="21.635384375" x2="14.5206" y2="21.655703125" layer="26" rot="R213"/>
 <rectangle x1="14.3096125" y1="21.641359375" x2="14.472175" y2="21.661678125" layer="26" rot="R213"/>
-<rectangle x1="46.195865625" y1="25.53190625" x2="46.317784375" y2="25.552225" layer="26" rot="R213"/>
-<rectangle x1="46.24411875" y1="25.554478125" x2="46.2644375" y2="25.574796875" layer="26" rot="R213"/>
 <text x="20.004971875" y="17.009321875" size="1.905" layer="26" font="vector" ratio="17" rot="MR2">IMU</text>
 <text x="24.765" y="15.494" size="1.27" layer="26" ratio="12" rot="MR0">Dual Motor</text>
 <text x="26.543" y="13.462" size="1.27" layer="26" ratio="12" rot="MR0">Driver Add-on</text>
