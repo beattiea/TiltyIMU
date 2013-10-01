@@ -24,7 +24,6 @@ void loop()
     }
     */
 	for (int i = 0; i < 1024; i++) {
-		/*
 		char byte1 = 0b01011000 | (i >> 8);
 		Serial.print("Sent Byte 1: ");
 		Serial.print(byte1, HEX);
@@ -37,19 +36,10 @@ void loop()
 		Wire.write(i & 0xFF);
 	    Wire.endTransmission();
 		delay(1);
-		*/
-
-		Wire.beginTransmission(0x02);
-		Wire.write(i / 4);
-		Wire.endTransmission();
 		
-		delay(1);
-		
-		Wire.requestFrom(0x02, 3);
+		Wire.requestFrom(0x02, 2);
 		if (Wire.available()) {
 			Serial.print("Value: ");
-			Serial.print(Wire.read(), HEX);
-			Serial.print("\t");
 			Serial.print(Wire.read(), HEX);
 			Serial.print("\t");
 			Serial.println(Wire.read(), HEX);
@@ -59,7 +49,6 @@ void loop()
 		}
 		
 	}
-	/*
 	Wire.beginTransmission(0x02);
 	Wire.write(0b01011000);
 	Wire.write(0);
@@ -81,7 +70,6 @@ void loop()
       }
       Serial.println();
     }
-	*/
     
     delay(20);
 }

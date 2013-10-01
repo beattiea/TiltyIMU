@@ -10,14 +10,14 @@ void setup() {
   pinMode(9, OUTPUT);
   digitalWrite(9, LOW);
   
-  Wire.begin(0x15);
+  Wire.begin(0x02);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
 }
 
 void loop() {
   delay(1);
-  analogWrite(6, map(x, 0, 9, 0, 255));
+  //analogWrite(6, map(x, 0, 9, 0, 255));
 }
 
 
