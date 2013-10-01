@@ -2916,6 +2916,9 @@ Please make sure your boards conform to these design rules.</description>
 <element name="SJ7" library="SparkFun-Passives" package="SJ_2S-TRACE" value="SOLDERJUMPERTRACE" x="17.2085" y="20.6375" smashed="yes">
 <attribute name="VALUE" x="16.256" y="18.9865" size="0.4064" layer="27"/>
 </element>
+<element name="R9" library="resistor" package="R0603" value="" x="14.9225" y="45.72" smashed="yes" rot="MR90">
+<attribute name="VALUE" x="12.8905" y="44.831" size="1.27" layer="28" rot="MR90"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
@@ -3092,7 +3095,6 @@ Please make sure your boards conform to these design rules.</description>
 <via x="17.399" y="15.24" extent="1-16" drill="0.3302"/>
 <via x="10.541" y="15.494" extent="1-16" drill="0.3302"/>
 <via x="36.449" y="27.7495" extent="1-16" drill="0.3302"/>
-<contactref element="D5" pad="1"/>
 <contactref element="JP4" pad="P$2"/>
 <contactref element="JP3" pad="P$8"/>
 <contactref element="JP2" pad="P$1"/>
@@ -3105,6 +3107,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="34.163" y1="12.7" x2="33.997" y2="12.7" width="0.27431875" layer="16"/>
 <wire x1="33.997" y1="12.7" x2="33.655" y2="13.042" width="0.27431875" layer="16"/>
 <contactref element="C6" pad="2"/>
+<contactref element="R9" pad="1"/>
 </signal>
 <signal name="SCL" class="4">
 <contactref element="U5" pad="23"/>
@@ -3862,6 +3865,12 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="21.082" y1="17.018" x2="21.082" y2="17.233" width="0.2032" layer="16"/>
 <wire x1="21.082" y1="17.233" x2="22.0735" y2="18.2245" width="0.2032" layer="16"/>
 <wire x1="17.907" y1="20.828" x2="18.542" y2="20.828" width="0.2032" layer="1"/>
+</signal>
+<signal name="N$22">
+<contactref element="D5" pad="1"/>
+<contactref element="R9" pad="2"/>
+<wire x1="14.92" y1="47.768" x2="14.92" y2="46.5725" width="0.381" layer="16"/>
+<wire x1="14.92" y1="46.5725" x2="14.9225" y2="46.57" width="0.381" layer="16"/>
 </signal>
 </signals>
 <errors>

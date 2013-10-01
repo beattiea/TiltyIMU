@@ -8,17 +8,17 @@
 </settings>
 <grid distance="0.01" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.0025" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="21" name="tPlace" color="16" fill="1" visible="yes" active="yes"/>
-<layer number="22" name="bPlace" color="14" fill="1" visible="yes" active="yes"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="14" fill="1" visible="yes" active="yes"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="yes"/>
+<layer number="21" name="tPlace" color="10" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="25" name="tNames" color="14" fill="1" visible="no" active="yes"/>
 <layer number="26" name="bNames" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
@@ -44,8 +44,8 @@
 <layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
 <layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="15" fill="1" visible="no" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
 <layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
 <layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
@@ -220,7 +220,6 @@
 <text x="5.207" y="44.069" size="1.016" layer="25" ratio="12" rot="R90" align="top-left">1</text>
 <text x="5.715" y="34.163" size="1.778" layer="25" ratio="10" align="center-right">5</text>
 <text x="5.715" y="31.623" size="1.778" layer="25" ratio="10" align="center-right">6</text>
-<circle x="29.972" y="28.6385" radius="0.3302" width="0.2286" layer="26"/>
 <text x="19.685" y="13.843" size="1.016" layer="25" font="vector" ratio="12">Voltage</text>
 <text x="19.685" y="12.573" size="1.016" layer="25" font="vector" ratio="12">Sense</text>
 <text x="6.2865" y="20.574" size="1.778" layer="25" ratio="10" rot="R180" align="top-center">10</text>
@@ -1006,6 +1005,20 @@
 <text x="9.525" y="47.879" size="1.016" layer="26" ratio="12" rot="MR90" align="center-left">3v3</text>
 <circle x="19.05" y="24.892" radius="0.0635" width="0.254" layer="25"/>
 <text x="19.304" y="20.066" size="1.143" layer="25" ratio="15">Mag</text>
+<wire x1="2.032" y1="45.466" x2="2.032" y2="45.5295" width="0.2032" layer="26"/>
+<wire x1="2.032" y1="45.5295" x2="2.286" y2="45.7835" width="0.2032" layer="26" curve="-90"/>
+<wire x1="2.286" y1="45.7835" x2="3.81" y2="45.7835" width="0.2032" layer="26"/>
+<wire x1="4.064" y1="45.466" x2="4.064" y2="45.5295" width="0.2032" layer="26"/>
+<wire x1="4.064" y1="45.5295" x2="3.81" y2="45.7835" width="0.2032" layer="26" curve="90"/>
+<wire x1="4.064" y1="44.069" x2="4.064" y2="44.0055" width="0.2032" layer="26"/>
+<wire x1="4.064" y1="44.0055" x2="3.81" y2="43.7515" width="0.2032" layer="26" curve="-90"/>
+<wire x1="3.81" y1="43.7515" x2="2.286" y2="43.7515" width="0.2032" layer="26"/>
+<wire x1="2.032" y1="44.069" x2="2.032" y2="44.0055" width="0.2032" layer="26"/>
+<wire x1="2.032" y1="44.0055" x2="2.286" y2="43.7515" width="0.2032" layer="26" curve="90"/>
+<circle x="29.591" y="25.2095" radius="0.0254" width="0.381" layer="26"/>
+<circle x="5.1435" y="19.939" radius="0.0254" width="0.381" layer="26"/>
+<wire x1="20.32" y1="20.193" x2="20.701" y2="19.812" width="0.254" layer="26"/>
+<wire x1="20.701" y1="23.368" x2="21.082" y2="23.749" width="0.254" layer="26"/>
 </plain>
 <libraries>
 <library name="SparkFun-Sensors">

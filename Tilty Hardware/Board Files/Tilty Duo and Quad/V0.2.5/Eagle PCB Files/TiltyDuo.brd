@@ -3296,7 +3296,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="19.05" y1="40.132" x2="21.336" y2="40.132" width="0.508" layer="16"/>
 <wire x1="21.336" y1="40.132" x2="21.336" y2="40.1193" width="0.508" layer="16"/>
 <wire x1="17.8" y1="10.371" x2="17.8" y2="10.434" width="0.508" layer="1"/>
-<wire x1="17.8" y1="10.434" x2="18.288" y2="10.922" width="0.508" layer="1"/>
 <wire x1="18.288" y1="10.922" x2="18.288" y2="13.208" width="0.508" layer="1"/>
 <contactref element="D6" pad="C"/>
 <contactref element="D6" pad="A"/>
@@ -3309,6 +3308,7 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="C4" pad="1"/>
 <wire x1="22.987" y1="39.409" x2="22.0463" y2="39.409" width="0.254" layer="16"/>
 <wire x1="22.0463" y1="39.409" x2="21.336" y2="40.1193" width="0.254" layer="16"/>
+<wire x1="17.8" y1="10.434" x2="18.288" y2="10.922" width="0.508" layer="1"/>
 </signal>
 <signal name="CMD">
 <contactref element="U2" pad="P$34"/>
