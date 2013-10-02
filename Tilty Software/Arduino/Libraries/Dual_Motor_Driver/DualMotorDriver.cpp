@@ -32,8 +32,11 @@ MotorDriver::MotorDriver()
 : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 #endif
 {
-	uint8_t rxBufferIndex = 0;
-	uint8_t tx_bufferIndex = 0;
+	rxBufferIndex = 0;
+	txbufferIndex = 0;
+	
+	M1_direction = 1;
+	M2_direction = 0;
 }
 
 MotorDriver::~MotorDriver() 
@@ -43,6 +46,9 @@ MotorDriver::~MotorDriver()
 
 
 
+
+/** \brief Initializes the add-on board (starts Wire, sets up fast PWM, etc...)
+**/
 void MotorDriver::init()
 {
 	pinMode(M1, OUTPUT);
@@ -99,13 +105,135 @@ int MotorDriver::getData(int bytes)
 
 
 
+/** \brief Parses the data in the rxBuffer
+	\param[out] error Returns 0 if command is not recognized
+**/
+int MotorDriver::parseCommands()
+{
+	if (!(0xE0 & rxBuffer[rxBufferIndex])) // Top 3 bits = 0 means motor control command
+	{
+		parseMotorCommand();
+	}
+	else
+	{
+		// Non motor control commands
+	}
+}
+
+
 /** \brief Parses data in rxBuffer and updates encoder values
 **/
 int MotorDriver::update()
 {
 	encoder1 = m1Encoder.read();
 	encoder2 = m2Encoder.read();
+	
+	while (rxBufferIndex < MOTOR_DRIVER_RX_BUFFER_SIZE)
+	{
+		parseCommands();// Recursively parse commands until rxBuffer is parsed
+	}
+	
+	for (int i = 0; i < MOTOR_DRIVER_RX_BUFFER_SIZE; i++)// Clear the rxBuffer
+	{
+		rxBuffer[i] = 0;
+	}
 }
 
+
+
+/** \brief Parses rxBuffer data to control the motors
+	\param[out] error Returns 0 if command is not recognized
+**/
+int MotorDriver::parseMotorCommand()
+{
+	char control_byte = rxBuffer[rxBufferIndex];
+	uint8_t power = rxBuffer[rxBufferIndex + 1];
+	rxBufferIndex += 2;
+	
+	
+	
+	if (DRIVE & control_byte)// Parse for tank style control
+	{
+		if (MOTOR_NUM & control_byte) // Parse for motor 2
+		{
+			if (ENABLE & control_byte)
+			{
+				digitalWrite(M2A, HIGH);
+				digitalWrite(M2A, HIGH);
+				
+				return 1;
+			}
+			else
+			{
+				if (DIRECTION & control_byte)
+				{
+					digitalWrite(M2A, HIGH);
+					digitalWrite(M2A, LOW);
+				}
+				else
+				{
+					digitalWrite(M2A, LOW);
+					digitalWrite(M2A, HIGH);
+				}
+				
+				if (SPEED & control_byte)// Parse for power control
+				{
+					analogWrite(M2, power);
+				}
+				else // Parse for RPM control
+				{
+
+				}
+			}
+		}
+		
+		
+		else // parse for motor 1
+		{
+			if (ENABLE & control_byte)
+			{
+				digitalWrite(M1A, HIGH);
+				digitalWrite(M1A, HIGH);
+				
+				return 1;
+			}
+			else
+			{
+				if (DIRECTION & control_byte)
+				{
+					digitalWrite(M1A, HIGH);
+					digitalWrite(M1A, LOW);
+				}
+				else
+				{
+					digitalWrite(M1A, LOW);
+					digitalWrite(M1A, HIGH);
+				}
+				
+				if (SPEED & control_byte)// Parse for power control
+				{
+					analogWrite(M1, power);
+				}
+				else // Parse for RPM control
+				{
+
+				}
+			}
+		}
+		
+		return 1;
+	}
+	else // Parse for arcade style control
+	{
+		if (SPEED & control_byte)// Parse for power control
+		{
+			
+		}
+		else // Parse for RPM control
+		{
+			
+		}
+	}
+}
 // End add-on class information
 #endif

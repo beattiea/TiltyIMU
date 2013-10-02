@@ -40,10 +40,10 @@ void setup() {
 	
 	Serial.begin(115200);
 	
-	digitalWrite(M1A, HIGH);
-	digitalWrite(M1B, LOW);
-	digitalWrite(M2A, HIGH);
-	digitalWrite(M2B, LOW);
+	digitalWrite(M1A, !HIGH);
+	digitalWrite(M1B, !LOW);
+	digitalWrite(M2A, !HIGH);
+	digitalWrite(M2B, !LOW);
 }
 
 uint8_t enc1;
@@ -53,9 +53,6 @@ uint8_t enc4;
 uint8_t enc5, enc6, enc7, enc8;
 
 void loop() {
-	// motor1 is throttle, motor2 is turn
-	analogWrite(M1, motor1 + motor2);
-	analogWrite(M2, motor1 - motor2);
 	motors.update();// This function should be called as frequently as possible to keep everything up to speed
 
 	enc1 = (motors.encoder1 >> 24) & 0xFF;
@@ -70,9 +67,7 @@ void loop() {
 }
 
 void receiveEvent(int bytes) {
-	motor1 = Wire.read();
-	motor2 = Wire.read() - 127;
-	//motors.getData(bytes);
+	motors.getData(bytes);
 }
 
 void requestEvent() {

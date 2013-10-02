@@ -94,16 +94,36 @@ class MotorDriver {
 		
 		// I2C data handlers
 		int getData(int bytes);
-		int parseCommand();
+		int parseCommands();
 		
 		// Update functions
 		int update();
+		
+		// Motor control functions
+		int parseMotorCommand();
+		
+		// Motor power values (0-255)
+		uint8_t M1_power;
+		uint8_t M2_power;
+		
+		bool M1_direction;
+		bool M2_direction;
+		
+		bool invertM1;
+		bool invertM2;
 		
 		// Encoder values
 		long encoder1;
 		long encoder2;
 
 	private:
+		// Command Values
+		static const char DIRECTION = 0x01;// Sets motor direction
+		static const char ENABLE = 0x02;// Motor brake/cost. 0 brakes, 1 coasts.
+		static const char MOTOR_NUM = 0x04;// Motor or Throttle/Steering selection
+		static const char SPEED = 0x08;// Speed/Power setting
+		static const char DRIVE = 0x10;// Tank/Arcade style control. Set to 1 to enable Tank Control, 0 to enable Arcade.
+				
 		// I2C data buffers
 		uint8_t rxBuffer[MOTOR_DRIVER_RX_BUFFER_SIZE];
 		uint8_t txBuffer[MOTOR_DRIVER_TX_BUFFER_SIZE];
