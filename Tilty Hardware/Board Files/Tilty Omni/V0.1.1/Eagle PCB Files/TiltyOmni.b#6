@@ -2217,9 +2217,6 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="AREF">
 <contactref element="U1" pad="AREF"/>
 </signal>
-<signal name="VUSB">
-<contactref element="U1" pad="VUSB"/>
-</signal>
 <signal name="N$1">
 <contactref element="C1" pad="1"/>
 <contactref element="U5" pad="10"/>
@@ -2926,6 +2923,16 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="22.225" y1="16.383" x2="22.733" y2="16.383" width="0.2032" layer="1"/>
 <wire x1="22.733" y1="16.383" x2="22.86" y2="16.256" width="0.2032" layer="1"/>
 <wire x1="22.86" y1="16.256" x2="30.988" y2="16.256" width="0.2032" layer="1"/>
+<contactref element="U1" pad="VUSB"/>
+<via x="26.035" y="48.26" extent="1-16" drill="0.3302"/>
+<wire x1="26.035" y1="48.26" x2="26.035" y2="45.593" width="0.2032" layer="16"/>
+<wire x1="26.035" y1="45.593" x2="26.67" y2="44.958" width="0.2032" layer="16"/>
+<wire x1="26.67" y1="44.958" x2="27.686" y2="44.958" width="0.2032" layer="16"/>
+<wire x1="27.686" y1="44.958" x2="28.0035" y2="44.6405" width="0.2032" layer="16"/>
+<wire x1="28.0035" y1="44.6405" x2="29.4005" y2="44.6405" width="0.2032" layer="16"/>
+<wire x1="29.4005" y1="44.6405" x2="29.972" y2="45.212" width="0.2032" layer="16"/>
+<wire x1="29.972" y1="45.212" x2="29.972" y2="48.387" width="0.2032" layer="16"/>
+<wire x1="29.972" y1="48.387" x2="32.258" y2="50.673" width="0.2032" layer="16"/>
 </signal>
 <signal name="VCC">
 <contactref element="JP2" pad="P$7"/>
