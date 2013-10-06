@@ -7507,6 +7507,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="U$1" library="My Parts" deviceset="PCA9306" device=""/>
 <part name="+3V4" library="supply1" deviceset="+3V3" device=""/>
 <part name="P+6" library="supply1" deviceset="+5V" device=""/>
+<part name="GND7" library="supply1" deviceset="GND" device=""/>
+<part name="R6" library="resistor" deviceset="R-US_" device="R0603"/>
+<part name="R7" library="resistor" deviceset="R-US_" device="R0603"/>
+<part name="+3V5" library="supply1" deviceset="+3V3" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7588,6 +7592,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="U$1" gate="G$1" x="193.04" y="25.4"/>
 <instance part="+3V4" gate="G$1" x="175.26" y="33.02"/>
 <instance part="P+6" gate="1" x="210.82" y="35.56"/>
+<instance part="GND7" gate="1" x="175.26" y="15.24"/>
+<instance part="R6" gate="G$1" x="165.1" y="30.48" rot="R90"/>
+<instance part="R7" gate="G$1" x="160.02" y="27.94" rot="R90"/>
+<instance part="+3V5" gate="G$1" x="162.56" y="40.64"/>
 </instances>
 <busses>
 </busses>
@@ -7742,6 +7750,12 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="50.8" y1="27.94" x2="53.34" y2="27.94" width="0.1524" layer="91"/>
 <pinref part="GND16" gate="1" pin="GND"/>
 <wire x1="53.34" y1="27.94" x2="53.34" y2="25.4" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="GND"/>
+<wire x1="177.8" y1="20.32" x2="175.26" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="20.32" x2="175.26" y2="17.78" width="0.1524" layer="91"/>
+<pinref part="GND7" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="+24V" class="0">
@@ -8067,6 +8081,16 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="175.26" y1="27.94" x2="175.26" y2="30.48" width="0.1524" layer="91"/>
 <pinref part="+3V4" gate="G$1" pin="+3V3"/>
 </segment>
+<segment>
+<pinref part="R7" gate="G$1" pin="2"/>
+<wire x1="160.02" y1="33.02" x2="160.02" y2="35.56" width="0.1524" layer="91"/>
+<pinref part="R6" gate="G$1" pin="2"/>
+<wire x1="160.02" y1="35.56" x2="162.56" y2="35.56" width="0.1524" layer="91"/>
+<pinref part="+3V5" gate="G$1" pin="+3V3"/>
+<wire x1="162.56" y1="35.56" x2="165.1" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="162.56" y1="35.56" x2="162.56" y2="38.1" width="0.1524" layer="91"/>
+<junction x="162.56" y="35.56"/>
+</segment>
 </net>
 <net name="SERVO_3" class="0">
 <segment>
@@ -8233,15 +8257,17 @@ We've spent an enormous amount of time creating and checking these footprints an
 <net name="3V_SDA" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="SDA1"/>
-<wire x1="177.8" y1="22.86" x2="167.64" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="177.8" y1="22.86" x2="160.02" y2="22.86" width="0.1524" layer="91"/>
 <label x="167.64" y="22.86" size="1.778" layer="95"/>
+<pinref part="R7" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="3V_SCL" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="SCL1"/>
-<wire x1="177.8" y1="25.4" x2="167.64" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="177.8" y1="25.4" x2="165.1" y2="25.4" width="0.1524" layer="91"/>
 <label x="167.64" y="25.4" size="1.778" layer="95"/>
+<pinref part="R6" gate="G$1" pin="1"/>
 </segment>
 </net>
 </nets>

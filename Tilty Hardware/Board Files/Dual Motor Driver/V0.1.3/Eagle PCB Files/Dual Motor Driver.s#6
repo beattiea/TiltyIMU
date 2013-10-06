@@ -11732,14 +11732,14 @@ Sparkfun button</text>
 <label x="58.42" y="114.3" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP6" gate="1" pin="2"/>
-<wire x1="180.34" y1="35.56" x2="175.26" y2="35.56" width="0.1524" layer="91"/>
-<label x="175.26" y="35.56" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="JP9" gate="G$1" pin="2"/>
 <wire x1="147.32" y1="78.74" x2="152.4" y2="78.74" width="0.1524" layer="91"/>
 <label x="147.32" y="78.74" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP6" gate="1" pin="1"/>
+<wire x1="180.34" y1="38.1" x2="175.26" y2="38.1" width="0.1524" layer="91"/>
+<label x="175.26" y="38.1" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="M1B" class="0">
@@ -11758,14 +11758,14 @@ Sparkfun button</text>
 <label x="58.42" y="111.76" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP6" gate="1" pin="1"/>
-<wire x1="180.34" y1="38.1" x2="175.26" y2="38.1" width="0.1524" layer="91"/>
-<label x="175.26" y="38.1" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="JP9" gate="G$1" pin="1"/>
 <wire x1="147.32" y1="76.2" x2="152.4" y2="76.2" width="0.1524" layer="91"/>
 <label x="147.32" y="76.2" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP6" gate="1" pin="2"/>
+<wire x1="180.34" y1="35.56" x2="175.26" y2="35.56" width="0.1524" layer="91"/>
+<label x="175.26" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="M2A" class="0">
@@ -11789,9 +11789,9 @@ Sparkfun button</text>
 <label x="147.32" y="66.04" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP5" gate="1" pin="5"/>
-<wire x1="205.74" y1="35.56" x2="210.82" y2="35.56" width="0.1524" layer="91"/>
-<label x="205.74" y="35.56" size="1.778" layer="95"/>
+<pinref part="JP5" gate="1" pin="6"/>
+<wire x1="205.74" y1="38.1" x2="210.82" y2="38.1" width="0.1524" layer="91"/>
+<label x="205.74" y="38.1" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="M2B" class="0">
@@ -11815,9 +11815,9 @@ Sparkfun button</text>
 <label x="147.32" y="63.5" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP5" gate="1" pin="6"/>
-<wire x1="205.74" y1="38.1" x2="210.82" y2="38.1" width="0.1524" layer="91"/>
-<label x="205.74" y="38.1" size="1.778" layer="95"/>
+<pinref part="JP5" gate="1" pin="5"/>
+<wire x1="205.74" y1="35.56" x2="210.82" y2="35.56" width="0.1524" layer="91"/>
+<label x="205.74" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+24V" class="0">

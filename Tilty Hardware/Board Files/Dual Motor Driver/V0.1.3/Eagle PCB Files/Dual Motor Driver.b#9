@@ -3020,6 +3020,12 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="9.652" y1="36.83" x2="8.89" y2="37.592" width="0.2032" layer="1"/>
 <wire x1="8.89" y1="37.592" x2="8.89" y2="42.672" width="0.2032" layer="1"/>
 <wire x1="8.89" y1="42.672" x2="11.43" y2="45.212" width="0.2032" layer="1"/>
+<polygon width="0.1524" layer="16">
+<vertex x="0.508" y="0.508"/>
+<vertex x="37.846" y="0.508"/>
+<vertex x="37.846" y="50.292"/>
+<vertex x="0.508" y="50.292"/>
+</polygon>
 </signal>
 <signal name="M1A">
 <contactref element="D1" pad="1"/>
