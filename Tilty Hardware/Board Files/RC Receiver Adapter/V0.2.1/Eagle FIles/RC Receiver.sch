@@ -7560,8 +7560,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="JP8" gate="G$1" x="190.5" y="121.92">
 <attribute name="PART#" x="190.5" y="121.92" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="+3V1" gate="G$1" x="175.26" y="129.54"/>
-<instance part="GND8" gate="1" x="162.56" y="114.3"/>
+<instance part="+3V1" gate="G$1" x="182.88" y="129.54"/>
+<instance part="GND8" gate="1" x="177.8" y="116.84"/>
 <instance part="U3" gate="G$1" x="215.9" y="101.6">
 <attribute name="PART#" x="215.9" y="101.6" size="1.778" layer="96" display="off"/>
 </instance>
@@ -7680,8 +7680,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 </segment>
 <segment>
 <pinref part="JP8" gate="G$1" pin="2"/>
-<wire x1="185.42" y1="121.92" x2="162.56" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="162.56" y1="121.92" x2="162.56" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="185.42" y1="121.92" x2="177.8" y2="121.92" width="0.1524" layer="91"/>
+<wire x1="177.8" y1="121.92" x2="177.8" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="GND8" gate="1" pin="GND"/>
 </segment>
 <segment>
@@ -8020,24 +8020,24 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="JP7" gate="G$1" pin="4"/>
 </segment>
 </net>
-<net name="SATELLITE_TX" class="0">
+<net name="RX" class="0">
 <segment>
 <pinref part="JP8" gate="G$1" pin="3"/>
-<label x="165.1" y="119.38" size="1.778" layer="95"/>
-<wire x1="185.42" y1="119.38" x2="165.1" y2="119.38" width="0.1524" layer="91"/>
+<label x="180.34" y="119.38" size="1.778" layer="95"/>
+<wire x1="185.42" y1="119.38" x2="180.34" y2="119.38" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="PD0(RXD)"/>
-<wire x1="86.36" y1="78.74" x2="104.14" y2="78.74" width="0.1524" layer="91"/>
-<label x="86.36" y="78.74" size="1.778" layer="95"/>
+<wire x1="86.36" y1="78.74" x2="91.44" y2="78.74" width="0.1524" layer="91"/>
+<label x="88.9" y="78.74" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
 <segment>
 <pinref part="JP8" gate="G$1" pin="1"/>
-<wire x1="185.42" y1="124.46" x2="175.26" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="185.42" y1="124.46" x2="182.88" y2="124.46" width="0.1524" layer="91"/>
 <pinref part="+3V1" gate="G$1" pin="+3V3"/>
-<wire x1="175.26" y1="124.46" x2="175.26" y2="127" width="0.1524" layer="91"/>
+<wire x1="182.88" y1="124.46" x2="182.88" y2="127" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="VOUT"/>
@@ -8142,10 +8142,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <label x="93.98" y="63.5" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="ARDUINO_TX" class="0">
+<net name="TX" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="PD1(TXD)"/>
-<wire x1="86.36" y1="76.2" x2="104.14" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="76.2" x2="91.44" y2="76.2" width="0.1524" layer="91"/>
 <label x="88.9" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>

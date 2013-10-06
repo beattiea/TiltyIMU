@@ -8185,9 +8185,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="JP7" gate="G$1" pin="7"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="PC2(ADC2)"/>
-<wire x1="86.36" y1="96.52" x2="99.06" y2="96.52" width="0.1524" layer="91"/>
-<label x="88.9" y="96.52" size="1.778" layer="95"/>
+<pinref part="U1" gate="G$1" pin="PC3(ADC3)"/>
+<wire x1="86.36" y1="93.98" x2="99.06" y2="93.98" width="0.1524" layer="91"/>
+<label x="88.9" y="93.98" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RC_IN4" class="0">
@@ -8197,9 +8197,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="JP7" gate="G$1" pin="10"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="PC3(ADC3)"/>
-<wire x1="86.36" y1="93.98" x2="99.06" y2="93.98" width="0.1524" layer="91"/>
-<label x="88.9" y="93.98" size="1.778" layer="95"/>
+<pinref part="U1" gate="G$1" pin="PC2(ADC2)"/>
+<wire x1="86.36" y1="96.52" x2="99.06" y2="96.52" width="0.1524" layer="91"/>
+<label x="88.9" y="96.52" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RC_IN5" class="0">
@@ -8249,7 +8249,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 </segment>
 <segment>
 <pinref part="JP3" gate="A" pin="8"/>
-<wire x1="246.38" y1="40.64" x2="259.08" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="40.64" x2="264.16" y2="40.64" width="0.1524" layer="91"/>
 <label x="254" y="40.64" size="1.778" layer="95"/>
 </segment>
 </net>
@@ -8262,7 +8262,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 </segment>
 <segment>
 <pinref part="JP3" gate="A" pin="7"/>
-<wire x1="246.38" y1="43.18" x2="259.08" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="43.18" x2="264.16" y2="43.18" width="0.1524" layer="91"/>
 <label x="254" y="43.18" size="1.778" layer="95"/>
 </segment>
 </net>

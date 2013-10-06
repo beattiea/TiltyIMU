@@ -7505,6 +7505,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="GND16" library="supply1" deviceset="GND" device=""/>
 <part name="P+11" library="supply1" deviceset="+5V" device=""/>
 <part name="U$1" library="My Parts" deviceset="PCA9306" device=""/>
+<part name="+3V4" library="supply1" deviceset="+3V3" device=""/>
+<part name="P+6" library="supply1" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7584,6 +7586,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="GND16" gate="1" x="53.34" y="22.86"/>
 <instance part="P+11" gate="1" x="30.48" y="33.02"/>
 <instance part="U$1" gate="G$1" x="193.04" y="25.4"/>
+<instance part="+3V4" gate="G$1" x="175.26" y="33.02"/>
+<instance part="P+6" gate="1" x="210.82" y="35.56"/>
 </instances>
 <busses>
 </busses>
@@ -7882,6 +7886,16 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="R5" gate="G$1" pin="2"/>
 <wire x1="30.48" y1="27.94" x2="33.02" y2="27.94" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="EN"/>
+<pinref part="P+6" gate="1" pin="+5V"/>
+<wire x1="208.28" y1="30.48" x2="210.82" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="210.82" y1="30.48" x2="210.82" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="210.82" y1="30.48" x2="210.82" y2="27.94" width="0.1524" layer="91"/>
+<junction x="210.82" y="30.48"/>
+<pinref part="U$1" gate="G$1" pin="VREF2"/>
+<wire x1="210.82" y1="27.94" x2="208.28" y2="27.94" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="N$5" class="0">
 <segment>
@@ -7896,24 +7910,12 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="246.38" y1="40.64" x2="259.08" y2="40.64" width="0.1524" layer="91"/>
 <label x="254" y="40.64" size="1.778" layer="95"/>
 </segment>
-<segment>
-<pinref part="U1" gate="G$1" pin="PC4(ADC4/SDA)"/>
-<wire x1="86.36" y1="91.44" x2="109.22" y2="91.44" width="0.1524" layer="91"/>
-<label x="99.06" y="91.44" size="1.778" layer="95"/>
-<pinref part="R2" gate="G$1" pin="1"/>
-</segment>
 </net>
 <net name="SCL" class="0">
 <segment>
 <pinref part="JP3" gate="A" pin="7"/>
 <wire x1="246.38" y1="43.18" x2="259.08" y2="43.18" width="0.1524" layer="91"/>
 <label x="254" y="43.18" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="U1" gate="G$1" pin="PC5(ADC5/SCL)"/>
-<wire x1="86.36" y1="88.9" x2="114.3" y2="88.9" width="0.1524" layer="91"/>
-<label x="99.06" y="88.9" size="1.778" layer="95"/>
-<pinref part="R3" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="RC_IN6" class="0">
@@ -8059,6 +8061,12 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="246.38" y1="116.84" x2="256.54" y2="116.84" width="0.1524" layer="91"/>
 <wire x1="256.54" y1="116.84" x2="256.54" y2="119.38" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="VREF1"/>
+<wire x1="177.8" y1="27.94" x2="175.26" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="27.94" x2="175.26" y2="30.48" width="0.1524" layer="91"/>
+<pinref part="+3V4" gate="G$1" pin="+3V3"/>
+</segment>
 </net>
 <net name="SERVO_3" class="0">
 <segment>
@@ -8194,6 +8202,46 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="U1" gate="G$1" pin="PC1(ADC1)"/>
 <wire x1="86.36" y1="99.06" x2="99.06" y2="99.06" width="0.1524" layer="91"/>
 <label x="88.9" y="99.06" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="5V_SDA" class="0">
+<segment>
+<pinref part="U1" gate="G$1" pin="PC4(ADC4/SDA)"/>
+<wire x1="86.36" y1="91.44" x2="109.22" y2="91.44" width="0.1524" layer="91"/>
+<label x="93.98" y="91.44" size="1.778" layer="95"/>
+<pinref part="R2" gate="G$1" pin="1"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="SDA2"/>
+<wire x1="208.28" y1="22.86" x2="218.44" y2="22.86" width="0.1524" layer="91"/>
+<label x="208.28" y="22.86" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="5V_SCL" class="0">
+<segment>
+<pinref part="U1" gate="G$1" pin="PC5(ADC5/SCL)"/>
+<wire x1="86.36" y1="88.9" x2="114.3" y2="88.9" width="0.1524" layer="91"/>
+<label x="93.98" y="88.9" size="1.778" layer="95"/>
+<pinref part="R3" gate="G$1" pin="1"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="SCL2"/>
+<wire x1="208.28" y1="25.4" x2="218.44" y2="25.4" width="0.1524" layer="91"/>
+<label x="208.28" y="25.4" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="3V_SDA" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="SDA1"/>
+<wire x1="177.8" y1="22.86" x2="167.64" y2="22.86" width="0.1524" layer="91"/>
+<label x="167.64" y="22.86" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="3V_SCL" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="SCL1"/>
+<wire x1="177.8" y1="25.4" x2="167.64" y2="25.4" width="0.1524" layer="91"/>
+<label x="167.64" y="25.4" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

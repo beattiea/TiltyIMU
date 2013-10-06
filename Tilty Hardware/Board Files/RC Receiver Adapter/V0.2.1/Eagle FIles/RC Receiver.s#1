@@ -7448,7 +7448,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="C7" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="P+13" library="supply1" deviceset="+24V" device=""/>
 <part name="P+17" library="supply1" deviceset="+24V" device=""/>
-<part name="SJ1" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NC"/>
+<part name="SJ1" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE" value="SOLDERJUMPERTRACE"/>
 <part name="U1" library="SparkFun-DigitalIC" deviceset="ATMEGA328_SMT" device="" value="ATMEGA328P"/>
 <part name="P+1" library="supply1" deviceset="+5V" device=""/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
@@ -8020,7 +8020,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="JP7" gate="G$1" pin="4"/>
 </segment>
 </net>
-<net name="SATELLITE_TX" class="0">
+<net name="RX" class="0">
 <segment>
 <pinref part="JP8" gate="G$1" pin="3"/>
 <label x="165.1" y="119.38" size="1.778" layer="95"/>
@@ -8028,8 +8028,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="PD0(RXD)"/>
-<wire x1="86.36" y1="78.74" x2="104.14" y2="78.74" width="0.1524" layer="91"/>
-<label x="86.36" y="78.74" size="1.778" layer="95"/>
+<wire x1="86.36" y1="78.74" x2="91.44" y2="78.74" width="0.1524" layer="91"/>
+<label x="88.9" y="78.74" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -8142,10 +8142,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <label x="93.98" y="63.5" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="ARDUINO_TX" class="0">
+<net name="TX" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="PD1(TXD)"/>
-<wire x1="86.36" y1="76.2" x2="104.14" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="76.2" x2="91.44" y2="76.2" width="0.1524" layer="91"/>
 <label x="88.9" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
