@@ -5897,14 +5897,14 @@ www.scr.com</description>
 <wire x1="-10.16" y1="1.27" x2="10.16" y2="1.27" width="0.254" layer="23"/>
 <wire x1="10.16" y1="1.27" x2="10.16" y2="-1.27" width="0.254" layer="23"/>
 <wire x1="10.16" y1="-1.27" x2="-10.16" y2="-1.27" width="0.254" layer="23"/>
-<pad name="P$1" x="-8.89" y="-0.127" drill="0.889"/>
-<pad name="P$2" x="-6.35" y="0.127" drill="0.889"/>
-<pad name="P$3" x="-3.81" y="-0.127" drill="0.889"/>
-<pad name="P$4" x="-1.27" y="0.127" drill="0.889"/>
-<pad name="P$5" x="1.27" y="-0.127" drill="0.889"/>
-<pad name="P$6" x="3.81" y="0" drill="0.889"/>
-<pad name="P$7" x="6.35" y="-0.127" drill="0.889"/>
-<pad name="P$8" x="8.89" y="0" drill="0.889"/>
+<pad name="P$1" x="-8.89" y="-0.127" drill="0.8"/>
+<pad name="P$2" x="-6.35" y="0.127" drill="0.8"/>
+<pad name="P$3" x="-3.81" y="-0.127" drill="0.8"/>
+<pad name="P$4" x="-1.27" y="0.127" drill="0.8"/>
+<pad name="P$5" x="1.27" y="-0.127" drill="0.8"/>
+<pad name="P$6" x="3.81" y="0.127" drill="0.8"/>
+<pad name="P$7" x="6.35" y="-0.127" drill="0.8"/>
+<pad name="P$8" x="8.89" y="0.127" drill="0.8"/>
 </package>
 </packages>
 <symbols>
@@ -8470,6 +8470,11 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <wire x1="193.04" y1="20.32" x2="182.88" y2="20.32" width="0.1524" layer="91"/>
 <label x="182.88" y="20.32" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="JP6" gate="G$1" pin="1"/>
+<wire x1="279.4" y1="53.34" x2="264.16" y2="53.34" width="0.1524" layer="91"/>
+<label x="264.16" y="53.34" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="N$3" class="0">
 <segment>
@@ -8671,9 +8676,9 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <label x="177.8" y="22.86" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP6" gate="G$1" pin="1"/>
-<wire x1="279.4" y1="53.34" x2="264.16" y2="53.34" width="0.1524" layer="91"/>
-<label x="264.16" y="53.34" size="1.778" layer="95"/>
+<pinref part="JP6" gate="G$1" pin="2"/>
+<wire x1="279.4" y1="55.88" x2="264.16" y2="55.88" width="0.1524" layer="91"/>
+<label x="264.16" y="55.88" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="IMU_INT" class="0">
@@ -8795,6 +8800,11 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <wire x1="231.14" y1="12.7" x2="251.46" y2="12.7" width="0.1524" layer="91"/>
 <label x="241.3" y="12.7" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="JP7" gate="G$1" pin="11"/>
+<wire x1="302.26" y1="78.74" x2="312.42" y2="78.74" width="0.1524" layer="91"/>
+<label x="304.8" y="78.74" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="5V_SCL" class="0">
 <segment>
@@ -8806,11 +8816,6 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="U1" gate="G$1" pin="16/A2"/>
 <wire x1="231.14" y1="10.16" x2="251.46" y2="10.16" width="0.1524" layer="91"/>
 <label x="241.3" y="10.16" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="JP7" gate="G$1" pin="11"/>
-<wire x1="302.26" y1="78.74" x2="312.42" y2="78.74" width="0.1524" layer="91"/>
-<label x="304.8" y="78.74" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="JP7" gate="G$1" pin="10"/>
@@ -9130,13 +9135,6 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <pinref part="JP6" gate="G$1" pin="3"/>
 <wire x1="279.4" y1="58.42" x2="269.24" y2="58.42" width="0.1524" layer="91"/>
 <label x="269.24" y="58.42" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="27" class="0">
-<segment>
-<pinref part="JP6" gate="G$1" pin="2"/>
-<wire x1="279.4" y1="55.88" x2="269.24" y2="55.88" width="0.1524" layer="91"/>
-<label x="269.24" y="55.88" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="29" class="0">
