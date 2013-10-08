@@ -35,7 +35,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 RCadapter::RCadapter() : satRX(Serial)
 {
+	uint8_t input_pins[MAX_INPUTS] = {255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};
+	uint16_t channel_min[MAX_INPUTS] = {0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF};
+	uint16_t channel_max[MAX_INPUTS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	
+	uint8_t output_pins[MAX_OUTPUTS] = {255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};
 }
 
 RCadapter::~RCadapter() 
@@ -47,20 +51,23 @@ RCadapter::~RCadapter()
 
 void RCadapter::init()
 {
-	#ifndef RC_I2C_ADDRESS
-		char I2C_ADDRESS = EEPROM.read(RC_ADAPTER_I2C_EEPROM_ADDRESS);
-		if (I2C_ADDRESS == 255)
-		{
-			I2C_ADDRESS = 0x02;
-			EEPROM.write(RC_ADAPTER_I2C_EEPROM_ADDRESS, I2C_ADDRESS);
-		}
-	#else
-		I2C_ADDRESS = RC_I2C_ADDRESS;
-	#endif
+#ifndef RC_I2C_ADDRESS
+	char I2C_ADDRESS = EEPROM.read(RC_ADAPTER_I2C_EEPROM_ADDRESS);
+	if (I2C_ADDRESS == 255)
+	{
+	I2C_ADDRESS = 0x02;
+		EEPROM.write(RC_ADAPTER_I2C_EEPROM_ADDRESS, I2C_ADDRESS);
+	}
+#else
+	I2C_ADDRESS = RC_I2C_ADDRESS;
+#endif
 	TWBR = 400000L;// Set up I2C for 400kHz
-	Wire.begin(0x02); // Begin I2C at slave address I2C_ADDRESS (defaults to 0x02)
+	Wire.begin(I2C_ADDRESS); // Begin I2C at slave address I2C_ADDRESS (defaults to 0x02)
 	delay(5);
-	satRX.init(); // setup satellite receiver
+	if (EEPROM.read(USE_SAT_RX_ADDRESS) != 255)
+	{
+		satRX.init(); // setup satellite receiver
+	}
 }
 
 
@@ -86,6 +93,28 @@ void RCadapter::initServo(char servo)
 		case 5: servo_5.attach(SERVO_5_PIN); break;
 		case 6: servo_6.attach(SERVO_6_PIN); break;
 	}
+}
+
+/** \brief Call this function to initialize the Satellite receiver
+**/
+void RCadapter::initSatelliteRX() 
+{
+	satRX.init();
+	EEPROM.write(USE_SAT_RX_ADDRESS, 0x01); // Saves that satellite receiver should be used
+}
+
+/** \brief Call this function to initialize standar R/C pwm inputs. This will clear any existing setup.
+	\param[in] *pins An array of pin numbers to read from
+	\param[in] length The length of the array
+**/
+void RCadapter::initRCinputs(uint8_t *pins, uint8_t length)
+{
+	for (int i = 0; i < length; i++)
+	{
+		input_pins[i] = pins[i];
+		pinMode(input_pins[i], INPUT);
+	}
+	number_inputs = length;
 }
 
 
@@ -164,6 +193,46 @@ int RCadapter::readSatRX()
 	return NO_NEW_SAT_RX_DATA;
 }
 
+/** \brief Reads the R/C pwm inputs for data, this function should be called as frequently as possible
+	\param[out] boolean Returns true if new data has been read, false if data isn't ready yet
+**/
+int RCadapter::readRCinputs()
+{
+	if (digitalRead(ordered_pins[input_index])) {
+		rc_start[input_index] = TCNT1;//micros();
+		
+		if (input_index != 0) {
+			rc_end[input_index - 1] = rc_start[input_index];
+		}
+		
+		input_index++;
+		
+		if (input_index == sizeof(ordered_pins))
+		{
+			while (digitalRead(ordered_pins[input_index - 1])) {}
+			rc_end[input_index - 1] = TCNT1;//micros();
+			input_index = 0;
+			
+			for (int i = 0; i < sizeof(ordered_pins); i++)
+			{
+				if (rc_start[i] < rc_end[i])
+				{
+					channel_values[i] = rc_end[i] - rc_start[i];
+				}
+				else // Handle timer overflows
+				{
+					channel_values[i] = 0xFFFFFFFF - rc_start[i] + rc_end[i];
+				}
+				
+				if (channel_values[i] < channel_min[i] || channel_min[i] == 0) { channel_min[i] = channel_values[i];}
+				if (channel_values[i] > channel_max[i] || channel_max[i] == 0) { channel_max[i] = channel_values[i];}
+			}
+		}
+		return 1;
+	}
+	return 0;
+}
+
 
 
 /** \brief Writes a value to one of the servo headers to control a servo or electronic speed dontroller
@@ -194,6 +263,59 @@ int RCadapter::writeServo(char servo, int value)
 		case 5: return writeServo(servo_5, value); break;
 		case 6: return writeServo(servo_6, value); break;
 	}
+}
+
+
+/** \brief Parses a write data command from I2C
+	\param[out] boolean Returns 1 when successfully synced
+**/
+int RCadapter::syncRCinputs()
+{	
+	while (last_read == 0 || millis() - last_read < 10)
+	{
+		for (int i = 0; i < sizeof(input_pins) && input_pins[i] != 255; i++)
+		{
+			if (digitalRead(input_pins[i]))
+			{
+				last_read = millis();
+			}
+		}
+	}
+	//Serial.println("Found start point...");
+	return 1;
+}
+
+/** \brief Parses a write data command from I2C
+	\param[out] boolean Returns 0 if all pins successfully initialized. Otherwise, returns a bitmask of unsuccessful pins.
+**/
+int RCadapter::getInputOrder()
+{
+	while (input_index < sizeof(ordered_pins)) {
+		for (int i = 0; i < sizeof(input_pins); i++) {
+			if (!inOrderedPins(input_pins[i])) {// Only reads an input pin if it hasn't already been read
+				if (digitalRead(input_pins[i])) {
+					last_read = micros();
+					ordered_pins[input_index] = input_pins[i];
+					input_index++;
+				}
+			}
+		}
+	}
+	/*
+	Serial.print("Found input order: ");
+	for (int i = 0; i < sizeof(order) - 1; i++) {
+		Serial.print(order[i]);
+		Serial.print(", ");
+	}
+	Serial.println(order[sizeof(order) - 1]);
+	*/
+}
+
+bool RCadapter::inOrderedPins(uint8_t num) {
+	for (int i = 0; i < sizeof(ordered_pins); i++) {
+		if (ordered_pins[i] == num) { return true;}
+	}
+	return false;
 }
 
 

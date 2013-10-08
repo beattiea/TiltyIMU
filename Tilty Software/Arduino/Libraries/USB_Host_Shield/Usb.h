@@ -54,6 +54,8 @@ typedef MAX3421e<P9, P8> MAX3421E; // Teensy++ 2.0 & 1.0
 typedef MAX3421e<P53, P54> MAX3421E; // Arduino Mega ADK
 #elif defined(BOARD_BALANDUINO)
 typedef MAX3421e<P20, P19> MAX3421E; // Balanduino
+#elif defined(CORE_TEENSY) && defined(__arm__)
+typedef MAX3421e<P20, P19> MAX3421e
 #else
 typedef MAX3421e<P10, P9> MAX3421E; // Official Arduinos (UNO, Duemilanove, Mega, 2560, Leonardo etc.)
 #endif

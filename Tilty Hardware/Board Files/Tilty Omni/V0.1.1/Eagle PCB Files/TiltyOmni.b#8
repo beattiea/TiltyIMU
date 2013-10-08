@@ -3673,7 +3673,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="25.146" y1="36.83" x2="25.146" y2="47.371" width="0.2032" layer="16"/>
 <wire x1="25.146" y1="47.371" x2="26.035" y2="48.26" width="0.2032" layer="16"/>
 <contactref element="U1" pad="VIN"/>
-<wire x1="29.845" y1="48.26" x2="28.575" y2="50.8" width="0" layer="19" extent="1-16"/>
+<wire x1="28.575" y1="50.8" x2="26.035" y2="48.26" width="0.2032" layer="1"/>
 </signal>
 <signal name="VCC">
 <contactref element="JP2" pad="P$7"/>

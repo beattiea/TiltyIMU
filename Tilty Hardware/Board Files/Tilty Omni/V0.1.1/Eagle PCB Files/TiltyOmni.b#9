@@ -3672,6 +3672,8 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="29.845" y1="48.26" x2="32.258" y2="50.673" width="0.2032" layer="16"/>
 <wire x1="25.146" y1="36.83" x2="25.146" y2="47.371" width="0.2032" layer="16"/>
 <wire x1="25.146" y1="47.371" x2="26.035" y2="48.26" width="0.2032" layer="16"/>
+<contactref element="U1" pad="VIN"/>
+<wire x1="29.845" y1="48.26" x2="28.575" y2="50.8" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="VCC">
 <contactref element="JP2" pad="P$7"/>
@@ -3705,14 +3707,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="30.988" y1="10.922" x2="33.3502" y2="10.922" width="0.254" layer="1"/>
 <wire x1="33.3502" y1="10.922" x2="33.8582" y2="10.414" width="0.254" layer="1"/>
 <wire x1="30.646" y1="8.548" x2="30.646" y2="8.382" width="0.2032" layer="1"/>
-</signal>
-<signal name="N$4">
-<contactref element="U1" pad="VIN"/>
-<wire x1="35.56" y1="46.482" x2="35.052" y2="46.99" width="0" layer="19" extent="1-16"/>
-<wire x1="35.052" y1="46.99" x2="27.813" y2="46.99" width="0" layer="19" extent="1-16"/>
-<wire x1="27.813" y1="46.99" x2="27.305" y2="47.498" width="0" layer="19" extent="1-16"/>
-<wire x1="27.305" y1="47.498" x2="27.305" y2="49.53" width="0" layer="19" extent="1-16"/>
-<wire x1="27.305" y1="49.53" x2="28.575" y2="50.8" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="24">
 <contactref element="U1" pad="24"/>

@@ -37,6 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Wire.h"
 #include "EEPROM.h"
 
+#define MAX_INPUTS 12
+#define MAX_OUTPUTS 12
+
 //#define FAST_SERVO
 #ifdef FAST_SERVO
 	#include "FastServo.h"
@@ -59,7 +62,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // EEPROM data addresses
 #define RC_ADAPTER_I2C_EEPROM_ADDRESS 0
-#define SAT_RX_BOUND_ADDRESS 1
+#define USE_SAT_RX_ADDRESS 1 // Boolean whether to initialize the Satellite receiver at startup
+#define INPUT_PINS_ADDRESS 2 // Pins last used for input, if not set manually. 12 bytes.
+#define OUTPUT_PINS_ADDRESS 14 // Pins last used for output, if not set manually. 12 bytes.
 
 // Command identifiers
 #define READ_RC_COMMAND 0x00
@@ -80,17 +85,38 @@ class RCadapter {
 		void init();
 		void initServo(Servo &servo, char servo_pin);
 		void initServo(char servo);
+		void initSatelliteRX();
+		void initRCinputs(uint8_t *pins, uint8_t length);
 		
 		int getData(int bytes);
 		int parseCommand();
 		
 		// Read signal functions
 		int readSatRX();
+		int readRCinputs();
 		
 		// write servo functions
 		int writeServo(char servo, int value);
 		int writeServo(Servo &servo, int value);
+		
 	private:
+		// R/C channel inputs
+		uint8_t input_pins[MAX_INPUTS]; // pins to read
+		uint8_t ordered_pins[MAX_INPUTS]; // pins ordered to read correct channel in correct order
+		uint32_t last_read; // time of last input reading
+		uint8_t input_index; // Index of next input pin to read for getting input order
+		uint8_t number_inputs; // contains the number of initialized inputs
+		uint32_t rc_start[MAX_INPUTS];
+		uint32_t rc_end[MAX_INPUTS];
+		uint16_t channel_values[MAX_INPUTS];
+		
+		// Input min/max values
+		uint16_t channel_min[MAX_INPUTS];
+		uint16_t channel_max[MAX_INPUTS];
+		
+		// Servo pwm output pins
+		uint8_t output_pins[MAX_OUTPUTS];
+		
 		// I2C data buffers
 		uint8_t rxBuffer[RC_ADAPTER_RX_BUFFER_SIZE];
 		uint8_t txBuffer[RC_ADAPTER_TX_BUFFER_SIZE];
@@ -98,6 +124,10 @@ class RCadapter {
 		// I2C data buffer indexes
 		uint8_t rxBufferIndex;
 		uint8_t txbufferIndex;
+		
+		int syncRCinputs();
+		int getInputOrder();
+		bool inOrderedPins(uint8_t num);
 		
 		int parseServoWrite();
 		
