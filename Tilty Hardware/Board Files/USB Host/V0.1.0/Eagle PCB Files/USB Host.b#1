@@ -3065,7 +3065,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="22.15" y1="20.094" x2="24.174" y2="20.094" width="0.2032" layer="1"/>
 <wire x1="24.174" y1="20.094" x2="24.638" y2="19.63" width="0.2032" layer="1"/>
 </signal>
-<signal name="CS">
+<signal name="USB_CS">
 <contactref element="U1" pad="14"/>
 <contactref element="JP1" pad="P$6"/>
 <via x="9.906" y="25.4" extent="1-16" drill="0.3302"/>

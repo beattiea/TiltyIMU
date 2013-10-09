@@ -6961,7 +6961,7 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
 <part name="C5" library="resistor" deviceset="C-US" device="C0603" value="4.7uF"/>
 <part name="U2" library="My Parts" deviceset="AP7313" device="SOT23R"/>
-<part name="C6" library="resistor" deviceset="C-US" device="C0603" value="1uF"/>
+<part name="C6" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="U3" library="on-semiconductor" deviceset="LM2931" device=""/>
 <part name="C7" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="C8" library="resistor" deviceset="C-US" device="C0603" value="4.7uF"/>

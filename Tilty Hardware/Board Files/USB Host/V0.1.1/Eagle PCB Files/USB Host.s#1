@@ -7615,15 +7615,16 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <junction x="93.98" y="33.02"/>
 </segment>
 </net>
-<net name="CS" class="0">
+<net name="USB_CS" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="SS"/>
 <wire x1="139.7" y1="73.66" x2="139.7" y2="83.82" width="0.1524" layer="91"/>
-<label x="139.7" y="81.28" size="1.778" layer="95" rot="R90"/>
+<label x="139.7" y="73.66" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
 <pinref part="JP1" gate="G$1" pin="6"/>
 <wire x1="5.08" y1="91.44" x2="25.4" y2="91.44" width="0.1524" layer="91"/>
+<label x="15.24" y="91.44" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="INT" class="0">

@@ -38,7 +38,6 @@ RCadapter::RCadapter() : satRX(Serial)
 	uint8_t input_pins[MAX_INPUTS] = {255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};
 	uint16_t channel_min[MAX_INPUTS] = {0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF};
 	uint16_t channel_max[MAX_INPUTS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-	
 	uint8_t output_pins[MAX_OUTPUTS] = {255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};
 }
 
@@ -115,6 +114,8 @@ void RCadapter::initRCinputs(uint8_t *pins, uint8_t length)
 		pinMode(input_pins[i], INPUT);
 	}
 	number_inputs = length;
+	syncRCinputs();
+	getInputOrder();
 }
 
 
@@ -227,8 +228,8 @@ int RCadapter::readRCinputs()
 				if (channel_values[i] < channel_min[i] || channel_min[i] == 0) { channel_min[i] = channel_values[i];}
 				if (channel_values[i] > channel_max[i] || channel_max[i] == 0) { channel_max[i] = channel_values[i];}
 			}
+					return 1;
 		}
-		return 1;
 	}
 	return 0;
 }
@@ -278,10 +279,12 @@ int RCadapter::syncRCinputs()
 			if (digitalRead(input_pins[i]))
 			{
 				last_read = millis();
+				Serial.print("Read pin: ");
+				Serial.println(input_pins[i]);
 			}
 		}
 	}
-	//Serial.println("Found start point...");
+	Serial.println("Found start point...");
 	return 1;
 }
 
@@ -301,14 +304,14 @@ int RCadapter::getInputOrder()
 			}
 		}
 	}
-	/*
+	
 	Serial.print("Found input order: ");
-	for (int i = 0; i < sizeof(order) - 1; i++) {
-		Serial.print(order[i]);
+	for (int i = 0; i < sizeof(ordered_pins) - 1; i++) {
+		Serial.print(ordered_pins[i]);
 		Serial.print(", ");
 	}
-	Serial.println(order[sizeof(order) - 1]);
-	*/
+	Serial.println(ordered_pins[sizeof(ordered_pins) - 1]);
+	
 }
 
 bool RCadapter::inOrderedPins(uint8_t num) {

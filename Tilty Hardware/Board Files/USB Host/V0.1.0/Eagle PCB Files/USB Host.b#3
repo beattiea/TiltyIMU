@@ -906,6 +906,22 @@
 <text x="27.686" y="17.018" size="1.524" layer="25" ratio="15">1</text>
 <text x="27.686" y="19.558" size="1.524" layer="25" ratio="15">0</text>
 <text x="32.766" y="5.334" size="1.524" layer="25" ratio="15">PWR</text>
+<text x="9.398" y="48.641" size="1.524" layer="25" ratio="12">3v3</text>
+<text x="9.398" y="46.101" size="1.524" layer="25" ratio="12">0</text>
+<text x="4.7625" y="43.561" size="1.524" layer="25" ratio="12">1</text>
+<text x="4.7625" y="41.021" size="1.524" layer="25" ratio="12">2</text>
+<text x="6.1595" y="38.481" size="1.524" layer="25" ratio="12" align="bottom-right">3</text>
+<text x="6.1595" y="35.941" size="1.524" layer="25" ratio="12" align="bottom-right">4</text>
+<text x="6.1595" y="33.401" size="1.524" layer="25" ratio="12" align="bottom-right">5</text>
+<text x="6.1595" y="30.861" size="1.524" layer="25" ratio="12" align="bottom-right">6</text>
+<text x="4.318" y="28.321" size="1.524" layer="25" ratio="12">7</text>
+<text x="4.318" y="25.781" size="1.524" layer="25" ratio="12">8</text>
+<text x="4.318" y="23.241" size="1.524" layer="25" ratio="12">9</text>
+<text x="4.826" y="20.32" size="1.27" layer="25" ratio="15" rot="R45">10</text>
+<text x="4.826" y="17.78" size="1.27" layer="25" ratio="15" rot="R45">11</text>
+<text x="6.35" y="15.621" size="1.524" layer="26" ratio="12" rot="MR0">12</text>
+<text x="6.7945" y="13.081" size="1.524" layer="26" ratio="12" rot="MR0">Vin</text>
+<text x="3.429" y="10.6045" size="1.524" layer="26" ratio="12" rot="MR270">GND</text>
 </plain>
 <libraries>
 <library name="My Parts">

@@ -1,2 +1,3 @@
 Add solder jumper to disable I2C pullups
 I2C can potentially be connected to 3v3 I2C line with level translator
+Change headers to locking variant

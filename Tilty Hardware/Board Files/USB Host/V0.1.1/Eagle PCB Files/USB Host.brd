@@ -2742,9 +2742,6 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="N$26">
 <contactref element="JP4" pad="P$5"/>
 </signal>
-<signal name="N$27">
-<contactref element="JP4" pad="P$6"/>
-</signal>
 <signal name="3V_SCL">
 <contactref element="JP4" pad="P$7"/>
 </signal>
@@ -3084,6 +3081,8 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="R3" pad="1"/>
 <wire x1="17.8" y1="18.744" x2="17.8" y2="17.1495" width="0.2032" layer="1"/>
 <wire x1="17.8" y1="17.1495" x2="17.8045" y2="17.145" width="0.2032" layer="1"/>
+<contactref element="JP4" pad="P$6"/>
+<wire x1="17.8" y1="18.744" x2="30.607" y2="36.703" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RST">
 <contactref element="U1" pad="12"/>

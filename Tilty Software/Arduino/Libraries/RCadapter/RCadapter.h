@@ -94,12 +94,12 @@ class RCadapter {
 		// Read signal functions
 		int readSatRX();
 		int readRCinputs();
+		uint16_t channel_values[MAX_INPUTS];
 		
 		// write servo functions
 		int writeServo(char servo, int value);
 		int writeServo(Servo &servo, int value);
 		
-	private:
 		// R/C channel inputs
 		uint8_t input_pins[MAX_INPUTS]; // pins to read
 		uint8_t ordered_pins[MAX_INPUTS]; // pins ordered to read correct channel in correct order
@@ -108,7 +108,9 @@ class RCadapter {
 		uint8_t number_inputs; // contains the number of initialized inputs
 		uint32_t rc_start[MAX_INPUTS];
 		uint32_t rc_end[MAX_INPUTS];
-		uint16_t channel_values[MAX_INPUTS];
+		
+	private:
+		
 		
 		// Input min/max values
 		uint16_t channel_min[MAX_INPUTS];
