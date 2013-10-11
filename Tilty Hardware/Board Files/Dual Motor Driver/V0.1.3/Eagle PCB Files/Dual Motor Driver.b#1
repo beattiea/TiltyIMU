@@ -2818,7 +2818,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="D11" library="SparkFun-LED" package="LED-0805" value="" x="6.35" y="8.001" smashed="yes">
 <attribute name="VALUE" x="5.588" y="5.08" size="1.27" layer="27"/>
 </element>
-<element name="U$1" library="My Parts" package="SOIC-8" value="PCA9306" x="42.164" y="33.528" rot="R90"/>
+<element name="U$1" library="My Parts" package="SOIC-8" value="PCA9306" x="40.64" y="33.782" rot="R90"/>
 </elements>
 <signals>
 <signal name="GND">

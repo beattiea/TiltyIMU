@@ -895,12 +895,8 @@
 <polygon width="0.2032" layer="29">
 <vertex x="16.002" y="28.194"/>
 <vertex x="22.098" y="28.194"/>
-<vertex x="22.098" y="16.51"/>
-<vertex x="23.114" y="15.494"/>
-<vertex x="23.114" y="13.462"/>
-<vertex x="15.24" y="13.462"/>
-<vertex x="15.24" y="15.748"/>
-<vertex x="16.002" y="16.51"/>
+<vertex x="22.098" y="13.462"/>
+<vertex x="16.002" y="13.462"/>
 </polygon>
 <polygon width="0.2032" layer="31">
 <vertex x="16.637" y="17.272"/>

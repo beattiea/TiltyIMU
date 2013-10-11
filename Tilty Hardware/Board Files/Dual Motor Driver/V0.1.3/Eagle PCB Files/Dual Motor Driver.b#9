@@ -917,6 +917,7 @@
 <wire x1="8.89" y1="15.621" x2="9.906" y2="15.621" width="0.2032" layer="25"/>
 <wire x1="28.448" y1="15.621" x2="29.464" y2="15.621" width="0.2032" layer="25"/>
 <wire x1="30.48" y1="16.891" x2="31.496" y2="16.891" width="0.2032" layer="25"/>
+<text x="24.384" y="11.176" size="1.524" layer="26" ratio="12" rot="MR0">v0.1.2</text>
 </plain>
 <libraries>
 <library name="SparkFun-PowerIC">
