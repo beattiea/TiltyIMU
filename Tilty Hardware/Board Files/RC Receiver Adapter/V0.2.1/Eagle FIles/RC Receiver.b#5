@@ -902,7 +902,7 @@
 <text x="7.0485" y="28.194" size="1.778" layer="25" ratio="12">ICSP</text>
 <text x="26.924" y="12.192" size="1.778" layer="25" ratio="15">PWR</text>
 <text x="0.635" y="34.544" size="1.27" layer="25" ratio="15">Reset</text>
-<text x="29.21" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">5v</text>
+<text x="29.464" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">5v</text>
 <text x="34.036" y="44.196" size="1.27" layer="26" ratio="15" rot="MR30">GND</text>
 <text x="11.176" y="47.244" size="1.27" layer="26" ratio="15" rot="MR32.5">3v3</text>
 <text x="35.56" y="45.72" size="1.27" layer="25" ratio="15" rot="R150">GND</text>

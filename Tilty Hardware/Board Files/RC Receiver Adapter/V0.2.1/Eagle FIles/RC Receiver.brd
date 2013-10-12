@@ -3005,14 +3005,17 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="SCK">
 <contactref element="U1" pad="17"/>
 <contactref element="JP6" pad="3"/>
-<via x="15.367" y="21.1455" extent="1-16" drill="0.3302"/>
-<wire x1="15.367" y1="21.1455" x2="14.1605" y2="21.1455" width="0.2032" layer="16"/>
-<wire x1="14.1605" y1="21.1455" x2="13.716" y2="21.59" width="0.2032" layer="16"/>
-<wire x1="15.367" y1="21.1455" x2="16.2119" y2="21.1455" width="0.2032" layer="1"/>
-<wire x1="16.2119" y1="21.1455" x2="16.25" y2="21.1074" width="0.2032" layer="1"/>
-<wire x1="13.716" y1="21.59" x2="13.716" y2="23.622" width="0.2032" layer="16"/>
+<via x="15.367" y="21.3995" extent="1-16" drill="0.3302"/>
 <wire x1="13.716" y1="23.622" x2="13.208" y2="24.13" width="0.2032" layer="16"/>
 <wire x1="13.208" y1="24.13" x2="11.43" y2="24.13" width="0.2032" layer="16"/>
+<wire x1="16.2119" y1="21.2919" x2="16.256" y2="21.336" width="0.2032" layer="1"/>
+<wire x1="16.25" y1="21.1074" x2="16.25" y2="21.2538" width="0.2032" layer="1"/>
+<wire x1="16.25" y1="21.2538" x2="16.2119" y2="21.2919" width="0.2032" layer="1"/>
+<wire x1="15.367" y1="21.3995" x2="15.9579" y2="21.3995" width="0.2032" layer="1"/>
+<wire x1="15.9579" y1="21.3995" x2="16.25" y2="21.1074" width="0.2032" layer="1"/>
+<wire x1="15.367" y1="21.3995" x2="14.1605" y2="21.3995" width="0.2032" layer="16"/>
+<wire x1="14.1605" y1="21.3995" x2="13.716" y2="21.844" width="0.2032" layer="16"/>
+<wire x1="13.716" y1="21.844" x2="13.716" y2="23.622" width="0.2032" layer="16"/>
 </signal>
 <signal name="MOSI">
 <contactref element="U1" pad="15"/>
@@ -3400,10 +3403,10 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,58c30cf9bb5212b9"/>
 <approved hash="19,1,f61fa0cbe1ae4bdf"/>
 <approved hash="19,1,a06022982697a46f"/>
-<approved hash="19,1,f85427ac2427fbdf"/>
 <approved hash="19,1,f1142eec2b12f4ea"/>
-<approved hash="19,1,c5d0bb28b633c8cb"/>
+<approved hash="19,1,f85427ac2427fbdf"/>
 <approved hash="19,1,c5e4bb1cb6c0c838"/>
+<approved hash="19,1,c5d0bb28b633c8cb"/>
 </errors>
 </board>
 </drawing>

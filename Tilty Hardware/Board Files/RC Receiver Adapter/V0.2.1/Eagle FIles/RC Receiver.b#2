@@ -938,9 +938,9 @@
 <text x="33.401" y="48.26" size="1.27" layer="25" ratio="15" rot="R90">5v</text>
 <text x="5.334" y="46.482" size="1.27" layer="25" ratio="15" rot="R75">3v3</text>
 <text x="35.306" y="9.906" size="1.27" layer="25" ratio="15" rot="R240">GND</text>
-<text x="20.701" y="36.1315" size="1.778" layer="25" ratio="12">RX</text>
-<text x="20.701" y="33.5915" size="1.778" layer="25" ratio="12">TX</text>
-<text x="20.32" y="38.862" size="1.27" layer="25" ratio="15">GND</text>
+<text x="20.701" y="35.814" size="1.778" layer="25" ratio="12">RX</text>
+<text x="20.701" y="33.274" size="1.778" layer="25" ratio="12">TX</text>
+<text x="20.32" y="38.608" size="1.27" layer="25" ratio="15">GND</text>
 </plain>
 <libraries>
 <library name="resistor">
@@ -2674,8 +2674,8 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="SJ2" library="SparkFun-Passives" package="SJ_2S-NOTRACE" value="SOLDERJUMPERNC2" x="26.416" y="25.654" smashed="yes" rot="MR0"/>
 <element name="SJ3" library="SparkFun-Passives" package="SJ_2S-NOTRACE" value="SOLDERJUMPERNC2" x="26.416" y="23.368" smashed="yes" rot="MR0"/>
-<element name="JP9" library="SparkFun-Connectors" package="1X03_LOCK" value="" x="25.146" y="34.544" smashed="yes" rot="R90">
-<attribute name="VALUE" x="28.321" y="33.274" size="1.27" layer="27" rot="R90"/>
+<element name="JP9" library="SparkFun-Connectors" package="1X03_LOCK" value="" x="25.0825" y="34.163" smashed="yes" rot="R90">
+<attribute name="VALUE" x="28.2575" y="32.893" size="1.27" layer="27" rot="R90"/>
 </element>
 </elements>
 <signals>
@@ -2823,7 +2823,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="23.622" y1="14.224" x2="23.622" y2="15.748" width="0.508" layer="1"/>
 <wire x1="7.62" y1="16.764" x2="7.62" y2="17.78" width="0.508" layer="1"/>
 <contactref element="JP9" pad="3"/>
-<wire x1="25.019" y1="39.624" x2="28.067" y2="42.672" width="0.254" layer="1"/>
+<wire x1="24.9555" y1="39.243" x2="28.067" y2="42.672" width="0.254" layer="1"/>
 <wire x1="28.067" y1="42.672" x2="28.067" y2="44.323" width="0.254" layer="1"/>
 <wire x1="28.067" y1="44.323" x2="30.607" y2="46.863" width="0.254" layer="1"/>
 </signal>
@@ -3087,7 +3087,7 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="JP9" pad="2"/>
 <wire x1="27.432" y1="40.132" x2="27.432" y2="37.846" width="0.2032" layer="1"/>
 <wire x1="27.432" y1="37.846" x2="26.67" y2="37.084" width="0.2032" layer="1"/>
-<wire x1="26.67" y1="37.084" x2="25.273" y2="37.084" width="0.2032" layer="1"/>
+<wire x1="26.67" y1="37.084" x2="25.2095" y2="36.703" width="0.2032" layer="1"/>
 </signal>
 <signal name="+3V3">
 <contactref element="JP8" pad="P$1"/>
@@ -3214,7 +3214,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="23.3426" y1="27.4" x2="23.971" y2="27.4" width="0.2032" layer="1"/>
 <wire x1="23.971" y1="27.4" x2="24.257" y2="27.686" width="0.2032" layer="1"/>
 <wire x1="24.257" y1="27.686" x2="24.257" y2="33.782" width="0.2032" layer="1"/>
-<wire x1="24.257" y1="33.782" x2="25.019" y2="34.544" width="0.2032" layer="1"/>
+<wire x1="24.257" y1="33.782" x2="24.9555" y2="34.163" width="0.2032" layer="1"/>
 </signal>
 <signal name="STATUS_LED">
 <contactref element="U1" pad="14"/>
