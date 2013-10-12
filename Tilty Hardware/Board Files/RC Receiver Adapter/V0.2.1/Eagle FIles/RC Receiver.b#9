@@ -906,6 +906,33 @@
 <text x="34.036" y="44.196" size="1.27" layer="26" ratio="15" rot="MR30">GND</text>
 <text x="11.938" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">3v3</text>
 <text x="35.56" y="45.72" size="1.27" layer="25" ratio="15" rot="R150">GND</text>
+<text x="8.382" y="45.974" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">0</text>
+<text x="8.382" y="43.434" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">1</text>
+<text x="8.382" y="40.894" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">2</text>
+<text x="8.382" y="38.354" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">3</text>
+<text x="8.382" y="35.814" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">4</text>
+<text x="8.382" y="33.274" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">5</text>
+<text x="8.382" y="30.734" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">6</text>
+<text x="3.302" y="28.194" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">7</text>
+<text x="3.302" y="25.654" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">8</text>
+<text x="3.302" y="23.114" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">9</text>
+<text x="3.302" y="20.574" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">10</text>
+<text x="3.302" y="18.034" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">11</text>
+<text x="3.302" y="15.494" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">12</text>
+<text x="3.302" y="12.954" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">Vin</text>
+<text x="3.556" y="10.414" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">GND</text>
+<text x="34.544" y="18.034" size="1.778" layer="26" ratio="12" rot="MR0">13</text>
+<text x="34.544" y="20.574" size="1.778" layer="26" ratio="12" rot="MR0">14</text>
+<text x="34.544" y="23.114" size="1.778" layer="26" ratio="12" rot="MR0">15</text>
+<text x="34.544" y="25.654" size="1.778" layer="26" ratio="12" rot="MR0">16</text>
+<text x="34.29" y="28.194" size="1.778" layer="26" ratio="12" rot="MR0">17</text>
+<text x="29.464" y="30.734" size="1.778" layer="26" ratio="12" rot="MR0">18</text>
+<text x="29.464" y="33.274" size="1.778" layer="26" ratio="12" rot="MR0">19</text>
+<text x="29.464" y="35.814" size="1.778" layer="26" ratio="12" rot="MR0">20</text>
+<text x="29.464" y="38.354" size="1.778" layer="26" ratio="12" rot="MR0">21</text>
+<text x="29.464" y="40.894" size="1.778" layer="26" ratio="12" rot="MR0">22</text>
+<text x="34.544" y="42.672" size="1.778" layer="26" ratio="12" rot="MR0">23</text>
+<text x="34.544" y="10.414" size="1.778" layer="26" ratio="12" rot="MR0">GND</text>
 </plain>
 <libraries>
 <library name="resistor">
@@ -2671,7 +2698,7 @@ Please make sure your boards conform to these design rules.</description>
 <via x="9.906" y="18.288" extent="1-16" drill="0.508"/>
 <via x="9.906" y="14.478" extent="1-16" drill="0.508"/>
 <wire x1="8.167" y1="12.739" x2="9.906" y2="14.478" width="0.508" layer="1"/>
-<via x="7.62" y="16.764" extent="1-16" drill="0.508"/>
+<via x="7.62" y="17.78" extent="1-16" drill="0.508"/>
 <via x="14.9225" y="29.337" extent="1-16" drill="0.3302"/>
 <polygon width="0.254" layer="16">
 <vertex x="13.97" y="11.938"/>
@@ -2679,12 +2706,12 @@ Please make sure your boards conform to these design rules.</description>
 <vertex x="4.826" y="21.082"/>
 <vertex x="13.97" y="21.082"/>
 </polygon>
-<via x="5.334" y="14.224" extent="1-16" drill="0.508"/>
-<via x="5.334" y="18.288" extent="1-16" drill="0.508"/>
+<via x="7.62" y="15.494" extent="1-16" drill="0.508"/>
+<via x="5.334" y="17.4625" extent="1-16" drill="0.508"/>
 <wire x1="28.702" y1="32.766" x2="24.892" y2="32.766" width="0.3175" layer="16"/>
 <wire x1="24.892" y1="32.766" x2="23.622" y2="31.496" width="0.3175" layer="16"/>
 <wire x1="23.622" y1="31.496" x2="23.622" y2="28.448" width="0.3175" layer="16"/>
-<wire x1="5.334" y1="18.288" x2="5.334" y2="24.892" width="0.3175" layer="16"/>
+<wire x1="5.334" y1="17.4625" x2="5.334" y2="24.892" width="0.3175" layer="16"/>
 <wire x1="5.334" y1="24.892" x2="8.636" y2="26.67" width="0.3175" layer="16"/>
 <contactref element="JP2" pad="P$1"/>
 <wire x1="2.667" y1="11.303" x2="4.191" y2="11.303" width="0.508" layer="16"/>
@@ -3317,16 +3344,19 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="5,1,5204c67a539faabb"/>
 <approved hash="19,1,e11023e8261de4e5"/>
 <approved hash="19,1,e4f02608260de4f5"/>
-<approved hash="19,1,f85427ac2427fbdf"/>
 <approved hash="19,1,c8f4b60cb61bc8e3"/>
 <approved hash="19,1,cd14b3ecb60bc8f3"/>
+<approved hash="19,1,e9e02b1826d6e42e"/>
+<approved hash="19,1,e2f4200c2602e4fa"/>
+<approved hash="19,1,e560279826d6e42e"/>
+<approved hash="19,1,ef3030c835d7ea2f"/>
 <approved hash="19,1,5068ac87b1dd5360"/>
 <approved hash="19,1,cf47e2109def4d69"/>
 <approved hash="19,1,58c30cf9bb5212b9"/>
 <approved hash="19,1,f61fa0cbe1ae4bdf"/>
-<approved hash="19,1,e9e02b1826d6e42e"/>
-<approved hash="19,1,e560279826d6e42e"/>
-<approved hash="19,1,ef3030c835d7ea2f"/>
+<approved hash="19,1,a06022982697a46f"/>
+<approved hash="19,1,f1142eec2b12f4ea"/>
+<approved hash="19,1,f85427ac2427fbdf"/>
 <approved hash="19,1,c5e4bb1cb6c0c838"/>
 <approved hash="19,1,c5d0bb28b633c8cb"/>
 </errors>

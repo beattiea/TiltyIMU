@@ -8232,9 +8232,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="R7" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="JP3" gate="G$1" pin="8"/>
-<wire x1="243.84" y1="38.1" x2="264.16" y2="38.1" width="0.1524" layer="91"/>
-<label x="254" y="40.64" size="1.778" layer="95"/>
+<pinref part="JP4" gate="G$1" pin="1"/>
+<wire x1="243.84" y1="12.7" x2="259.08" y2="12.7" width="0.1524" layer="91"/>
+<label x="248.92" y="12.7" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="3V_SCL" class="0">
@@ -8245,9 +8245,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="R6" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="JP3" gate="G$1" pin="7"/>
-<wire x1="243.84" y1="40.64" x2="264.16" y2="40.64" width="0.1524" layer="91"/>
-<label x="254" y="43.18" size="1.778" layer="95"/>
+<pinref part="JP4" gate="G$1" pin="2"/>
+<wire x1="243.84" y1="15.24" x2="259.08" y2="15.24" width="0.1524" layer="91"/>
+<label x="248.92" y="15.24" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$6" class="0">

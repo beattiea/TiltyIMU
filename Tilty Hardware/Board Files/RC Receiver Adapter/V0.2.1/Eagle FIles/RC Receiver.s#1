@@ -8039,6 +8039,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <pinref part="SJ3" gate="1" pin="2"/>
 <wire x1="261.62" y1="38.1" x2="271.78" y2="38.1" width="0.1524" layer="91"/>
+<label x="261.62" y="38.1" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="5V_SCL" class="0">
@@ -8055,7 +8056,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 </segment>
 <segment>
 <pinref part="SJ2" gate="1" pin="2"/>
-<wire x1="256.54" y1="43.18" x2="269.24" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="256.54" y1="43.18" x2="266.7" y2="43.18" width="0.1524" layer="91"/>
+<label x="256.54" y="43.18" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="3V_SDA" class="0">
