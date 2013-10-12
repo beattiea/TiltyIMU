@@ -902,9 +902,9 @@
 <text x="7.0485" y="28.194" size="1.778" layer="25" ratio="12">ICSP</text>
 <text x="26.924" y="12.192" size="1.778" layer="25" ratio="15">PWR</text>
 <text x="0.635" y="34.544" size="1.27" layer="25" ratio="15">Reset</text>
-<text x="29.21" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">5v</text>
+<text x="29.464" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">5v</text>
 <text x="34.036" y="44.196" size="1.27" layer="26" ratio="15" rot="MR30">GND</text>
-<text x="11.938" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">3v3</text>
+<text x="11.176" y="47.244" size="1.27" layer="26" ratio="15" rot="MR32.5">3v3</text>
 <text x="35.56" y="45.72" size="1.27" layer="25" ratio="15" rot="R150">GND</text>
 <text x="8.382" y="45.974" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">0</text>
 <text x="8.382" y="43.434" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">1</text>
@@ -932,7 +932,7 @@
 <text x="29.464" y="38.354" size="1.778" layer="26" ratio="12" rot="MR0">21</text>
 <text x="29.464" y="40.894" size="1.778" layer="26" ratio="12" rot="MR0">22</text>
 <text x="34.544" y="10.414" size="1.778" layer="26" ratio="12" rot="MR0">GND</text>
-<text x="29.464" y="43.434" size="1.778" layer="26" ratio="12" rot="MR0">23</text>
+<text x="29.464" y="43.688" size="1.27" layer="26" ratio="15" rot="MR0">23</text>
 <text x="34.544" y="15.494" size="1.778" layer="26" ratio="12" rot="MR0">ASDA</text>
 <text x="34.544" y="12.954" size="1.778" layer="26" ratio="12" rot="MR0">ASCL</text>
 <text x="33.401" y="48.26" size="1.27" layer="25" ratio="15" rot="R90">5v</text>

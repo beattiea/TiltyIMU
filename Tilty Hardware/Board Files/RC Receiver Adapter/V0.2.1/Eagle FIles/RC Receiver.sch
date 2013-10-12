@@ -8374,7 +8374,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 </segment>
 <segment>
 <pinref part="JP9" gate="G$1" pin="2"/>
-<wire x1="149.86" y1="121.92" x2="142.24" y2="121.92" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="121.92" x2="144.78" y2="121.92" width="0.1524" layer="91"/>
+<label x="144.78" y="121.92" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -8492,7 +8493,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 </segment>
 <segment>
 <pinref part="JP9" gate="G$1" pin="1"/>
-<wire x1="149.86" y1="124.46" x2="142.24" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="124.46" x2="144.78" y2="124.46" width="0.1524" layer="91"/>
+<label x="144.78" y="124.46" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="STATUS_LED" class="0">

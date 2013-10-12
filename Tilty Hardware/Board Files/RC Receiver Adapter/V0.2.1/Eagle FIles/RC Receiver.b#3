@@ -902,7 +902,7 @@
 <text x="7.0485" y="28.194" size="1.778" layer="25" ratio="12">ICSP</text>
 <text x="26.924" y="12.192" size="1.778" layer="25" ratio="15">PWR</text>
 <text x="0.635" y="34.544" size="1.27" layer="25" ratio="15">Reset</text>
-<text x="29.21" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">5v</text>
+<text x="29.464" y="48.768" size="1.27" layer="26" ratio="15" rot="MR0">5v</text>
 <text x="34.036" y="44.196" size="1.27" layer="26" ratio="15" rot="MR30">GND</text>
 <text x="11.176" y="47.244" size="1.27" layer="26" ratio="15" rot="MR32.5">3v3</text>
 <text x="35.56" y="45.72" size="1.27" layer="25" ratio="15" rot="R150">GND</text>
@@ -2351,6 +2351,36 @@ We've spent an enormous amount of time creating and checking these footprints an
 <rectangle x1="4.826" y1="2.286" x2="5.334" y2="2.794" layer="51"/>
 <rectangle x1="4.826" y1="-0.254" x2="5.334" y2="0.254" layer="51"/>
 </package>
+<package name="1X03_LOCK">
+<wire x1="3.81" y1="0.635" x2="4.445" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="4.445" y1="1.27" x2="5.715" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="5.715" y1="1.27" x2="6.35" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="6.35" y1="-0.635" x2="5.715" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="5.715" y1="-1.27" x2="4.445" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="4.445" y1="-1.27" x2="3.81" y2="-0.635" width="0.2032" layer="21"/>
+<wire x1="-0.635" y1="1.27" x2="0.635" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="0.635" y1="1.27" x2="1.27" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="1.27" y1="-0.635" x2="0.635" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="1.27" y1="0.635" x2="1.905" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="1.905" y1="1.27" x2="3.175" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="3.175" y1="1.27" x2="3.81" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="3.81" y1="-0.635" x2="3.175" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="3.175" y1="-1.27" x2="1.905" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="1.905" y1="-1.27" x2="1.27" y2="-0.635" width="0.2032" layer="21"/>
+<wire x1="-1.27" y1="0.635" x2="-1.27" y2="-0.635" width="0.2032" layer="21"/>
+<wire x1="-0.635" y1="1.27" x2="-1.27" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="-1.27" y1="-0.635" x2="-0.635" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="0.635" y1="-1.27" x2="-0.635" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="6.35" y1="0.635" x2="6.35" y2="-0.635" width="0.2032" layer="21"/>
+<pad name="1" x="0" y="0.127" drill="1.016" diameter="1.8796" rot="R90"/>
+<pad name="2" x="2.54" y="-0.127" drill="1.016" diameter="1.8796" rot="R90"/>
+<pad name="3" x="5.08" y="0.127" drill="1.016" diameter="1.8796" rot="R90"/>
+<text x="-1.3462" y="1.8288" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-1.27" y="-3.175" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="4.826" y1="-0.254" x2="5.334" y2="0.254" layer="51"/>
+<rectangle x1="2.286" y1="-0.254" x2="2.794" y2="0.254" layer="51"/>
+<rectangle x1="-0.254" y1="-0.254" x2="0.254" y2="0.254" layer="51"/>
+</package>
 </packages>
 </library>
 <library name="SparkFun-LED">
@@ -2641,6 +2671,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="SJ2" library="SparkFun-Passives" package="SJ_2S-NOTRACE" value="SOLDERJUMPERNC2" x="26.416" y="25.654" smashed="yes" rot="MR0"/>
 <element name="SJ3" library="SparkFun-Passives" package="SJ_2S-NOTRACE" value="SOLDERJUMPERNC2" x="26.416" y="23.368" smashed="yes" rot="MR0"/>
+<element name="JP9" library="SparkFun-Connectors" package="1X03_LOCK" value="" x="2.032" y="-3.556"/>
 </elements>
 <signals>
 <signal name="GND">
@@ -2786,6 +2817,8 @@ Please make sure your boards conform to these design rules.</description>
 <via x="23.622" y="15.748" extent="1-16" drill="0.3302"/>
 <wire x1="23.622" y1="14.224" x2="23.622" y2="15.748" width="0.508" layer="1"/>
 <wire x1="7.62" y1="16.764" x2="7.62" y2="17.78" width="0.508" layer="1"/>
+<contactref element="JP9" pad="3"/>
+<wire x1="9.398" y1="1.778" x2="7.112" y2="-3.429" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+24V">
 <contactref element="C7" pad="1"/>
@@ -3044,6 +3077,8 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="24.638" y1="27.178" x2="24.13" y2="26.67" width="0.2032" layer="1"/>
 <wire x1="24.13" y1="26.67" x2="23.4126" y2="26.67" width="0.2032" layer="1"/>
 <wire x1="23.4126" y1="26.67" x2="23.3426" y2="26.6" width="0.2032" layer="1"/>
+<contactref element="JP9" pad="2"/>
+<wire x1="4.572" y1="-3.683" x2="23.3426" y2="26.6" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+3V3">
 <contactref element="JP8" pad="P$1"/>
@@ -3166,6 +3201,8 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="TX">
 <contactref element="U1" pad="31"/>
+<contactref element="JP9" pad="1"/>
+<wire x1="2.032" y1="-3.429" x2="23.3426" y2="27.4" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="STATUS_LED">
 <contactref element="U1" pad="14"/>
