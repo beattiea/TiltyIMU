@@ -167,8 +167,8 @@
 <text x="31.242" y="44.958" size="1.27" layer="26" ratio="15" rot="MR0">23</text>
 <text x="33.782" y="0.889" size="1.524" layer="25" ratio="15">P</text>
 <text x="33.782" y="4.318" size="1.524" layer="25" ratio="15">BT</text>
-<text x="26.4795" y="33.528" size="1.524" layer="26" ratio="15" rot="MR0">IMU</text>
-<text x="26.4795" y="31.75" size="1.524" layer="26" ratio="15" rot="MR0">INT</text>
+<text x="25.4635" y="33.274" size="1.524" layer="26" ratio="15" rot="MR0">IMU</text>
+<text x="25.4635" y="31.496" size="1.524" layer="26" ratio="15" rot="MR0">INT</text>
 <text x="2.54" y="44.196" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">1</text>
 <text x="2.54" y="41.656" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">2</text>
 <text x="2.54" y="39.116" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">3</text>
@@ -2760,7 +2760,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="C4" library="resistor" package="C0603" value="0.1uF" x="31.496" y="8.382" smashed="yes"/>
 <element name="C5" library="resistor" package="C0603" value="4.7uF" x="34.544" y="12.7" smashed="yes"/>
-<element name="MPU_INT" library="SparkFun-Passives" package="SJ_2S-TRACE" value="SOLDERJUMPERTRACE" x="23.876" y="30.48" smashed="yes" rot="MR0"/>
+<element name="MPU_INT" library="SparkFun-Passives" package="SJ_2S-TRACE" value="SOLDERJUMPERTRACE" x="23.876" y="30.226" smashed="yes" rot="MR0"/>
 <element name="D1" library="SparkFun-LED" package="LED-0805" value="RED" x="30.988" y="6.35" smashed="yes"/>
 <element name="D2" library="SparkFun-LED" package="LED-0805" value="GREEN" x="30.988" y="1.778" smashed="yes"/>
 <element name="C9" library="resistor" package="C0603" value="0.1uF" x="10.922" y="25.4" smashed="yes" rot="R90">
@@ -2961,7 +2961,6 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="AREF">
 <contactref element="U1" pad="AREF"/>
-<via x="26.035" y="43.18" extent="1-16" drill="0.3302"/>
 </signal>
 <signal name="N$1">
 <contactref element="C1" pad="1"/>
@@ -3031,13 +3030,15 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="36.6395" y1="26.9875" x2="36.6395" y2="26.6065" width="0.1524" layer="1"/>
 <wire x1="36.6395" y1="26.6065" x2="36.322" y2="26.289" width="0.1524" layer="1"/>
 <wire x1="36.322" y1="26.289" x2="36.322" y2="21.6535" width="0.1524" layer="1"/>
-<wire x1="23.749" y1="28.956" x2="27.94" y2="28.956" width="0.1524" layer="16"/>
-<wire x1="27.94" y1="28.956" x2="28.448" y2="28.448" width="0.1524" layer="16"/>
-<wire x1="28.448" y1="28.448" x2="28.448" y2="27.94" width="0.1524" layer="16"/>
-<wire x1="28.448" y1="27.94" x2="28.956" y2="27.432" width="0.1524" layer="16"/>
-<wire x1="28.956" y1="27.432" x2="36.195" y2="27.432" width="0.1524" layer="16"/>
+<wire x1="23.749" y1="28.956" x2="27.432" y2="28.956" width="0.1524" layer="16"/>
+<wire x1="29.718" y1="27.432" x2="36.195" y2="27.432" width="0.1524" layer="16"/>
 <wire x1="23.749" y1="28.956" x2="23.368" y2="29.337" width="0.1524" layer="16"/>
-<wire x1="23.368" y1="29.337" x2="23.368" y2="30.48" width="0.1524" layer="16"/>
+<wire x1="23.368" y1="29.337" x2="23.368" y2="30.226" width="0.1524" layer="16"/>
+<wire x1="29.718" y1="27.432" x2="29.464" y2="27.178" width="0.1524" layer="16"/>
+<wire x1="29.464" y1="27.178" x2="28.194" y2="27.178" width="0.1524" layer="16"/>
+<wire x1="28.194" y1="27.178" x2="27.94" y2="27.432" width="0.1524" layer="16"/>
+<wire x1="27.94" y1="27.432" x2="27.94" y2="28.448" width="0.1524" layer="16"/>
+<wire x1="27.94" y1="28.448" x2="27.432" y2="28.956" width="0.1524" layer="16"/>
 </signal>
 <signal name="BT_CMD">
 <contactref element="SJ5" pad="1"/>
@@ -3293,7 +3294,8 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U1" pad="33"/>
 <contactref element="MPU_INT" pad="1"/>
 <via x="25.273" y="30.48" extent="1-16" drill="0.3302"/>
-<wire x1="24.384" y1="30.48" x2="25.273" y2="30.48" width="0.1524" layer="16"/>
+<wire x1="25.273" y1="30.48" x2="24.638" y2="30.48" width="0.1524" layer="16"/>
+<wire x1="24.638" y1="30.48" x2="24.384" y2="30.226" width="0.1524" layer="16"/>
 </signal>
 <signal name="4/PWM">
 <contactref element="JP1" pad="P$6"/>
@@ -3383,6 +3385,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="39.1795" y1="27.305" x2="38.735" y2="27.7495" width="0.2032" layer="1"/>
 <wire x1="38.735" y1="27.7495" x2="38.735" y2="28.956" width="0.2032" layer="1"/>
 <wire x1="38.735" y1="28.956" x2="37.338" y2="30.353" width="0.2032" layer="1"/>
+<via x="28.575" y="27.94" extent="1-16" drill="0.3302"/>
 </signal>
 <signal name="5V_SCL">
 <contactref element="JP3" pad="P$2"/>
@@ -3540,13 +3543,11 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="29.718" y1="34.29" x2="33.528" y2="34.29" width="0.254" layer="16"/>
 <wire x1="33.528" y1="34.29" x2="36.156" y2="34.29" width="0.254" layer="1"/>
 <wire x1="36.156" y1="34.29" x2="36.664" y2="34.798" width="0.254" layer="1"/>
-<via x="35.052" y="21.717" extent="1-16" drill="0.3302"/>
+<via x="35.56" y="21.844" extent="1-16" drill="0.3302"/>
 <via x="33.528" y="18.9865" extent="1-16" drill="0.3302"/>
-<wire x1="35.052" y1="21.717" x2="35.052" y2="22.848" width="0.1524" layer="1"/>
 <wire x1="35.052" y1="22.848" x2="35.02" y2="22.88" width="0.1524" layer="1"/>
 <wire x1="33.528" y1="18.9865" x2="33.528" y2="21.463" width="0.1524" layer="16"/>
-<wire x1="33.528" y1="21.463" x2="33.782" y2="21.717" width="0.1524" layer="16"/>
-<wire x1="33.782" y1="21.717" x2="35.052" y2="21.717" width="0.1524" layer="16"/>
+<wire x1="33.528" y1="21.463" x2="33.909" y2="21.844" width="0.1524" layer="16"/>
 <wire x1="32.27" y1="22.13" x2="32.27" y2="20.332" width="0.1524" layer="1"/>
 <wire x1="32.27" y1="20.332" x2="32.258" y2="20.32" width="0.1524" layer="1"/>
 <wire x1="32.258" y1="20.32" x2="32.258" y2="19.4945" width="0.1524" layer="1"/>
@@ -3632,6 +3633,12 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="29.4005" y1="18.923" x2="29.972" y2="19.4945" width="0.2032" layer="1"/>
 <wire x1="29.972" y1="19.4945" x2="30.5825" y2="19.4945" width="0.2032" layer="1"/>
 <wire x1="30.5825" y1="19.4945" x2="30.988" y2="19.9" width="0.2032" layer="1"/>
+<wire x1="33.909" y1="21.844" x2="35.56" y2="21.844" width="0.1524" layer="16"/>
+<wire x1="35.052" y1="22.848" x2="35.318" y2="22.848" width="0.1524" layer="1"/>
+<wire x1="35.318" y1="22.848" x2="35.3695" y2="22.7965" width="0.1524" layer="1"/>
+<wire x1="35.3695" y1="22.7965" x2="35.3695" y2="22.5425" width="0.1524" layer="1"/>
+<wire x1="35.3695" y1="22.5425" x2="35.56" y2="22.352" width="0.1524" layer="1"/>
+<wire x1="35.56" y1="22.352" x2="35.56" y2="21.844" width="0.1524" layer="1"/>
 </signal>
 <signal name="+5V">
 <contactref element="JP4" pad="P$1"/>
@@ -3974,6 +3981,14 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="N$4">
 <via x="23.495" y="17.78" extent="1-16" drill="0.3302"/>
 </signal>
+<signal name="N$6">
+<polygon width="0.1524" layer="1">
+<vertex x="0" y="52.07"/>
+<vertex x="41.91" y="52.07"/>
+<vertex x="41.91" y="0"/>
+<vertex x="0" y="0"/>
+</polygon>
+</signal>
 </signals>
 <errors>
 <approved hash="19,1,afae255856bf2076"/>
@@ -4004,50 +4019,51 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,300208360b1f332b"/>
 <approved hash="5,1,55a606c82d8da8e1"/>
 <approved hash="19,1,b1a6c609b70ec5a3"/>
-<approved hash="19,1,40e02dd422324f06"/>
-<approved hash="19,1,48d825ec26924ba6"/>
-<approved hash="19,1,47182a2c2e024336"/>
-<approved hash="19,1,44fc29c8268a4bbe"/>
-<approved hash="19,1,47242a10170a7a3e"/>
-<approved hash="19,1,47602a542e724346"/>
-<approved hash="19,1,47242a102e0a433e"/>
-<approved hash="19,1,475c2a682f8a42be"/>
 <approved hash="19,1,47582a6c17027a36"/>
+<approved hash="19,1,475c2a682f8a42be"/>
+<approved hash="19,1,48d825ec26924ba6"/>
+<approved hash="19,1,47242a102e0a433e"/>
+<approved hash="19,1,44fc29c8268a4bbe"/>
 <approved hash="19,1,441c2928298a44be"/>
+<approved hash="19,1,47242a10170a7a3e"/>
+<approved hash="19,1,47182a2c2e024336"/>
+<approved hash="19,1,47602a542e724346"/>
+<approved hash="19,1,40e02dd422324f06"/>
 <approved hash="19,1,3efe8c3c1710a1af"/>
 <approved hash="19,1,373d7a1b5d4f1414"/>
 <approved hash="19,1,c618f9c8e7f4bb58"/>
 <approved hash="19,1,78531e11a0d0f4d5"/>
 <approved hash="19,1,b370e644eb8fbebb"/>
-<approved hash="19,1,c7582a6c1704fa30"/>
 <approved hash="19,1,c7302a043604db30"/>
-<approved hash="19,1,c7242a102e0cc338"/>
 <approved hash="19,1,c75c2a682f8cc2b8"/>
+<approved hash="19,1,c7582a6c1704fa30"/>
 <approved hash="19,1,c4f429c02a0cc738"/>
+<approved hash="19,1,c7242a102e0cc338"/>
 <approved hash="19,1,bd7076447b8cb0b8"/>
 <approved hash="19,1,27706a4467852ab1"/>
 <approved hash="19,1,b3c2c7f6c488b0bc"/>
 <approved hash="19,1,b10ac53ec488b0bc"/>
 <approved hash="19,1,37820fb60ced34d9"/>
 <approved hash="19,1,34c20cf60c0d3439"/>
+<approved hash="19,1,2735aa01b6043b30"/>
 <approved hash="19,1,2759aa6daf0c2238"/>
 <approved hash="19,1,24f1a9c5aa0c2738"/>
-<approved hash="19,1,2759aa6daf8c22b8"/>
 <approved hash="19,1,2721aa15ae0c2338"/>
-<approved hash="19,1,2735aa01b6043b30"/>
-<approved hash="19,1,35180a2c0efe31ca"/>
-<approved hash="19,1,36fc09c806763942"/>
-<approved hash="19,1,32e00dd402ce3dfa"/>
+<approved hash="19,1,2759aa6daf8c22b8"/>
 <approved hash="19,1,35600a540e8e31ba"/>
+<approved hash="19,1,32e00dd402ce3dfa"/>
+<approved hash="19,1,36fc09c806763942"/>
+<approved hash="19,1,35180a2c0efe31ca"/>
+<approved hash="19,1,3b64fe50fa743f40"/>
 <approved hash="19,1,38f8fdccf28c37b8"/>
+<approved hash="19,1,34dcf1e8f29437a0"/>
+<approved hash="19,1,3b58fe6cfb0c3e38"/>
+<approved hash="19,1,3b20fe14c30c0638"/>
+<approved hash="19,1,3818fd2cfd8c38b8"/>
+<approved hash="19,1,3b5cfe68c3040630"/>
+<approved hash="19,1,3b58fe6cfb8c3eb8"/>
 <approved hash="19,1,3b20fe14fa0c3f38"/>
 <approved hash="19,1,3ce4f9d0f6343300"/>
-<approved hash="19,1,3b5cfe68c3040630"/>
-<approved hash="19,1,3b64fe50fa743f40"/>
-<approved hash="19,1,3b58fe6cfb8c3eb8"/>
-<approved hash="19,1,3818fd2cfd8c38b8"/>
-<approved hash="19,1,3b20fe14c30c0638"/>
-<approved hash="19,1,3b58fe6cfb0c3e38"/>
 <approved hash="19,16,f84f6a485fb93679"/>
 <approved hash="19,16,2dc9709dfdd87969"/>
 <approved hash="19,16,7aa097d5bc68aada"/>

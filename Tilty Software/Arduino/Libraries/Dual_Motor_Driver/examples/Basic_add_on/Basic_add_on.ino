@@ -55,6 +55,10 @@ uint8_t enc5, enc6, enc7, enc8;
 void loop() {
 	motors.update();// This function should be called as frequently as possible to keep everything up to speed
 
+	for (int i = 0; i < 256; i++) {
+		
+	}
+	
 	enc1 = (motors.encoder1 >> 24) & 0xFF;
 	enc2 = (motors.encoder1 >> 16) & 0xFF;
 	enc3 = (motors.encoder1 >> 8) & 0xFF;
