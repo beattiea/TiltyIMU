@@ -1,5 +1,2 @@
-Add connection for interrupt
-Move crystal caps further from crystal
-Remove 0.1uF filter cap from near top of chip. Regulator filter cap will do.
 
 ORDER 33Ω RESISTORS!!!!
