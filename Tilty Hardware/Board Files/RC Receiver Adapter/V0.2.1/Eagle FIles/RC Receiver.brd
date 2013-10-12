@@ -112,22 +112,22 @@
 <text x="26.67" y="5.969" size="1.778" layer="25" ratio="12">S</text>
 <text x="26.67" y="3.429" size="1.778" layer="25" ratio="12">+</text>
 <text x="26.67" y="0.889" size="1.778" layer="25" ratio="12">-</text>
-<text x="24.511" y="8.382" size="1.778" layer="25" ratio="12">6</text>
-<text x="21.971" y="8.382" size="1.778" layer="25" ratio="12">5</text>
+<text x="25.146" y="8.382" size="1.778" layer="25" ratio="12">6</text>
+<text x="22.606" y="8.382" size="1.778" layer="25" ratio="12">5</text>
 <text x="19.431" y="8.382" size="1.778" layer="25" ratio="12">4</text>
 <text x="16.891" y="8.382" size="1.778" layer="25" ratio="12">3</text>
-<text x="14.351" y="8.382" size="1.778" layer="25" ratio="12">2</text>
-<text x="11.811" y="8.382" size="1.778" layer="25" ratio="12">1</text>
+<text x="13.716" y="8.382" size="1.778" layer="25" ratio="12">2</text>
+<text x="11.176" y="8.382" size="1.778" layer="25" ratio="12">1</text>
 <hole x="2.54" y="2.54" drill="3.175"/>
 <hole x="2.54" y="48.26" drill="3.175"/>
 <hole x="35.56" y="48.26" drill="3.175"/>
 <hole x="35.56" y="2.54" drill="3.175"/>
-<text x="25.019" y="40.894" size="1.778" layer="25" ratio="12">7</text>
-<text x="22.479" y="40.894" size="1.778" layer="25" ratio="12">8</text>
+<text x="25.654" y="40.894" size="1.778" layer="25" ratio="12">7</text>
+<text x="23.114" y="40.894" size="1.778" layer="25" ratio="12">8</text>
 <text x="19.939" y="40.894" size="1.778" layer="25" ratio="12">9</text>
 <text x="18.923" y="39.878" size="1.778" layer="25" ratio="12" rot="R90">10</text>
-<text x="16.383" y="39.878" size="1.778" layer="25" ratio="12" rot="R90">11</text>
-<text x="13.843" y="39.878" size="1.778" layer="25" ratio="12" rot="R90">12</text>
+<text x="15.748" y="39.878" size="1.778" layer="25" ratio="12" rot="R90">11</text>
+<text x="13.208" y="39.878" size="1.778" layer="25" ratio="12" rot="R90">12</text>
 <text x="27.178" y="48.514" size="1.778" layer="25" ratio="12">-</text>
 <text x="27.178" y="45.974" size="1.778" layer="25" ratio="12">+</text>
 <text x="27.178" y="43.434" size="1.778" layer="25" ratio="12">S</text>
