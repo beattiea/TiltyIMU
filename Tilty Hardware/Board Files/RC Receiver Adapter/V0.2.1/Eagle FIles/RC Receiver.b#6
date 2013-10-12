@@ -3283,12 +3283,14 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="32.893" y1="25.908" x2="33.257" y2="25.908" width="0.2032" layer="1"/>
 <wire x1="33.257" y1="25.908" x2="33.384" y2="25.781" width="0.2032" layer="1"/>
 <contactref element="JP4" pad="P$1"/>
-<via x="33.909" y="27.2415" extent="1-16" drill="0.3302"/>
-<wire x1="33.909" y1="27.2415" x2="32.6145" y2="27.2415" width="0.2032" layer="1"/>
+<via x="31.496" y="28.321" extent="1-16" drill="0.3302"/>
 <wire x1="32.6145" y1="27.2415" x2="32.512" y2="27.344" width="0.2032" layer="1"/>
-<wire x1="30.607" y1="31.623" x2="30.607" y2="27.8765" width="0.2032" layer="16"/>
-<wire x1="30.607" y1="27.8765" x2="31.242" y2="27.2415" width="0.2032" layer="16"/>
-<wire x1="31.242" y1="27.2415" x2="33.909" y2="27.2415" width="0.2032" layer="16"/>
+<wire x1="30.607" y1="31.623" x2="30.607" y2="29.083" width="0.2032" layer="16"/>
+<wire x1="30.607" y1="29.083" x2="31.496" y2="28.321" width="0.2032" layer="16"/>
+<wire x1="31.496" y1="28.321" x2="31.496" y2="27.94" width="0.2032" layer="1"/>
+<wire x1="31.496" y1="27.94" x2="31.75" y2="27.686" width="0.2032" layer="1"/>
+<wire x1="31.75" y1="27.686" x2="32.17" y2="27.686" width="0.2032" layer="1"/>
+<wire x1="32.17" y1="27.686" x2="32.512" y2="27.344" width="0.2032" layer="1"/>
 </signal>
 <signal name="3V_SCL">
 <contactref element="U4" pad="P$3"/>

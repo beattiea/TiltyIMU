@@ -2607,8 +2607,8 @@ Please make sure your boards conform to these design rules.</description>
 <element name="R7" library="resistor" package="R0603" value="" x="32.512" y="28.194" smashed="yes" rot="R90">
 <attribute name="VALUE" x="34.544" y="27.305" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="SJ2" library="SparkFun-Passives" package="SJ_2S-NOTRACE" value="SOLDERJUMPERNC2" x="-1.524" y="2.286"/>
-<element name="SJ3" library="SparkFun-Passives" package="SJ_2S-NOTRACE" value="SOLDERJUMPERNC2" x="-4.572" y="2.286"/>
+<element name="SJ2" library="SparkFun-Passives" package="SJ_2S-NOTRACE" value="SOLDERJUMPERNC2" x="26.416" y="25.654" smashed="yes" rot="MR0"/>
+<element name="SJ3" library="SparkFun-Passives" package="SJ_2S-NOTRACE" value="SOLDERJUMPERNC2" x="26.416" y="23.368" smashed="yes" rot="MR0"/>
 </elements>
 <signals>
 <signal name="GND">
@@ -3207,10 +3207,6 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="U1" pad="27"/>
 <contactref element="R2" pad="1"/>
 <contactref element="U4" pad="P$5"/>
-<wire x1="23.3426" y1="24.2" x2="23.7425" y2="24.2" width="0.1524" layer="1"/>
-<wire x1="23.7425" y1="24.2" x2="23.9395" y2="24.003" width="0.1524" layer="1"/>
-<wire x1="23.9395" y1="24.003" x2="25.742" y2="24.003" width="0.1524" layer="1"/>
-<wire x1="25.742" y1="24.003" x2="26.162" y2="23.583" width="0.1524" layer="1"/>
 <wire x1="26.162" y1="23.583" x2="26.3135" y2="23.583" width="0.1524" layer="1"/>
 <wire x1="26.3135" y1="23.583" x2="26.6065" y2="23.876" width="0.1524" layer="1"/>
 <wire x1="26.6065" y1="23.876" x2="28.829" y2="23.876" width="0.1524" layer="1"/>
@@ -3220,14 +3216,20 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="28.829" y1="25.5905" x2="28.2745" y2="25.5905" width="0.1524" layer="1"/>
 <wire x1="28.2745" y1="25.5905" x2="28.084" y2="25.781" width="0.1524" layer="1"/>
 <contactref element="SJ3" pad="2"/>
-<wire x1="-4.1593" y1="2.286" x2="23.3426" y2="24.2" width="0" layer="19" extent="1-1"/>
+<via x="24.892" y="24.1935" extent="1-16" drill="0.3302"/>
+<wire x1="24.892" y1="24.1935" x2="23.3491" y2="24.1935" width="0.1524" layer="1"/>
+<wire x1="23.3491" y1="24.1935" x2="23.3426" y2="24.2" width="0.1524" layer="1"/>
+<wire x1="24.892" y1="24.1935" x2="25.2095" y2="23.876" width="0.1524" layer="1"/>
+<wire x1="25.2095" y1="23.876" x2="25.869" y2="23.876" width="0.1524" layer="1"/>
+<wire x1="25.869" y1="23.876" x2="26.162" y2="23.583" width="0.1524" layer="1"/>
+<wire x1="26.0033" y1="23.368" x2="25.146" y2="23.368" width="0.1524" layer="16"/>
+<wire x1="25.146" y1="23.368" x2="24.892" y2="23.622" width="0.1524" layer="16"/>
+<wire x1="24.892" y1="23.622" x2="24.892" y2="24.1935" width="0.1524" layer="16"/>
 </signal>
 <signal name="5V_SCL">
 <contactref element="U1" pad="28"/>
 <contactref element="R3" pad="1"/>
 <contactref element="U4" pad="P$6"/>
-<wire x1="23.3426" y1="25" x2="25.723" y2="25" width="0.1524" layer="1"/>
-<wire x1="25.723" y1="25" x2="26.162" y2="25.439" width="0.1524" layer="1"/>
 <wire x1="26.162" y1="25.439" x2="26.25" y2="25.439" width="0.1524" layer="1"/>
 <wire x1="26.25" y1="25.439" x2="26.67" y2="25.019" width="0.1524" layer="1"/>
 <wire x1="26.67" y1="25.019" x2="26.924" y2="25.019" width="0.1524" layer="1"/>
@@ -3235,7 +3237,13 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="27.2415" y1="24.7015" x2="27.8935" y2="24.7015" width="0.1524" layer="1"/>
 <wire x1="27.8935" y1="24.7015" x2="28.084" y2="24.511" width="0.1524" layer="1"/>
 <contactref element="SJ2" pad="2"/>
-<wire x1="-1.1113" y1="2.286" x2="23.3426" y2="25" width="0" layer="19" extent="1-1"/>
+<via x="24.5745" y="25.019" extent="1-16" drill="0.3302"/>
+<wire x1="24.5745" y1="25.019" x2="23.3426" y2="25.019" width="0.1524" layer="1"/>
+<wire x1="23.3426" y1="25.019" x2="23.3426" y2="25" width="0.1524" layer="1"/>
+<wire x1="24.5745" y1="25.019" x2="25.742" y2="25.019" width="0.1524" layer="1"/>
+<wire x1="25.742" y1="25.019" x2="26.162" y2="25.439" width="0.1524" layer="1"/>
+<wire x1="26.0033" y1="25.654" x2="25.2095" y2="25.654" width="0.1524" layer="16"/>
+<wire x1="25.2095" y1="25.654" x2="24.5745" y2="25.019" width="0.1524" layer="16"/>
 </signal>
 <signal name="3V_SDA">
 <contactref element="U4" pad="P$4"/>
@@ -3286,12 +3294,20 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="N$7">
 <contactref element="JP3" pad="P$8"/>
 <contactref element="SJ3" pad="1"/>
-<wire x1="-4.9729" y1="2.286" x2="35.433" y2="29.083" width="0" layer="19" extent="1-1"/>
+<wire x1="26.8169" y1="23.368" x2="33.782" y2="23.368" width="0.1524" layer="16"/>
+<wire x1="33.782" y1="23.368" x2="34.29" y2="23.876" width="0.1524" layer="16"/>
+<wire x1="34.29" y1="23.876" x2="34.29" y2="24.638" width="0.1524" layer="16"/>
+<wire x1="34.29" y1="24.638" x2="34.798" y2="25.146" width="0.1524" layer="16"/>
+<wire x1="34.798" y1="25.146" x2="36.195" y2="25.146" width="0.1524" layer="16"/>
+<wire x1="36.195" y1="25.146" x2="36.703" y2="25.654" width="0.1524" layer="16"/>
+<wire x1="36.703" y1="25.654" x2="36.703" y2="27.813" width="0.1524" layer="16"/>
+<wire x1="36.703" y1="27.813" x2="35.433" y2="29.083" width="0.1524" layer="16"/>
 </signal>
 <signal name="N$8">
 <contactref element="JP3" pad="P$7"/>
 <contactref element="SJ2" pad="1"/>
-<wire x1="-1.9249" y1="2.286" x2="35.687" y2="26.543" width="0" layer="19" extent="1-1"/>
+<wire x1="26.8169" y1="25.654" x2="34.798" y2="25.654" width="0.1524" layer="16"/>
+<wire x1="34.798" y1="25.654" x2="35.687" y2="26.543" width="0.1524" layer="16"/>
 </signal>
 </signals>
 <errors>
@@ -3308,8 +3324,8 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,cf47e2109def4d69"/>
 <approved hash="19,1,58c30cf9bb5212b9"/>
 <approved hash="19,1,f61fa0cbe1ae4bdf"/>
-<approved hash="19,1,e560279826d6e42e"/>
 <approved hash="19,1,e9e02b1826d6e42e"/>
+<approved hash="19,1,e560279826d6e42e"/>
 <approved hash="19,1,ef3030c835d7ea2f"/>
 <approved hash="19,1,c5e4bb1cb6c0c838"/>
 <approved hash="19,1,c5d0bb28b633c8cb"/>
