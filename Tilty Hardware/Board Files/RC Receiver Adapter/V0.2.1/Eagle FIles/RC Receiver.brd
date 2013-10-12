@@ -109,9 +109,9 @@
 <wire x1="38.1" y1="0" x2="38.1" y2="50.8" width="0" layer="20"/>
 <wire x1="38.1" y1="50.8" x2="0" y2="50.8" width="0" layer="20"/>
 <wire x1="0" y1="50.8" x2="0" y2="0" width="0" layer="20"/>
-<text x="26.67" y="5.969" size="1.778" layer="25" ratio="12">S</text>
-<text x="26.67" y="3.429" size="1.778" layer="25" ratio="12">+</text>
-<text x="26.67" y="0.889" size="1.778" layer="25" ratio="12">-</text>
+<text x="27.432" y="5.969" size="1.778" layer="25" ratio="12">S</text>
+<text x="27.432" y="3.429" size="1.778" layer="25" ratio="12">+</text>
+<text x="27.432" y="0.889" size="1.778" layer="25" ratio="12">-</text>
 <text x="25.146" y="8.382" size="1.778" layer="25" ratio="12">6</text>
 <text x="22.606" y="8.382" size="1.778" layer="25" ratio="12">5</text>
 <text x="19.431" y="8.382" size="1.778" layer="25" ratio="12">4</text>
@@ -128,9 +128,9 @@
 <text x="18.923" y="39.878" size="1.778" layer="25" ratio="12" rot="R90">10</text>
 <text x="15.748" y="39.878" size="1.778" layer="25" ratio="12" rot="R90">11</text>
 <text x="13.208" y="39.878" size="1.778" layer="25" ratio="12" rot="R90">12</text>
-<text x="27.178" y="48.514" size="1.778" layer="25" ratio="12">-</text>
-<text x="27.178" y="45.974" size="1.778" layer="25" ratio="12">+</text>
-<text x="27.178" y="43.434" size="1.778" layer="25" ratio="12">S</text>
+<text x="27.686" y="48.514" size="1.778" layer="25" ratio="12">-</text>
+<text x="27.686" y="45.974" size="1.778" layer="25" ratio="12">+</text>
+<text x="27.686" y="43.434" size="1.778" layer="25" ratio="12">S</text>
 <text x="24.511" y="19.05" size="1.778" layer="25" ratio="15">Status</text>
 <rectangle x1="22.866453125" y1="30.4422375" x2="23.008690625" y2="30.46255625" layer="26" rot="R213.3"/>
 <rectangle x1="22.834971875" y1="30.459221875" x2="23.017853125" y2="30.479540625" layer="26" rot="R213.3"/>
