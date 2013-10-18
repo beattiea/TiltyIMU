@@ -37,13 +37,6 @@ void setup() {
 	
 	Wire.onReceive(receiveEvent);
 	Wire.onRequest(requestEvent);
-	
-	Serial.begin(115200);
-	
-	digitalWrite(M1A, !HIGH);
-	digitalWrite(M1B, !LOW);
-	digitalWrite(M2A, !HIGH);
-	digitalWrite(M2B, !LOW);
 }
 
 uint8_t enc1;
@@ -54,40 +47,14 @@ uint8_t enc5, enc6, enc7, enc8;
 
 void loop() {
 	motors.update();// This function should be called as frequently as possible to keep everything up to speed
-
-	for (int i = 0; i < 256; i++) {
-		
-	}
-	
-	enc1 = (motors.encoder1 >> 24) & 0xFF;
-	enc2 = (motors.encoder1 >> 16) & 0xFF;
-	enc3 = (motors.encoder1 >> 8) & 0xFF;
-	enc4 = (motors.encoder1 >> 0) & 0xFF;
-	
-	enc5 = (motors.encoder2 >> 24) & 0xFF;
-	enc6 = (motors.encoder2 >> 16) & 0xFF;
-	enc7 = (motors.encoder2 >> 8) & 0xFF;
-	enc8 = (motors.encoder2 >> 0) & 0xFF;
 }
 
 void receiveEvent(int bytes) {
 	motors.getData(bytes);
+	digitalWrite(10, HIGH);
 }
 
 void requestEvent() {
-	uint8_t buffer[8] = {enc1, enc2, enc3, enc4, enc5, enc6, enc7, enc8};
-	Wire.write(buffer, 8);
-	
-	/*
-	for (int i = 0; i < 4; i++) {
-		if (buffer[i] == 0x00) { buffer[i]++;}
-		Wire.write(byte(buffer[i]));
-	}
-	*/
-	/*
-	Wire.write((motors.encoder2 >> 24) & 0xFF);
-	Wire.write((motors.encoder2 >> 16) & 0xFF);
-	Wire.write((motors.encoder2 >> 8) & 0xFF);
-	Wire.write((motors.encoder2 >> 0) & 0xFF);
-	*/
+	motors.sendData();
+	digitalWrite(10, LOW);
 }

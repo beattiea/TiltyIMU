@@ -31,12 +31,8 @@ MotorDriver::MotorDriver()
 // Only instantiate encoders if they are allowed to be used
 : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 #endif
-{
-	rxBufferIndex = 0;
-	txbufferIndex = 0;
-	
-	M1_direction = 1;
-	M2_direction = 0;
+{	
+	uint8_t data_reg[REGISTER_SIZE] = {0x12, 0x12, 0x00, 0x00}; // Initializes the status and control register array
 }
 
 MotorDriver::~MotorDriver() 
@@ -59,6 +55,13 @@ void MotorDriver::init()
 	pinMode(M2A, OUTPUT);
 	pinMode(M2B, OUTPUT);
 	
+	pinMode(LED, OUTPUT);
+	
+	data_reg[0] = 0x12;
+	data_reg[1] = 0x12;
+	data_reg[2] = 0xAA;
+	data_reg[3] = 0x05;
+	
 	TCCR0A = _BV(COM0A1) | _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);// Setup pins 5 and 6 for fast PWM
 	TCCR0B = _BV(CS00);// Set PWM frequency to 62.5kHz (fastest possible)
 	#ifndef MOTOR_DRIVER_I2C_ADDRESS
@@ -79,161 +82,127 @@ void MotorDriver::init()
 
 /** \brief Takes incoming I2C data into the rxBuffer
 	\param[in] bytes The number of incoming bytes
-	\param[out] error Returns 0 if buffer overflows, 1 if data is successfully transferred
+	\param[out] error Returns 0 if register overflows, 1 if data is successfully transferred
 **/
 int MotorDriver::getData(int bytes)
 {
-	if (bytes + rxBufferIndex > MOTOR_DRIVER_RX_BUFFER_SIZE)
+	active_reg = Wire.read();
+	
+	for (char i = 1; i < bytes; i++)
 	{
-		for (int i = rxBufferIndex; i < MOTOR_DRIVER_RX_BUFFER_SIZE; i++)
+		if (active_reg >= REGISTER_SIZE) {	return 0;}
+		
+		else
 		{
-			rxBuffer[i] = Wire.read();
+			data_reg[active_reg] = Wire.read();
+			active_reg++;
 		}
-		rxBufferIndex = MOTOR_DRIVER_RX_BUFFER_SIZE;
-		return false;
 	}
-	else
-	{
-		for (int i = rxBufferIndex; i < bytes + rxBufferIndex; i++) 
-		{
-			rxBuffer[i] = Wire.read();
-		}
-		rxBufferIndex += bytes;
-		return true;
-	}
+	return 1;
 }
 
 
 
-/** \brief Parses the data in the rxBuffer
-	\param[out] error Returns 0 if command is not recognized
+/** \brief Sends requested I2C data
+	\param[out] error Returns 0 if register overflows, 1 if data is successfully transferred
 **/
-int MotorDriver::parseCommands()
-{
-	if (!(0xE0 & rxBuffer[rxBufferIndex])) // Top 3 bits = 0 means motor control command
+int MotorDriver::sendData()
+{	
+	Wire.write(data_reg, 4);
+	
+	/*
+	while (TWSR & 0x08 && active_reg < REGISTER_SIZE)
 	{
-		parseMotorCommand();
+		Wire.write(data_reg[active_reg]);
+		active_reg++;
 	}
-	else
-	{
-		// Non motor control commands
-	}
+	*/
 }
+
 
 
 /** \brief Parses data in rxBuffer and updates encoder values
 **/
 int MotorDriver::update()
 {
-	encoder1 = m1Encoder.read();
-	encoder2 = m2Encoder.read();
-	
-	while (rxBufferIndex < MOTOR_DRIVER_RX_BUFFER_SIZE)
-	{
-		parseCommands();// Recursively parse commands until rxBuffer is parsed
-	}
-	
-	for (int i = 0; i < MOTOR_DRIVER_RX_BUFFER_SIZE; i++)// Clear the rxBuffer
-	{
-		rxBuffer[i] = 0;
-	}
+	updateMotor1();
+	//updateMotor2();
 }
 
 
 
-/** \brief Parses rxBuffer data to control the motors
-	\param[out] error Returns 0 if command is not recognized
+/** \brief Updates Motor 1 based on control register bit settings
 **/
-int MotorDriver::parseMotorCommand()
+void MotorDriver::updateMotor1()
 {
-	char control_byte = rxBuffer[rxBufferIndex];
-	uint8_t power = rxBuffer[rxBufferIndex + 1];
-	rxBufferIndex += 2;
+	uint8_t M1_updates = data_reg[M1_CONTROL] ^ M1_control;// gets a list of what values have changed
 	
-	
-	
-	if (DRIVE & control_byte)// Parse for tank style control
+	if (M1_updates & BRAKE) // If ENABLE bit value has changed, enables/disables the motor
 	{
-		if (MOTOR_NUM & control_byte) // Parse for motor 2
+		M1_control ^= BRAKE;
+		if (M1_control & BRAKE) // If enabled, sets MxA and MxB both HIGH
 		{
-			if (ENABLE & control_byte)
+			digitalWrite(M1A, HIGH);
+			digitalWrite(M1B, HIGH);
+			return;
+		}
+		else // If disabled, sets the motor to DIRECTION
+		{
+			if (M1_control & INVERT) // If inverted, starts again in inverted direction
 			{
-				digitalWrite(M2A, HIGH);
-				digitalWrite(M2A, HIGH);
-				
-				return 1;
+				digitalWrite(M1A, !(M1_control & DIRECTION));
+				digitalWrite(M1B, (M1_control & DIRECTION));
 			}
 			else
 			{
-				if (DIRECTION & control_byte)
-				{
-					digitalWrite(M2A, HIGH);
-					digitalWrite(M2A, LOW);
-				}
-				else
-				{
-					digitalWrite(M2A, LOW);
-					digitalWrite(M2A, HIGH);
-				}
-				
-				if (SPEED & control_byte)// Parse for power control
-				{
-					analogWrite(M2, power);
-				}
-				else // Parse for RPM control
-				{
-
-				}
+				digitalWrite(M1A, M1_control & DIRECTION);
+				digitalWrite(M1B, !(M1_control & DIRECTION));
 			}
 		}
-		
-		
-		else // parse for motor 1
-		{
-			if (ENABLE & control_byte)
-			{
-				digitalWrite(M1A, HIGH);
-				digitalWrite(M1A, HIGH);
-				
-				return 1;
-			}
-			else
-			{
-				if (DIRECTION & control_byte)
-				{
-					digitalWrite(M1A, HIGH);
-					digitalWrite(M1A, LOW);
-				}
-				else
-				{
-					digitalWrite(M1A, LOW);
-					digitalWrite(M1A, HIGH);
-				}
-				
-				if (SPEED & control_byte)// Parse for power control
-				{
-					analogWrite(M1, power);
-				}
-				else // Parse for RPM control
-				{
-
-				}
-			}
-		}
-		
-		return 1;
 	}
-	else // Parse for arcade style control
+	
+	// Only checks everything else if BRAKE is not enabled //
+	if (!(M1_control & BRAKE))
+	{	
+		if (M1_updates & DIRECTION) // If DIRECTION bit value has changed, changes motor direction
+		{
+			M1_control ^= DIRECTION;
+			digitalWrite(M1A, !digitalRead(M1A));
+			digitalWrite(M1B, !digitalRead(M1B));
+		}
+	
+		if (M1_updates & SPEED) // if SPEED/POWER bit value has changed, changes motor control variable to match
+		{
+			M1_control ^= SPEED;
+		}
+	
+		if (M1_updates & INVERT)
+		{
+			M1_control ^= INVERT;
+			digitalWrite(M1A, !digitalRead(M1A));
+			digitalWrite(M1B, !digitalRead(M1B));
+		}
+	}
+	
+	// Updates the motor speed/power values //
+	if ((M1_control & SPEED) && !(M1_control & BRAKE)) // If SPEED is enabled and BRAKE is not, uses PID based RPM speed control
 	{
-		if (SPEED & control_byte)// Parse for power control
+		// RPM control PID will go here once implemented and will run every loop regardless of whether the values have changed
+	}
+	else // If SPEED is LOW or BRAKE is enabled, uses power control from register 0x02 or 0x03 (depends on motor)
+	{
+		if (M1_power ^ data_reg[M1_POWER]) // Only updates if value has changed
 		{
-			
+			M1_power = data_reg[M1_POWER];
+			analogWrite(M1, M1_power);
 		}
-		else // Parse for RPM control
-		{
-			
-		}
+	}
+	
+	if (data_reg[M1_CONTROL] & EN_ENC)
+	{
+		M1_encoder = m1Encoder.read();
 	}
 }
+
 // End add-on class information
 #endif

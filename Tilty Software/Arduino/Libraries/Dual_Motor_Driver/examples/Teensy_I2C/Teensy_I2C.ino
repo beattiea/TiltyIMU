@@ -10,36 +10,52 @@ void setup()
     delay(1);
 }
 
+int count = 0;
+
 void loop()
 {
-	/*//Reads encoder values from both motors
-	Wire.requestFrom(0x03, 8);
-	if (Wire.available()) {
-		long value = 0;
-		for (int i = 0; i < 4; i++) {
-			char data = Wire.read();
-			value |= (data << ((3 - i) * 8));
-		}
-		Serial.print("Encoder 1: ");
-		Serial.println(value);
-		
-		value = 0;
-		for (int i = 0; i < 4; i++) {
-			char data = Wire.read();
-			value |= (data << ((3 - i) * 8));
-		}
-		Serial.print("Encoder 2: ");
-		Serial.println(value);
-		Serial.println();
+	Serial.print("New Cycle... #");
+	Serial.println(count++);
+	
+	Wire.beginTransmission(0x03);// Default I2C address is 0x03
+	Wire.write(0x00);
+	Wire.endTransmission();
+
+	long start = micros();
+	/*
+	for (int i = 0; i < 4; i++) {
+		Wire.requestFrom(0x03, 1);
 	}
 	*/
-
+	while (Wire.requestFrom(0x03, 4) != 4);
+	for (int i = 0; i < 4; i++) {
+		Serial.println(Wire.read());
+	}
+	Serial.print("Time: ");
+	Serial.println(micros() - start);
 	
-	Wire.beginTransmission(0x03);
-	Wire.write(0xD0);
-	Wire.write(127);
-	Wire.endTransmission();
-	Serial.println("New Cycle...");
+	/*
+	Serial.print("Control 1: ");
+	Serial.println(Wire.read());
+	Serial.print("Control 2: ");
+	Serial.println(Wire.read());
+	Serial.print("Power 1: ");
+	Serial.println(Wire.read());
+	Serial.print("Power 2: ");
+	Serial.println(Wire.read());
+	Serial.println();
+	*/
+	
+	/*
+	if (Serial1.available()) {
+		Serial.println("====Motor Driver Output====");
+		while (Serial1.available()) {
+			Serial.print(char(Serial1.read()));
+			delay(2);
+		}
+		Serial.println("==End Motor Driver Output==\n");
+	}
+	*/
 	
 	delay(5);
 }

@@ -45,8 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // ========== Library includes ==========
 
 // ========== I2C Settings ==========
-#define MOTOR_DRIVER_RX_BUFFER_SIZE 14
-#define MOTOR_DRIVER_TX_BUFFER_SIZE 14
+#define REGISTER_SIZE 4
 #define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
 // ========== I2C Settings ==========
 
@@ -72,6 +71,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENC2B 3 // Interrupt pin
 // ========== Encoder pins ==========
 
+#define LED 10
+
 // ========== Command identifiers ==========
 
 // ========== Command identifiers ==========
@@ -94,43 +95,42 @@ class MotorDriver {
 		
 		// I2C data handlers
 		int getData(int bytes);
-		int parseCommands();
+		int sendData();
 		
 		// Update functions
 		int update();
 		
-		// Motor control functions
-		int parseMotorCommand();
-		
-		// Motor power values (0-255)
+		// Motor status variables
+		uint8_t M1_control;
+		uint8_t M2_control;
 		uint8_t M1_power;
 		uint8_t M2_power;
 		
-		bool M1_direction;
-		bool M2_direction;
-		
-		bool invertM1;
-		bool invertM2;
-		
 		// Encoder values
-		long encoder1;
-		long encoder2;
+		volatile long M1_encoder;
+		volatile long M2_encoder;
+		
+		// I2C register data
+		uint8_t data_reg[REGISTER_SIZE];
+		uint8_t active_reg;
+		
+		// I2C register addresses
+		static const uint8_t M1_CONTROL = 0x00;
+		static const uint8_t M2_CONTROL = 0x01;
+		static const uint8_t M1_POWER = 0x02;
+		static const uint8_t M2_POWER = 0x03;
 
 	private:
-		// Command Values
-		static const char DIRECTION = 0x01;// Sets motor direction
-		static const char ENABLE = 0x02;// Motor brake/cost. 0 brakes, 1 coasts.
-		static const char MOTOR_NUM = 0x04;// Motor or Throttle/Steering selection
-		static const char SPEED = 0x08;// Speed/Power setting
-		static const char DRIVE = 0x10;// Tank/Arcade style control. Set to 1 to enable Tank Control, 0 to enable Arcade.
-				
-		// I2C data buffers
-		uint8_t rxBuffer[MOTOR_DRIVER_RX_BUFFER_SIZE];
-		uint8_t txBuffer[MOTOR_DRIVER_TX_BUFFER_SIZE];
+		// Motor control functions
+		void updateMotor1();
+		void updateMotor2();
 		
-		// I2C data buffer indexes
-		uint8_t rxBufferIndex;
-		uint8_t txbufferIndex;
+		// Motor control register bit values
+		static const uint8_t DIRECTION = 0x01;// Sets motor direction.
+		static const uint8_t BRAKE = 0x02;// Motor brake/cost. 1 brakes, 0 coasts.
+		static const uint8_t SPEED = 0x04;// Speed/Power control setting. 0 is power, 1 is speed (RPM).
+		static const uint8_t INVERT = 0x08;// Motor direction inversion. 0 is normal, 1 is inverted.
+		static const uint8_t EN_ENC = 0x10;// Sets whether to enable the encoder
 	
 };
 // End add-on class information
