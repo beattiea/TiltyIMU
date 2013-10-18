@@ -65,8 +65,7 @@ void MotorDriver::init()
 	// Initialize the status and control registers
 	data_reg[0] = 0x10;
 	data_reg[1] = 0x10;
-	data_reg[2] = 0x00;
-	data_reg[3] = 0x00;
+	for (int i = 0x02; i < REGISTER_SIZE; i++) {	data_reg[i] = 0x00;}
 	
 	TCCR0A = _BV(COM0A1) | _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);// Setup pins 5 and 6 for fast PWM
 	TCCR0B = _BV(CS00);// Set PWM frequency to 62.5kHz (fastest possible)
@@ -113,6 +112,11 @@ int MotorDriver::getData(int bytes)
 		}
 		m2Encoder.write(enc_union.int32);
 	}
+	
+	
+	if (active_reg == M1_CURRENT)	{ updateM1Current();}
+	if (active_reg == M2_CURRENT)	{ updateM2Current();}
+	
 	
 	for (char i = 1; i < bytes; i++)
 	{
@@ -258,6 +262,22 @@ void MotorDriver::updateEnc2Reg()
 	{
 		data_reg[M2_ENCODER + i] = enc_union.bytes[i];
 	}
+}
+
+
+
+/** \brief Updates the register value of motor 1's current draw. The analog reading necessary is slow so this function must be called manually.
+**/
+void MotorDriver::updateM1Current()
+{
+	data_reg[M1_CURRENT] = analogRead(M1_SENSE);
+}
+
+/** \brief Updates the register value of motor 2's current draw. The analog reading necessary is slow so this function must be called manually.
+**/
+void MotorDriver::updateM2Current()
+{
+	data_reg[M2_CURRENT] = analogRead(M2_SENSE);
 }
 
 // End add-on class information

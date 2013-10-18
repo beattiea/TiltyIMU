@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // ========== Library includes ==========
 
 // ========== I2C Settings ==========
-#define REGISTER_SIZE 12
+#define REGISTER_SIZE 14
 #define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
 // ========== I2C Settings ==========
 
@@ -62,6 +62,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define M1B 9
 #define M2A 7
 #define M2B 8
+// Motor current sense pins
+#define M1_SENSE A2
+#define M2_SENSE A3
 // ========== Motor control pins ==========
 
 // ========== Encoder pins ==========
@@ -105,18 +108,24 @@ class MotorDriver {
 		uint8_t M2_power;
 		volatile int32_t M1_encoder;
 		volatile int32_t M2_encoder;
+		uint8_t M1_current;
+		uint8_t M2_current;
 		
 		// I2C register data
 		uint8_t data_reg[REGISTER_SIZE];
 		uint8_t active_reg;
 		
 		// I2C register addresses
+		// Read/Write registers
 		static const uint8_t M1_CONTROL = 0x00;
 		static const uint8_t M2_CONTROL = 0x01;
 		static const uint8_t M1_POWER = 0x02;
 		static const uint8_t M2_POWER = 0x03;
 		static const uint8_t M1_ENCODER = 0x04;
 		static const uint8_t M2_ENCODER = 0x09;
+		// Read only registers
+		static const uint8_t M1_CURRENT = 0x0D;
+		static const uint8_t M2_CURRENT = 0x0E;
 
 	private:
 		// Motor control functions
@@ -125,6 +134,9 @@ class MotorDriver {
 		
 		void updateEnc1Reg();
 		void updateEnc2Reg();
+		
+		void updateM1Current();
+		void updateM2Current();
 		
 		// Encoder union variable for converting 32 bit integer to byte array
 		union enc_union {
