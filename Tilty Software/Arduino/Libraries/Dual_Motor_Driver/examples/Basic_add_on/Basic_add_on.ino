@@ -51,10 +51,10 @@ void loop() {
 
 void receiveEvent(int bytes) {
 	motors.getData(bytes);
-	digitalWrite(10, HIGH);
+	//digitalWrite(10, HIGH);
 }
 
 void requestEvent() {
 	motors.sendData();
-	digitalWrite(10, LOW);
+	//digitalWrite(10, LOW);
 }

@@ -32,7 +32,7 @@ MotorDriver::MotorDriver()
 : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 #endif
 {	
-	uint8_t data_reg[REGISTER_SIZE] = {0x12, 0x12, 0x00, 0x00}; // Initializes the status and control register array
+	// Do nothing
 }
 
 MotorDriver::~MotorDriver() 
@@ -57,10 +57,16 @@ void MotorDriver::init()
 	
 	pinMode(LED, OUTPUT);
 	
-	data_reg[0] = 0x12;
-	data_reg[1] = 0x12;
-	data_reg[2] = 0xAA;
-	data_reg[3] = 0x05;
+	M1_control = 0x00;
+	updateMotor1();
+	M1_control = 0xFF;
+	updateMotor1();
+	
+	// Initialize the status and control registers
+	data_reg[0] = 0x10;
+	data_reg[1] = 0x10;
+	data_reg[2] = 0x00;
+	data_reg[3] = 0x00;
 	
 	TCCR0A = _BV(COM0A1) | _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);// Setup pins 5 and 6 for fast PWM
 	TCCR0B = _BV(CS00);// Set PWM frequency to 62.5kHz (fastest possible)
@@ -88,6 +94,26 @@ int MotorDriver::getData(int bytes)
 {
 	active_reg = Wire.read();
 	
+	if (active_reg == M1_ENCODER && bytes >= 5)// Separate code to handle setting M1 encoder
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			enc_union.bytes[i] = Wire.read();
+			active_reg++;
+		}
+		m1Encoder.write(enc_union.int32);
+	}
+	
+	if (active_reg == M2_ENCODER && bytes >= 5)// Separate code to handle setting M2 encoder
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			enc_union.bytes[i] = Wire.read();
+			active_reg++;
+		}
+		m2Encoder.write(enc_union.int32);
+	}
+	
 	for (char i = 1; i < bytes; i++)
 	{
 		if (active_reg >= REGISTER_SIZE) {	return 0;}
@@ -108,7 +134,12 @@ int MotorDriver::getData(int bytes)
 **/
 int MotorDriver::sendData()
 {	
-	Wire.write(data_reg, 4);
+	byte temp[REGISTER_SIZE - active_reg];
+	for (int i = 0; i < REGISTER_SIZE - active_reg; i++)
+	{
+		temp[i] = data_reg[i + active_reg];
+	}
+	Wire.write(temp, REGISTER_SIZE - active_reg);
 	
 	/*
 	while (TWSR & 0x08 && active_reg < REGISTER_SIZE)
@@ -201,6 +232,31 @@ void MotorDriver::updateMotor1()
 	if (data_reg[M1_CONTROL] & EN_ENC)
 	{
 		M1_encoder = m1Encoder.read();
+		updateEnc1Reg();
+	}
+}
+
+
+
+/** \brief Updates the encoder 1 data registers with the encoder 1 value as a 4 byte array
+**/
+void MotorDriver::updateEnc1Reg()
+{
+	enc_union.int32 = M1_encoder;
+	for (int i = 0; i < 4; i++)
+	{
+		data_reg[M1_ENCODER + i] = enc_union.bytes[i];
+	}
+}
+
+/** \brief Updates the encoder 2 data registers with the encoder 2 value as a 4 byte array
+**/
+void MotorDriver::updateEnc2Reg()
+{
+	enc_union.int32 = M2_encoder;
+	for (int i = 0; i < 4; i++)
+	{
+		data_reg[M2_ENCODER + i] = enc_union.bytes[i];
 	}
 }
 

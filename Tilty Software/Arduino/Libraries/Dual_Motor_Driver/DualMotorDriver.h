@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // ========== Library includes ==========
 
 // ========== I2C Settings ==========
-#define REGISTER_SIZE 4
+#define REGISTER_SIZE 12
 #define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
 // ========== I2C Settings ==========
 
@@ -85,10 +85,8 @@ class MotorDriver {
 		~MotorDriver();
 		
 		// Encoder objects
-	#ifndef NO_ENCODERS
 		Encoder m1Encoder;
 		Encoder m2Encoder;
-	#endif
 		
 		// Initialization functions
 		void init();
@@ -105,10 +103,8 @@ class MotorDriver {
 		uint8_t M2_control;
 		uint8_t M1_power;
 		uint8_t M2_power;
-		
-		// Encoder values
-		volatile long M1_encoder;
-		volatile long M2_encoder;
+		volatile int32_t M1_encoder;
+		volatile int32_t M2_encoder;
 		
 		// I2C register data
 		uint8_t data_reg[REGISTER_SIZE];
@@ -119,11 +115,22 @@ class MotorDriver {
 		static const uint8_t M2_CONTROL = 0x01;
 		static const uint8_t M1_POWER = 0x02;
 		static const uint8_t M2_POWER = 0x03;
+		static const uint8_t M1_ENCODER = 0x04;
+		static const uint8_t M2_ENCODER = 0x09;
 
 	private:
 		// Motor control functions
 		void updateMotor1();
 		void updateMotor2();
+		
+		void updateEnc1Reg();
+		void updateEnc2Reg();
+		
+		// Encoder union variable for converting 32 bit integer to byte array
+		union enc_union {
+			uint8_t bytes[4];
+			int32_t int32;
+		} enc_union;
 		
 		// Motor control register bit values
 		static const uint8_t DIRECTION = 0x01;// Sets motor direction.
