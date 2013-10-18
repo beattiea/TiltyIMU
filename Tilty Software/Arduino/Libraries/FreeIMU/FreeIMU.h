@@ -133,7 +133,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #elif HAS_MPU6000()
   #include <SPI.h>
   #include "I2Cdev.h"
-  #include "MPU60X0.h"
+  #include "MPU6050.h"
   #define FIMU_ACCGYRO_ADDR MPU60X0_DEFAULT_SS_PIN
 #endif
 

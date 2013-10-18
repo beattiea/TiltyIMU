@@ -17,19 +17,19 @@ void loop()
 	Serial.print("New Cycle... #");
 	Serial.println(count++);
 	
-	/*
-	Wire.beginTransmission(0x03);// Default I2C address is 0x03
-	Wire.write(0x02);
-	Wire.write(127);
-	Wire.write(127);
-	Wire.endTransmission();
-	delayMicroseconds(10);
-	*/
 	
 	Wire.beginTransmission(0x03);// Default I2C address is 0x03
-	Wire.write(0x04);
+	Wire.write(0x02);
+	Wire.write(255);
+	Wire.write(255);
 	Wire.endTransmission();
-	delayMicroseconds(10);
+	delayMicroseconds(15);
+	
+	
+	Wire.beginTransmission(0x03);// Default I2C address is 0x03
+	Wire.write(0x00);
+	Wire.endTransmission();
+	delayMicroseconds(15);
 
 	long start = micros();
 	/*
@@ -45,12 +45,12 @@ void loop()
 	} enc_union;
 	
 	for (int i = 0; i < 4; i++) {
-		enc_union.bytes[i] = Wire.read();
-		Serial.println(enc_union.bytes[i], HEX);
-		//Serial.println(Wire.read(), HEX);
+		//enc_union.bytes[i] = Wire.read();
+		//Serial.println(enc_union.bytes[i], HEX);
+		Serial.println(Wire.read(), HEX);
 	}
-	Serial.print("Encoder Value: ");
-	Serial.println(enc_union.int32);
+	//Serial.print("Encoder Value: ");
+	//Serial.println(enc_union.int32);
 	Serial.print("Time: ");
 	Serial.println(micros() - start);
 	

@@ -61,19 +61,31 @@ void setup()
 	imu_avail = imu.init();
 	if (imu_avail) {
 		imu.setI2CBypassEnabled(true);
+		Serial.println("IMU Detected!");
 	}
-	Serial.println("IMU Detected!");
+	else {
+		Serial.println("IMU NOT Detected!");
+	}
 	
 	// initialize the compass
 	compass_avail = compass.init();
-	Serial.println("COMPASS Detected!");
+	if (compass_avail) {
+		Serial.println("COMPASS Detected!");
+	}
+	else {
+		Serial.println("COMPASS NOT Detected!");
+	}
 	
 	// initialize the altimeter and set oversampling to 0 to speed up measurements
 	alt_avail = altimeter.init();
 	if (alt_avail) {
 		altimeter.setOversampling(0);
+		Serial.println("ALTIMETER Detected!");
 	}
-	Serial.println("ALTIMETER Detected!");
+	else {
+		altimeter.setOversampling(0);
+		Serial.println("ALTIMETER NOT Detected!");
+	}
 	
 	if (flash.getManufacturer() == 1) {
 		Serial.println("Flash chip detected!");
