@@ -144,14 +144,6 @@ int MotorDriver::sendData()
 		temp[i] = data_reg[i + active_reg];
 	}
 	Wire.write(temp, REGISTER_SIZE - active_reg);
-	
-	/*
-	while (TWSR & 0x08 && active_reg < REGISTER_SIZE)
-	{
-		Wire.write(data_reg[active_reg]);
-		active_reg++;
-	}
-	*/
 }
 
 

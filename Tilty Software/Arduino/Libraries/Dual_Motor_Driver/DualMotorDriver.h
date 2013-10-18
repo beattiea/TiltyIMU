@@ -101,6 +101,16 @@ class MotorDriver {
 		// Update functions
 		int update();
 		
+		// Motor control functions
+		void updateMotor1();
+		void updateMotor2();
+		
+		void updateEnc1Reg();
+		void updateEnc2Reg();
+		
+		void updateM1Current();
+		void updateM2Current();
+		
 		// Motor status variables
 		uint8_t M1_control;
 		uint8_t M2_control;
@@ -108,8 +118,8 @@ class MotorDriver {
 		uint8_t M2_power;
 		volatile int32_t M1_encoder;
 		volatile int32_t M2_encoder;
-		uint8_t M1_current;
-		uint8_t M2_current;
+		uint8_t M1_current;// Unused
+		uint8_t M2_current;// Unused
 		
 		// I2C register data
 		uint8_t data_reg[REGISTER_SIZE];
@@ -128,16 +138,6 @@ class MotorDriver {
 		static const uint8_t M2_CURRENT = 0x0E;
 
 	private:
-		// Motor control functions
-		void updateMotor1();
-		void updateMotor2();
-		
-		void updateEnc1Reg();
-		void updateEnc2Reg();
-		
-		void updateM1Current();
-		void updateM2Current();
-		
 		// Encoder union variable for converting 32 bit integer to byte array
 		union enc_union {
 			uint8_t bytes[4];
