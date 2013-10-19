@@ -30,6 +30,54 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	char I2C_ADDRESS = 0x03;
 #endif
 
+class MotorDriver {
+	public:
+		// Constructors
+		MotorDriver();
+		~MotorDriver();
+
+		// Motor status variables
+		uint8_t M1_control;
+		uint8_t M2_control;
+		uint8_t M1_power;
+		uint8_t M2_power;
+		volatile int32_t M1_encoder;
+		volatile int32_t M2_encoder;
+		uint8_t M1_current;// Unused
+		uint8_t M2_current;// Unused
+
+		// I2C register data
+		uint8_t data_reg[REGISTER_SIZE];
+		uint8_t active_reg;
+
+		// I2C register addresses
+		// Read/Write registers
+		static const uint8_t M1_CONTROL = 0x00;
+		static const uint8_t M2_CONTROL = 0x01;
+		static const uint8_t M1_POWER = 0x02;
+		static const uint8_t M2_POWER = 0x03;
+		static const uint8_t M1_ENCODER = 0x04;
+		static const uint8_t M2_ENCODER = 0x09;
+		// Read only registers
+		static const uint8_t M1_CURRENT = 0x0D;
+		static const uint8_t M2_CURRENT = 0x0E;
+
+	private:
+		// Encoder union variable for converting 32 bit integer to byte array
+		union enc_union {
+			uint8_t bytes[4];
+			int32_t int32;
+		} enc_union;
+
+		// Motor control register bit values
+		static const uint8_t DIRECTION = 0x01;// Sets motor direction.
+		static const uint8_t BRAKE = 0x02;// Motor brake/cost. 1 brakes, 0 coasts.
+		static const uint8_t SPEED = 0x04;// Speed/Power control setting. 0 is power, 1 is speed (RPM).
+		static const uint8_t INVERT = 0x08;// Motor direction inversion. 0 is normal, 1 is inverted.
+		static const uint8_t EN_ENC = 0x10;// Sets whether to enable the encoder
+
+};
+
 // End Teensy/Master class information
 //==========================================================================================//
 #else
