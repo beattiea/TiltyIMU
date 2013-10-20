@@ -228,6 +228,7 @@ void MotorDriver::init()
 	data_reg[0] = 0x10;
 	data_reg[1] = 0x10;
 	for (int i = 0x02; i < REGISTER_SIZE; i++) {	data_reg[i] = 0x00;}
+	data_reg[M1_power] = 200;
 	
 	TCCR0A = _BV(COM0A1) | _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);// Setup pins 5 and 6 for fast PWM
 	TCCR0B = _BV(CS00);// Set PWM frequency to 62.5kHz (fastest possible)
@@ -315,7 +316,7 @@ int MotorDriver::sendData()
 int MotorDriver::update()
 {
 	updateMotor1();
-	//updateMotor2();
+	updateMotor2();
 }
 
 
@@ -391,6 +392,83 @@ void MotorDriver::updateMotor1()
 	{
 		M1_encoder = m1Encoder.read();
 		updateEnc1Reg();
+	}
+}
+
+
+
+/** \brief Updates Motor 2 based on control register bit settings
+**/
+void MotorDriver::updateMotor2()
+{
+	uint8_t M2_updates = data_reg[M2_CONTROL] ^ M2_control;// gets a list of what values have changed
+	
+	if (M2_updates & BRAKE) // If ENABLE bit value has changed, enables/disables the motor
+	{
+		M2_control ^= BRAKE;
+		if (M2_control & BRAKE) // If enabled, sets MxA and MxB both HIGH
+		{
+			digitalWrite(M2A, HIGH);
+			digitalWrite(M2B, HIGH);
+			return;
+		}
+		else // If disabled, sets the motor to DIRECTION
+		{
+			if (M2_control & INVERT) // If inverted, starts again in inverted direction
+			{
+				digitalWrite(M2A, !(M2_control & DIRECTION));
+				digitalWrite(M2B, (M2_control & DIRECTION));
+			}
+			else
+			{
+				digitalWrite(M2A, M2_control & DIRECTION);
+				digitalWrite(M2B, !(M2_control & DIRECTION));
+			}
+		}
+	}
+	
+	// Only checks everything else if BRAKE is not enabled //
+	if (!(M2_control & BRAKE))
+	{	
+		if (M2_updates & DIRECTION) // If DIRECTION bit value has changed, changes motor direction
+		{
+			M2_control ^= DIRECTION;
+			digitalWrite(M2A, !digitalRead(M2A));
+			digitalWrite(M2B, !digitalRead(M2B));
+		}
+	
+		if (M2_updates & SPEED) // if SPEED/POWER bit value has changed, changes motor control variable to match
+		{
+			M2_control ^= SPEED;
+		}
+	
+		if (M2_updates & INVERT)
+		{
+			M2_control ^= INVERT;
+			digitalWrite(M2A, !digitalRead(M2A));
+			digitalWrite(M2B, !digitalRead(M2B));
+		}
+	}
+	
+	// Updates the motor speed/power values //
+	if ((M2_control & SPEED) && !(M2_control & BRAKE)) // If SPEED is enabled and BRAKE is not, uses PID based RPM speed control
+	{
+		// RPM control PID will go here once implemented and will run every loop regardless of whether the values have changed
+	}
+	else // If SPEED is LOW or BRAKE is enabled, uses power control from register 0x02 or 0x03 (depends on motor)
+	{
+		if (M2_power ^ data_reg[M2_POWER]) // Only updates if value has changed
+		{
+			M2_power = data_reg[M2_POWER];
+			analogWrite(M2, M2_power);
+			analogWrite(LED, M2_power);
+		}
+	}
+	
+	if (data_reg[M2_CONTROL] & EN_ENC)
+	{
+		M2_encoder = m2Encoder.read();
+		updateEnc2Reg();
 	}
 }
 

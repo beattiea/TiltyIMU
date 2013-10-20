@@ -21,7 +21,7 @@ void loop()
 	
 	Wire.beginTransmission(0x03);// Default I2C address is 0x03
 	Wire.write(0x02);
-	Wire.write(127);
+	Wire.write(255);
 	Wire.write(255);
 	Wire.endTransmission();
 	delayMicroseconds(25);
