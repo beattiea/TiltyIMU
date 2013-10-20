@@ -35,17 +35,21 @@ MPL3115A2 altimeter;
 // Instantiate the flash memory
 SpiFlash flash;
 
-bool compass_avail, imu_avail, alt_avail; // variabless to indicate whether sensor is available
+bool compass_avail, imu_avail, alt_avail, flash_avail, bt_avail; // variabless to indicate whether sensor is available
 
 // Constant variable #defines
 #define VOLTAGE_SENSE_PIN 14
 #define VOLTAGE_DIVIDER 0.05061465
 #define SS_PIN 6
+#define BT_COMMAND 15
+#define BT_DEFAULT_BAUD 9600
+#define BT_SET_BAUD 115200
 
 void setup()
 {
 	//Open up some serial communications with the computer
 	Serial.begin(115200);
+	pinMode(BT_COMMAND, OUTPUT);
 	
 	flash.begin(SS_PIN, 2);
 	
@@ -59,40 +63,29 @@ void setup()
 	// initialize the IMU
 	imu = MPU6050();
 	imu_avail = imu.init();
-	if (imu_avail) {
-		imu.setI2CBypassEnabled(true);
-		Serial.println("IMU detected!");
-	}
-	else {
-		Serial.println("IMU NOT detected!");
-	}
+	Serial.print("IMU status...\t\t\t");
+	Serial.println(imu_avail ? "OK!" : "NOT OK!");
 	
 	// initialize the compass
 	compass_avail = compass.init();
-	if (compass_avail) {
-		Serial.println("COMPASS detected!");
-	}
-	else {
-		Serial.println("COMPASS NOT detected!");
-	}
+	Serial.print("Compass status...\t\t");
+	Serial.println(compass_avail ? "OK!" : "NOT OK!");
 	
 	// initialize the altimeter and set oversampling to 0 to speed up measurements
 	alt_avail = altimeter.init();
-	if (alt_avail) {
-		altimeter.setOversampling(0);
-		Serial.println("ALTIMETER detected!");
-	}
-	else {
-		altimeter.setOversampling(0);
-		Serial.println("ALTIMETER NOT detected!");
-	}
+	if (alt_avail) {	altimeter.setOversampling(0);}
+	Serial.print("Altimeter status...\t\t");
+	Serial.println(alt_avail ? "OK!" : "NOT OK!");
 
-	if (flash.getManufacturer() == 1) {
-		Serial.println("Flash chip detected!");
-	}
-	else {
-		Serial.println("Flash chip not detected!");
-	}
+	// initialize and check for the flash memory chip
+	flash_avail = flash.getManufacturer() == 1 ? true : false;
+	Serial.print("Flash memory status...\t\t");
+	Serial.println(flash_avail ? "OK!" : "NOT OK!");
+	
+	// initialize and check for the bluetooth chip
+	bt_avail = checkBT();
+	Serial.print("Bluetooth status...\t\t");
+	Serial.println(bt_avail ? "OK!" : "NOT OK!");
 	
 	Serial.println("Enter any character to continue...");
 	
@@ -133,4 +126,9 @@ void loop()
 	if (imu_avail) { while (!imu.getIntDataReadyStatus());}
 	if (compass_avail) { while (!compass.getDataReady());}
 	if (alt_avail) { while (!altimeter.getDataReady());}
+}
+
+bool checkBT() {
+	Serial1.begin(DEFAULT_BT_SPEED);
+	
 }
