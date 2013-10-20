@@ -85,14 +85,16 @@ void setup()
 	
 	// initialize and check for the bluetooth chip
 	int baud = findBaud();
-	Serial1.begin(baud);//BT_DEFAULT_BAUD);
+	Serial1.begin(baud);
 	bt_avail = checkBTok();
 	Serial.print("Bluetooth status...\t\t");
 	Serial.println(bt_avail ? "OK!" : "NOT OK!\n");
 	if (bt_avail) {
 		Serial.print("\tBluetooth version: ");
 		getBTversion();
-		//setBTbaud() ? Serial.println("\tBluetooth baud set to default Tilty speed") : Serial.println("\tBluetooth baud not set");
+		Serial.print("\tSet bluetooth name to TiltyBT: ");
+		setBTname();
+		setBTbaud();
 		Serial.print("\tBluetooth baud set to: ");
 		Serial.println(findBaud());
 		
@@ -170,13 +172,13 @@ bool getBTversion() {
 	
 	Serial1.begin(BT_DEFAULT_BAUD);
 	digitalWrite(BT_COMMAND, HIGH);
-	delayMicroseconds(1000);
+	delayMicroseconds(10);
 	
 	Serial1.print("AT+VERSION?\r\n");
-	delayMicroseconds(1000);
+	delayMicroseconds(25);
 	
 	digitalWrite(BT_COMMAND, LOW);
-	delayMicroseconds(1000);
+	delayMicroseconds(10);
 	
 	while (Serial1.available() < sizeof(version) && timer < 250) {}
 
@@ -186,7 +188,7 @@ bool getBTversion() {
 		}
 		while (Serial1.available()) {
 			char data = Serial1.read();
-			if (data != 'O' && data != 'K' && data != '\n' && data != '\r') {	Serial.print((int)data);}
+			if (data != 'O' && data != 'K' && data != '\n' && data != '\r') {	Serial.print(data);}
 			delay(1);
 		}
 	}
@@ -230,6 +232,24 @@ bool setBTbaud() {
 	int baud = findBaud();
 	if (baud == 115200) {	return true;}
 	else {	return false;}
+}
+
+bool setBTname() {
+	elapsedMillis timer;
+	
+	digitalWrite(BT_COMMAND, HIGH);
+	delay(10);
+	
+	Serial1.print("AT+NAME=TiltyBT\r\n");
+	delay(25);
+	
+	digitalWrite(BT_COMMAND, LOW);
+	delay(10);
+
+	delay(25);
+	while (Serial1.available()) {
+		Serial.print((char)Serial1.read());
+	}
 }
 
 
