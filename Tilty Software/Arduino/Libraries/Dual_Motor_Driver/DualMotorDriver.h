@@ -20,31 +20,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Arduino.h"
 
+// ========== I2C Settings ==========
+#define REGISTER_SIZE 14
+#define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
+// ========== I2C Settings ==========
+
+
 #ifdef CORE_TEENSY && __arm__
 //==========================================================================================//
 // Teensy class data
 #include <i2c_t3.h>
 
-#ifndef MOTOR_DRIVER_I2C_ADDRESS
-	#define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
-	char I2C_ADDRESS = 0x03;
-#endif
-
 class MotorDriver {
 	public:
 		// Constructors
 		MotorDriver();
+		MotorDriver(uint8_t address);
 		~MotorDriver();
+		
+		// Initialization functions
+		int init();
+		
+		// Motor control functions
+		uint8_t setPower(uint8_t motor, uint8_t power);
+		uint8_t setPowers(uint8_t power1, uint8_t power2);
+		
+		uint8_t setPower(uint8_t motor, uint16_t power);
+		uint8_t setPowers(uint16_t power1, uint16_t power2);
+		
+		// I2C address
+		uint8_t i2c_address;
 
 		// Motor status variables
-		uint8_t M1_control;
-		uint8_t M2_control;
-		uint8_t M1_power;
-		uint8_t M2_power;
-		volatile int32_t M1_encoder;
-		volatile int32_t M2_encoder;
-		uint8_t M1_current;// Unused
-		uint8_t M2_current;// Unused
+		uint8_t M1_control_reg;
+		bool M1_direction = true;
+		bool M1_brake = false;
+		bool M1_control = false;
+		bool M1_invert = false;
+		bool M1_enc = true;
+		
+		uint8_t M2_control_reg;
+		bool M2_direction = true;
+		bool M2_brake = false;
+		bool M2_control = false;
+		bool M2_invert = false;
+		bool M2_enc = true;
 
 		// I2C register data
 		uint8_t data_reg[REGISTER_SIZE];
@@ -63,6 +83,9 @@ class MotorDriver {
 		static const uint8_t M2_CURRENT = 0x0E;
 
 	private:
+		// Register update function
+		uint8_t updateControlReg(bool dir, bool brake, bool cont, bool inv, bool enc);
+		
 		// Encoder union variable for converting 32 bit integer to byte array
 		union enc_union {
 			uint8_t bytes[4];
@@ -72,7 +95,7 @@ class MotorDriver {
 		// Motor control register bit values
 		static const uint8_t DIRECTION = 0x01;// Sets motor direction.
 		static const uint8_t BRAKE = 0x02;// Motor brake/cost. 1 brakes, 0 coasts.
-		static const uint8_t SPEED = 0x04;// Speed/Power control setting. 0 is power, 1 is speed (RPM).
+		static const uint8_t CONTROL = 0x04;// Speed/Power control setting. 0 is power, 1 is speed (RPM).
 		static const uint8_t INVERT = 0x08;// Motor direction inversion. 0 is normal, 1 is inverted.
 		static const uint8_t EN_ENC = 0x10;// Sets whether to enable the encoder
 
@@ -87,15 +110,8 @@ class MotorDriver {
 // ========== Library includes ==========
 #include "Wire.h"
 #include "EEPROM.h"
-#ifndef NO_ENCODERS
-	#include "Encoder.h"
-#endif
+#include "Encoder.h"
 // ========== Library includes ==========
-
-// ========== I2C Settings ==========
-#define REGISTER_SIZE 14
-#define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
-// ========== I2C Settings ==========
 
 // ========== EEPROM data addresses ==========
 #define MOTOR_DRIVER_I2C_EEPROM_ADDRESS 0

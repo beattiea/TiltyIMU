@@ -40,7 +40,7 @@ bool compass_avail, imu_avail, alt_avail; // variabless to indicate whether sens
 // Constant variable #defines
 #define VOLTAGE_SENSE_PIN 14
 #define VOLTAGE_DIVIDER 0.05061465
-#define SS_PIN 10
+#define SS_PIN 6
 
 void setup()
 {
@@ -61,34 +61,37 @@ void setup()
 	imu_avail = imu.init();
 	if (imu_avail) {
 		imu.setI2CBypassEnabled(true);
-		Serial.println("IMU Detected!");
+		Serial.println("IMU detected!");
 	}
 	else {
-		Serial.println("IMU NOT Detected!");
+		Serial.println("IMU NOT detected!");
 	}
 	
 	// initialize the compass
 	compass_avail = compass.init();
 	if (compass_avail) {
-		Serial.println("COMPASS Detected!");
+		Serial.println("COMPASS detected!");
 	}
 	else {
-		Serial.println("COMPASS NOT Detected!");
+		Serial.println("COMPASS NOT detected!");
 	}
 	
 	// initialize the altimeter and set oversampling to 0 to speed up measurements
 	alt_avail = altimeter.init();
 	if (alt_avail) {
 		altimeter.setOversampling(0);
-		Serial.println("ALTIMETER Detected!");
+		Serial.println("ALTIMETER detected!");
 	}
 	else {
 		altimeter.setOversampling(0);
-		Serial.println("ALTIMETER NOT Detected!");
+		Serial.println("ALTIMETER NOT detected!");
 	}
-	
+
 	if (flash.getManufacturer() == 1) {
 		Serial.println("Flash chip detected!");
+	}
+	else {
+		Serial.println("Flash chip not detected!");
 	}
 	
 	Serial.println("Enter any character to continue...");
