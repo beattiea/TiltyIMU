@@ -83,7 +83,7 @@ void setup()
 	Serial.println(flash_avail ? "OK!" : "NOT OK!");
 	
 	// initialize and check for the bluetooth chip
-	bt_avail = checkBT();
+	bt_avail = checkBTok();
 	Serial.print("Bluetooth status...\t\t");
 	Serial.println(bt_avail ? "OK!" : "NOT OK!");
 	
@@ -128,7 +128,22 @@ void loop()
 	if (alt_avail) { while (!altimeter.getDataReady());}
 }
 
-bool checkBT() {
-	Serial1.begin(DEFAULT_BT_SPEED);
+bool checkBTok() {
+	elapsedMillis timer;
+	char ok[4] = {'O', 'K', '\r', '\n'};
 	
+	Serial1.begin(BT_DEFAULT_BAUD);
+	digitalWrite(BT_COMMAND, HIGH);
+	delay(10);
+	Serial1.print("AT\r\n");
+	
+	delay(10);
+	digitalWrite(BT_COMMAND, LOW);
+	delay(25);
+	
+	while (Serial1.available() < sizeof(ok) && timer < 250) {}
+	for (int i = 0; i < sizeof(ok); i++) {
+		if (Serial1.read() != ok[i]) {	return false;}
+	}
+	return true;
 }
