@@ -41,7 +41,7 @@ bool compass_avail, imu_avail, alt_avail, flash_avail, bt_avail; // variabless t
 #define VOLTAGE_SENSE_PIN 14
 #define VOLTAGE_DIVIDER 0.05061465
 #define SS_PIN 6
-#define FLASH_TEST_WRITES 2048
+#define FLASH_TEST_WRITES 1024
 #define BT_COMMAND 15
 #define BT_DEFAULT_BAUD 38400
 #define TILTY_DEFAULT_BT_BAUD 115200
@@ -124,7 +124,7 @@ void loop()
 {
 	if (imu_avail) {
 		imu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-		Serial.print("\t\tAccel x: "); Serial.print(ax);
+		Serial.print("Accel x: "); Serial.print(ax);
 		Serial.print(" y: "); Serial.print(ay);
 		Serial.print(" z: "); Serial.print(az);
 		
@@ -135,7 +135,7 @@ void loop()
 	
 	if (compass_avail) {
 		compass.getValues(&compass_x, &compass_y, &compass_z);
-		Serial.print("Compass x: "); Serial.print(compass_x);
+		Serial.print("\t\tCompass x: "); Serial.print(compass_x);
 		Serial.print(" y: "); Serial.print(compass_y);
 		Serial.print(" z: "); Serial.print(compass_z);
 	}
