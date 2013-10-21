@@ -9020,21 +9020,6 @@ QFN is non-stock</description>
 <pad name="P$7" x="6.35" y="-0.127" drill="0.889"/>
 <pad name="P$8" x="8.89" y="0" drill="0.889"/>
 </package>
-<package name="SOIC-8">
-<smd name="P$1" x="-2.65" y="1.905" dx="1.3" dy="0.6" layer="1"/>
-<smd name="P$2" x="-2.65" y="0.635" dx="1.3" dy="0.6" layer="1"/>
-<smd name="P$3" x="-2.65" y="-0.635" dx="1.3" dy="0.6" layer="1"/>
-<smd name="P$4" x="-2.65" y="-1.905" dx="1.3" dy="0.6" layer="1"/>
-<smd name="P$5" x="2.65" y="-1.905" dx="1.3" dy="0.6" layer="1"/>
-<smd name="P$6" x="2.65" y="-0.635" dx="1.3" dy="0.6" layer="1"/>
-<smd name="P$7" x="2.65" y="0.635" dx="1.3" dy="0.6" layer="1"/>
-<smd name="P$8" x="2.65" y="1.905" dx="1.3" dy="0.6" layer="1"/>
-<wire x1="-3.5" y1="2.75" x2="3.5" y2="2.75" width="0.127" layer="23"/>
-<wire x1="3.5" y1="2.75" x2="3.5" y2="-2.75" width="0.127" layer="23"/>
-<wire x1="3.5" y1="-2.75" x2="-3.5" y2="-2.75" width="0.127" layer="23"/>
-<wire x1="-3.5" y1="-2.75" x2="-3.5" y2="2.75" width="0.127" layer="23"/>
-<circle x="-1.4" y="1.9" radius="0.22360625" width="0.127" layer="23"/>
-</package>
 </packages>
 <symbols>
 <symbol name="2-POS_SMD_TERMINAL_BLOCK">
@@ -9061,24 +9046,6 @@ QFN is non-stock</description>
 <pin name="6" x="0" y="-5.08" visible="pin" length="short" direction="pas" function="dot"/>
 <pin name="7" x="0" y="-7.62" visible="pin" length="short" direction="pas" function="dot"/>
 <pin name="8" x="0" y="-10.16" visible="pin" length="short" direction="pas" function="dot"/>
-</symbol>
-<symbol name="PCA9306">
-<wire x1="-10.16" y1="-7.62" x2="10.16" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="10.16" y1="-7.62" x2="10.16" y2="7.62" width="0.254" layer="94"/>
-<wire x1="10.16" y1="7.62" x2="-10.16" y2="7.62" width="0.254" layer="94"/>
-<wire x1="-10.16" y1="7.62" x2="-10.16" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="0" x2="1.778" y2="0" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="-2.54" x2="1.778" y2="-2.54" width="0.254" layer="94"/>
-<pin name="SDA1" x="-15.24" y="-2.54" visible="pin" length="middle"/>
-<pin name="SCL1" x="-15.24" y="0" visible="pin" length="middle"/>
-<pin name="EN" x="15.24" y="5.08" visible="pin" length="middle" rot="R180"/>
-<pin name="VREF1" x="-15.24" y="2.54" visible="pin" length="middle"/>
-<pin name="VREF2" x="15.24" y="2.54" visible="pin" length="middle" rot="R180"/>
-<pin name="SCL2" x="15.24" y="0" visible="pin" length="middle" rot="R180"/>
-<pin name="SDA2" x="15.24" y="-2.54" visible="pin" length="middle" rot="R180"/>
-<pin name="GND" x="-15.24" y="-5.08" visible="pin" length="middle"/>
-<text x="-10.16" y="8.382" size="1.778" layer="95">&gt;NAME</text>
-<text x="-10.16" y="-10.16" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -9113,28 +9080,6 @@ QFN is non-stock</description>
 <connect gate="G$1" pin="6" pad="P$6"/>
 <connect gate="G$1" pin="7" pad="P$7"/>
 <connect gate="G$1" pin="8" pad="P$8"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="PCA9306">
-<gates>
-<gate name="G$1" symbol="PCA9306" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SOIC-8">
-<connects>
-<connect gate="G$1" pin="EN" pad="P$8"/>
-<connect gate="G$1" pin="GND" pad="P$1"/>
-<connect gate="G$1" pin="SCL1" pad="P$3"/>
-<connect gate="G$1" pin="SCL2" pad="P$6"/>
-<connect gate="G$1" pin="SDA1" pad="P$4"/>
-<connect gate="G$1" pin="SDA2" pad="P$5"/>
-<connect gate="G$1" pin="VREF1" pad="P$2"/>
-<connect gate="G$1" pin="VREF2" pad="P$7"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -11468,7 +11413,6 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <part name="R9" library="resistor" deviceset="R-US_" device="R0603"/>
 <part name="D11" library="SparkFun-LED" deviceset="LED-GREEN" device="LED-0805_NO_SILK"/>
 <part name="GND17" library="supply1" deviceset="GND" device=""/>
-<part name="U$1" library="My Parts" deviceset="PCA9306" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -11612,7 +11556,6 @@ Sparkfun button</text>
 </instance>
 <instance part="D11" gate="G$1" x="129.54" y="15.24" rot="R90"/>
 <instance part="GND17" gate="1" x="137.16" y="10.16"/>
-<instance part="U$1" gate="G$1" x="213.36" y="5.08"/>
 </instances>
 <busses>
 </busses>

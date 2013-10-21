@@ -11463,9 +11463,9 @@ Sparkfun button</text>
 <instance part="D8" gate="G$1" x="137.16" y="119.38" rot="R90">
 <attribute name="PART#" x="137.16" y="119.38" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="JP5" gate="1" x="200.66" y="33.02" smashed="yes">
-<attribute name="PART#" x="200.66" y="33.02" size="1.778" layer="96" display="off"/>
-<attribute name="NAME" x="195.58" y="41.402" size="1.778" layer="95"/>
+<instance part="JP5" gate="1" x="198.12" y="30.48" smashed="yes" rot="MR180">
+<attribute name="PART#" x="198.12" y="30.48" size="1.778" layer="96" rot="MR180" display="off"/>
+<attribute name="NAME" x="193.04" y="22.098" size="1.778" layer="95" rot="MR180"/>
 </instance>
 <instance part="JP6" gate="1" x="185.42" y="30.48" smashed="yes" rot="R180">
 <attribute name="PART#" x="185.42" y="30.48" size="1.778" layer="96" rot="R180" display="off"/>
@@ -11707,8 +11707,8 @@ Sparkfun button</text>
 </segment>
 <segment>
 <pinref part="JP5" gate="1" pin="1"/>
-<wire x1="205.74" y1="25.4" x2="210.82" y2="25.4" width="0.1524" layer="91"/>
-<label x="205.74" y="25.4" size="1.778" layer="95"/>
+<wire x1="203.2" y1="38.1" x2="208.28" y2="38.1" width="0.1524" layer="91"/>
+<label x="208.28" y="38.1" size="1.778" layer="95" rot="MR0"/>
 </segment>
 <segment>
 <pinref part="JP6" gate="1" pin="6"/>
@@ -11790,8 +11790,8 @@ Sparkfun button</text>
 </segment>
 <segment>
 <pinref part="JP5" gate="1" pin="6"/>
-<wire x1="205.74" y1="38.1" x2="210.82" y2="38.1" width="0.1524" layer="91"/>
-<label x="205.74" y="38.1" size="1.778" layer="95"/>
+<wire x1="203.2" y1="25.4" x2="208.28" y2="25.4" width="0.1524" layer="91"/>
+<label x="208.28" y="25.4" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
 <net name="M2B" class="0">
@@ -11816,8 +11816,8 @@ Sparkfun button</text>
 </segment>
 <segment>
 <pinref part="JP5" gate="1" pin="5"/>
-<wire x1="205.74" y1="35.56" x2="210.82" y2="35.56" width="0.1524" layer="91"/>
-<label x="205.74" y="35.56" size="1.778" layer="95"/>
+<wire x1="203.2" y1="27.94" x2="208.28" y2="27.94" width="0.1524" layer="91"/>
+<label x="208.28" y="27.94" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
 <net name="+24V" class="0">
@@ -11937,8 +11937,8 @@ Sparkfun button</text>
 </segment>
 <segment>
 <pinref part="JP5" gate="1" pin="3"/>
-<wire x1="205.74" y1="30.48" x2="210.82" y2="30.48" width="0.1524" layer="91"/>
-<label x="205.74" y="30.48" size="1.778" layer="95"/>
+<wire x1="203.2" y1="33.02" x2="208.28" y2="33.02" width="0.1524" layer="91"/>
+<label x="208.28" y="33.02" size="1.778" layer="95" rot="MR0"/>
 </segment>
 <segment>
 <pinref part="JP6" gate="1" pin="4"/>
@@ -12080,8 +12080,8 @@ Sparkfun button</text>
 </segment>
 <segment>
 <pinref part="JP5" gate="1" pin="2"/>
-<wire x1="205.74" y1="27.94" x2="210.82" y2="27.94" width="0.1524" layer="91"/>
-<label x="203.2" y="27.94" size="1.778" layer="95"/>
+<wire x1="203.2" y1="35.56" x2="208.28" y2="35.56" width="0.1524" layer="91"/>
+<label x="208.28" y="35.56" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
 <net name="ENC2A" class="0">
@@ -12092,8 +12092,8 @@ Sparkfun button</text>
 </segment>
 <segment>
 <pinref part="JP5" gate="1" pin="4"/>
-<wire x1="205.74" y1="33.02" x2="210.82" y2="33.02" width="0.1524" layer="91"/>
-<label x="203.2" y="33.02" size="1.778" layer="95"/>
+<wire x1="203.2" y1="30.48" x2="208.28" y2="30.48" width="0.1524" layer="91"/>
+<label x="208.28" y="30.48" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
 <net name="M1+" class="0">

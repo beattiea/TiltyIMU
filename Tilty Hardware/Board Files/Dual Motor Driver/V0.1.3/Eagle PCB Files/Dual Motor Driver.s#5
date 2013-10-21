@@ -11789,9 +11789,9 @@ Sparkfun button</text>
 <label x="147.32" y="66.04" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP5" gate="1" pin="5"/>
-<wire x1="205.74" y1="35.56" x2="210.82" y2="35.56" width="0.1524" layer="91"/>
-<label x="205.74" y="35.56" size="1.778" layer="95"/>
+<pinref part="JP5" gate="1" pin="6"/>
+<wire x1="205.74" y1="38.1" x2="210.82" y2="38.1" width="0.1524" layer="91"/>
+<label x="205.74" y="38.1" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="M2B" class="0">
@@ -11815,9 +11815,9 @@ Sparkfun button</text>
 <label x="147.32" y="63.5" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP5" gate="1" pin="6"/>
-<wire x1="205.74" y1="38.1" x2="210.82" y2="38.1" width="0.1524" layer="91"/>
-<label x="205.74" y="38.1" size="1.778" layer="95"/>
+<pinref part="JP5" gate="1" pin="5"/>
+<wire x1="205.74" y1="35.56" x2="210.82" y2="35.56" width="0.1524" layer="91"/>
+<label x="205.74" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+24V" class="0">
