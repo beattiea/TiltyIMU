@@ -6948,7 +6948,6 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <part name="R3" library="resistor" deviceset="R-US_" device="R0603" value="4.7K"/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
-<part name="C1" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="C2" library="resistor" deviceset="C-US" device="C0603" value="0.1uF"/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
 <part name="P+3" library="supply1" deviceset="+5V" device=""/>
@@ -7030,9 +7029,8 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <instance part="R3" gate="G$1" x="121.92" y="86.36" rot="R180"/>
 <instance part="GND1" gate="1" x="76.2" y="35.56"/>
 <instance part="GND2" gate="1" x="124.46" y="5.08"/>
-<instance part="C1" gate="G$1" x="101.6" y="78.74"/>
-<instance part="C2" gate="G$1" x="88.9" y="78.74"/>
-<instance part="GND3" gate="1" x="88.9" y="66.04"/>
+<instance part="C2" gate="G$1" x="101.6" y="78.74"/>
+<instance part="GND3" gate="1" x="101.6" y="68.58"/>
 <instance part="P+3" gate="1" x="83.82" y="63.5"/>
 <instance part="X1" gate="G$1" x="93.98" y="25.4" rot="R90">
 <attribute name="PART#" x="93.98" y="25.4" size="1.778" layer="96" rot="R90" display="off"/>
@@ -7094,13 +7092,8 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 </segment>
 <segment>
 <pinref part="C2" gate="G$1" pin="2"/>
-<wire x1="88.9" y1="73.66" x2="88.9" y2="71.12" width="0.1524" layer="91"/>
-<pinref part="C1" gate="G$1" pin="2"/>
-<wire x1="88.9" y1="71.12" x2="101.6" y2="71.12" width="0.1524" layer="91"/>
-<wire x1="101.6" y1="71.12" x2="101.6" y2="73.66" width="0.1524" layer="91"/>
 <pinref part="GND3" gate="1" pin="GND"/>
-<wire x1="88.9" y1="71.12" x2="88.9" y2="68.58" width="0.1524" layer="91"/>
-<junction x="88.9" y="71.12"/>
+<wire x1="101.6" y1="73.66" x2="101.6" y2="71.12" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="GND"/>
@@ -7324,12 +7317,6 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <wire x1="5.08" y1="10.16" x2="22.86" y2="10.16" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$27" class="0">
-<segment>
-<pinref part="JP4" gate="G$1" pin="6"/>
-<wire x1="5.08" y1="7.62" x2="22.86" y2="7.62" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="3V_SCL" class="0">
 <segment>
 <pinref part="JP4" gate="G$1" pin="7"/>
@@ -7353,14 +7340,10 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 </segment>
 <segment>
 <pinref part="C2" gate="G$1" pin="1"/>
-<wire x1="88.9" y1="81.28" x2="88.9" y2="83.82" width="0.1524" layer="91"/>
-<pinref part="C1" gate="G$1" pin="1"/>
-<wire x1="88.9" y1="83.82" x2="101.6" y2="83.82" width="0.1524" layer="91"/>
-<wire x1="101.6" y1="83.82" x2="101.6" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="U1" gate="G$1" pin="VCC"/>
+<wire x1="101.6" y1="81.28" x2="101.6" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="83.82" x2="111.76" y2="83.82" width="0.1524" layer="91"/>
+<pinref part="U1" gate="G$1" pin="VCC"/>
 <wire x1="111.76" y1="83.82" x2="111.76" y2="73.66" width="0.1524" layer="91"/>
-<junction x="101.6" y="83.82"/>
 <pinref part="U1" gate="G$1" pin="VL"/>
 <wire x1="111.76" y1="73.66" x2="119.38" y2="73.66" width="0.1524" layer="91"/>
 <junction x="111.76" y="73.66"/>
@@ -7633,6 +7616,11 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <wire x1="127" y1="73.66" x2="127" y2="86.36" width="0.1524" layer="91"/>
 <label x="127" y="78.74" size="1.778" layer="95" rot="R90"/>
 <pinref part="R3" gate="G$1" pin="1"/>
+</segment>
+<segment>
+<pinref part="JP4" gate="G$1" pin="6"/>
+<wire x1="5.08" y1="7.62" x2="22.86" y2="7.62" width="0.1524" layer="91"/>
+<label x="10.16" y="7.62" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RST" class="0">
