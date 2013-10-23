@@ -1,0 +1,1 @@
+Add bind mode for DSM receivers. On power-on, activate input pullups on all pins and check for any being low (bind plug connects signal to ground).
