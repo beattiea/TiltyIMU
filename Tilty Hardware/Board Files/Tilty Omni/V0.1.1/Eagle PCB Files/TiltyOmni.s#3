@@ -8020,7 +8020,7 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <instance part="P+9" gate="VCC" x="187.96" y="116.84"/>
 <instance part="GND5" gate="1" x="187.96" y="91.44"/>
 <instance part="R9" gate="G$1" x="137.16" y="152.4" rot="R90"/>
-<instance part="P+5" gate="1" x="233.68" y="76.2"/>
+<instance part="P+5" gate="1" x="231.14" y="76.2"/>
 </instances>
 <busses>
 </busses>
@@ -8823,14 +8823,11 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <label x="307.34" y="101.6" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="VUSB"/>
 <pinref part="P+5" gate="1" pin="+5V"/>
-<wire x1="231.14" y1="68.58" x2="233.68" y2="68.58" width="0.1524" layer="91"/>
-<wire x1="233.68" y1="68.58" x2="233.68" y2="73.66" width="0.1524" layer="91"/>
-<pinref part="U1" gate="G$1" pin="VIN"/>
-<wire x1="231.14" y1="66.04" x2="233.68" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="233.68" y1="66.04" x2="233.68" y2="68.58" width="0.1524" layer="91"/>
-<junction x="233.68" y="68.58"/>
+<pinref part="U1" gate="G$1" pin="VUSB"/>
+<wire x1="231.14" y1="73.66" x2="231.14" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="233.68" y1="68.58" x2="231.14" y2="68.58" width="0.1524" layer="91"/>
+<junction x="231.14" y="68.58"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -8860,6 +8857,13 @@ This is just like the LOCK variant in that the holes are staggared by 5 mil, but
 <wire x1="193.04" y1="109.22" x2="187.96" y2="109.22" width="0.1524" layer="91"/>
 <wire x1="187.96" y1="109.22" x2="187.96" y2="114.3" width="0.1524" layer="91"/>
 <pinref part="P+9" gate="VCC" pin="VCC"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="U1" gate="G$1" pin="VIN"/>
+<wire x1="231.14" y1="66.04" x2="233.68" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="233.68" y1="66.04" x2="233.68" y2="68.58" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="24" class="0">

@@ -3031,13 +3031,16 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="36.6395" y1="26.9875" x2="36.6395" y2="26.6065" width="0.1524" layer="1"/>
 <wire x1="36.6395" y1="26.6065" x2="36.322" y2="26.289" width="0.1524" layer="1"/>
 <wire x1="36.322" y1="26.289" x2="36.322" y2="21.6535" width="0.1524" layer="1"/>
-<wire x1="23.749" y1="28.956" x2="27.94" y2="28.956" width="0.1524" layer="16"/>
-<wire x1="27.94" y1="28.956" x2="28.448" y2="28.448" width="0.1524" layer="16"/>
-<wire x1="28.448" y1="28.448" x2="28.448" y2="27.94" width="0.1524" layer="16"/>
-<wire x1="28.448" y1="27.94" x2="28.956" y2="27.432" width="0.1524" layer="16"/>
-<wire x1="28.956" y1="27.432" x2="36.195" y2="27.432" width="0.1524" layer="16"/>
+<wire x1="23.749" y1="28.956" x2="27.432" y2="28.956" width="0.1524" layer="16"/>
+<wire x1="27.432" y1="28.956" x2="27.94" y2="28.956" width="0" layer="19" extent="1-16"/>
+<wire x1="29.718" y1="27.432" x2="36.195" y2="27.432" width="0.1524" layer="16"/>
 <wire x1="23.749" y1="28.956" x2="23.368" y2="29.337" width="0.1524" layer="16"/>
 <wire x1="23.368" y1="29.337" x2="23.368" y2="30.48" width="0.1524" layer="16"/>
+<wire x1="29.718" y1="27.432" x2="29.464" y2="27.178" width="0.1524" layer="16"/>
+<wire x1="29.464" y1="27.178" x2="28.194" y2="27.178" width="0.1524" layer="16"/>
+<wire x1="28.194" y1="27.178" x2="27.94" y2="27.432" width="0.1524" layer="16"/>
+<wire x1="27.94" y1="27.432" x2="27.94" y2="28.448" width="0.1524" layer="16"/>
+<wire x1="27.94" y1="28.448" x2="27.432" y2="28.956" width="0.1524" layer="16"/>
 </signal>
 <signal name="BT_CMD">
 <contactref element="SJ5" pad="1"/>
@@ -3383,6 +3386,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="39.1795" y1="27.305" x2="38.735" y2="27.7495" width="0.2032" layer="1"/>
 <wire x1="38.735" y1="27.7495" x2="38.735" y2="28.956" width="0.2032" layer="1"/>
 <wire x1="38.735" y1="28.956" x2="37.338" y2="30.353" width="0.2032" layer="1"/>
+<via x="28.575" y="27.94" extent="1-16" drill="0.3302"/>
 </signal>
 <signal name="5V_SCL">
 <contactref element="JP3" pad="P$2"/>

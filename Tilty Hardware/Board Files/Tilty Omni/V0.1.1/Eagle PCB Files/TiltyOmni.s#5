@@ -6778,20 +6778,20 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <wire x1="-1.27" y1="17.78" x2="-1.27" y2="16.51" width="0.2032" layer="21"/>
 <text x="-3.81" y="13.97" size="1.27" layer="25" font="vector">&gt;NAME</text>
 <text x="-3.81" y="5.08" size="1.27" layer="27" font="vector">&gt;VALUE</text>
-<smd name="A12" x="-1.27" y="1.27" dx="3.556" dy="1.397" layer="1"/>
-<smd name="GND2" x="-1.27" y="-1.27" dx="3.556" dy="1.397" layer="1"/>
-<smd name="24" x="-1.27" y="-3.81" dx="3.556" dy="1.397" layer="1"/>
-<smd name="25" x="-1.27" y="-6.35" dx="3.556" dy="1.397" layer="1"/>
-<smd name="26" x="-1.27" y="-8.89" dx="3.556" dy="1.397" layer="1"/>
-<smd name="27" x="-1.27" y="-11.43" dx="3.556" dy="1.397" layer="1"/>
-<smd name="28" x="-1.27" y="-13.97" dx="3.556" dy="1.397" layer="1"/>
-<smd name="29" x="3.81" y="-13.97" dx="3.556" dy="1.397" layer="1"/>
-<smd name="30" x="3.81" y="-11.43" dx="3.556" dy="1.397" layer="1"/>
-<smd name="31" x="3.81" y="-8.89" dx="3.556" dy="1.397" layer="1"/>
-<smd name="32" x="3.81" y="-6.35" dx="3.556" dy="1.397" layer="1"/>
-<smd name="33" x="3.81" y="-3.81" dx="3.556" dy="1.397" layer="1"/>
-<smd name="3.3V2" x="3.81" y="-1.27" dx="3.556" dy="1.397" layer="1"/>
-<smd name="A13" x="3.81" y="1.27" dx="3.556" dy="1.397" layer="1"/>
+<smd name="A12" x="-1.778" y="1.27" dx="2.54" dy="1.27" layer="1"/>
+<smd name="GND2" x="-1.778" y="-1.27" dx="2.54" dy="1.27" layer="1"/>
+<smd name="24" x="-1.778" y="-3.81" dx="2.54" dy="1.27" layer="1"/>
+<smd name="25" x="-1.778" y="-6.35" dx="2.54" dy="1.27" layer="1"/>
+<smd name="26" x="-1.778" y="-8.89" dx="2.54" dy="1.27" layer="1"/>
+<smd name="27" x="-1.778" y="-11.43" dx="2.54" dy="1.27" layer="1"/>
+<smd name="28" x="-1.778" y="-13.97" dx="2.54" dy="1.27" layer="1"/>
+<smd name="29" x="4.318" y="-13.97" dx="2.54" dy="1.27" layer="1"/>
+<smd name="30" x="4.318" y="-11.43" dx="2.54" dy="1.27" layer="1"/>
+<smd name="31" x="4.318" y="-8.89" dx="2.54" dy="1.27" layer="1"/>
+<smd name="32" x="4.318" y="-6.35" dx="2.54" dy="1.27" layer="1"/>
+<smd name="33" x="4.318" y="-3.81" dx="2.54" dy="1.27" layer="1"/>
+<smd name="3.3V2" x="4.318" y="-1.27" dx="2.54" dy="1.27" layer="1"/>
+<smd name="A13" x="4.318" y="1.27" dx="2.54" dy="1.27" layer="1"/>
 <smd name="GND" x="-7.62" y="16.51" dx="1.524" dy="1.524" layer="1" roundness="100"/>
 <smd name="0" x="-7.62" y="13.97" dx="1.524" dy="1.524" layer="1" roundness="100"/>
 <smd name="1" x="-7.62" y="11.43" dx="1.524" dy="1.524" layer="1" roundness="100"/>

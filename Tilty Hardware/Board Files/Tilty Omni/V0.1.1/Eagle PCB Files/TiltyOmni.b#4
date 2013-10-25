@@ -167,8 +167,8 @@
 <text x="31.242" y="44.958" size="1.27" layer="26" ratio="15" rot="MR0">23</text>
 <text x="33.782" y="0.889" size="1.524" layer="25" ratio="15">P</text>
 <text x="33.782" y="4.318" size="1.524" layer="25" ratio="15">BT</text>
-<text x="26.4795" y="33.528" size="1.524" layer="26" ratio="15" rot="MR0">IMU</text>
-<text x="26.4795" y="31.75" size="1.524" layer="26" ratio="15" rot="MR0">INT</text>
+<text x="25.4635" y="33.528" size="1.524" layer="26" ratio="15" rot="MR0">IMU</text>
+<text x="25.4635" y="31.75" size="1.524" layer="26" ratio="15" rot="MR0">INT</text>
 <text x="2.54" y="44.196" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">1</text>
 <text x="2.54" y="41.656" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">2</text>
 <text x="2.54" y="39.116" size="1.778" layer="26" ratio="12" rot="MR0" align="bottom-right">3</text>
@@ -2961,7 +2961,6 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="AREF">
 <contactref element="U1" pad="AREF"/>
-<wire x1="26.035" y1="43.18" x2="26.035" y2="43.18" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="N$1">
 <contactref element="C1" pad="1"/>
