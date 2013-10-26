@@ -64,6 +64,7 @@ void setup()
 	
 	// initialize the IMU
 	imu = MPU6050();
+        imu.reset();
 	imu_avail = imu.init();
 	Serial.print("IMU status...\t\t\t");
 	Serial.println(imu_avail ? "OK!" : "NOT OK!");
@@ -83,6 +84,9 @@ void setup()
 	flash_avail = flash.getManufacturer() == 1 ? true : false;
 	Serial.print("Flash memory status...\t\t");
 	Serial.println(flash_avail ? "OK!" : "NOT OK!");
+        Serial.print("\tMemory Size: ");
+        Serial.print(flash.getCapacity());
+        Serial.println(" bytes");
 	Serial.print("\tMemory read: ");
 	Serial.print(checkMemory(FLASH_TEST_WRITES));
 	Serial.print(" of ");
