@@ -65,6 +65,7 @@ void setup()
 	// initialize the IMU
 	imu = MPU6050();
         imu.reset();
+        delay(5);
 	imu_avail = imu.init();
 	Serial.print("IMU status...\t\t\t");
 	Serial.println(imu_avail ? "OK!" : "NOT OK!");
@@ -107,7 +108,7 @@ void setup()
 	if (bt_avail) {
 		Serial.print("\tBluetooth version: ");
 		getBTversion();
-		Serial.print("\tSet bluetooth name to TiltyBT: ");
+		Serial.print("\tBluetooth name set to: TiltyBT ");
 		setBTname();
 		setBTbaud();
 		Serial.print("\tBluetooth baud set to: ");
