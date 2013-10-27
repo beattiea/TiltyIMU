@@ -80,6 +80,11 @@ void setup()
 	Serial.print("Altimeter status...\t\t");
 	Serial.println(alt_avail ? "OK!" : "NOT OK!");
 
+        // Check voltage sensing
+        float voltage = analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER;
+        Serial.print("Voltage sense status...\t\t");
+        Serial.println(voltage < 5.3 && voltage > 4.3 ? "OK!" : "NOT OK!");
+
 	// initialize and check for the flash memory chip
 	flash_avail = flash.getManufacturer() == 1 ? true : false;
 	Serial.print("Flash memory status...\t\t");
