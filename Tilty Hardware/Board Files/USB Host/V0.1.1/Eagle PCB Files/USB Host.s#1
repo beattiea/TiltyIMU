@@ -7740,14 +7740,14 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <segment>
 <pinref part="JP1" gate="G$1" pin="6"/>
 <wire x1="5.08" y1="91.44" x2="25.4" y2="91.44" width="0.1524" layer="91"/>
-<label x="15.24" y="91.44" size="1.778" layer="95"/>
+<label x="25.4" y="91.44" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="INT" class="0">
 <segment>
 <pinref part="JP4" gate="G$1" pin="6"/>
 <wire x1="5.08" y1="7.62" x2="22.86" y2="7.62" width="0.1524" layer="91"/>
-<label x="17.78" y="7.62" size="1.778" layer="95"/>
+<label x="22.86" y="7.62" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="SJ1" gate="1" pin="1"/>

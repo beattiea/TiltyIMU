@@ -7631,6 +7631,7 @@ LILYPAD- DIO-09910&lt;br&gt;</description>
 <segment>
 <pinref part="JP4" gate="G$1" pin="6"/>
 <wire x1="5.08" y1="7.62" x2="22.86" y2="7.62" width="0.1524" layer="91"/>
+<label x="10.16" y="7.62" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RST" class="0">
