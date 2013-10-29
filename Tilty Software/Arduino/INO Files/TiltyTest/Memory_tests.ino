@@ -2,7 +2,7 @@ int checkMemory(int test_writes) {
 	
 	int memory[test_writes];
 	
-	flash.eraseChip();
+	flash.eraseSector(0);
 	
 	for (int i = 0; i < sizeof(memory) / sizeof(int); i++) {
 		memory[i] = random(0, 65535);
@@ -14,5 +14,8 @@ int checkMemory(int test_writes) {
 	for (int i = 0; i < sizeof(memory) / sizeof(int); i++) {
 		if (flash.readInt(i * sizeof(int)) != memory[i]) {	wrong_count++;}
 	}
+
+        flash.eraseSector(0);
+        
 	return wrong_count;
 }

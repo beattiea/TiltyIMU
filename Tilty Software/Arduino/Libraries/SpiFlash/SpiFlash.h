@@ -68,7 +68,7 @@ class SpiFlash {
 		// Erase a sector (4kB)
 		bool eraseSector(long _addr);
 		// Erase a block (64kB)
-		bool eraseBlock(long _addr);
+		bool eraseBlock(long _addr); // Not implemented
 		// Erase the entire chip
 		bool eraseChip();
 		

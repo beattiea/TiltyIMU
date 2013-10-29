@@ -108,7 +108,7 @@ void setup()
 	if (bt_avail) {
 		Serial.print("\tBluetooth version: ");
 		getBTversion();
-		Serial.print("\tBluetooth name set to: TiltyBT ");
+		Serial.print("\tBluetooth name set to TiltyBT: ");
 		setBTname();
 		setBTbaud();
 		Serial.print("\tBluetooth baud set to: ");
