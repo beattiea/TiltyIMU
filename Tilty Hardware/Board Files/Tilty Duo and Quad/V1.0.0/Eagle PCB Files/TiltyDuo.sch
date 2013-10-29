@@ -147,7 +147,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <text x="-2.45" y="2.8" size="1.27" layer="25">&gt;NAME</text>
 <text x="-2.5" y="-4.15" size="1.27" layer="27">&gt;VALUE</text>
 <rectangle x1="-1.016" y1="-1.016" x2="1.016" y2="1.016" layer="1"/>
-<rectangle x1="-1.016" y1="-1.016" x2="1.016" y2="1.016" layer="29"/>
+<rectangle x1="-0.508" y1="-0.508" x2="0.508" y2="0.508" layer="29"/>
 </package>
 <package name="LGA8">
 <description>&lt;h4&gt;LGA8 Package&lt;/h4&gt; &lt;B&gt;**UNPROVEN**&lt;/b&gt;

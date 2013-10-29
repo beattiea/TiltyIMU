@@ -6708,14 +6708,14 @@ We've spent an enormous amount of time creating and checking these footprints an
 <rectangle x1="-0.508" y1="-0.762" x2="0.508" y2="0.762" layer="51"/>
 </package>
 <package name="SJ_3">
-<wire x1="1.27" y1="-1.016" x2="-1.27" y2="-1.016" width="0.1524" layer="51"/>
-<wire x1="1.27" y1="1.016" x2="1.524" y2="0.762" width="0.1524" layer="51" curve="-90"/>
-<wire x1="-1.524" y1="0.762" x2="-1.27" y2="1.016" width="0.1524" layer="51" curve="-90"/>
-<wire x1="-1.524" y1="-0.762" x2="-1.27" y2="-1.016" width="0.1524" layer="51" curve="90"/>
-<wire x1="1.27" y1="-1.016" x2="1.524" y2="-0.762" width="0.1524" layer="51" curve="90"/>
-<wire x1="1.524" y1="-0.762" x2="1.524" y2="0.762" width="0.1524" layer="51"/>
-<wire x1="-1.524" y1="-0.762" x2="-1.524" y2="0.762" width="0.1524" layer="51"/>
-<wire x1="-1.27" y1="1.016" x2="1.27" y2="1.016" width="0.1524" layer="51"/>
+<wire x1="1.27" y1="-1.016" x2="-1.27" y2="-1.016" width="0.1524" layer="23"/>
+<wire x1="1.27" y1="1.016" x2="1.524" y2="0.762" width="0.1524" layer="23" curve="-90"/>
+<wire x1="-1.524" y1="0.762" x2="-1.27" y2="1.016" width="0.1524" layer="23" curve="-90"/>
+<wire x1="-1.524" y1="-0.762" x2="-1.27" y2="-1.016" width="0.1524" layer="23" curve="90"/>
+<wire x1="1.27" y1="-1.016" x2="1.524" y2="-0.762" width="0.1524" layer="23" curve="90"/>
+<wire x1="1.524" y1="-0.762" x2="1.524" y2="0.762" width="0.1524" layer="23"/>
+<wire x1="-1.524" y1="-0.762" x2="-1.524" y2="0.762" width="0.1524" layer="23"/>
+<wire x1="-1.27" y1="1.016" x2="1.27" y2="1.016" width="0.1524" layer="23"/>
 <smd name="1" x="-0.889" y="0" dx="0.635" dy="1.27" layer="1" cream="no"/>
 <smd name="2" x="0" y="0" dx="0.635" dy="1.27" layer="1" cream="no"/>
 <smd name="3" x="0.889" y="0" dx="0.635" dy="1.27" layer="1" cream="no"/>
