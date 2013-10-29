@@ -8,7 +8,7 @@ bool checkBTok() {
 	Serial1.print("AT\r\n");
 	delayMicroseconds(25);
 	
-	digitalWrite(BT_COMMAND, LOW);
+	//digitalWrite(BT_COMMAND, LOW);
 	delayMicroseconds(10);
 	
 	while (Serial1.available() < sizeof(ok) && timer < 250) {}
@@ -29,7 +29,7 @@ bool getBTversion() {
 	Serial1.print("AT+VERSION?\r\n");
 	delayMicroseconds(25);
 	
-	digitalWrite(BT_COMMAND, LOW);
+	//digitalWrite(BT_COMMAND, LOW);
 	delayMicroseconds(10);
 	
 	while (Serial1.available() < sizeof(version) && timer < 250) {}
@@ -52,20 +52,20 @@ bool setBTbaud() {
 	char ok[4] = {'O', 'K', '\r', '\n'};
 	
 	digitalWrite(BT_COMMAND, HIGH);
-	delayMicroseconds(10);
+	delayMicroseconds(50);
 	
 	Serial1.print("AT+UART=");
 	Serial1.print(TILTY_DEFAULT_BT_BAUD);
 	Serial1.print(",0,0\r\n");
-	delayMicroseconds(25);
-	
-	digitalWrite(BT_COMMAND, LOW);
-	delayMicroseconds(10);
+	delayMicroseconds(50);
 
-	while (Serial1.available() < sizeof(ok) && timer < 250) {}
+        while (Serial1.available() < sizeof(ok) && timer < 250) {}
 	for (int i = 0; i < sizeof(ok); i++) {
 		if (Serial1.read() != ok[i]) {	return false;}
 	}
+	
+	//digitalWrite(BT_COMMAND, LOW);
+	delayMicroseconds(50);
 	
 	digitalWrite(BT_COMMAND, HIGH);
 	delayMicroseconds(10);
@@ -95,7 +95,7 @@ bool setBTname() {
 	Serial1.print("AT+NAME=TiltyBT\r\n");
 	delay(25);
 	
-	digitalWrite(BT_COMMAND, LOW);
+	//digitalWrite(BT_COMMAND, LOW);
 	delay(10);
 
 	delay(25);
@@ -118,7 +118,7 @@ int findBaud()
 	delay(100);
 	Serial1.write("AT\r\n");
 	delay(100);
-	digitalWrite(BT_COMMAND, LOW);
+	//digitalWrite(BT_COMMAND, LOW);
 
 	if (Serial1.available()) 
 	{
