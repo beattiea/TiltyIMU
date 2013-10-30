@@ -3,7 +3,8 @@
 #include <MPL3115A2.h>
 
 #include <I2Cdev.h>
-#include <MPU6050.h>
+//#include <MPU6050.h>
+#include "MPU6050_6Axis_MotionApps20.h"
 
 //#include <Wire.h> // Uncomment to use standard Wire library on normal Arduinos
 #include <i2c_t3.h> // Uncomment to use I2C_t3 Wire library on Teensy 3.0
@@ -17,6 +18,7 @@ int raw_values[9];
 int compass_x, compass_y, compass_z;
 
 // Places to store MPU6050 IMU readings
+float ypr[3];		   // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
@@ -46,6 +48,8 @@ bool compass_avail, imu_avail, alt_avail, flash_avail, bt_avail; // variabless t
 #define BT_DEFAULT_BAUD 38400
 #define TILTY_DEFAULT_BT_BAUD 115200
 
+bool display_raw_IMU, send_box_demo;
+
 void setup()
 {
 	//Open up some serial communications with the computer
@@ -69,6 +73,9 @@ void setup()
 	imu_avail = imu.init();
 	Serial.print("IMU status...\t\t\t");
 	Serial.println(imu_avail ? "OK!" : "NOT OK!");
+	if (imu_avail) {
+		setupDMP();
+	}
 	
 	// initialize the compass
 	compass_avail = compass.init();
@@ -125,27 +132,42 @@ void setup()
 	
 	Serial.println("Enter any character to test sensor reading...");
 	
-	while (!Serial.available()) {}
+	while (!Serial.available()) {
+		if (imu_avail) { while (!imu.getIntDataReadyStatus());}
+		if (compass_avail) { while (!compass.getDataReady());}
+		if (alt_avail) { while (!altimeter.getDataReady());}
+	}
 	while (Serial.available()) { Serial.read();}
+	
+	imu.resetFIFO();
 }
-
 
 void loop()
 {
 	if (imu_avail) {
-		imu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-		Serial.print("Accel x: "); Serial.print(ax);
-		Serial.print(" y: "); Serial.print(ay);
-		Serial.print(" z: "); Serial.print(az);
+		readDMP();
+		Serial.print("Yaw: ");
+		Serial.print(ypr[0]);
+		Serial.print("  Pitch: ");
+		Serial.print(ypr[1]);
+		Serial.print("  Roll: ");
+		Serial.print(ypr[2]);
 		
-		Serial.print("\t\tGyro x: "); Serial.print(gx);
-		Serial.print(" y: "); Serial.print(gx);
-		Serial.print(" z: "); Serial.print(gx);
+		if (display_raw_IMU) {
+			imu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+			Serial.print("\t\t Accel x: "); Serial.print(ax);
+			Serial.print("  y: "); Serial.print(ay);
+			Serial.print("  z: "); Serial.print(az);
+		
+			Serial.print("\t\tGyro x: "); Serial.print(gx);
+			Serial.print("  y: "); Serial.print(gx);
+			Serial.print("  z: "); Serial.print(gx);
+		}
 	}
 	
 	if (compass_avail) {
 		compass.getValues(&compass_x, &compass_y, &compass_z);
-		Serial.print("\t\tCompass x: "); Serial.print(compass_x);
+		Serial.print("\t\t Compass x: "); Serial.print(compass_x);
 		Serial.print(" y: "); Serial.print(compass_y);
 		Serial.print(" z: "); Serial.print(compass_z);
 	}
@@ -160,6 +182,11 @@ void loop()
 	Serial.print("\t\t Voltage: "); Serial.print(analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER);
 	
 	Serial.println();
+	
+	if (Serial.available()) {
+		char data = Serial.read();
+		if (data == 'R') {	display_raw_IMU = !display_raw_IMU;}
+	}
 	
 	// wait for all three sensors to have new data available
 	if (imu_avail) { while (!imu.getIntDataReadyStatus());}

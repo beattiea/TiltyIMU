@@ -6,15 +6,16 @@
 #define TEMP_ 'T'//  Read temperature
 #define ZERO_ 'Z'//  Zero IMU gyro
 
-#include <Wire.h>
+//#include <Wire.h>
 #include <SPI.h>
 #include <EEPROM.h>
 #include "DebugUtils.h"
 #include "CommunicationUtils.h"
 #include "FreeIMU.h"
 #include <I2Cdev.h>
-#include <MPU60X0.h>
-#include <HMC58X3.h>
+#include <MPU6050.h>
+#include <HMC5883.h>
+#include <i2c_t3.h>
 
 FreeIMU IMU = FreeIMU();
 float ypr[3];
