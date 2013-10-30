@@ -41,7 +41,7 @@ bool compass_avail, imu_avail, alt_avail, flash_avail, bt_avail; // variabless t
 #define VOLTAGE_SENSE_PIN 14
 #define VOLTAGE_DIVIDER 0.05061465
 #define SS_PIN 6
-#define FLASH_TEST_WRITES 1024
+#define FLASH_TEST_WRITES 2048
 #define BT_COMMAND 15
 #define BT_DEFAULT_BAUD 38400
 #define TILTY_DEFAULT_BT_BAUD 115200
