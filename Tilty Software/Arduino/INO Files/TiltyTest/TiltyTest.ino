@@ -146,7 +146,7 @@ void loop()
 {
 	if (imu_avail) {
 		readDMP();
-		Serial.print("Yaw: ");
+		Serial.print("yaw: ");
 		Serial.print(ypr[0]);
 		Serial.print("  Pitch: ");
 		Serial.print(ypr[1]);
@@ -162,6 +162,19 @@ void loop()
 			Serial.print("\t\tGyro x: "); Serial.print(gx);
 			Serial.print("  y: "); Serial.print(gx);
 			Serial.print("  z: "); Serial.print(gx);
+		}
+		
+		if (send_box_demo) {
+			char YAW = 'Y';
+			char PITCH = 'P';
+			char ROLL = 'R';
+			char BATT = 'B';
+			char ALT = 'A';
+			char TEMP = 'T';
+			Serial.println();
+			Serial.print(YAW); Serial.println(ypr[0]);
+			Serial.print(PITCH); Serial.println(ypr[1]);
+			Serial.print(ROLL); Serial.println(ypr[2]);
 		}
 	}
 	
@@ -186,6 +199,7 @@ void loop()
 	if (Serial.available()) {
 		char data = Serial.read();
 		if (data == 'R') {	display_raw_IMU = !display_raw_IMU;}
+		if (data == 'B') {	send_box_demo = !send_box_demo;}
 	}
 	
 	// wait for all three sensors to have new data available

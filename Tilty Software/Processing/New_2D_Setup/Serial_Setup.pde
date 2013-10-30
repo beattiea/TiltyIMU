@@ -18,6 +18,8 @@ void serialSetup(int comm_port) {
     myPort.clear();
     myPort.bufferUntil('\n');
     println("Serial started on: " + Serial.list()[comm_port]);
+    myPort.write(0);
+    myPort.write('B');
   }
   catch (Exception serialException) {
     myPort = null;
@@ -36,11 +38,11 @@ void serialEvent(Serial myPort) {
     switch (serial_data.charAt(0)) {
       case (ROLL): {  roll = float(serial_data.substring(1)); break;}
       case (PITCH): {  pitch = float(serial_data.substring(1)); break;}
-      case (YAW): {  yaw = -float(serial_data.substring(1)); break;}
+      case (YAW): {  yaw = -float(serial_data.substring(1)); println(yaw); break;}
       case (BATT): {  batt_voltage = float(serial_data.substring(1)); break;}
       case (ALT): {  altitude = float(serial_data.substring(1)); break;}
       case (TEMP): {  temperature = float(serial_data.substring(1)); break;}
-      default: {  println(serial_data); break;}
+      //default: {  println(serial_data); break;}
     }
   }
 }
