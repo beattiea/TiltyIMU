@@ -72,6 +72,8 @@ void setupTelemetryTab() {
                   ;
                   
   gui.addButton("zero", 1)
+     .setSize(93, 25)
+     .setLabel("Zero Angles")
      .setPosition(width/2 - 43, int(176*scale))
      ;
 }
@@ -79,12 +81,12 @@ void setupTelemetryTab() {
 
 void drawTelemetry() {
   if (gui.getTab("default").isActive()) {
-    yaw_label.setText("Yaw: " + str(yaw) + "°");
-    pitch_label.setText("Pitch: " + str(pitch) + "°");
-    roll_label.setText("Roll: " + str(roll) + "°");
+    yaw_label.setText("Yaw: " + nfs(yaw, 3, 2) + "°");
+    pitch_label.setText("Pitch: " + nfs(pitch, 2, 2) + "°");
+    roll_label.setText("Roll: " + nfs(roll, 2, 2) + "°");
     batt_label.setText("Voltage:\n" + nfs(batt_voltage, 1, 2) + "v");
-    alt_label.setText("Altitude: " + str(altitude) + " m");
-    temp_label.setText("Temperature: " + str(temperature) + "°C");
+    alt_label.setText("Altitude: " + nfs(altitude, 3, 2) + " m");
+    temp_label.setText("Temperature: " + nfs(temperature, 2, 2) + "°C");
     
     //  Battery voltage Meter 
     pushMatrix();
@@ -101,6 +103,7 @@ void drawTelemetry() {
 
 void zero(int value) {
   if (myPort != null) {
+    println("Zeroed!");
     myPort.write('Z');
     myPort.write('Y');
     myPort.write('P');

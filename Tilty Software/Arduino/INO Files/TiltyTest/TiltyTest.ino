@@ -19,6 +19,7 @@ int compass_x, compass_y, compass_z;
 
 // Places to store MPU6050 IMU readings
 float ypr[3];		   // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
+float ypr_offset[3];
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
@@ -137,7 +138,7 @@ void setup()
 		if (compass_avail) { while (!compass.getDataReady());}
 		if (alt_avail) { while (!altimeter.getDataReady());}
 	}
-	while (Serial.available()) { Serial.read();}
+	//while (Serial.available()) { Serial.read();}
 	
 	imu.resetFIFO();
 }
@@ -146,12 +147,14 @@ void loop()
 {
 	if (imu_avail) {
 		readDMP();
-		Serial.print("yaw: ");
-		Serial.print(ypr[0]);
-		Serial.print("  Pitch: ");
-		Serial.print(ypr[1]);
-		Serial.print("  Roll: ");
-		Serial.print(ypr[2]);
+		if (!display_raw_IMU && !send_box_demo) {
+			Serial.print("yaw: ");
+			Serial.print(ypr[0]);
+			Serial.print("  Pitch: ");
+			Serial.print(ypr[1]);
+			Serial.print("  Roll: ");
+			Serial.print(ypr[2]);
+		}
 		
 		if (display_raw_IMU) {
 			imu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
@@ -168,31 +171,46 @@ void loop()
 			char YAW = 'Y';
 			char PITCH = 'P';
 			char ROLL = 'R';
-			char BATT = 'B';
-			char ALT = 'A';
-			char TEMP = 'T';
 			Serial.println();
-			Serial.print(YAW); Serial.println(ypr[0]);
-			Serial.print(PITCH); Serial.println(ypr[1]);
-			Serial.print(ROLL); Serial.println(ypr[2]);
+			Serial.print(YAW); Serial.println(ypr[0] - ypr_offset[0]);
+			Serial.print(PITCH); Serial.println(ypr[1] - ypr_offset[1]);
+			Serial.print(ROLL); Serial.println(ypr[2] - ypr_offset[2]);
 		}
 	}
 	
 	if (compass_avail) {
 		compass.getValues(&compass_x, &compass_y, &compass_z);
-		Serial.print("\t\t Compass x: "); Serial.print(compass_x);
-		Serial.print(" y: "); Serial.print(compass_y);
-		Serial.print(" z: "); Serial.print(compass_z);
+		if (!send_box_demo) {
+			Serial.print("\t\t Compass x: "); Serial.print(compass_x);
+			Serial.print(" y: "); Serial.print(compass_y);
+			Serial.print(" z: "); Serial.print(compass_z);
+		}
+		
+		else {
+			char HEADING = 'H';
+			Serial.println();
+			Serial.print(HEADING); Serial.println(atan(compass_x / compass_y));
+		}
 	}
 	if (alt_avail) {
 		altitude = altimeter.readAltitudeM();
 		temperature = altimeter.readTempC();
 		altimeter.forceMeasurement();
-		Serial.print("\t\t Altitude: "); Serial.print(altitude);
-		Serial.print("\t\t Temperature: "); Serial.print(temperature);
+		if (!send_box_demo) {
+			Serial.print("\t\t Altitude: "); Serial.print(altitude);
+			Serial.print("\t\t Temperature: "); Serial.print(temperature);
+		}
+		else {
+			char ALT = 'A';
+			char TEMP = 'T';
+			Serial.println();
+			Serial.print(ALT); Serial.println(altitude, 2);
+			Serial.print(TEMP); Serial.println(temperature, 2);
+		}
 	}
 	
-	Serial.print("\t\t Voltage: "); Serial.print(analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER);
+	if (!send_box_demo) {	Serial.print("\t\t Voltage: "); Serial.print(analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER);}
+	else {	Serial.println(); Serial.print('V'); Serial.println(analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER);}
 	
 	Serial.println();
 	
@@ -200,6 +218,11 @@ void loop()
 		char data = Serial.read();
 		if (data == 'R') {	display_raw_IMU = !display_raw_IMU;}
 		if (data == 'B') {	send_box_demo = !send_box_demo;}
+		if (data == 'Z') {
+			ypr_offset[0] = ypr[0];
+			ypr_offset[1] = ypr[1];
+			ypr_offset[2] = ypr[2];
+		}
 	}
 	
 	// wait for all three sensors to have new data available

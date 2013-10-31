@@ -76,9 +76,9 @@ void draw() {
   
   pushMatrix();
   translate(width/2, height/2);
-  rotateY(radians(yaw));
-  rotateX(radians(pitch));
-  rotateZ(radians(roll));
+  rotateY(-radians(yaw));
+  rotateX(-radians(pitch));
+  rotateZ(-radians(roll));
   lights();
   fill(149,2,135);
   box(height / 5, height / 16, height / 3);
@@ -90,7 +90,7 @@ void draw() {
     resizeGUI();
   }
   
-  println(frameRate);
+  //println(frameRate);
 }
 
 
