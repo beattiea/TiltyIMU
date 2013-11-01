@@ -146,7 +146,7 @@ void setup()
 void loop()
 {
 	if (imu_avail) {
-		readDMP();
+		//readDMP();
 		if (!display_raw_IMU && !send_box_demo) {
 			Serial.print("yaw: ");
 			Serial.print(ypr[0]);
@@ -179,7 +179,7 @@ void loop()
 	}
 	
 	if (compass_avail) {
-		compass.getValues(&compass_x, &compass_y, &compass_z);
+		//compass.getValues(&compass_x, &compass_y, &compass_z);
 		if (!send_box_demo) {
 			Serial.print("\t\t Compass x: "); Serial.print(compass_x);
 			Serial.print(" y: "); Serial.print(compass_y);
@@ -199,9 +199,9 @@ void loop()
         }
 
 	if (alt_avail) {
-		altitude = altimeter.readAltitudeM();
-		temperature = altimeter.readTempC();
-		altimeter.forceMeasurement();
+		//altitude = altimeter.readAltitudeM();
+		//temperature = altimeter.readTempC();
+		//altimeter.forceMeasurement();
 		if (!send_box_demo) {
 			Serial.print("\t\t Altitude: "); Serial.print(altitude);
 			Serial.print("\t\t Temperature: "); Serial.print(temperature);
@@ -237,8 +237,43 @@ void loop()
 		}
 	}
 	
+        bool imu_read = false; 
+        bool compass_read = false;
+        bool alt_read = false;
+        
 	// wait for all three sensors to have new data available
+        while (!imu_read && !compass_read && !alt_read) {
+            if (!imu_avail) {    imu_read = true;}
+            else {
+                if (imu.getIntDataReadyStatus()) {
+                    readDMP();
+                    imu_read = true;
+                }
+            }
+            
+            if (!compass_avail) {    compass_read = true;}
+            else {
+                if (compass.getDataReady()) {
+                    compass.getValues(&compass_x, &compass_y, &compass_z);
+                    compass_read = true;
+                }
+            }
+            
+            if (!alt_avail) {    alt_read = true;}
+            else {
+                if (altimeter.getDataReady()) {
+                    altitude = altimeter.readAltitudeM();
+		    temperature = altimeter.readTempC();
+		    altimeter.forceMeasurement();
+                    alt_read = true;
+                }
+            }
+        }
+            
+            
+        /*
 	if (imu_avail) { while (!imu.getIntDataReadyStatus());}
 	if (compass_avail) { while (!compass.getDataReady());}
 	if (alt_avail) { while (!altimeter.getDataReady());}
+        */
 }
