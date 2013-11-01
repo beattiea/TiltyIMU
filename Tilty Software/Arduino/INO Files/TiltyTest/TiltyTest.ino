@@ -192,6 +192,12 @@ void loop()
 			Serial.print(HEADING); Serial.println(atan(compass_x / compass_y));
 		}
 	}
+        else {
+            if (send_box_demo) {   
+                Serial.print('H'); Serial.println(char(0));
+            }
+        }
+
 	if (alt_avail) {
 		altitude = altimeter.readAltitudeM();
 		temperature = altimeter.readTempC();
@@ -208,6 +214,12 @@ void loop()
 			Serial.print(TEMP); Serial.println(temperature, 2);
 		}
 	}
+        else {
+            if (send_box_demo) {   
+                Serial.print('A'); Serial.println(char(0));
+                Serial.print('T'); Serial.println(char(0));
+            }
+        }
 	
 	if (!send_box_demo) {	Serial.print("\t\t Voltage: "); Serial.print(analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER);}
 	else {	Serial.println(); Serial.print('V'); Serial.println(analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER);}
@@ -217,7 +229,7 @@ void loop()
 	if (Serial.available()) {
 		char data = Serial.read();
 		if (data == 'R') {	display_raw_IMU = !display_raw_IMU;}
-		if (data == 'B') {	send_box_demo = !send_box_demo;}
+		if (data == 'B') {	send_box_demo = true;}
 		if (data == 'Z') {
 			ypr_offset[0] = ypr[0];
 			ypr_offset[1] = ypr[1];

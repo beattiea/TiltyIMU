@@ -1,0 +1,17 @@
+//include
+
+#define MAGN_DOCALIBRATION 1 //enable or disable calibration
+#define magncal_getrawdata(mxraw, myraw, mzraw) magnetometer_getrawdata(mxraw, myraw, mzraw); //set the function that return magnetometer raw values
+#include "magn_docalibration.h"
+
+int main(void) {
+    
+	//init uart
+	//init magnetometer
+	
+	#if MAGN_DOCALIBRATION  == 1
+	magncal_docalibrationclient(uart_putc, uart_getc);
+	#endif
+	
+	//your code
+}

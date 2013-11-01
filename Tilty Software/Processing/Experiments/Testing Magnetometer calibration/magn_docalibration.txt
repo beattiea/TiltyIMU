@@ -1,0 +1,87 @@
+==================================================
+magnetometer calibration functions 01
+==================================================
+= Copyright (c) Davide Gironi, 2012              =
+= http://davidegironi.blogspot.it/               =
+==================================================
+
+This Python script implements a simple Magnetometer calibration routine to
+estimate offset and gain calibration values, this will correct soft and hard
+iron errors.
+
+The magnetomer calibration consist of collecting raw values of the magnetometer
+placing it in varios orientation.
+Then the raw data collected are computed by one of the two script provided. 
+The math of the computation scripts is out of this document.
+Script references:
+ * "ellipsoid fit" by Yury Petrov
+    http://www.mathworks.com/matlabcentral/fileexchange/24693-ellipsoid-fit
+ * "magneto" by http://www.sailboatinstruments.blogspot.com
+    http://sites.google.com/site/sailboatinstruments1/home
+
+The bias obtained will correct hard iron errors, the scale factor will correct
+soft errors.
+The math of the computation scripts is out of this document.
+
+To obtain values, run this python script and follow the instructions.
+A processing script is also provided to collect raw values.
+
+Once you obtain raw values using the script provided, to compute offset and
+scale factor values, you can use the matlab script or magneto12 program provided.
+
+Once you obtain those values you can get calibrated data by applying this formula:
+xt_raw = x_raw - offsetx;
+yt_raw = y_raw - offsety;
+zt_raw = z_raw - offsetz;
+x_calibrated = scalefactor_x[1] * xt_raw + scalefactor_x[2] * yt_raw + scalefactor_x[3] * zt_raw;
+y_calibrated = scalefactor_y[1] * xt_raw + scalefactor_y[2] * yt_raw + scalefactor_y[3] * zt_raw;
+z_calibrated = scalefactor_z[1] * xt_raw + scalefactor_z[2] * yt_raw + scalefactor_z[3] * zt_raw;
+
+On the microcontroller side you have to setup a function that print out to UART
+raw values read from your chip.
+Given 2 bytes (int16_t) variables for every axis, output the LSB and then MSB
+byte ((uint8_t)(int16_t>>0) + (uint8_t)(int16_t>>8)), follow by a '\n' char.
+
+An avr-gcc snippet:
+---
+int16_t raw_value_x_axis = 0;
+int16_t raw_value_y_axis = 0;
+int16_t raw_value_z_axis = 0;
+for(;;) {
+	//wait for the input request
+	while(uart_read_byte() != 0x20);
+	//get raw data
+	raw_value_x_axis = read_x_axis_raw_data();
+	raw_value_y_axis = read_y_axis_raw_data();
+	raw_value_z_axis = read_z_axis_raw_data();
+	//send raw data
+	uart_send_byte(raw_value_x_axis);
+	uart_send_byte(raw_value_x_axis>>8);
+	uart_send_byte(raw_value_y_axis);
+	uart_send_byte(raw_value_y_axis>>8);
+	uart_send_byte(raw_value_z_axis);
+	uart_send_byte(raw_value_z_axis>>8);
+	//send end
+	uart_send_byte('\n');
+}
+---
+
+An Arduino snippet:
+---
+int16_t ax, ay, az;
+void loop() {
+	//wait for the input request
+    while(Serial.read() != 0x20);
+    //get raw data
+    chip.getrawdata(&ax, &ay, &az);
+    //send raw data
+    Serial.write(ax); 
+    Serial.write(ax>>8);
+    Serial.write(ay); 
+    Serial.write(ay>>8);
+    Serial.write(az); 
+    Serial.write(az>>8);
+	//send end
+    Serial.write('\n');
+}
+---

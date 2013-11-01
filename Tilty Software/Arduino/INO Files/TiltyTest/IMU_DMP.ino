@@ -19,13 +19,13 @@ volatile bool mpuInterrupt = false;	 // indicates whether MPU interrupt pin has 
 #define OUTPUT_READABLE_YAWPITCHROLL
 
 void setupDMP() {
-    Serial.println("\tInitializing DMP...");
+    //Serial.println("\tInitializing DMP...");
     devStatus = imu.dmpInitialize();
 
 	// make sure it worked (returns 0 if so)
 	if (devStatus == 0) {
 		// turn on the DMP, now that it's ready
-		Serial.println(F("\tEnabling DMP..."));
+		//Serial.println(F("\tEnabling DMP..."));
 		imu.setDMPEnabled(true);
 
 		mpuIntStatus = imu.getIntStatus();
