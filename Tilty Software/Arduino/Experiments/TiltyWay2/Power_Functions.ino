@@ -24,7 +24,6 @@ void calcPower() {
   }
   */
   
-  pitch_offset = settings.angleOffset - RCspeed / 50.0;
   
   //powerCheck();
   
@@ -100,7 +99,6 @@ float steering_kP = 2.0, steering_kI = 0.05, steering_kD = 0.0000033;
 int testSteering() {
   int range = 0.075 * 500;
   
-  steering_P = map(analogRead(STEERING_SENSE), settings.steeringMin, settings.steeringMax, -range, range) * steering_kP;
   steering_I = steering_I + dYaw * steering_kI * dT;
   steering_D = ddYaw * steering_kD;
   

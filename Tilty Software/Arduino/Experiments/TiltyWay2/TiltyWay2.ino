@@ -13,10 +13,6 @@
 #include <I2Cdev.h>
 #include <MPU6050.h>
 
-/*  Custom Library Includes  */
-//#include <Multiplexer.h>
-#include <Settings.h>
-
 /*  Definition File Includes  */
 //#import "Mux_Definitions.h"
 #import "EEPROM_Definitions.h"
@@ -40,14 +36,14 @@ long start, stop, loop_start;
 int loop_time = 5, time;
 float dT = loop_time / 1000.0;
 boolean connected = false;
-#define BUZZER 2
-#define SPEED_PIN 2//  PWM1
-#define STEERING_PIN 3//  PWM2
+#define BUZZER 13
+#define SPEED_PIN 3//  PWM1
+#define STEERING_PIN 4//  PWM2
 #define STEERING_SENSE 14
+
 
 #define DEBUG
 
-Settings settings, test;
 Servo f_signal;//  Forward/back signal
 Servo s_signal;//  Steering signal
 
@@ -59,8 +55,6 @@ void setup()
   
   myPort.begin(115200);
   Serial.begin(115200);
-
-  loadSavedSettings();
   
   setupServos();
   
@@ -100,8 +94,8 @@ void setup()
   
   while (abs(pitch) > 1) {
     buzzerPulse(500);
-    kP = 10;
-    kI = 1.5;
+    kP = 20;
+    kI = 100;
     kD = 0.2;
     checkSerial();
     getAngles();
@@ -112,10 +106,7 @@ void setup()
     Serial.println(pitch);
     killTime();
   }
-  
-  kP = settings.kP;
-  kI = settings.kI;
-  kD = settings.kD;
+
   P = 0;
   I = 0;
   D = 0;
@@ -149,7 +140,7 @@ void loop()
     
     myPort.println(f_power);
     myPort.println(pitch);
-    pitch_offset = settings.angleOffset;
+	pitch_offset = 0;
     while (abs(pitch) > 1) {//  If anything goes drastically wrong the segway must be rebooted but can still be read from
       buzzerOn();
       checkSerial();
@@ -177,7 +168,7 @@ int killTime() {
     delayMicroseconds(10);
     delay += 10;
   }
-  Serial.println(delay);
+  //Serial.println(delay);
   loop_start = millis();
   return delay;
 }

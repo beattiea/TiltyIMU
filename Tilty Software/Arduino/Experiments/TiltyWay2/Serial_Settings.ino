@@ -11,8 +11,6 @@ void checkSerial() {
     switch (data) {
       case (SET_COMMAND): {  setVariable(); break;}
       case (READ_COMMAND): {  readVariable(); break;}
-      case (SAVE_COMMAND): {  saveVariable(); break;}
-      case (LOAD_SAVED_COMMAND): {  loadVariable(); break;}
       case (STREAMING_COMMAND): {  setStreaming(); break;}
       case (PING): {  myPort.println(CONFIRM); connected = true; break;}
       case (FORWARD): {  remoteControl(data); break;}
@@ -76,35 +74,6 @@ void readVariable() {
   }
 }
 
-/*  Saves a specified variable to EEPROM  */
-void saveVariable() {
-  while (!myPort.available()) {}
-  switch (myPort.read()) {
-    case (VARIABLE_kP): {  settings.kP = kP; settings.savekP(); break;}
-    case (VARIABLE_kI): {  settings.kI = kI; settings.savekI(); break;}
-    case (VARIABLE_kD): {  settings.kD = kD; settings.savekD(); break;}
-    case (VARIABLE_kS): {  settings.kS = kS; settings.savekS(); break;}
-    case (VARIABLE_OFFSET): {  settings.angleOffset = pitch_offset; settings.saveAngleOffset(); break;}
-    case (VARIABLE_LOOP): {  settings.loopTime = loop_time; settings.saveLoopTime(); break;}
-    case (VARIABLE_SPEED): {  settings.speedLimit = speed_limit; settings.saveSpeedLimit(); break;}
-    case (VARIABLE_KICK): {  settings.kickback = kickback; settings.saveKickback(); break;}
-  }
-}
-
-void loadVariable() {//    SHOULD BE MODIFIED TO RETURN THE LOADED VALUE OVER SERIAL
-  while (!myPort.available()) {}
-  switch (myPort.read()) {
-    case (VARIABLE_kP): {  kP = settings.loadkP(); break;}
-    case (VARIABLE_kI): {  kI = settings.loadkI(); break;}
-    case (VARIABLE_kD): {  kD = settings.loadkD(); break;}
-    case (VARIABLE_kS): {  kS = settings.loadkS(); break;}
-    case (VARIABLE_OFFSET): {  pitch_offset = settings.loadAngleOffset(); break;}
-    case (VARIABLE_LOOP): {  loop_time = settings.loadLoopTime(); break;}
-    case (VARIABLE_SPEED): {  speed_limit = settings.loadSpeedLimit(); break;}
-    case (VARIABLE_KICK): {  kickback = settings.loadKickback(); break;}
-  }
-}
-
 /*  Sets streaming data either on or off  */
 void setStreaming() {
   char serial_input;
@@ -126,37 +95,31 @@ void setStreaming() {
 void setkP() {
   while (!myPort.available()) {}
   kP = myPort.parseFloat();
-  settings.kP = kP;
 }
 
 void setkI() {
   while (!myPort.available()) {}
   kI = myPort.parseFloat();
   if (kI == 0) {  I = 0;}
-  settings.kI = kI;
 }
 
 void setkD() {
   while (!myPort.available()) {}
   kD = myPort.parseFloat();
-  settings.kD = kD;
 }
 
 void setOffset() {
   while (!myPort.available()) {}
   pitch_offset = myPort.parseFloat();
-  settings.angleOffset = pitch_offset;
 }
 
 void setkS() {
   while (!myPort.available()) {}
   kS = myPort.parseFloat();
-  settings.kS = kS;
 }
 
 void setSteeringOffset() {
   while (!myPort.available()) {}
-  settings.steeringOffset = myPort.parseInt();
 }
 
 

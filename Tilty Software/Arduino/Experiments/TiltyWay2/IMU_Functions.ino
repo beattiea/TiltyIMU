@@ -54,27 +54,3 @@ void getAngles() {
 float average = 10.5;
 int below = 0, above = 0;
 unsigned long iter = 0;
-
-void testPIDtune() {
-  
-  Serial.print("Below: ");
-  Serial.print(below);
-  Serial.print("   Above: ");
-  Serial.print(above);
-  Serial.print("      kP: ");
-  Serial.println(kP, 3);
-  //Serial.print("   ddPitch: ");
-  //Serial.println(ddPitch, 3);
-  //if ((pitch > 0 && ddPitch > 0) || (pitch < 0 && ddPitch < 0)) {
-    if (abs(ddPitch) < 250 && kP < settings.kP * 4) {  kP += (0.5 / (abs(ddPitch) + 1)); below += 1;}//  worked well at 0.5
-    if (abs(ddPitch) > 2750 && kP > 0) {  kP -= (abs(ddPitch) / 250000) * abs(dPitch); above += 1; buzzerOn();}//  worked well at 5000
-    else {  buzzerOff();}
-  //}
-  iter += 1;
-  average = (average * (iter - 1) + kP) / iter;
-  //if (abs(ddPitch) < 200 && kD < settings.kD * 2.5 && abs(pitch) > 1) {  kD += 0.0075 / abs(ddPitch);}
-  //if (abs(ddPitch) > 750 && kD > settings.kD) {  kD -= abs(ddPitch) / 10000000;}
-  
-  if (kP < settings.kP) {  kP = settings.kP;}
-  //if (kP < settings.kP) {  kP = settings.kP;}
-}

@@ -1,33 +1,3 @@
-void loadSavedSettings() {
-  if (EEPROM.read(0) != 1) {  setupSettings();}
-  else {  load(0, settings);}
-  linkSettings();//  Used to link settings class variables to global variables used for calculations and held in RAM
-}
-
-void setupSettings() {
-  settings.address = 0;
-  settings.kP = 35.0;//  Very stiff at 15.0
-  settings.kI = 110.0;//Very stiff at 110
-  settings.kD = 0.15;//0.2
-  settings.kS = 0.065;//  0.075 on baby one
-  settings.angleOffset = 0.0;//  2.13 works well (measured at startup and steady state
-  settings.speedLimit = 400;
-  settings.kickback = 10;//  Needs to be changed to float in library
-  settings.steeringMin = 383 + 70;
-  settings.steeringMax = 383 - 70;
-  settings.steeringOffset = 0;
-  settings.name = "Default";
-  //save(0, settings);
-}
-
-void linkSettings() {
-  kP = settings.kP;
-  kI = settings.kI;
-  kD = settings.kD;
-  kS = settings.kS;
-  pitch_offset = settings.angleOffset;
-  speed_limit = settings.speedLimit;
-}
 
 /*
 float* kP, kI, kD;

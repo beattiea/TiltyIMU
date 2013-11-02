@@ -37,7 +37,7 @@
 
 /*  Variables to control data streaming  */
 boolean STREAM_DATA = false;//  Global streaming controller
-boolean STREAM_ANGLE = false;
+boolean STREAM_ANGLE = true;
 boolean STREAM_P = false;
 boolean STREAM_I = false;
 boolean STREAM_D = false;
