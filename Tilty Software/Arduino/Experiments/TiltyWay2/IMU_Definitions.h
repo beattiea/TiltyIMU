@@ -22,7 +22,7 @@ void startIMU();
 
 /*  IMU Variable Declarations  */
 float val[9], q[4], ypr[3];// float arrays to retrieve IMU data fro freeIMU
-float yaw_offset = 1.221053012 - 0.245624384, pitch_offset = 3.5, roll_offset;
+float yaw_offset = 1.221053012 - 0.245624384, pitch_offset = 3.0, roll_offset;
 
 /*  Velocity variables  (derivatives of absolute angles)  */
 float dYaw = 0, dYaw_old = 0;

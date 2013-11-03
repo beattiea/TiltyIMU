@@ -29,7 +29,7 @@ int RCspeed, RCsteering;
 /*  Temporary variables (need to be moved?)  */
 float kP, kI, kD, P=0, I=0, D=0, kS, S, PID_old = 0;
 float kickback = 0.25;
-int max_speed = 500, speed_limit;
+int max_speed = 500, speed_limit = 250;
 int f_power = 0, s_power = 0;
 int steering_min , steering_max;
 long start, stop, loop_start;
