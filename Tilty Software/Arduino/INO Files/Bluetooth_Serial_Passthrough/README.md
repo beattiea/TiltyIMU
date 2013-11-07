@@ -1,0 +1,1 @@
+This program is useful for experimenting with the bluetooth AT commands. It basically takes whatever you type in the Arduino serial window and outputs it to the hardware serial used by the bluetooth. And then takes the bluetooth response and outputs it to the Arduino serial monitor.
