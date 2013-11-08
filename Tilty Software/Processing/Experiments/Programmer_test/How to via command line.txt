@@ -1,0 +1,1 @@
+1. call teensy_post_compile -file=<filename without .hex: eg. TiltyTest.cpp> -path=<path to directory containing file> -tools=<path to tools folder>
