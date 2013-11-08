@@ -1,0 +1,14 @@
+All commands must be sent with bluetooth command pin (15) HIGH and must be followed by \r\n
+
+To set up bluetooth as master: AT+ROLE=1 -> OK
+To set up bluetooth as a slave: AT+ROLE=0 -> OK
+
+To connect to a slave: AT+LINK=<address>, ex. AT+LINK=98D3,31,B0466B -> OK/FAIL
+To disconnect from a slave (must be done by master): AT+DISC -> disconnect result
+
+To get bluetooth address: AT+ADDR? -> address + OK
+
+To search for discoverable bluetooth devices:
+AT+IPSCAN=20,5,20,5 -> OK
+AT+INQM=1,<# of devices to search for>,<search timeout in seconds> -> OK
+AT+INQ -> discoverable device addresses
