@@ -1,3 +1,6 @@
+// All of this code is used to set up and read the tilt angles from the IMU
+
+
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
 uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU

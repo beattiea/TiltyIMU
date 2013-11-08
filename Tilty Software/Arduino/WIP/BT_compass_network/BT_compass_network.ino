@@ -3,14 +3,18 @@
 #include <MPL3115A2.h>
 
 #include <I2Cdev.h>
-//#include <MPU6050.h>
 #include "MPU6050_6Axis_MotionApps20.h"
 
 #define MASTER
 //#define SLAVE
 
-#define slave1 "98D3,31,B0466B"
-#define slave2 "98D3,31,B045DB"
+// Board bluetooth addresses
+#define board1 "98D3,31,B0339B" // White
+#define board2 "98D3,31,B045D7" // Red
+#define board3 "98D3,31,B033C0" // Green
+
+#define bt_cmd 15 // Bluetooth command pin
+
 
 // Instantiate the sensors
 MPU6050 imu;
@@ -25,31 +29,35 @@ float compass_data[3];
 void setup() {
 	Serial.begin(115200);
     Serial1.begin(115200);
+	pinMode(bt_cmd, OUTPUT);
+
 
 	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_800);
-
 	imu.reset();
-	delay(25);
+
+	delay(250);
 	
 	setupIMU();
 	compass.init();
 }
 
 void loop() {
-    //connectToSlave(slave1);
-
 	if (imu.getIntDataReadyStatus()) {
 		readIMU();
 	}
 	
 	if (compass.getDataReady()) {
 		compass.getValues(compass_data);
+		calibrateCompass();
 	}
 	
-	//debugIMU();
+	debugIMU();
 	debugCompass();
+	
+	//testBT();
 }
 
+// Prints measured yaw, pitch, and roll to USB serial
 void debugIMU() {
 	Serial.print("Y: ");	Serial.print(ypr[0]);
 	Serial.print("\tP: ");	Serial.print(ypr[1]);
@@ -57,11 +65,12 @@ void debugIMU() {
 	Serial.println();
 }
 
+// Prints compass data to USB serial
 void debugCompass() {
 	Serial.print("X: ");	Serial.print(compass_data[0]);
 	Serial.print("\tY: ");	Serial.print(compass_data[1]);
 	Serial.print("\tZ: ");	Serial.print(compass_data[2]);
-	Serial.print("\tHeading: ");	//Serial.print(atan(compass_data[0] / compass_data[1]) * 180 / PI);
+	Serial.print("\tHeading: ");
 	Serial.print(tiltCompensateCompass(compass_data));
 	Serial.println();
 }
