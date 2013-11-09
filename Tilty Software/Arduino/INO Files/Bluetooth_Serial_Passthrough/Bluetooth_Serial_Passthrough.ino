@@ -21,21 +21,6 @@ void loop() {
                 break;
             }
             
-            else if (data == '~') {
-                Serial1.print("AT+LINK:98D3,31,B0466B\r\n");
-                Serial1.flush();
-                delay(5000);
-                digitalWrite(15, LOW);
-                for (int i = 0; i < 30; i++) {
-                    Serial.print(".");
-                    delay(1000);
-                }
-                Serial.println();
-                digitalWrite(15, HIGH);
-                Serial1.print("AT+DISC\r\n");
-                break;
-            }
-            
             else {
                 Serial1.print(data);
                 start = micros();
