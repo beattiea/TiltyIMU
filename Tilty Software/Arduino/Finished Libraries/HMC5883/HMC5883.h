@@ -62,7 +62,7 @@ class HMC5883
 	private:
 		void writeRegister(unsigned char reg, unsigned char val);
 		float x_scale,y_scale,z_scale,x_max,y_max,z_max;
-		uint8_t _gain = 0;
+		uint8_t _gain;
 		int16_t xMin, xMax;
 		int16_t yMin, yMax;
 		int16_t zMin, zMax;

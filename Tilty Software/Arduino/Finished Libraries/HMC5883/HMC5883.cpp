@@ -25,6 +25,7 @@ HMC5883::HMC5883()
 	x_scale = (float) 1.0;
 	y_scale = (float) 1.0;
 	z_scale = (float) 1.0;
+	_gain = 0;
 }
 
 HMC5883::~HMC5883()
