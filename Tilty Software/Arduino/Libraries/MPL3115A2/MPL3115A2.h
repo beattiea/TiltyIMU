@@ -26,7 +26,7 @@ This is a library to control and read a MPL3115A2 Altimeter from Freescale Semic
 //#define DEBUG
 
 #include <i2c_t3.h>
-#include "WProgram.h"
+//#include "WProgram.h"
 #include "Arduino.h"
 
 #define ADDRESS 0x60//	Sensor I2C address
