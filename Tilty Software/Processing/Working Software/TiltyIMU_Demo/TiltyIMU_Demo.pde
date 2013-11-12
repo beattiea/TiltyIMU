@@ -51,7 +51,7 @@ void setup() {
   // by calling function addControlFrame() a
   // new frame is created and an instance of class
   // ControlFrame is instanziated.
-  cf = addControlFrame("extra", 600,300);
+  //cf = addControlFrame("extra", 600,300);
   
   // add Controllers to the 'extra' Frame inside 
   // the ControlFrame class setup() method below.
@@ -87,7 +87,7 @@ void draw() {
   noLights();
   
   if (width != x_size || height != y_size) {
-    resizeGUI();
+    //resizeGUI();
   }
   
   //println(frameRate);
@@ -112,7 +112,7 @@ void controlEvent(ControlEvent event) {
 
 
 
-
+/*
 void resizeGUI() {
   x_size = width;
   y_size = x_size * 10/16;
@@ -146,3 +146,4 @@ ControlFrame addControlFrame(String theName, int theWidth, int theHeight) {
   
   return p;
 }
+*/

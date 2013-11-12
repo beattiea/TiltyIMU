@@ -36,7 +36,7 @@ void serialEvent(Serial myPort) {
   
   while (myPort.available() != 0) {
     connected = millis();
-    serial_data = myPort.readStringUntil('\n');
+    serial_data = new String(myPort.readBytesUntil('\n'));
     //serial_data = "l123";
     
     switch (serial_data.charAt(0)) {
