@@ -49,18 +49,18 @@ bool compass_avail, imu_avail, alt_avail, flash_avail, bt_avail; // variabless t
 #define BT_DEFAULT_BAUD 38400
 #define TILTY_DEFAULT_BT_BAUD 115200
 
-bool display_raw_IMU, send_box_demo;
+bool display_raw_IMU, send_box_demo = true;
 
 void setup()
 {
 	//Open up some serial communications with the computer
 	Serial.begin(115200);
 	pinMode(BT_COMMAND, OUTPUT);
-	digitalWrite(BT_COMMAND, HIGH);
+        pinMode(SS_PIN, OUTPUT);
 	
 	flash.begin(SS_PIN, 2);
 	
-	while (!Serial) {}
+	//while (!Serial && !available()) {}
 	
 	//Start the internal I2C Bus for the sensors 
 	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_800);
@@ -108,6 +108,7 @@ void setup()
 	Serial.println(" reads failed");
 	
 	// initialize and check for the bluetooth chip
+        digitalWrite(BT_COMMAND, HIGH);
 	int baud = findBaud();
 	Serial1.begin(baud);
 	bt_avail = checkBTok();
@@ -121,8 +122,10 @@ void setup()
 		setBTbaud();
 		Serial.print("\tBluetooth baud set to: ");
 		Serial.println(findBaud());
-		
-		Serial.println();
+                delay(50);
+		Serial1.begin(115200);
+                digitalWrite(BT_COMMAND, LOW);
+		println();
 	}
 	
 	if (imu_avail && !compass_avail && !alt_avail) {	Serial.print("Tilty Duo ");}
@@ -133,7 +136,7 @@ void setup()
 	
 	Serial.println("Enter any character to test sensor reading...");
 	
-	while (!Serial.available()) {
+	while (!available()) {
 		if (imu_avail) { while (!imu.getIntDataReadyStatus());}
 		if (compass_avail) { while (!compass.getDataReady());}
 		if (alt_avail) { while (!altimeter.getDataReady());}
@@ -148,53 +151,53 @@ void loop()
 	if (imu_avail) {
 		//readDMP();
 		if (!display_raw_IMU && !send_box_demo) {
-			Serial.print("yaw: ");
-			Serial.print(ypr[0]);
-			Serial.print("  Pitch: ");
-			Serial.print(ypr[1]);
-			Serial.print("  Roll: ");
-			Serial.print(ypr[2]);
+			print("yaw: ");
+			print(ypr[0]);
+			print("  Pitch: ");
+			print(ypr[1]);
+			print("  Roll: ");
+			print(ypr[2]);
 		}
 		
 		if (display_raw_IMU) {
 			imu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-			Serial.print("\t\t Accel x: "); Serial.print(ax);
-			Serial.print("  y: "); Serial.print(ay);
-			Serial.print("  z: "); Serial.print(az);
+			print("\t\t Accel x: "); print(ax);
+			print("  y: "); print(ay);
+			print("  z: "); print(az);
 		
-			Serial.print("\t\tGyro x: "); Serial.print(gx);
-			Serial.print("  y: "); Serial.print(gx);
-			Serial.print("  z: "); Serial.print(gx);
+			print("\t\tGyro x: "); print(gx);
+			print("  y: "); print(gx);
+			print("  z: "); print(gx);
 		}
 		
 		if (send_box_demo) {
 			char YAW = 'Y';
 			char PITCH = 'P';
 			char ROLL = 'R';
-			Serial.println();
-			Serial.print(YAW); Serial.println(ypr[0] - ypr_offset[0]);
-			Serial.print(PITCH); Serial.println(ypr[1] - ypr_offset[1]);
-			Serial.print(ROLL); Serial.println(ypr[2] - ypr_offset[2]);
+			println();
+			print(YAW); println(ypr[0] - ypr_offset[0]);
+			print(PITCH); println(ypr[1] - ypr_offset[1]);
+			print(ROLL); println(ypr[2] - ypr_offset[2]);
 		}
 	}
 	
 	if (compass_avail) {
 		//compass.getValues(&compass_x, &compass_y, &compass_z);
 		if (!send_box_demo) {
-			Serial.print("\t\t Compass x: "); Serial.print(compass_x);
-			Serial.print(" y: "); Serial.print(compass_y);
-			Serial.print(" z: "); Serial.print(compass_z);
+			print("\t\t Compass x: "); print(compass_x);
+			print(" y: "); print(compass_y);
+			print(" z: "); print(compass_z);
 		}
 		
 		else {
 			char HEADING = 'H';
-			Serial.println();
-			Serial.print(HEADING); Serial.println(atan(compass_x / compass_y));
+			println();
+			print(HEADING); println((float)atan(compass_x / compass_y));
 		}
 	}
         else {
             if (send_box_demo) {   
-                Serial.print('H'); Serial.println(char(0));
+                print('H'); println(char(0));
             }
         }
 
@@ -203,31 +206,31 @@ void loop()
 		//temperature = altimeter.readTempC();
 		//altimeter.forceMeasurement();
 		if (!send_box_demo) {
-			Serial.print("\t\t Altitude: "); Serial.print(altitude);
-			Serial.print("\t\t Temperature: "); Serial.print(temperature);
+			print("\t\t Altitude: "); print(altitude);
+			print("\t\t Temperature: "); print(temperature);
 		}
 		else {
 			char ALT = 'A';
 			char TEMP = 'T';
-			Serial.println();
-			Serial.print(ALT); Serial.println(altitude, 2);
-			Serial.print(TEMP); Serial.println(temperature, 2);
+			println();
+			print(ALT); println(altitude);
+			print(TEMP); println(temperature);
 		}
 	}
         else {
             if (send_box_demo) {   
-                Serial.print('A'); Serial.println(char(0));
-                Serial.print('T'); Serial.println(char(0));
+                print('A'); println(char(0));
+                print('T'); println(char(0));
             }
         }
 	
-	if (!send_box_demo) {	Serial.print("\t\t Voltage: "); Serial.print(analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER);}
-	else {	Serial.println(); Serial.print('V'); Serial.println(analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER);}
+	if (!send_box_demo) {	print("\t\t Voltage: "); print(float(analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER));}
+	else {	println(); print('V'); println(float(analogRead(VOLTAGE_SENSE_PIN) * VOLTAGE_DIVIDER));}
 	
-	Serial.println();
+	println();
 	
-	if (Serial.available()) {
-		char data = Serial.read();
+	if (available()) {
+		char data = read();
 		if (data == 'R') {	display_raw_IMU = !display_raw_IMU;}
 		if (data == 'B') {	send_box_demo = true;}
 		if (data == 'Z') {
@@ -269,11 +272,5 @@ void loop()
                 }
             }
         }
-            
-            
-        /*
-	if (imu_avail) { while (!imu.getIntDataReadyStatus());}
-	if (compass_avail) { while (!compass.getDataReady());}
-	if (alt_avail) { while (!altimeter.getDataReady());}
-        */
 }
+

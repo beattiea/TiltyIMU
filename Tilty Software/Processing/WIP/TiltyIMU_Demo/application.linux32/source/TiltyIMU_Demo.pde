@@ -5,7 +5,7 @@ import processing.serial.*;
 import java.awt.Frame;
 import java.awt.BorderLayout;
 import controlP5.*;
-import processing.opengl.*;
+//import processing.opengl.*;
 
 private ControlP5 gui;
 
@@ -36,7 +36,7 @@ void setup() {
   */
   
   frame.setTitle("Tilty Control");
-  frame.setLocation(displayWidth / 2 - width / 2, displayHeight / 2 - height / 2);
+  //frame.setLocation(displayWidth / 2 - width / 2, displayHeight / 2 - height / 2);
   //frame.setResizable(true);
   
   gui = new ControlP5(this);
@@ -51,10 +51,12 @@ void setup() {
   // by calling function addControlFrame() a
   // new frame is created and an instance of class
   // ControlFrame is instanziated.
-  cf = addControlFrame("extra", 600,300);
+  //cf = addControlFrame("extra", 600 ,300);              CURRENTLY BROKEN
   
   // add Controllers to the 'extra' Frame inside 
   // the ControlFrame class setup() method below.
+  
+  setupFirmwareTest();
 }
 
 float t = 0;
@@ -145,4 +147,19 @@ ControlFrame addControlFrame(String theName, int theWidth, int theHeight) {
   f.setVisible(false);
   
   return p;
+}
+
+void exit() {
+  println("Quitting...");
+  if (myPort != null) {
+    try {
+      myPort.stop();
+    }
+    catch (Exception serialException) {
+      println("Serial stop exception!");
+      myPort = null;
+    }
+  }
+  println("I quit!");
+  System.exit(0);
 }

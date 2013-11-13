@@ -8,7 +8,6 @@ import processing.serial.*;
 import java.awt.Frame; 
 import java.awt.BorderLayout; 
 import controlP5.*; 
-import processing.opengl.*; 
 import org.gwoptics.graphics.graph2D.Graph2D; 
 import org.gwoptics.graphics.graph2D.traces.ILine2DEquation; 
 import org.gwoptics.graphics.graph2D.traces.RollingLine2DTrace; 
@@ -32,7 +31,7 @@ public class TiltyIMU_Demo extends PApplet {
 
 
 
-
+//import processing.opengl.*;
 
 private ControlP5 gui;
 
@@ -63,7 +62,7 @@ public void setup() {
   */
   
   frame.setTitle("Tilty Control");
-  frame.setLocation(displayWidth / 2 - width / 2, displayHeight / 2 - height / 2);
+  //frame.setLocation(displayWidth / 2 - width / 2, displayHeight / 2 - height / 2);
   //frame.setResizable(true);
   
   gui = new ControlP5(this);
@@ -78,10 +77,12 @@ public void setup() {
   // by calling function addControlFrame() a
   // new frame is created and an instance of class
   // ControlFrame is instanziated.
-  cf = addControlFrame("extra", 600,300);
+  //cf = addControlFrame("extra", 600 ,300);              CURRENTLY BROKEN
   
   // add Controllers to the 'extra' Frame inside 
   // the ControlFrame class setup() method below.
+  
+  setupFirmwareTest();
 }
 
 float t = 0;
@@ -172,6 +173,21 @@ public ControlFrame addControlFrame(String theName, int theWidth, int theHeight)
   f.setVisible(false);
   
   return p;
+}
+
+public void exit() {
+  println("Quitting...");
+  if (myPort != null) {
+    try {
+      myPort.stop();
+    }
+    catch (Exception serialException) {
+      println("Serial stop exception!");
+      myPort = null;
+    }
+  }
+  println("I quit!");
+  System.exit(0);
 }
 
 
@@ -315,7 +331,15 @@ final char HEADING = 'H';
 
 public void serialSetup(int comm_port) {
   if (comm_port == -1) {  serialTest(); return;}
+  if (comm_port == -2) {
+    serial_conn.clear();
+    serial_conn.addItem("Refresh list", -2);
+    serial_conn.addItems(Serial.list());
+    serial_conn.addItem("Attempt to auto-connect", -1);
+    return;
+  }
   try {
+    if (myPort != null) {  myPort.stop();}
     myPort = new Serial(this, Serial.list()[comm_port], 115200);
     myPort.clear();
     myPort.bufferUntil('\n');
@@ -334,23 +358,27 @@ public void serialSetup(int comm_port) {
 
 public void serialEvent(Serial myPort) {
   String serial_data;
-  
-  while (myPort.available() != 0) {
-    connected = millis();
-    serial_data = myPort.readStringUntil('\n');
-    //serial_data = "l123";
-    
-    switch (serial_data.charAt(0)) {
-      case (ROLL): {  roll = PApplet.parseFloat(serial_data.substring(1)); break;}
-      case (PITCH): {  pitch = PApplet.parseFloat(serial_data.substring(1)); break;}
-      case (YAW): {  yaw = -PApplet.parseFloat(serial_data.substring(1)); break;}
-      case (BATT): {  batt_voltage = PApplet.parseFloat(serial_data.substring(1)); break;}
-      case (ALT): {  altitude = PApplet.parseFloat(serial_data.substring(1)); println(altitude); break;}
-      case (TEMP): {  temperature = PApplet.parseFloat(serial_data.substring(1)); break;}
-      //case (HEADING): {  temperature = float(serial_data.substring(1)); break;}
-      case('\n'): {break;}
-      //default: {  println(serial_data); break;}
+  try {
+    while (myPort.available() != 0) {
+      connected = millis();
+      serial_data = new String(myPort.readBytesUntil('\n'));
+      //serial_data = "l123";
+      
+      switch (serial_data.charAt(0)) {
+        case (ROLL): {  roll = PApplet.parseFloat(serial_data.substring(1)); break;}
+        case (PITCH): {  pitch = PApplet.parseFloat(serial_data.substring(1)); break;}
+        case (YAW): {  yaw = -PApplet.parseFloat(serial_data.substring(1)); break;}
+        case (BATT): {  batt_voltage = PApplet.parseFloat(serial_data.substring(1)); break;}
+        case (ALT): {  altitude = PApplet.parseFloat(serial_data.substring(1)); break;}
+        case (TEMP): {  temperature = PApplet.parseFloat(serial_data.substring(1)); break;}
+        //case (HEADING): {  temperature = float(serial_data.substring(1)); break;}
+        case('\n'): {break;}
+        //default: {  println(serial_data); break;}
+      }
     }
+  }
+  catch (Exception serialException) {
+    println("SerialEvent error!");
   }
 }
 
@@ -454,6 +482,7 @@ public void setupTelemetryTab() {
                    ;
   serial_conn.captionLabel().style().marginTop = serial_conn.getBarHeight() / 2 - 6;
   serial_conn.addItem("Attempt to auto-connect", -1);
+  serial_conn.addItem("Refresh list", -2);
                 
   
   yaw_label = gui.addTextlabel("yawLabel")
@@ -501,7 +530,7 @@ public void setupTelemetryTab() {
   gui.addButton("zero", 1)
      .setSize(93, 20)
      .setLabel("Zero Angles")
-     .setPosition(width/2 - 43, PApplet.parseInt(178*scale))
+     .setPosition(width/2 - 46, PApplet.parseInt(178*scale))
      ;
 }
 
@@ -539,6 +568,50 @@ public void zero(int value) {
     myPort.write('Z');
     myPort.write('A');
   }
+}
+String file_path;
+String file_name;
+
+public void setupFirmwareTest() {
+  gui.addButton("update", 2)
+     .setSize(120, 20)
+     .setLabel("Update Firmware")
+     .setPosition(width / 2 - 60, PApplet.parseInt(120*scale))
+     ;
+     
+     gui.getController("update").moveTo("System");
+}
+
+public void chooseNewFirmware() {
+  selectInput("Select a new .hex file", "fileSelected");
+}
+
+public void fileSelected(File selection) {
+  if (selection == null) {
+    println("Window was closed or the user hit cancel.");
+  } else {
+    file_path = selection.getAbsolutePath();
+    //file_name = file_path.substring(0, file_path.length() - 4);
+    file_name = selection.getName().substring(0, selection.getName().length() - 4);
+    file_path = selection.getParent();
+    uploadFirmware();
+  }
+}
+
+public void update() {
+  chooseNewFirmware();
+}
+
+public void uploadFirmware() {
+  println("Path: " + file_path);
+  println("Name: " + file_name);
+  String[] command_line = {dataPath("") + "/tools/teensy_post_compile", "-file=" + file_name + "", "-path=" + file_path, "-tools=" + dataPath("tools")};
+  for (int i = 0; i < 4; i++) {
+    print(command_line[i] + " ");
+  }
+  exec(command_line);
+  String[] command_line2 = {dataPath("") + "/tools/teensy_reboot", "-pmk20dx128", "-chalfkay"};
+  exec(command_line2);
 }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "TiltyIMU_Demo" };

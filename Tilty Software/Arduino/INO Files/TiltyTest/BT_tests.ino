@@ -127,6 +127,7 @@ int findBaud()
 	  return _bauds[i];//  return the correct baud rate
 	}
 	Serial1.end();
+        digitalWrite(BT_COMMAND, LOW);
   }
   return -1;
 }

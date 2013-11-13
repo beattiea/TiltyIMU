@@ -27,6 +27,7 @@ void setupTelemetryTab() {
                    ;
   serial_conn.captionLabel().style().marginTop = serial_conn.getBarHeight() / 2 - 6;
   serial_conn.addItem("Attempt to auto-connect", -1);
+  serial_conn.addItem("Refresh list", -2);
                 
   
   yaw_label = gui.addTextlabel("yawLabel")
@@ -74,7 +75,7 @@ void setupTelemetryTab() {
   gui.addButton("zero", 1)
      .setSize(93, 20)
      .setLabel("Zero Angles")
-     .setPosition(width/2 - 43, int(178*scale))
+     .setPosition(width/2 - 46, int(178*scale))
      ;
 }
 

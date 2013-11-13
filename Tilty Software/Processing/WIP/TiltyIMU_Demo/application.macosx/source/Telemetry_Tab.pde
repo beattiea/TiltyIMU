@@ -75,7 +75,7 @@ void setupTelemetryTab() {
   gui.addButton("zero", 1)
      .setSize(93, 20)
      .setLabel("Zero Angles")
-     .setPosition(width/2 - 43, int(178*scale))
+     .setPosition(width/2 - 46, int(178*scale))
      ;
 }
 
