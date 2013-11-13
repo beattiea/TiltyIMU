@@ -28,24 +28,10 @@ void fileSelected(File selection) {
 }
 
 void update() {
-  chooseNewFirmware();
+  //chooseNewFirmware();
+  forceUpdate();
 }
 
-/*
-void uploadFirmware() {
-  println("Path: " + file_path);
-  println("Name: " + file_name);
-  if (System.getProperty("os.name").equals("Mac OS X")) {
-    String[] command_line = {dataPath("") + "/tools/Mac/teensy_post_compile", "-file=" + file_name + "", "-path=" + file_path, "-tools=" + dataPath("tools/Mac")};
-    for (int i = 0; i < 4; i++) {
-      print(command_line[i] + " ");
-    }
-    exec(command_line);
-    String[] command_line2 = {dataPath("") + "/tools/Mac/teensy_reboot", ""};
-    exec(command_line2);
-  }
-}
-*/
 void uploadFirmware() {
   println("Path: " + file_path);
   println("Name: " + file_name);
@@ -70,5 +56,7 @@ void uploadFirmware() {
 }
 
 void forceUpdate() {
-  
+  file_name = "TiltyTest.cpp";
+  file_path = dataPath("");
+  uploadFirmware();
 }

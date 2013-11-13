@@ -28,17 +28,35 @@ void fileSelected(File selection) {
 }
 
 void update() {
-  chooseNewFirmware();
+  //chooseNewFirmware();
+  forceUpdate();
 }
 
 void uploadFirmware() {
   println("Path: " + file_path);
   println("Name: " + file_name);
-  String[] command_line = {dataPath("") + "/tools/teensy_post_compile", "-file=" + file_name + "", "-path=" + file_path, "-tools=" + dataPath("tools")};
-  for (int i = 0; i < 4; i++) {
-    print(command_line[i] + " ");
+  
+  if (System.getProperty("os.name").equals("Mac OS X")) {
+    String[] command_line = {dataPath("") + "/tools/Mac/teensy_post_compile", "-file=" + file_name + "", "-path=" + file_path, "-tools=" + dataPath("tools/Mac")};
+  
+    //for (int i = 0; i < 4; i++) {  print(command_line[i] + " ");}
+  
+    exec(command_line);
+    String[] command_line2 = {dataPath("") + "/tools/Mac/teensy_reboot", ""};//, "-pmk20dx128", "-chalfkay"};
+    exec(command_line2);
   }
-  exec(command_line);
-  String[] command_line2 = {dataPath("") + "/tools/teensy_reboot", "-pmk20dx128", "-chalfkay"};
-  exec(command_line2);
+  
+  else {
+    String[] command_line = {dataPath("") + "/tools/Windows/teensy_post_compile.exe", "-file=" + file_name + "", "-path=" + file_path, "-tools=" + dataPath("tools/Windows")};
+  
+    exec(command_line);
+    String[] command_line2 = {dataPath("") + "/tools/Windows/teensy_reboot.exe", ""};//, "-pmk20dx128", "-chalfkay"};
+    exec(command_line2);
+  }
+}
+
+void forceUpdate() {
+  file_name = "TiltyTest.cpp";
+  file_path = dataPath("");
+  uploadFirmware();
 }
