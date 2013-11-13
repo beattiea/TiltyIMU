@@ -27,6 +27,7 @@ void setupTelemetryTab() {
                    ;
   serial_conn.captionLabel().style().marginTop = serial_conn.getBarHeight() / 2 - 6;
   serial_conn.addItem("Attempt to auto-connect", -1);
+  serial_conn.addItem("Refresh list", -2);
                 
   
   yaw_label = gui.addTextlabel("yawLabel")
