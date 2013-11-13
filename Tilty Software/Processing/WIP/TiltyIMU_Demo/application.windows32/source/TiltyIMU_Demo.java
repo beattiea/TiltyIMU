@@ -3,12 +3,12 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
-import java.io.InputStreamReader; 
 import saito.objloader.*; 
 import processing.serial.*; 
 import java.awt.Frame; 
 import java.awt.BorderLayout; 
 import controlP5.*; 
+import processing.opengl.*; 
 import org.gwoptics.graphics.graph2D.Graph2D; 
 import org.gwoptics.graphics.graph2D.traces.ILine2DEquation; 
 import org.gwoptics.graphics.graph2D.traces.RollingLine2DTrace; 
@@ -33,7 +33,6 @@ public class TiltyIMU_Demo extends PApplet {
 
 
 
-//import processing.opengl.*;
 
 private ControlP5 gui;
 
@@ -83,8 +82,6 @@ public void setup() {
   
   // add Controllers to the 'extra' Frame inside 
   // the ControlFrame class setup() method below.
-  
-  setupFirmwareTest();
 }
 
 float t = 0;
@@ -318,13 +315,6 @@ final char HEADING = 'H';
 
 public void serialSetup(int comm_port) {
   if (comm_port == -1) {  serialTest(); return;}
-  if (comm_port == -2) {
-    serial_conn.clear();
-    serial_conn.addItem("Refresh list", -2);
-    serial_conn.addItems(Serial.list());
-    serial_conn.addItem("Attempt to auto-connect", -1);
-    return;
-  }
   try {
     myPort = new Serial(this, Serial.list()[comm_port], 115200);
     myPort.clear();
@@ -355,7 +345,7 @@ public void serialEvent(Serial myPort) {
       case (PITCH): {  pitch = PApplet.parseFloat(serial_data.substring(1)); break;}
       case (YAW): {  yaw = -PApplet.parseFloat(serial_data.substring(1)); break;}
       case (BATT): {  batt_voltage = PApplet.parseFloat(serial_data.substring(1)); break;}
-      case (ALT): {  altitude = PApplet.parseFloat(serial_data.substring(1)); break;}
+      case (ALT): {  altitude = PApplet.parseFloat(serial_data.substring(1)); println(altitude); break;}
       case (TEMP): {  temperature = PApplet.parseFloat(serial_data.substring(1)); break;}
       //case (HEADING): {  temperature = float(serial_data.substring(1)); break;}
       case('\n'): {break;}
@@ -464,7 +454,6 @@ public void setupTelemetryTab() {
                    ;
   serial_conn.captionLabel().style().marginTop = serial_conn.getBarHeight() / 2 - 6;
   serial_conn.addItem("Attempt to auto-connect", -1);
-  serial_conn.addItem("Refresh list", -2);
                 
   
   yaw_label = gui.addTextlabel("yawLabel")
@@ -549,59 +538,6 @@ public void zero(int value) {
     myPort.write('P');
     myPort.write('Z');
     myPort.write('A');
-  }
-}
-String file_path;
-String file_name;
-
-public void setupFirmwareTest() {
-  gui.addButton("update", 2)
-     .setSize(120, 20)
-     .setLabel("Update Firmware")
-     .setPosition(PApplet.parseInt(2*scale), PApplet.parseInt(15*scale))
-     ;
-}
-
-public void chooseNewFirmware() {
-  selectInput("Select a new .hex file", "fileSelected");
-}
-
-public void fileSelected(File selection) {
-  if (selection == null) {
-    println("Window was closed or the user hit cancel.");
-  } else {
-    file_path = selection.getAbsolutePath();
-    //file_name = file_path.substring(0, file_path.length() - 4);
-    file_name = selection.getName().substring(0, selection.getName().length() - 4);
-    file_path = selection.getParent();
-    uploadFirmware();
-  }
-}
-
-public void update() {
-  chooseNewFirmware();
-}
-
-public void uploadFirmware() {
-  println("Path: " + file_path);
-  println("Name: " + file_name);
-  
-  if (System.getProperty("os.name").equals("Mac OS X")) {
-    String[] command_line = {dataPath("") + "/tools/teensy_post_compile", "-file=" + file_name + "", "-path=" + file_path, "-tools=" + dataPath("tools")};
-  
-    //for (int i = 0; i < 4; i++) {  print(command_line[i] + " ");}
-  
-    exec(command_line);
-    String[] command_line2 = {dataPath("") + "/tools/teensy_reboot", ""};//, "-pmk20dx128", "-chalfkay"};
-    exec(command_line2);
-  }
-  
-  else {
-    String[] command_line = {dataPath("") + "/tools/Windows/teensy_post_compile.exe", "-file=" + file_name + "", "-path=" + file_path, "-tools=" + dataPath("tools/Windows")};
-  
-    exec(command_line);
-    String[] command_line2 = {dataPath("") + "/tools/Windows/teensy_reboot.exe", ""};//, "-pmk20dx128", "-chalfkay"};
-    exec(command_line2);
   }
 }
   static public void main(String[] passedArgs) {

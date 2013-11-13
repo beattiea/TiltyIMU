@@ -585,13 +585,14 @@ public void update() {
 public void uploadFirmware() {
   println("Path: " + file_path);
   println("Name: " + file_name);
-  String[] command_line = {dataPath("") + "/tools/teensy_post_compile", "-file=" + file_name + "", "-path=" + file_path, "-tools=" + dataPath("tools")};
+  String[] command_line = {"\"" + dataPath("") + "/tools/teensy_post_compile\"", "-file=\"" + file_name + "\"", "-path=\"" + file_path + "\"", "-tools=\"" + dataPath("tools\"")};
   for (int i = 0; i < 4; i++) {
     print(command_line[i] + " ");
   }
-  exec(command_line);
-  String[] command_line2 = {dataPath("") + "/tools/teensy_reboot", "-pmk20dx128", "-chalfkay"};
-  exec(command_line2);
+  String[] blah = {"chmod +x", "\"" + dataPath("") + "/tools/teensy_post_compile\""};
+  //exec(blah);
+  //exec("chmod 777 hello.txt");
+  open(command_line);
 }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "TiltyIMU_Demo" };

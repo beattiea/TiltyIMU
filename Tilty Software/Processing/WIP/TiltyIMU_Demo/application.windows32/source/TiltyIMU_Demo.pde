@@ -1,4 +1,3 @@
-import java.io.InputStreamReader;
 import saito.objloader.*;
 
 import processing.serial.*;
@@ -6,7 +5,7 @@ import processing.serial.*;
 import java.awt.Frame;
 import java.awt.BorderLayout;
 import controlP5.*;
-//import processing.opengl.*;
+import processing.opengl.*;
 
 private ControlP5 gui;
 
@@ -56,8 +55,6 @@ void setup() {
   
   // add Controllers to the 'extra' Frame inside 
   // the ControlFrame class setup() method below.
-  
-  setupFirmwareTest();
 }
 
 float t = 0;
