@@ -1,4 +1,5 @@
 Add solder paste to large regulator pad
 Remove solder paste on IMU die pad
+Change servo headers to be non-locking, but use same size hole and pad as add-on headers and Teensy socket
 
 Add spot for Satellite Rx connector in future revision(?)
