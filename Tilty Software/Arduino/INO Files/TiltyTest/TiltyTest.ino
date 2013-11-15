@@ -49,18 +49,21 @@ bool compass_avail, imu_avail, alt_avail, flash_avail, bt_avail; // variabless t
 #define BT_DEFAULT_BAUD 38400
 #define TILTY_DEFAULT_BT_BAUD 115200
 
-bool display_raw_IMU, send_box_demo = true;
+bool display_raw_IMU, send_box_demo;
 
 void setup()
 {
 	//Open up some serial communications with the computer
 	Serial.begin(115200);
 	pinMode(BT_COMMAND, OUTPUT);
+
+        //Serial1.begin(BT_DEFAULT_BAUD);
+        digitalWrite(BT_COMMAND, HIGH);
         pinMode(SS_PIN, OUTPUT);
 	
 	flash.begin(SS_PIN, 2);
 	
-	//while (!Serial && !available()) {}
+	while (!Serial && !available()) {}
 	
 	//Start the internal I2C Bus for the sensors 
 	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_800);
