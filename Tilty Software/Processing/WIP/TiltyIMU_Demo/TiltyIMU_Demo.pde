@@ -1,15 +1,10 @@
-import saito.objloader.*;
-
 import processing.serial.*;
 
 import java.awt.Frame;
 import java.awt.BorderLayout;
 import controlP5.*;
-//import processing.opengl.*;
 
 private ControlP5 gui;
-
-OBJModel TiltyIMU;
 
 ControlFrame cf;
 Frame f;
@@ -28,12 +23,6 @@ void setup() {
   size(x_size, y_size, P3D);
   noStroke();
   smooth(4);
-  
-  /*//  3D Model code, but the model needs work
-  TiltyIMU = new OBJModel(this, "Tilty.obj", "absolute", TRIANGLES);
-  TiltyIMU.scale(5);
-  TiltyIMU.translateToCenter();
-  */
   
   frame.setTitle("Tilty Control");
   //frame.setLocation(displayWidth / 2 - width / 2, displayHeight / 2 - height / 2);
