@@ -46,7 +46,7 @@ void setup() {
   // by calling function addControlFrame() a
   // new frame is created and an instance of class
   // ControlFrame is instanziated.
-  //cf = addControlFrame("extra", 600 ,300);              CURRENTLY BROKEN
+  //cf = addControlFrame("extra", 600 ,300);//              CURRENTLY BROKEN
   
   // add Controllers to the 'extra' Frame inside 
   // the ControlFrame class setup() method below.
@@ -60,6 +60,7 @@ float yaw, pitch, roll, altitude, temperature;
 float batt_voltage = 13.2;
 float min_batt = 5.3;//  Can't be less than 5.16 volts due to regulator drop out
 float max_batt = 24;//  Can't be more than 51.8 volts or it will damage the Teensy;void draw() {
+  
 void draw() {
   background(10);
   
@@ -72,9 +73,9 @@ void draw() {
   checkConn();
   
   pushMatrix();
-  translate(width/2, height/2);
+  translate(width/2, height/4);
   rotateY(-radians(yaw));
-  rotateX(-radians(pitch));
+  rotateX(-radians(pitch + 16));
   rotateZ(-radians(roll));
   lights();
   fill(149,2,135);
@@ -139,7 +140,8 @@ ControlFrame addControlFrame(String theName, int theWidth, int theHeight) {
   f.setLocation(100, 100);
   f.setResizable(true);
   //f.setUndecorated(true);
-  f.setVisible(false);
+  //f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+  //f.setVisible(false);
   
   return p;
 }

@@ -5,7 +5,7 @@ void setupFirmwareTest() {
   gui.addButton("update", 2)
      .setSize(120, 20)
      .setLabel("Update Firmware")
-     .setPosition(width / 2 - 60, int(120*scale))
+     .setPosition(width / 2 - 60, int(200*scale))
      ;
      
      gui.getController("update").moveTo("System");

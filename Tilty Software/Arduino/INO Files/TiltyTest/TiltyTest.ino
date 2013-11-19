@@ -99,6 +99,7 @@ void setup()
 
 	// initialize and check for the flash memory chip
 	flash_avail = flash.getManufacturer() == 1 ? true : false;
+	
 	Serial.print("Flash memory status...\t\t");
 	Serial.println(flash_avail ? "OK!" : "NOT OK!");
         Serial.print("\tMemory Size: ");
@@ -111,7 +112,7 @@ void setup()
 	Serial.println(" reads failed");
 	
 	// initialize and check for the bluetooth chip
-        digitalWrite(BT_COMMAND, HIGH);
+    digitalWrite(BT_COMMAND, HIGH);
 	int baud = findBaud();
 	Serial1.begin(baud);
 	bt_avail = checkBTok();

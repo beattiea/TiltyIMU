@@ -45,6 +45,7 @@ void serialEvent(Serial myPort) {
     while (myPort.available() != 0) {
       connected = millis();
       serial_data = new String(myPort.readBytesUntil('\n'));
+      //printConsole(serial_data);
       //serial_data = "l123";
       
       switch (serial_data.charAt(0)) {
@@ -56,7 +57,7 @@ void serialEvent(Serial myPort) {
         case (TEMP): {  temperature = float(serial_data.substring(1)); break;}
         //case (HEADING): {  temperature = float(serial_data.substring(1)); break;}
         case('\n'): {break;}
-        //default: {  println(serial_data); break;}
+        default: {  printConsole(serial_data); break;}//println(serial_data); break;}
       }
     }
   }
