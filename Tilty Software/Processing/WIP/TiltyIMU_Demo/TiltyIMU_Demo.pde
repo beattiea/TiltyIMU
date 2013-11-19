@@ -19,12 +19,18 @@ ControlFont tabFont = new ControlFont(font, 18);
 ControlFont global = new ControlFont(globalFont, 12);
 
 void setup() {
+  setupMenuBar();
+  
+  frame.setTitle("TiltyIMU Demo");
+  if (!System.getProperty("os.name").equals("Mac OS X")) {
+    frame.setIconImage(getToolkit().getImage(dataPath("Resources/icon.png")));
+  }
+  
   if (y_size >= displayHeight) {  y_size = displayHeight - 20;}
   size(x_size, y_size, P3D);
   noStroke();
   smooth(4);
   
-  frame.setTitle("Tilty Control");
   //frame.setLocation(displayWidth / 2 - width / 2, displayHeight / 2 - height / 2);
   //frame.setResizable(true);
   
