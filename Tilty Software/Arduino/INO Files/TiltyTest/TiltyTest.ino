@@ -57,8 +57,8 @@ void setup()
 	Serial.begin(115200);
 	pinMode(BT_COMMAND, OUTPUT);
 
-        //Serial1.begin(BT_DEFAULT_BAUD);
         digitalWrite(BT_COMMAND, HIGH);
+        Serial1.begin(BT_DEFAULT_BAUD);
         pinMode(SS_PIN, OUTPUT);
 	
 	flash.begin(SS_PIN, 2);

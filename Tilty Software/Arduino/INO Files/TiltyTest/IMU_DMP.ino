@@ -40,7 +40,7 @@ void setupDMP() {
 		// ERROR!
 		// 1 = initial memory load failed
 		// 2 = DMP configuration updates failed
-		// (if it's going to break, usually the code will be 1)
+		// (if it's going to break, usually the c,,ode will be 1)
 		Serial.print("\tDMP Initialization failed (code ");
 		Serial.print(devStatus);
 		Serial.println(")");
