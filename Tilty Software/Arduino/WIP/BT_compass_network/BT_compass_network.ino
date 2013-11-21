@@ -53,8 +53,7 @@ void loop() {
 	
 	//debugIMU();
 	//debugCompass();
-        debugHeading();
-	
+    debugHeading();
 	//testBT();
 }
 
