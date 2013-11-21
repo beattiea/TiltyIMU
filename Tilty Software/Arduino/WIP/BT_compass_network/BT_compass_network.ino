@@ -51,8 +51,9 @@ void loop() {
 		calibrateCompass();
 	}
 	
-	debugIMU();
-	debugCompass();
+	//debugIMU();
+	//debugCompass();
+        debugHeading();
 	
 	//testBT();
 }
@@ -70,7 +71,11 @@ void debugCompass() {
 	Serial.print("X: ");	Serial.print(compass_data[0]);
 	Serial.print("\tY: ");	Serial.print(compass_data[1]);
 	Serial.print("\tZ: ");	Serial.print(compass_data[2]);
-	Serial.print("\tHeading: ");
-	Serial.print(tiltCompensateCompass(compass_data));
 	Serial.println();
+}
+
+void debugHeading() {
+    Serial.print("\tHeading: ");
+    Serial.print(tiltCompensateCompass(compass_data));
+    Serial.println();
 }

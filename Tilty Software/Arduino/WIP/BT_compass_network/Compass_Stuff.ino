@@ -7,11 +7,10 @@ float tiltCompensateCompass(float *xyz) {
 		ypr_radians[i] = ypr[i] * M_PI / 180;
 	}
 	
-	float xh = xyz[0] * cos(ypr_radians[PITCH]) + xyz[2] * sin(ypr_radians[PITCH]);
-	float yh = xyz[0] * sin(ypr_radians[ROLL]) * sin(ypr_radians[PITCH]) + xyz[1] * cos(ypr_radians[ROLL]) - xyz[2] * sin(ypr_radians[ROLL]) * cos(ypr_radians[PITCH]);
-	
-	//return atan(yh / xh) * 180/M_PI;
-	return map(atan(compass_data[0] / compass_data[1]) * 180 / PI, -90, 90, 0, 360);
+        float xh = xyz[0] * cos(ypr_radians[PITCH]) + xyz[1] * sin(ypr_radians[PITCH]) * sin(ypr_radians[ROLL]) - xyz[2] * cos(ypr_radians[ROLL]) * sin(ypr_radians[PITCH]);
+        float yh = xyz[1] * cos(ypr_radians[ROLL]) + xyz[2] * sin(ypr_radians[ROLL]);
+        
+	return atan(yh / xh) * 180/M_PI;
 }
 
 // Calibrates for compass offsets and reading error
