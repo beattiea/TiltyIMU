@@ -81,9 +81,9 @@ class PID {
 	float getkD();
 	
 	//	PID scalars
-	float kP = 0;
-	float kI = 0;
-	float kD = 0;
+	float kP_ = 0;
+	float kI_ = 0;
+	float kD_ = 0;
 	
 	//	PID values
 	float Pvalue = 0;

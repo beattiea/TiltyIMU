@@ -11,30 +11,30 @@ PID::~PID()
 }
 
 /** This function initializes the PID object with P, I, and D value scalars.
-* @param[in] kP Set the P value scalar.
-* @param[in] kI Set the I value scalar.
-* @param[in] kD Set the D value scalar.
+* @param[in] kP_ Set the P value scalar.
+* @param[in] kI_ Set the I value scalar.
+* @param[in] kD_ Set the D value scalar.
 */ 
 PID::PID(float _kP, float _kI, float _kD)
 {
-	kP = _kP;
-	kI = _kI;
-	kD = _kD;
+	kP_ = _kP;
+	kI_ = _kI;
+	kD_ = _kD;
 	
 	_direction = FORWARD;
 }
 
 /** This function initializes the PID object with P, I, and D value scalars and a direction relative to the input (+/-).
-* @param[in] kP Set the P value scalar.
-* @param[in] kI Set the I value scalar.
-* @param[in] kD Set the D value scalar.
+* @param[in] kP_ Set the P value scalar.
+* @param[in] kI_ Set the I value scalar.
+* @param[in] kD_ Set the D value scalar.
 * @param[in] dir Set the direction relative to the input value (+ input = + output or + input = - output).
 */ 
 PID::PID(float _kP, float _kI, float _kD, bool _dir)
 {
-	kP = _kP;
-	kI = _kI;
-	kD = _kD;
+	kP_ = _kP;
+	kI_ = _kI;
+	kD_ = _kD;
 	
 	_direction = _dir;
 }
@@ -52,18 +52,18 @@ PID::PID(float *_inputVar, float *_outputVar)
 /** This function initializes the PID object with P, I, and D value scalars as well as input and output variables so they can automatically update without needing to be set manually.
 * @param[in] &inputVar A pointer to the input variable.
 * @param[in] &outputVar A pointer to the output variable.
-* @param[in] kP Set the P value scalar.
-* @param[in] kI Set the I value scalar.
-* @param[in] kD Set the D value scalar.
+* @param[in] kP_ Set the P value scalar.
+* @param[in] kI_ Set the I value scalar.
+* @param[in] kD_ Set the D value scalar.
 */ 
 PID::PID(float *_inputVar, float *_outputVar, float _kP, float _kI, float _kD)
 {
 	_input = _inputVar;
 	_output = _outputVar;
 	
-	kP = _kP;
-	kI = _kI;
-	kD = _kD;
+	kP_ = _kP;
+	kI_ = _kI;
+	kD_ = _kD;
 	
 	_direction = FORWARD;
 }
@@ -71,9 +71,9 @@ PID::PID(float *_inputVar, float *_outputVar, float _kP, float _kI, float _kD)
 /** This function initializes the PID object with P, I, and D value scalars as well as input and output variables so they can automatically update without needing to be set manually, and a direction relative to the input value.
 * @param[in] &inputVar A pointer to the input variable.
 * @param[in] &outputVar A pointer to the output variable.
-* @param[in] kP Set the P value scalar.
-* @param[in] kI Set the I value scalar.
-* @param[in] kD Set the D value scalar.
+* @param[in] kP_ Set the P value scalar.
+* @param[in] kI_ Set the I value scalar.
+* @param[in] kD_ Set the D value scalar.
 * @param[in] dir Set the direction relative to the input value (+ input = + output or + input = - output).
 */ 
 PID::PID(float *_inputVar, float *_outputVar, float _kP, float _kI, float _kD, bool _dir)
@@ -81,9 +81,9 @@ PID::PID(float *_inputVar, float *_outputVar, float _kP, float _kI, float _kD, b
 	_input = _inputVar;
 	_output = _outputVar;
 	
-	kP = _kP;
-	kI = _kI;
-	kD = _kD;
+	kP_ = _kP;
+	kI_ = _kI;
+	kD_ = _kD;
 	
 	_direction = _dir;
 }
@@ -124,16 +124,16 @@ float PID::update(float _value)
 	
 	if (_direction)
 	{
-		Pvalue = constrain(kP * _value, lowerPLimit, upperPLimit);
-		Ivalue = constrain(Ivalue + kI * _value * _dT, lowerILimit, upperILimit);
-		Dvalue = constrain((kD * (_value - _old_value)) / _dT, lowerDLimit, upperDLimit);
+		Pvalue = constrain(kP_ * _value, lowerPLimit, upperPLimit);
+		Ivalue = constrain(Ivalue + kI_ * _value * _dT, lowerILimit, upperILimit);
+		Dvalue = constrain((kD_ * (_value - _old_value)) / _dT, lowerDLimit, upperDLimit);
 	}
 	
 	if (!_direction)
 	{
-		Pvalue = -constrain(kP * _value, lowerPLimit, upperPLimit);
-		Ivalue = constrain(Ivalue - kI * _value * _dT, lowerILimit, upperILimit);
-		Dvalue = -constrain((kD * (_value - _old_value)) / _dT, lowerDLimit, upperDLimit);
+		Pvalue = -constrain(kP_ * _value, lowerPLimit, upperPLimit);
+		Ivalue = constrain(Ivalue - kI_ * _value * _dT, lowerILimit, upperILimit);
+		Dvalue = -constrain((kD_ * (_value - _old_value)) / _dT, lowerDLimit, upperDLimit);
 	}
 
 	_old_value = _value;
@@ -146,15 +146,15 @@ float PID::update(float _value)
 }
 
 /** Set the scalar values of the P, I, and D values.
-* @param[in] kP Set the P value scalar.
-* @param[in] kI Set the I value scalar.
-* @param[in] kD Set the D value scalar.
+* @param[in] kP_ Set the P value scalar.
+* @param[in] kI_ Set the I value scalar.
+* @param[in] kD_ Set the D value scalar.
 */ 
 void PID::setScalars(float _kP, float _kI, float _kD)
 {
-	kP = _kP;
-	kI = _kI;
-	kD = _kD;
+	kP_ = _kP;
+	kI_ = _kI;
+	kD_ = _kD;
 }
 
 /** Sets the overall output limits of the PID values. The output value will not exceed these values.
@@ -264,11 +264,11 @@ bool PID::DLimited() { return (Dvalue >= upperDLimit || Dvalue <= lowerDLimit) ?
 int8_t PID::getDirection() { return _direction ? 1 : -1;}
 
 /** Returns P value scalar. */
-float PID::getkP() { return kP;}
+float PID::getkP() { return kP_;}
 /** Returns I value scalar. */
-float PID::getkI() { return kI;}
+float PID::getkI() { return kI_;}
 /** Returns D value scalar. */
-float PID::getkD() { return kD;}
+float PID::getkD() { return kD_;}
 
 
 
