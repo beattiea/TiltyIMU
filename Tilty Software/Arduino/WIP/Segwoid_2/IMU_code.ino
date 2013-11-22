@@ -135,3 +135,27 @@ bool readDMP() {
 				return true;
 		}
 }
+
+
+bool readCombinedYPR(float* data) {
+	if (readDMP()) {
+		float free_ypr[3];
+		fIMU.getYawPitchRoll(free_ypr);
+		
+		float bias = (abs(imu.getRotationX()) / 1024) >= 1 ? 1 : abs((float(imu.getRotationX()) / 2048.0));
+		
+		data[YAW] = ypr[YAW] * (1 - bias) + free_ypr[YAW] * bias;
+		data[PITCH] = ypr[PITCH] * (1 - bias) + free_ypr[PITCH] * bias;
+		data[ROLL] = ypr[ROLL] * (1 - bias) + free_ypr[ROLL] * bias;
+		
+		Serial.println(bias);
+		
+		yaw = data[YAW];
+		pitch = data[PITCH];
+		roll = data[ROLL];
+		
+		return true;
+	}
+	
+	return false;
+}

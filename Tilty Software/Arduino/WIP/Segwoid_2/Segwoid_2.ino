@@ -46,13 +46,14 @@ void setup() {
 }
 
 void loop() {
-	if (readDMP()) {
-		
+	//if (readDMP()) {
+	if (readCombinedYPR(ypr)) {
+		/*
 		fIMU.getYawPitchRoll(ypr);
 		yaw = ypr[YAW] - ypr_offset[YAW];
 		pitch = ypr[PITCH] - ypr_offset[PITCH];
 		roll = ypr[ROLL] - ypr_offset[ROLL];
-		
+		*/
 		printYPR();
 		tiltPID.update();
 		printPID();
@@ -76,13 +77,14 @@ void checkToStart() {
 	unsigned long startup_timer = 0;
 	
 	while (conditions != pow(2, how_many) - 1) {
-		if (readDMP()) {
-			
+		//if (readDMP()) {
+		if (readCombinedYPR(ypr)) {
+			/*
 			fIMU.getYawPitchRoll(ypr);
 			yaw = ypr[YAW] - ypr_offset[YAW];
 			pitch = ypr[PITCH] - ypr_offset[PITCH];
 			roll = ypr[ROLL] - ypr_offset[ROLL];
-			
+			*/
 			Serial.println(pitch);
 			if (pitch >= STARTING_PITCH - STARTING_PITCH_RANGE && pitch <= STARTING_PITCH + STARTING_PITCH_RANGE) {
 				conditions |= 0b00000001;
