@@ -22,6 +22,7 @@ HMC5883 compass;
 
 float ypr[3], ypr_radians[3];
 float compass_data[3];
+float xh, yh;
 #define YAW 0
 #define PITCH 1
 #define ROLL 2
@@ -41,6 +42,8 @@ void setup() {
 	compass.init();
 }
 
+bool print = false;
+
 void loop() {
 	if (imu.getIntDataReadyStatus()) {
 		readIMU();
@@ -52,9 +55,15 @@ void loop() {
 	}
 	
 	//debugIMU();
+    //debugHeading();
 	//debugCompass();
-    debugHeading();
+	//Serial.println();
 	//testBT();
+	//if (Serial.available()) {	Serial.read(); print = !print;}
+	//if (print) {	printCSV();}
+	Serial.print("X");	Serial.println(compass_data[0]);
+	Serial.print("Y");	Serial.println(compass_data[1]);
+	Serial.print("Z");	Serial.println(compass_data[2]);
 }
 
 // Prints measured yaw, pitch, and roll to USB serial
@@ -77,4 +86,13 @@ void debugHeading() {
     Serial.print("\tHeading: ");
     Serial.print(tiltCompensateCompass(compass_data));
     Serial.println();
+}
+
+void printCSV() {
+	Serial.print(compass_data[0]);
+	Serial.print(", ");	Serial.print(compass_data[1]);
+	Serial.print(", ");	Serial.print(compass_data[2]);
+	Serial.print(", ");	Serial.print(xh);
+	Serial.print(", ");	Serial.print(yh);
+	Serial.println();
 }

@@ -1,8 +1,3 @@
-// Angle array positions
-#define YAW 0
-#define PITCH 1
-#define ROLL 2
-
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
 uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU
@@ -20,6 +15,8 @@ VectorFloat gravity;	// [x, y, z]			gravity vector
 float euler[3];		 // [psi, theta, phi]	Euler angle container
 
 volatile bool mpuInterrupt = false;	 // indicates whether MPU interrupt pin has gone high
+
+int overflow_count = 0;
 
 #define OUTPUT_READABLE_YAWPITCHROLL
 
@@ -45,27 +42,22 @@ void setupDMP() {
 		// ERROR!
 		// 1 = initial memory load failed
 		// 2 = DMP configuration updates failed
-		// (if it's going to break, usually the c,,ode will be 1)
-		Serial.print("\tDMP Initialization failed (code ");
-		Serial.print(devStatus);
-		Serial.println(")");
-                while (true) {
-                    SOS(devStatus);
-                }
+		// (if it's going to break, usually the code will be 1)
+		devStatus == 1 ? SOS(devStatus, "\tInitial DMP memory load failed") : SOS(devStatus, "\tDMP configuration updates failed");
 	}
 }
 
-void readDMP() {
+bool readDMP() {
 	// if programming failed, don't try to do anything
-		if (!imu.getIntDataReadyStatus()) return;
+		if (!imu.getIntDataReadyStatus()) return false;
 
 		// reset interrupt flag and get INT_STATUS byte
 		mpuInterrupt = false;
-		mpuIntStatus = imu.getIntStatus() & 0x12;
+		mpuIntStatus = imu.getIntStatus() & 0x13;// Was 0x12
 
 		while (!mpuIntStatus) {
-			mpuIntStatus = imu.getIntStatus() & 0x12;
-			//Serial.println(mpuIntStatus);
+			mpuIntStatus = imu.getIntStatus();
+			mpuIntStatus &= 0x13;// was 0x12
 		}
 
 		// get current FIFO count
@@ -75,10 +67,15 @@ void readDMP() {
 		if ((mpuIntStatus & 0x10) || fifoCount == 1024) {
 			// reset so we can continue cleanly
 			imu.resetFIFO();
-			Serial.println("FIFO overflow!");
+			overflow_count++;
+			//Serial.println("FIFO overflow!");
+			if (overflow_count >= IMU_READ_ERROR_LIMIT) {
+				SOS(3, "\nIMU FIFO overflow. Your code is too inefficient or IMU_REFRESH_RATE is too high.\n");
+			}
+			
 
 		// otherwise, check for DMP data ready interrupt (this should happen frequently)
-		} else if (mpuIntStatus & 0x02) {
+		} else if (mpuIntStatus & 0x03) {// Was 0x02
 			// wait for correct available data length, should be a VERY short wait
 			while (fifoCount < packetSize) fifoCount = imu.getFIFOCount();
 
@@ -97,6 +94,10 @@ void readDMP() {
 				ypr[0] *= 180/M_PI;
 				ypr[1] *= 180/M_PI;
 				ypr[2] *= 180/M_PI;
+				
+				yaw = ypr[YAW] - ypr_offset[YAW];
+				pitch = ypr[PITCH] - ypr_offset[PITCH];
+				roll = ypr[ROLL] - ypr_offset[ROLL];
 			#endif
 
 			#ifdef OUTPUT_READABLE_REALACCEL
@@ -128,5 +129,9 @@ void readDMP() {
 				Serial.print("\t");
 				Serial.println(aaWorld.z);
 			#endif
+				
+				overflow_count = 0;
+				
+				return true;
 		}
 }
