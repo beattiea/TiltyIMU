@@ -29,7 +29,7 @@ This is a library to simplify the coding of PID control loops
 #define PID_h
 
 //#define DEBUG_PID
-#define USE_TIME
+//#define USE_TIME
 
 #define FORWARD true
 #define REVERSE false
@@ -125,8 +125,8 @@ class PID {
 	float _old_value;
 	
 	//	Variable storage
-	float *_input;
-	float *_output;
+	float* _input;
+	float* _output;
 	
 	//	Other private variables
 	bool _direction = true;

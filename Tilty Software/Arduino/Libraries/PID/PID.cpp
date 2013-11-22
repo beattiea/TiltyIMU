@@ -115,6 +115,12 @@ float PID::update(float _value)
 		if (_dT == 0) { _dT++;}
 	#endif
 	
+	#ifdef DEBUG_PID
+		Serial.print("Input: ");
+		Serial.print(_value);
+		Serial.print("\t");
+	#endif
+	
 	_value = checkInputOK(_value);
 	
 	if (_value == -214783647)
@@ -241,6 +247,7 @@ void PID::reset()
 	Pvalue = 0;
 	Ivalue = 0;
 	Dvalue = 0;
+	_dT = 1;
 }
 
 /** Returns true if the combined PID values exceed the upper or lower output limits.
