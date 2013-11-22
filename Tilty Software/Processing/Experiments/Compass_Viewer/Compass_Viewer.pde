@@ -16,7 +16,7 @@ void setup() {
   
    println(Serial.list());
    
-   myPort = new Serial(this, "/dev/tty.HC-05-DevB", 115200);
+   myPort = new Serial(this, "/dev/tty.usbmodem16391", 115200);
 }
 
 void draw() {
