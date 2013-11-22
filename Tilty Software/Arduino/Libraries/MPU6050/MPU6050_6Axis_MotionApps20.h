@@ -72,8 +72,10 @@ THE SOFTWARE.
 #define MPU6050_DMP_CODE_SIZE       1929    // dmpMemory[]
 #define MPU6050_DMP_CONFIG_SIZE     192     // dmpConfig[]
 #define MPU6050_DMP_UPDATES_SIZE    47      // dmpUpdates[]
-#ifndef MPU6050_DMP_FIFO_RATE
+#ifndef IMU_REFRESH_RATE
 	#define MPU6050_DMP_FIFO_RATE 0x01
+#else
+	#define MPU6050_DMP_FIFO_RATE (200 / IMU_REFRESH_RATE) - 1
 #endif
 
 /* ================================================================================================ *
