@@ -142,11 +142,18 @@ bool readCombinedYPR(float* data) {
 		float free_ypr[3];
 		fIMU.getYawPitchRoll(free_ypr);
 		
-		float bias = (abs(imu.getRotationX()) / 1024) >= 1 ? 1 : abs((float(imu.getRotationX()) / 2048.0));
-		
+		//float bias = (abs(imu.getRotationX()) / 1024) >= 1 ? 1 : (abs(float(imu.getRotationX()) / 1024.0);
+		float bias;
+		int rotation = abs(imu.getRotationX());
+		rotation > 82 ? bias = 1.0 / (float(rotation) / 82) : bias = 1;
+		/*
 		data[YAW] = ypr[YAW] * (1 - bias) + free_ypr[YAW] * bias;
 		data[PITCH] = ypr[PITCH] * (1 - bias) + free_ypr[PITCH] * bias;
 		data[ROLL] = ypr[ROLL] * (1 - bias) + free_ypr[ROLL] * bias;
+		*/
+		data[YAW] = ypr[YAW] * (bias) + free_ypr[YAW] * (1 - bias);
+		data[PITCH] = ypr[PITCH] * (bias) + free_ypr[PITCH] * (1 - bias);
+		data[ROLL] = ypr[ROLL] * (bias) + free_ypr[ROLL] * (1 - bias);
 		
 		Serial.println(bias);
 		

@@ -43,7 +43,7 @@ and being mounted upright (logo is visible from above) */
 #define PITCH 2
 #define ROLL 1
 
-#define IMU_REFRESH_RATE 100   // IMU data refresh rate in Hz. Max of 200 hz, which may give noisy data.
+#define IMU_REFRESH_RATE 200   // IMU data refresh rate in Hz. Max of 200 hz, which may give noisy data.
                                // Should not go below 100 Hz for balancing
                                // Valid values: 200, 100, 67, 50, 40, 33, 29, 25
 
@@ -54,7 +54,7 @@ and being mounted upright (logo is visible from above) */
 
 //================= PID Control Settings =================//
 #define TILT_kP 15            // Proportional PID scalar. Scales with tilt.
-#define TILT_kI 0.5            // Integral PID scalar. Scales with time and tilt.
+#define TILT_kI 0.25            // Integral PID scalar. Scales with time and tilt.
 #define TILT_kD 25            // Derivative PID scalar. Scales with rate of tilt.
 #define MAX_PID SERVO_RANGE  // Maximum value allowed for P + I + D.
 //========================================================//

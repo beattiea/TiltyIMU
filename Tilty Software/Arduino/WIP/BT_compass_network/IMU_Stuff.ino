@@ -84,44 +84,17 @@ void readIMU() {
 			// (this lets us immediately read more without waiting for an interrupt)
 			fifoCount -= packetSize;
 
-			#ifdef OUTPUT_READABLE_YAWPITCHROLL
-				// display Euler angles in degrees
-				imu.dmpGetQuaternion(&q, fifoBuffer);
-				imu.dmpGetGravity(&gravity, &q);
-				imu.dmpGetYawPitchRoll(ypr, &q, &gravity);
-				ypr[0] *= 180/M_PI;
-				ypr[1] *= 180/M_PI;
-				ypr[2] *= 180/M_PI;
-			#endif
-
-			#ifdef OUTPUT_READABLE_REALACCEL
-				// display real acceleration, adjusted to remove gravity
-				imu.dmpGetQuaternion(&q, fifoBuffer);
-				imu.dmpGetAccel(&aa, fifoBuffer);
-				imu.dmpGetGravity(&gravity, &q);
-				imu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-				Serial.print("areal\t");
-				Serial.print(aaReal.x);
-				Serial.print("\t");
-				Serial.print(aaReal.y);
-				Serial.print("\t");
-				Serial.println(aaReal.z);
-			#endif
-
-			#ifdef OUTPUT_READABLE_WORLDACCEL
-				// display initial world-frame acceleration, adjusted to remove gravity
-				// and rotated based on known orientation from quaternion
-				imu.dmpGetQuaternion(&q, fifoBuffer);
-				imu.dmpGetAccel(&aa, fifoBuffer);
-				imu.dmpGetGravity(&gravity, &q);
-				imu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-				imu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-				Serial.print("aworld\t");
-				Serial.print(aaWorld.x);
-				Serial.print("\t");
-			Serial.print(aaWorld.y);
-			Serial.print("\t");
-			Serial.println(aaWorld.z);
-		#endif
+			// display Euler angles in degrees
+			imu.dmpGetQuaternion(&q, fifoBuffer);
+			imu.dmpGetGravity(&gravity, &q);
+			imu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+			ypr[0] *= 180/M_PI;
+			ypr[1] *= 180/M_PI;
+			ypr[2] *= 180/M_PI;
+			
+			//if (ypr[PITCH] < 0) {	ypr[PITCH] += 360;}
+			//if (ypr[ROLL] < 0) {	ypr[ROLL] += 360;}
+			//Serial.println(ypr[PITCH]);
+			//Serial.println(ypr[ROLL]);
 	}
 }

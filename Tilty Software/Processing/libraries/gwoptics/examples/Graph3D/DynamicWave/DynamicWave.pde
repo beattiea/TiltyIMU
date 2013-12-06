@@ -24,7 +24,7 @@ class standingWave implements IGraph3DCallback{
 standingWave gcb = new standingWave();
 
 void setup() {
-  size(600, 600, P3D); 
+  size(600, 600, OPENGL); 
 
   cam = new Camera3D(this);
   PVector cam_pos = new PVector(800f,800f,800f);

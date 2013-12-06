@@ -18,15 +18,18 @@ class spiralTrace extends Blank2DTrace{
 		return t*0.1f*sin(t);
 	}
 	
-	public void TraceDraw(PGraphics parent) {
-		parent.background(0);
+	public void TraceDraw(Blank2DTrace.PlotRenderer pr) {
+		pr.canvas.background(0);
 		
 		int res = 40;
 		float dAngle = 2f*PI/res;
 		
 		for(int i=0;i<10*res;i++){
-			parent.stroke(0,0,255,255);
-			parent.line(xparam(dAngle*i), yparam(dAngle*i), xparam(dAngle*(i+1)), yparam(dAngle*(i+1)));
+			pr.canvas.stroke(0,0,255,255);
+			pr.canvas.line(pr.valToX(xparam(dAngle*i)),
+				       pr.valToY(yparam(dAngle*i)),
+				       pr.valToX(xparam(dAngle*(i+1))),
+			               pr.valToY(yparam(dAngle*(i+1))));
 		}
 	}
 }
@@ -35,7 +38,7 @@ spiralTrace r;
 Graph2D g;
 
 void setup(){
-	size(600,500);
+	size(600,500, P2D);
 	
 	r  = new spiralTrace();
 	 
@@ -49,7 +52,7 @@ void setup(){
 	g.setXAxisTickSpacing(2f);
 
 	g.setYAxisMin(-10f);
-	g.setYAxisMax(5f);
+	g.setYAxisMax(10f);
 	g.setXAxisMin(-10f);
 	g.setXAxisMax(10f);
 	

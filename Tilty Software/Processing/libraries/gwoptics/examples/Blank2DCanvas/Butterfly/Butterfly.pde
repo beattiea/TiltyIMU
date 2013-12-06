@@ -17,7 +17,7 @@ class ButterflyTrace extends Blank2DTrace{
 		return cos(t)*(exp(cos(t)) - 2*cos(4*t)-pow(sin(t/12),5));
 	}
 	
-	public void TraceDraw(PGraphics parent) {		
+	public void TraceDraw(Blank2DTrace.PlotRenderer pr) {		
 		int res = 1000; // alters the resolution of the 
                                 // plot to get a smoother appearance
 		float dAngle = 2f*PI/res;
@@ -26,8 +26,12 @@ class ButterflyTrace extends Blank2DTrace{
                                               //evolves
                 
 		for(int i=0;i < mod*2*res; i++){
-			parent.stroke(255,0,255,255);
-			parent.line(xparam(dAngle*i), yparam(dAngle*i), xparam(dAngle*(i+1)), yparam(dAngle*(i+1)));
+			pr.canvas.stroke(255,0,255,255);
+			pr.canvas.strokeWeight(2f);
+			pr.canvas.line(pr.valToX(xparam(dAngle*i)),
+                                       pr.valToY(yparam(dAngle*i)),
+                                       pr.valToX(xparam(dAngle*(i+1))),
+                                       pr.valToY(yparam(dAngle*(i+1))));
 		}
 	}
 }
@@ -36,8 +40,8 @@ ButterflyTrace bTrace;
 Graph2D g;
 
 void setup(){
-	size(600,500);
-        frameRate(20);
+	size(600,500, OPENGL);
+    frameRate(20);
         
 	bTrace  = new ButterflyTrace();
 	 

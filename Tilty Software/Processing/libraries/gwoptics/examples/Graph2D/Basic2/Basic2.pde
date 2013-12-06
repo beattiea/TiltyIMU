@@ -5,12 +5,17 @@
  *  methods available to alter the graph
  **/
 
+
+import org.gwoptics.graphics.*;
 import org.gwoptics.graphics.graph2D.Graph2D;
 import org.gwoptics.graphics.graph2D.LabelPos;
 import org.gwoptics.graphics.graph2D.traces.Line2DTrace;
 import org.gwoptics.graphics.graph2D.traces.ILine2DEquation;
+import org.gwoptics.graphics.graph2D.backgrounds.*;
 
 Graph2D g;
+GridBackground gb;
+
 
 /**
  *  Equations that are to be plot must be encapsulated into a 
@@ -51,6 +56,11 @@ void setup(){
   g.setNoBorder(); 
   g.setXAxisLabelPos(LabelPos.END);
   g.setYAxisLabelPos(LabelPos.END);
+  
+  // switching on Grid, with differetn colours for X and Y lines
+  gb = new  GridBackground(new GWColour(240));
+  gb.setGridColour(200,100,200,180,180,180);
+  g.setBackground(gb);
 
   g.position.y = 50;
   g.position.x = 60;

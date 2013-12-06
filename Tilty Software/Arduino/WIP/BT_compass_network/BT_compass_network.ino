@@ -5,6 +5,8 @@
 #include <I2Cdev.h>
 #include "MPU6050_6Axis_MotionApps20.h"
 
+//#include <AHRS.h>
+
 #define MASTER
 //#define SLAVE
 
@@ -31,6 +33,7 @@ void setup() {
 	Serial.begin(115200);
     Serial1.begin(115200);
 	pinMode(bt_cmd, OUTPUT);
+	pinMode(13, OUTPUT);
 
 
 	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_800);
@@ -40,30 +43,32 @@ void setup() {
 	
 	setupIMU();
 	compass.init();
+
+    while (!Serial) {}
+    Serial.println("Begin!");
+
 }
 
 bool print = false;
+float gyro_off, heading;
+unsigned long count = 0;
 
 void loop() {
 	if (imu.getIntDataReadyStatus()) {
 		readIMU();
+                if (count % 6000 == 0) {
+                    Serial.println(ypr[YAW]);
+                }
+                count++;
 	}
-	
+
 	if (compass.getDataReady()) {
 		compass.getValues(compass_data);
 		calibrateCompass();
+		//debugCompass();
+		//debugIMU();
+		//debugHeading();
 	}
-	
-	//debugIMU();
-    //debugHeading();
-	//debugCompass();
-	//Serial.println();
-	//testBT();
-	//if (Serial.available()) {	Serial.read(); print = !print;}
-	//if (print) {	printCSV();}
-	Serial.print("X");	Serial.println(compass_data[0]);
-	Serial.print("Y");	Serial.println(compass_data[1]);
-	Serial.print("Z");	Serial.println(compass_data[2]);
 }
 
 // Prints measured yaw, pitch, and roll to USB serial
@@ -82,13 +87,23 @@ void debugCompass() {
 	Serial.println();
 }
 
+// Prints just the heading
 void debugHeading() {
-    Serial.print("\tHeading: ");
-    Serial.print(tiltCompensateCompass(compass_data));
+    Serial.print("Heading: ");
+	heading = tiltCompensateCompass(compass_data);
+    Serial.print(heading);
     Serial.println();
 }
 
+// Prints comma separated value spreadhseet data
 void printCSV() {
+	float xyz[3];
+	compass.getValues(xyz);
+	for (int i = 0; i < 3; i++) {
+		Serial.print(xyz[i]);
+		Serial.print(", ");
+	}
+	
 	Serial.print(compass_data[0]);
 	Serial.print(", ");	Serial.print(compass_data[1]);
 	Serial.print(", ");	Serial.print(compass_data[2]);

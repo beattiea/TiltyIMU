@@ -2521,7 +2521,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="C2" library="resistor" package="C0603" value="0.1uF" x="21.1455" y="17.2085" smashed="yes">
 <attribute name="VALUE" x="20.2565" y="15.1765" size="1.27" layer="27"/>
 </element>
-<element name="X1" library="SparkFun-FreqCtrl" package="CRYSTAL-TXC-7A" value="" x="24.638" y="17.78" smashed="yes" rot="R270">
+<element name="X1" library="SparkFun-FreqCtrl" package="CRYSTAL-TXC-7A" value="12MHz" x="24.638" y="17.78" smashed="yes" rot="R270">
 <attribute name="PART#" value="7A-12.000MAAE-T" x="24.638" y="17.78" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="24.13" y="18.796003125" size="0.4064" layer="27" rot="R270"/>
 </element>
@@ -2535,7 +2535,7 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="VALUE" x="9.398" y="13.97" size="1.27" layer="27" rot="R270"/>
 </element>
 <element name="U2" library="My Parts" package="SOT23" value="AP7313SOT23R" x="18.034" y="30.48" smashed="yes"/>
-<element name="C6" library="resistor" package="C0603" value="1uF" x="17.9705" y="27.94" smashed="yes" rot="R180">
+<element name="C6" library="resistor" package="C0603" value=").F" x="17.9705" y="27.94" smashed="yes" rot="R180">
 <attribute name="VALUE" x="18.8595" y="29.972" size="1.27" layer="27" rot="R180"/>
 </element>
 <element name="U3" library="on-semiconductor" package="TO263" value="LM2931" x="12.7" y="36.068" smashed="yes">

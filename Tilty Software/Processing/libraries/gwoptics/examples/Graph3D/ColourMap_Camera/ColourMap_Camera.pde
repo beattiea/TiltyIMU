@@ -14,7 +14,7 @@ import org.gwoptics.graphics.graph3D.*;
 
 Camera3D cam;
 SurfaceGraph3D g3d[];
-PGraphics3D g3; 
+PGraphicsOpenGL g3; 
 
 IGraph3DCallback gcb = new IGraph3DCallback(){
   public float computePoint(float X, float Y) {
@@ -23,10 +23,10 @@ IGraph3DCallback gcb = new IGraph3DCallback(){
 };
 
 void setup() {
-  size(500, 500, P3D); 
+  size(500, 500, OPENGL); 
   frameRate(15);
 
-  g3 = (PGraphics3D) g; 
+  g3 = (PGraphicsOpenGL) g; 
 
   cam = new Camera3D(this);
   PVector cam_pos = new PVector(800f,800f,800f);

@@ -10,7 +10,7 @@ Camera3D cam;
 SquareGridMesh sMesh;
 
 void setup(){
-  size(500,300,P3D);
+  size(500,300,OPENGL);
   frameRate(30);
   cam = new Camera3D(this);
   cam.setPosition(new PVector(3000,2500,1500));

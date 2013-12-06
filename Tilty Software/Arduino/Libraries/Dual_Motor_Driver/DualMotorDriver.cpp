@@ -219,6 +219,11 @@ void MotorDriver::init()
 	
 	pinMode(LED, OUTPUT);
 	
+	pinMode(ENC1A, INPUT);
+	pinMode(ENC1B, INPUT);
+	pinMode(ENC2A, INPUT);
+	pinMode(ENC2B, INPUT);
+	
 	M1_control = 0x00;
 	updateMotor1();
 	M1_control = 0xFF;

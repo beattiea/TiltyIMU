@@ -56,7 +56,7 @@ void loop() {
 		*/
 		printYPR();
 		tiltPID.update();
-		printPID();
+		//printPID();
 		setServos();
 		checkToRun();
 	}
