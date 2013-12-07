@@ -37,13 +37,15 @@ void setup() {
 	
 	Wire.onReceive(receiveEvent);
 	Wire.onRequest(requestEvent);
+	
+	motors.init();
+	
+	//digitalWrite(M1, HIGH);
+	digitalWrite(M1A, HIGH);
+	digitalWrite(M1B, LOW);
 
-        //digitalWrite(M1, HIGH);
-        digitalWrite(M1A, HIGH);
-        digitalWrite(M1B, LOW);
-        
-        digitalWrite(M2A, HIGH);
-        digitalWrite(M2B, LOW);
+	digitalWrite(M2A, HIGH);
+	digitalWrite(M2B, LOW);
 }
 
 uint8_t enc1;
@@ -53,22 +55,28 @@ uint8_t enc4;
 uint8_t enc5, enc6, enc7, enc8;
 
 void loop() {
-    for (int i = 0; i < 256; i++) {
-        analogWrite(M1, i);
-        analogWrite(M2, i);
-        digitalWrite(10, HIGH);
-        delay(640);
-    }
-    for (int i = 255; i > 0; i--) {
-        analogWrite(M1, i);
-        analogWrite(M2, i);
-        digitalWrite(10, LOW);
-        delay(640);
-    }
-    digitalWrite(M1A, !digitalRead(M1A));
-    digitalWrite(M2A, !digitalRead(M2A));
-    digitalWrite(M1B, !digitalRead(M1B));
-    digitalWrite(M2B, !digitalRead(M2B));
+	//digitalWrite(LED, motors.data_reg[motors.M1_CONTROL] & 0x01);
+	//analogWrite(M1, motors.data_reg[motors.M1_POWER]);
+	//analogWrite(M2, motors.data_reg[motors.M2_POWER]);
+	
+	/*
+	for (int i = 0; i < 256; i++) {
+		analogWrite(M1, i);
+		analogWrite(M2, i);
+		digitalWrite(10, HIGH);
+		delay(640);
+	}
+	for (int i = 255; i > 0; i--) {
+		analogWrite(M1, i);
+		analogWrite(M2, i);
+		digitalWrite(10, LOW);
+		delay(640);
+	}
+	digitalWrite(M1A, !digitalRead(M1A));
+	digitalWrite(M2A, !digitalRead(M2A));
+	digitalWrite(M1B, !digitalRead(M1B));
+	digitalWrite(M2B, !digitalRead(M2B));
+*/
 	//motors.update();// This function should be called as frequently as possible to keep everything up to speed
 }
 

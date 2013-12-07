@@ -224,10 +224,12 @@ void MotorDriver::init()
 	pinMode(ENC2A, INPUT);
 	pinMode(ENC2B, INPUT);
 	
+	/*
 	M1_control = 0x00;
 	updateMotor1();
 	M1_control = 0xFF;
 	updateMotor1();
+	*/
 	
 	// Initialize the status and control registers
 	data_reg[0] = 0x10;
@@ -296,6 +298,8 @@ int MotorDriver::getData(int bytes)
 			active_reg++;
 		}
 	}
+	
+	update();
 	return 1;
 }
 
@@ -330,6 +334,7 @@ int MotorDriver::update()
 **/
 void MotorDriver::updateMotor1()
 {
+	/*
 	uint8_t M1_updates = data_reg[M1_CONTROL] ^ M1_control;// gets a list of what values have changed
 	
 	if (M1_updates & BRAKE) // If ENABLE bit value has changed, enables/disables the motor
@@ -398,6 +403,12 @@ void MotorDriver::updateMotor1()
 		M1_encoder = m1Encoder.read();
 		updateEnc1Reg();
 	}
+	*/
+	bool dir = data_reg[M1_CONTROL] & DIRECTION;
+	digitalWrite(M1A, dir);
+	digitalWrite(M1B, !dir);
+	
+	analogWrite(M1, data_reg[M1_POWER]);
 }
 
 
@@ -406,6 +417,7 @@ void MotorDriver::updateMotor1()
 **/
 void MotorDriver::updateMotor2()
 {
+	/*
 	uint8_t M2_updates = data_reg[M2_CONTROL] ^ M2_control;// gets a list of what values have changed
 	
 	if (M2_updates & BRAKE) // If ENABLE bit value has changed, enables/disables the motor
@@ -475,6 +487,12 @@ void MotorDriver::updateMotor2()
 		M2_encoder = m2Encoder.read();
 		updateEnc2Reg();
 	}
+	*/
+	bool dir = data_reg[M2_CONTROL] & DIRECTION;
+	digitalWrite(M2A, dir);
+	digitalWrite(M2B, !dir);
+	
+	analogWrite(M2, data_reg[M2_POWER]);
 }
 
 
