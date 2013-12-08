@@ -46,7 +46,7 @@ class MotorDriver {
 		uint8_t setPowers(uint8_t power1, uint8_t power2);
 		
 		uint8_t setPower(uint8_t motor, uint16_t power);
-		uint8_t setPowers(uint16_t power1, uint16_t power2);
+		uint8_t setMotors(int16_t power1, int16_t power2);
 		
 		// I2C address
 		uint8_t i2c_address;

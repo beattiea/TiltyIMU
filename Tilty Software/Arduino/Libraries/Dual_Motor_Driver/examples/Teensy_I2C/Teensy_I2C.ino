@@ -3,6 +3,8 @@
 
 char buff[6];
 
+MotorDriver motors;
+
 void setup()
 {
     Serial.begin(115200);
@@ -15,29 +17,7 @@ int count = 0;
 
 void loop()
 {
-	Serial.print("New Cycle... #");
-	Serial.println(count++);
-	
-	
-	Wire.beginTransmission(0x03);// Default I2C address is 0x03
-	Wire.write(0x02);
-	Wire.write(255);
-	Wire.write(255);
-	Wire.endTransmission();
-	delayMicroseconds(25);
-	
-	
-	Wire.beginTransmission(0x03);// Default I2C address is 0x03
-	Wire.write(0x00);
-	Wire.endTransmission();
-	delayMicroseconds(25);
-
-	long start = micros();
 	/*
-	for (int i = 0; i < 4; i++) {
-		Wire.requestFrom(0x03, 1);
-	}
-	*/
 	while (Wire.requestFrom(0x03, 4) != 4);
 	
 	union enc_union {
@@ -46,38 +26,47 @@ void loop()
 	} enc_union;
 	
 	for (int i = 0; i < 4; i++) {
-		//enc_union.bytes[i] = Wire.read();
+		enc_union.bytes[i] = Wire.read();
 		//Serial.println(enc_union.bytes[i], HEX);
 		Serial.println(Wire.read(), HEX);
 	}
-	//Serial.print("Encoder Value: ");
-	//Serial.println(enc_union.int32);
-	Serial.print("Time: ");
-	Serial.println(micros() - start);
 	
-	/*
-	Serial.print("Control 1: ");
-	Serial.println(Wire.read());
-	Serial.print("Control 2: ");
-	Serial.println(Wire.read());
-	Serial.print("Power 1: ");
-	Serial.println(Wire.read());
-	Serial.print("Power 2: ");
-	Serial.println(Wire.read());
-	Serial.println();
-	*/
-	
-	/*
-	if (Serial1.available()) {
-		Serial.println("====Motor Driver Output====");
-		while (Serial1.available()) {
-			Serial.print(char(Serial1.read()));
-			delay(2);
-		}
-		Serial.println("==End Motor Driver Output==\n");
-	}
-	*/
-	
+	Serial.println("Encoder
+	Serial.println(enc_union.int32);
+
 	Serial.println();
 	delay(5);
+
+	for (int16_t i = -255; i < 255; i++) {
+		motors.setMotors(i, i);
+		delay(2);
+	}
+	
+	for (int16_t i = 255; i > -255; i--) {
+		motors.setMotors(i, i);
+		delay(2);
+	}
+	*/
+	int i = 0;
+	int low, high;
+	while (! Serial.available() && i < 256) {
+		motors.setMotors(0, i);
+		i++;
+		delay(50);
+		high = i;
+	}
+	Serial.read();
+	while (!Serial.available() && i > 0) {
+		motors.setMotors(0, i);
+		i--;
+		delay(50);
+		low = i;
+	}
+	Serial.read();
+	Serial.print("High: ");
+	Serial.println(high);
+	Serial.print("Low: ");
+	Serial.println(low);
+	while (!Serial.available()) {}
+	Serial.read();
 }

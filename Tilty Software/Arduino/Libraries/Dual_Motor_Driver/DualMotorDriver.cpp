@@ -144,15 +144,21 @@ uint8_t MotorDriver::setPower(uint8_t motor, uint16_t power)
 	\param[in] power2 255 to -255 value to indicate motor power and direction
 	\param[out] error Returns 0 if everything went ok, 1 if add-on was not detected
 **/
-uint8_t MotorDriver::setPowers(uint16_t power1, uint16_t power2)
+uint8_t MotorDriver::setMotors(int16_t power1, int16_t power2)
 {
 	Wire.pinConfigure(I2C_PINS_16_17, I2C_PULLUP_EXT);
-
+	delay(1);
 	Wire.beginTransmission(i2c_address);
-	Wire.write(M1_POWER);
-	Wire.write(power1);
-	Wire.write(power2);
-	return Wire.endTransmission();
+	Wire.write(M1_CONTROL);
+	Wire.write(power1 < 0 ? 0 : 1);
+	Wire.write(power2 < 0 ? 0 : 1);
+	Wire.write(power1 < 0 ? power1 ^ 0xFF : power1 & 0xFF);
+	Wire.write(power2 < 0 ? power2 ^ 0xFF : power2 & 0xFF);
+	int result = Wire.endTransmission();
+	Wire.flush();
+	delay(1);
+	Wire.pinConfigure(I2C_PINS_18_19, I2C_PULLUP_EXT);
+	return result;
 }
 
 
@@ -334,76 +340,6 @@ int MotorDriver::update()
 **/
 void MotorDriver::updateMotor1()
 {
-	/*
-	uint8_t M1_updates = data_reg[M1_CONTROL] ^ M1_control;// gets a list of what values have changed
-	
-	if (M1_updates & BRAKE) // If ENABLE bit value has changed, enables/disables the motor
-	{
-		M1_control ^= BRAKE;
-		if (M1_control & BRAKE) // If enabled, sets MxA and MxB both HIGH
-		{
-			digitalWrite(M1A, HIGH);
-			digitalWrite(M1B, HIGH);
-			return;
-		}
-		else // If disabled, sets the motor to DIRECTION
-		{
-			if (M1_control & INVERT) // If inverted, starts again in inverted direction
-			{
-				digitalWrite(M1A, !(M1_control & DIRECTION));
-				digitalWrite(M1B, (M1_control & DIRECTION));
-			}
-			else
-			{
-				digitalWrite(M1A, M1_control & DIRECTION);
-				digitalWrite(M1B, !(M1_control & DIRECTION));
-			}
-		}
-	}
-	
-	// Only checks everything else if BRAKE is not enabled //
-	if (!(M1_control & BRAKE))
-	{	
-		if (M1_updates & DIRECTION) // If DIRECTION bit value has changed, changes motor direction
-		{
-			M1_control ^= DIRECTION;
-			digitalWrite(M1A, !digitalRead(M1A));
-			digitalWrite(M1B, !digitalRead(M1B));
-		}
-	
-		if (M1_updates & SPEED) // if SPEED/POWER bit value has changed, changes motor control variable to match
-		{
-			M1_control ^= SPEED;
-		}
-	
-		if (M1_updates & INVERT)
-		{
-			M1_control ^= INVERT;
-			digitalWrite(M1A, !digitalRead(M1A));
-			digitalWrite(M1B, !digitalRead(M1B));
-		}
-	}
-	
-	// Updates the motor speed/power values //
-	if ((M1_control & SPEED) && !(M1_control & BRAKE)) // If SPEED is enabled and BRAKE is not, uses PID based RPM speed control
-	{
-		// RPM control PID will go here once implemented and will run every loop regardless of whether the values have changed
-	}
-	else // If SPEED is LOW or BRAKE is enabled, uses power control from register 0x02 or 0x03 (depends on motor)
-	{
-		if (M1_power ^ data_reg[M1_POWER]) // Only updates if value has changed
-		{
-			M1_power = data_reg[M1_POWER];
-			analogWrite(M1, M1_power);
-		}
-	}
-	
-	if (data_reg[M1_CONTROL] & EN_ENC)
-	{
-		M1_encoder = m1Encoder.read();
-		updateEnc1Reg();
-	}
-	*/
 	bool dir = data_reg[M1_CONTROL] & DIRECTION;
 	digitalWrite(M1A, dir);
 	digitalWrite(M1B, !dir);
@@ -417,80 +353,9 @@ void MotorDriver::updateMotor1()
 **/
 void MotorDriver::updateMotor2()
 {
-	/*
-	uint8_t M2_updates = data_reg[M2_CONTROL] ^ M2_control;// gets a list of what values have changed
-	
-	if (M2_updates & BRAKE) // If ENABLE bit value has changed, enables/disables the motor
-	{
-		M2_control ^= BRAKE;
-		if (M2_control & BRAKE) // If enabled, sets MxA and MxB both HIGH
-		{
-			digitalWrite(M2A, HIGH);
-			digitalWrite(M2B, HIGH);
-			return;
-		}
-		else // If disabled, sets the motor to DIRECTION
-		{
-			if (M2_control & INVERT) // If inverted, starts again in inverted direction
-			{
-				digitalWrite(M2A, !(M2_control & DIRECTION));
-				digitalWrite(M2B, (M2_control & DIRECTION));
-			}
-			else
-			{
-				digitalWrite(M2A, M2_control & DIRECTION);
-				digitalWrite(M2B, !(M2_control & DIRECTION));
-			}
-		}
-	}
-	
-	// Only checks everything else if BRAKE is not enabled //
-	if (!(M2_control & BRAKE))
-	{	
-		if (M2_updates & DIRECTION) // If DIRECTION bit value has changed, changes motor direction
-		{
-			M2_control ^= DIRECTION;
-			digitalWrite(M2A, !digitalRead(M2A));
-			digitalWrite(M2B, !digitalRead(M2B));
-		}
-	
-		if (M2_updates & SPEED) // if SPEED/POWER bit value has changed, changes motor control variable to match
-		{
-			M2_control ^= SPEED;
-		}
-	
-		if (M2_updates & INVERT)
-		{
-			M2_control ^= INVERT;
-			digitalWrite(M2A, !digitalRead(M2A));
-			digitalWrite(M2B, !digitalRead(M2B));
-		}
-	}
-	
-	// Updates the motor speed/power values //
-	if ((M2_control & SPEED) && !(M2_control & BRAKE)) // If SPEED is enabled and BRAKE is not, uses PID based RPM speed control
-	{
-		// RPM control PID will go here once implemented and will run every loop regardless of whether the values have changed
-	}
-	else // If SPEED is LOW or BRAKE is enabled, uses power control from register 0x02 or 0x03 (depends on motor)
-	{
-		if (M2_power ^ data_reg[M2_POWER]) // Only updates if value has changed
-		{
-			M2_power = data_reg[M2_POWER];
-			analogWrite(M2, M2_power);
-			analogWrite(LED, M2_power);
-		}
-	}
-	
-	if (data_reg[M2_CONTROL] & EN_ENC)
-	{
-		M2_encoder = m2Encoder.read();
-		updateEnc2Reg();
-	}
-	*/
 	bool dir = data_reg[M2_CONTROL] & DIRECTION;
-	digitalWrite(M2A, dir);
-	digitalWrite(M2B, !dir);
+	digitalWrite(M2A, !dir);
+	digitalWrite(M2B, dir);
 	
 	analogWrite(M2, data_reg[M2_POWER]);
 }
