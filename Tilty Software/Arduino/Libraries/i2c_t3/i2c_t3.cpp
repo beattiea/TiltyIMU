@@ -177,6 +177,8 @@ void i2c_t3::begin(i2c_mode mode, uint8_t address1, uint8_t address2, i2c_pins p
     {
         CORE_PIN18_CONFIG = pinConfig;
         CORE_PIN19_CONFIG = pinConfig;
+		//CORE_PIN16_CONFIG = (PORT_PCR_MUX(2)|PORT_PCR_PE|PORT_PCR_PS);
+        //CORE_PIN17_CONFIG = (PORT_PCR_MUX(2)|PORT_PCR_PE|PORT_PCR_PS);
     }
     else
     {
