@@ -29,6 +29,9 @@ float xh, yh;
 #define PITCH 1
 #define ROLL 2
 
+float gyro_off, heading;
+int16_t yaw_map[360];
+
 void setup() {
 	Serial.begin(115200);
     Serial1.begin(115200);
@@ -46,20 +49,46 @@ void setup() {
 
     while (!Serial) {}
     Serial.println("Begin!");
+	
+	for (int i = 0; i < 10; i) {
+		if (imu.getIntDataReadyStatus()) {
+			readIMU();
+			debugIMU();
+			i++;
+		}
+	}
+	
+	while (abs(ypr[PITCH]) > 1 && abs(ypr[ROLL]) > 1) {
+		if (imu.getIntDataReadyStatus()) {
+			readIMU();
+			debugIMU();
+		}
+		if (compass.getDataReady()) {
+			digitalWrite(13, abs(ypr[PITCH]) < 1 && abs(ypr[ROLL]) < 1 ? HIGH : LOW);
+			heading = tiltCompensateCompass(compass_data);
+			if (abs(ypr[PITCH]) < 1 && abs(ypr[ROLL]) < 1) {
+				int yaw_heading = map(ypr[YAW], -180, 180, 360, 0);
+				for (int i = 0; i < 360; i++) {
+					int index;
+					if (yaw_heading + i < 360) {	index = yaw_heading + i;}
+					else {	index = yaw_heading + i - 360;}
+
+					int int_heading = int(heading);
+					if (int_heading + i < 360) {	yaw_map[index] = int_heading + i;}
+					else {	yaw_map[index] = int_heading + i - 360;}
+				}
+			}
+		}
+	}
 
 }
 
 bool print = false;
-float gyro_off, heading;
 unsigned long count = 0;
 
 void loop() {
 	if (imu.getIntDataReadyStatus()) {
 		readIMU();
-                if (count % 6000 == 0) {
-                    Serial.println(ypr[YAW]);
-                }
-                count++;
 	}
 
 	if (compass.getDataReady()) {
@@ -68,14 +97,49 @@ void loop() {
 		//debugCompass();
 		//debugIMU();
 		//debugHeading();
+		digitalWrite(13, abs(ypr[PITCH]) < 1 && abs(ypr[ROLL]) < 1 ? HIGH : LOW);
+		//Serial.print("Yaw: ");
+		//Serial.print(map(ypr[YAW], -180, 180, 360, 0));
+		//Serial.print("\t\tCompass Heading: ");
+		heading = tiltCompensateCompass(compass_data);
+		Serial.println(heading);
+		
+		if (count % 100 == 99) {
+			count = 0;
+			Serial.print("Pitch: ");
+			Serial.print(ypr[PITCH]);
+			Serial.print("\t\tMapped Heading: ");
+			Serial.print(yaw_map[map(ypr[YAW], -180, 180, 359, 0)]);
+			Serial.println();
+		}
+		else {	count++;}
+		
+		if (abs(ypr[PITCH]) < 1 && abs(ypr[ROLL]) < 1) {
+			int yaw_heading = map(ypr[YAW], -180, 180, 360, 0);
+			for (int i = 0; i < 360; i++) {
+				int index;
+				if (yaw_heading + i < 360) {	index = yaw_heading + i;}
+				else {	index = yaw_heading + i - 360;}
+				
+				int int_heading = int(heading);
+				if (int_heading + i < 360) {	yaw_map[index] = int_heading + i;}
+				else {	yaw_map[index] = int_heading + i - 360;}
+				/*
+				Serial.print("yaw_map[");
+				Serial.print(index);
+				Serial.print("] = ");
+				Serial.println(yaw_map[index]);
+				*/
+			}
+		}
 	}
 }
 
 // Prints measured yaw, pitch, and roll to USB serial
 void debugIMU() {
-	Serial.print("Y: ");	Serial.print(ypr[0]);
-	Serial.print("\tP: ");	Serial.print(ypr[1]);
-	Serial.print("\tR: ");	Serial.print(ypr[2]);
+	Serial.print("Y: ");	Serial.print(ypr[YAW]);
+	Serial.print("\tP: ");	Serial.print(ypr[PITCH]);
+	Serial.print("\tR: ");	Serial.print(ypr[ROLL]);
 	Serial.println();
 }
 
