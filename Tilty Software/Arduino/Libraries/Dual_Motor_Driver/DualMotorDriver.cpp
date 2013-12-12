@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "i2c_t3.h"
 
 MotorDriver::MotorDriver()
-{	
+{	textma
 	i2c_address = 0x03;
 }
 
@@ -241,7 +241,6 @@ void MotorDriver::init()
 	data_reg[0] = 0x10;
 	data_reg[1] = 0x10;
 	for (int i = 0x02; i < REGISTER_SIZE; i++) {	data_reg[i] = 0x00;}
-	data_reg[M1_power] = 200;
 	
 	TCCR0A = _BV(COM0A1) | _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);// Setup pins 5 and 6 for fast PWM
 	TCCR0B = _BV(CS00);// Set PWM frequency to 62.5kHz (fastest possible)
@@ -270,20 +269,16 @@ int MotorDriver::getData(int bytes)
 	active_reg = Wire.read();
 	
 	if (active_reg == M1_ENCODER) {	updateEnc1Reg(bytes);}
+	else if (active_reg == M2_ENCODER) {	updateEnc2Reg(bytes);}
+
+	else if (active_reg == M1_CURRENT)	{ updateM1Current();}
+	else if (active_reg == M2_CURRENT)	{ updateM2Current();}
 	
-	if (active_reg == M2_ENCODER) {	updateEnc2Reg(bytes);}
-	
-	
-	if (active_reg == M1_CURRENT)	{ updateM1Current();}
-	if (active_reg == M2_CURRENT)	{ updateM2Current();}
-	
-	
-	for (char i = 1; i < bytes; i++)
+	for (char i = 1; i < bytes && Wire.available(); i++)
 	{
 		if (active_reg >= REGISTER_SIZE) {	return 0;}
 		
-		else
-		{
+		else {
 			data_reg[active_reg] = Wire.read();
 			active_reg++;
 		}
@@ -303,8 +298,8 @@ int MotorDriver::sendData()
 	byte temp[REGISTER_SIZE - active_reg];
 	for (int i = 0; i < REGISTER_SIZE - active_reg; i++)
 	{
-		//	SHOULD BE ABLE TO UPDATE ENCODER REGISTERS HERE
-		temp[i] = data_reg[i + active_reg];
+		temp[i] = data_reg[active_reg];
+		active_reg++;
 	}
 	Wire.write(temp, REGISTER_SIZE - active_reg);
 }
@@ -352,7 +347,7 @@ void MotorDriver::updateMotor2()
 **/
 void MotorDriver::updateEnc1Reg(int bytes)
 {
-	if (bytes >= 5) {
+	if (Wire.available() >= 4) {
 		for (int i = 0; i < 4; i++)
 		{
 			enc_union.bytes[i] = Wire.read();
@@ -362,7 +357,7 @@ void MotorDriver::updateEnc1Reg(int bytes)
 	}
 	
 	else {
-		enc_union.int32 = M1_encoder;
+		enc_union.int32 = m1Encoder.read();
 		for (int i = 0; i < 4; i++)
 		{
 			data_reg[M1_ENCODER + i] = enc_union.bytes[i];
@@ -375,7 +370,7 @@ void MotorDriver::updateEnc1Reg(int bytes)
 **/
 void MotorDriver::updateEnc2Reg(int bytes)
 {
-	if (bytes >= 5) {
+	if (Wire.available() >= 4) {
 		for (int i = 0; i < 4; i++)
 		{
 			enc_union.bytes[i] = Wire.read();
@@ -385,7 +380,7 @@ void MotorDriver::updateEnc2Reg(int bytes)
 	}
 	
 	else {
-		enc_union.int32 = M2_encoder;
+		enc_union.int32 = m2Encoder.read();
 		for (int i = 0; i < 4; i++)
 		{
 			data_reg[M2_ENCODER + i] = enc_union.bytes[i];

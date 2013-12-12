@@ -96,8 +96,7 @@ class MotorDriver {
 		static const uint8_t DIRECTION = 0x01;// Sets motor direction.
 		static const uint8_t BRAKE = 0x02;// Motor brake/cost. 1 brakes, 0 coasts.
 		static const uint8_t CONTROL = 0x04;// Speed/Power control setting. 0 is power, 1 is speed (RPM).
-		static const uint8_t INVERT = 0x08;// Motor direction inversion. 0 is normal, 1 is inverted.
-		static const uint8_t EN_ENC = 0x10;// Sets whether to enable the encoder
+		static const uint8_t EN_ENC = 0x08;// Sets whether to enable the encoder
 
 };
 

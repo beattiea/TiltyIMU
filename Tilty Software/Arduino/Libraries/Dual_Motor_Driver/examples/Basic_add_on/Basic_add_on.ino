@@ -54,6 +54,8 @@ uint8_t enc3;
 uint8_t enc4;
 uint8_t enc5, enc6, enc7, enc8;
 
+int power = 0;
+
 void loop() {
 	//digitalWrite(LED, motors.data_reg[motors.M1_CONTROL] & 0x01);
 	//analogWrite(M1, motors.data_reg[motors.M1_POWER]);
@@ -78,6 +80,7 @@ void loop() {
 	digitalWrite(M2B, !digitalRead(M2B));
 */
 	//motors.update();// This function should be called as frequently as possible to keep everything up to speed
+	analogWrite(LED, map(analogRead(M1_SENSE), 0, 410, 0, 255));
 }
 
 void receiveEvent(int bytes) {
