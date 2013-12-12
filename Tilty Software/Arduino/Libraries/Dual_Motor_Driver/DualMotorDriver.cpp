@@ -269,25 +269,9 @@ int MotorDriver::getData(int bytes)
 {
 	active_reg = Wire.read();
 	
-	if (active_reg == M1_ENCODER && bytes >= 5)// Separate code to handle setting M1 encoder
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			enc_union.bytes[i] = Wire.read();
-			active_reg++;
-		}
-		m1Encoder.write(enc_union.int32);
-	}
+	if (active_reg == M1_ENCODER) {	updateEnc1Reg(bytes);}
 	
-	if (active_reg == M2_ENCODER && bytes >= 5)// Separate code to handle setting M2 encoder
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			enc_union.bytes[i] = Wire.read();
-			active_reg++;
-		}
-		m2Encoder.write(enc_union.int32);
-	}
+	if (active_reg == M2_ENCODER) {	updateEnc2Reg(bytes);}
 	
 	
 	if (active_reg == M1_CURRENT)	{ updateM1Current();}
@@ -319,6 +303,7 @@ int MotorDriver::sendData()
 	byte temp[REGISTER_SIZE - active_reg];
 	for (int i = 0; i < REGISTER_SIZE - active_reg; i++)
 	{
+		//	SHOULD BE ABLE TO UPDATE ENCODER REGISTERS HERE
 		temp[i] = data_reg[i + active_reg];
 	}
 	Wire.write(temp, REGISTER_SIZE - active_reg);
@@ -343,7 +328,7 @@ void MotorDriver::updateMotor1()
 	bool dir = data_reg[M1_CONTROL] & DIRECTION;
 	digitalWrite(M1A, dir);
 	digitalWrite(M1B, !dir);
-	
+
 	analogWrite(M1, data_reg[M1_POWER]);
 }
 
@@ -362,25 +347,49 @@ void MotorDriver::updateMotor2()
 
 
 
-/** \brief Updates the encoder 1 data registers with the encoder 1 value as a 4 byte array
+/** \brief Updates the encoder 1 data registers with the encoder 1 value as a 4 byte array or writes received values to encoder
+	\param[in] Takes the number of bytes received over I2C, if less than 5 it updates the register, otherwise it writes a new value to the encoder
 **/
-void MotorDriver::updateEnc1Reg()
+void MotorDriver::updateEnc1Reg(int bytes)
 {
-	enc_union.int32 = M1_encoder;
-	for (int i = 0; i < 4; i++)
-	{
-		data_reg[M1_ENCODER + i] = enc_union.bytes[i];
+	if (bytes >= 5) {
+		for (int i = 0; i < 4; i++)
+		{
+			enc_union.bytes[i] = Wire.read();
+			active_reg++;
+		}
+		m1Encoder.write(enc_union.int32);
+	}
+	
+	else {
+		enc_union.int32 = M1_encoder;
+		for (int i = 0; i < 4; i++)
+		{
+			data_reg[M1_ENCODER + i] = enc_union.bytes[i];
+		}
 	}
 }
 
-/** \brief Updates the encoder 2 data registers with the encoder 2 value as a 4 byte array
+/** \brief Updates the encoder 2 data registers with the encoder 2 value as a 4 byte array or writes received values to encoder
+	\param[in] Takes the number of bytes received over I2C, if less than 5 it updates the register, otherwise it writes a new value to the encoder
 **/
-void MotorDriver::updateEnc2Reg()
+void MotorDriver::updateEnc2Reg(int bytes)
 {
-	enc_union.int32 = M2_encoder;
-	for (int i = 0; i < 4; i++)
-	{
-		data_reg[M2_ENCODER + i] = enc_union.bytes[i];
+	if (bytes >= 5) {
+		for (int i = 0; i < 4; i++)
+		{
+			enc_union.bytes[i] = Wire.read();
+			active_reg++;
+		}
+		m2Encoder.write(enc_union.int32);
+	}
+	
+	else {
+		enc_union.int32 = M2_encoder;
+		for (int i = 0; i < 4; i++)
+		{
+			data_reg[M2_ENCODER + i] = enc_union.bytes[i];
+		}
 	}
 }
 

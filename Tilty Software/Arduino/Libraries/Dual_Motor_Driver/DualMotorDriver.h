@@ -169,8 +169,8 @@ class MotorDriver {
 		void updateMotor1();
 		void updateMotor2();
 		
-		void updateEnc1Reg();
-		void updateEnc2Reg();
+		void updateEnc1Reg(int bytes);
+		void updateEnc2Reg(int bytes);
 		
 		void updateM1Current();
 		void updateM2Current();
