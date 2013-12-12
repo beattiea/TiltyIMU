@@ -8,6 +8,7 @@ ControlFont global = new ControlFont(globalFont, 12);
 DropdownList serial_conn;
 Button send_scalars;
 Textfield kP_box, kI_box, kD_box;
+Slider max_speed_slider, speed_limit_slider;
 
 void setupGUI() {
   gui = new ControlP5(this);
@@ -15,6 +16,7 @@ void setupGUI() {
   
   setupSerialList();
   setupPIDscalars(275, 2);
+  setupSliders();
   setupToolTips();
 }
 
@@ -48,6 +50,7 @@ void setupPIDscalars(int x_pos, int y_pos) {
   kP_box = gui.addTextfield("kPbox")
               .setPosition(x_pos, y_pos)
               .setSize(145, 18)
+              .setAutoClear(false)
               .setText("Not yet set")
               .setLabel("Proportional Power")
               .registerTooltip("Changes the proportional power applied based on tilt angle")
@@ -55,24 +58,56 @@ void setupPIDscalars(int x_pos, int y_pos) {
   kI_box = gui.addTextfield("kIbox")
               .setPosition(x_pos, y_pos + 50)
               .setSize(145, 18)
+              .setAutoClear(false)
               .setText("Not yet set")
               .setLabel("Integral Power")
               .registerTooltip("Changes the accumulating power applied based on tilt angle")
+              .linebreak()
               ;
   kD_box = gui.addTextfield("kDbox")
               .setPosition(x_pos, y_pos + 100)
               .setSize(145, 18)
+              .setAutoClear(false)
               .setText("Not yet set")
               .setLabel("Derivative Power")
               .registerTooltip("Changes the power applied based on rate and direction of tilt")
-              ;
-                    
+              ;     
+}
+
+
+void setupSliders() {
+  max_speed_slider = gui.addSlider("max_speed")
+                        .setPosition(575, 2)
+                        .setSize(10, 135)
+                        .setRange(0, 100)
+                        .setValue(100)
+                        .setDecimalPrecision(0)
+                        .setNumberOfTickMarks(21)
+                        .snapToTickMarks(true)
+                        .showTickMarks(false)
+                        //.setSliderMode(Slider.FLEXIBLE)
+                        .setLabel("% Max Speed")
+                        .registerTooltip("Sets the percent of maximum motor speed that is allowable before balancing is assumed to have failed")
+                        ;
+                   
+  speed_limit_slider = gui.addSlider("speed_limit")
+                          .setPosition(675, 2)
+                          .setSize(10, 135)
+                          .setRange(0, 100)
+                          .setValue(50)
+                          .setDecimalPrecision(0)
+                          .setNumberOfTickMarks(21)
+                          .snapToTickMarks(true)
+                          .showTickMarks(false)
+                          //.setSliderMode(Slider.FLEXIBLE)
+                          .setLabel("% Speed Limit")
+                          .registerTooltip("Sets the percent of speed limit that is allowable before attempting to force overcorrection")
+                          ;
 }
 
 
 void setupToolTips() {
   gui.getTooltip().setDelay(500);
-  
 }
 
 

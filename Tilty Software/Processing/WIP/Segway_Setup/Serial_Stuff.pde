@@ -47,9 +47,8 @@ void serialEvent(Serial myPort) {
       serial_data = new String(myPort.readBytesUntil('\n'));
       //printConsole(serial_data);
       //serial_data = "l123";
-      
+      /*
       switch (serial_data.charAt(0)) {
-        /*
         case (ROLL): {  roll = float(serial_data.substring(1)); break;}
         case (PITCH): {  pitch = float(serial_data.substring(1)); break;}
         case (YAW): {  yaw = -float(serial_data.substring(1)); break;}
@@ -59,8 +58,8 @@ void serialEvent(Serial myPort) {
         //case (HEADING): {  temperature = float(serial_data.substring(1)); break;}
         case('\n'): {break;}
         default: {  printConsole(serial_data); break;}//println(serial_data); break;}
-        */
       }
+      */
     }
   }
   catch (Exception serialException) {
