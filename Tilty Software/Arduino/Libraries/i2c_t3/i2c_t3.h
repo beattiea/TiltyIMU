@@ -74,7 +74,6 @@
 //                      Default is 1byte Addr + 2byte Command + 256byte Data
 #define I2C_TX_BUFFER_LENGTH 259
 #define I2C_RX_BUFFER_LENGTH 259
-#define BUFFER_LENGTH 259
 
 // Default I2C 
 #define I2C_DEFAULT_TIMEOUT 5000 // 5000 microsecond timeout

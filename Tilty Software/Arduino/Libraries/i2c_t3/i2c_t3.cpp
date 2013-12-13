@@ -177,8 +177,6 @@ void i2c_t3::begin(i2c_mode mode, uint8_t address1, uint8_t address2, i2c_pins p
     {
         CORE_PIN18_CONFIG = pinConfig;
         CORE_PIN19_CONFIG = pinConfig;
-		//CORE_PIN16_CONFIG = (PORT_PCR_MUX(2)|PORT_PCR_PE|PORT_PCR_PS);
-        //CORE_PIN17_CONFIG = (PORT_PCR_MUX(2)|PORT_PCR_PE|PORT_PCR_PS);
     }
     else
     {
@@ -667,7 +665,7 @@ void i2c_t3::sendTransmission(i2c_stop sendStop)
 // return: #bytes received, 0=fail (0 length request, NAK, timeout, or bus error)
 //
 size_t i2c_t3::requestFrom(uint8_t addr, size_t len)
-    { return requestFrom((uint8_t)addr, len, I2C_STOP, I2C_DEFAULT_TIMEOUT); }
+    { return requestFrom(addr, len, I2C_STOP, I2C_DEFAULT_TIMEOUT); }
 size_t i2c_t3::requestFrom(int addr, int len)
     { return requestFrom((uint8_t)addr, (size_t)len, I2C_STOP, I2C_DEFAULT_TIMEOUT); }
 size_t i2c_t3::requestFrom(uint8_t addr, size_t len, i2c_stop sendStop)
