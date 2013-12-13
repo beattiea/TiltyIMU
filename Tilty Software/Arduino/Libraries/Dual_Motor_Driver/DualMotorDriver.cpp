@@ -92,8 +92,6 @@ uint8_t MotorDriver::setPower(uint8_t motor, uint8_t power)
 **/
 uint8_t MotorDriver::setPowers(uint8_t power1, uint8_t power2)
 {
-	Wire.pinConfigure(I2C_PINS_16_17, I2C_PULLUP_EXT);
-
 	Wire.beginTransmission(i2c_address);
 	Wire.write(M1_POWER);
 	Wire.write(power1);
@@ -108,33 +106,9 @@ uint8_t MotorDriver::setPowers(uint8_t power1, uint8_t power2)
 	\param[in] power 255 to -255 value to indicate motor power and direction
 	\param[out] error Returns 0 if everything went ok, 1 if add-on was not detected, and 2 if motor number was out of bounds
 **/
-uint8_t MotorDriver::setPower(uint8_t motor, uint16_t power)
+uint8_t MotorDriver::setMotor(uint8_t motor, uint16_t power)
 {
-	Wire.pinConfigure(I2C_PINS_16_17, I2C_PULLUP_EXT);
-
-	uint8_t cont_reg, pow_reg;
-
-	if (motor == 1) 
-	{
-		cont_reg = M1_CONTROL;
-		pow_reg = M1_POWER;
-	}
 	
-	else if (motor == 2) 
-	{
-		cont_reg = M2_CONTROL;
-		pow_reg = M2_POWER;
-	}
-	
-	else {	return 2;}
-	
-	if (power < 0) {	}
-	
-	Wire.beginTransmission(i2c_address);
-	Wire.write(cont_reg);
-	Wire.write(data_reg[cont_reg]);
-	
-	return Wire.endTransmission();
 }
 
 
@@ -146,19 +120,14 @@ uint8_t MotorDriver::setPower(uint8_t motor, uint16_t power)
 **/
 uint8_t MotorDriver::setMotors(int16_t power1, int16_t power2)
 {
-	Wire.pinConfigure(I2C_PINS_16_17, I2C_PULLUP_EXT);
-	delay(1);
 	Wire.beginTransmission(i2c_address);
 	Wire.write(M1_CONTROL);
 	Wire.write(power1 < 0 ? 0 : 1);
 	Wire.write(power2 < 0 ? 0 : 1);
 	Wire.write(power1 < 0 ? power1 ^ 0xFF : power1 & 0xFF);
 	Wire.write(power2 < 0 ? power2 ^ 0xFF : power2 & 0xFF);
-	int result = Wire.endTransmission();
-	Wire.flush();
-	delay(1);
-	Wire.pinConfigure(I2C_PINS_18_19, I2C_PULLUP_EXT);
-	return result;
+	
+	return Wire.endTransmission();
 }
 
 
@@ -230,16 +199,18 @@ void MotorDriver::init()
 	pinMode(ENC2A, INPUT);
 	pinMode(ENC2B, INPUT);
 	
-	/*
-	M1_control = 0x00;
-	updateMotor1();
-	M1_control = 0xFF;
-	updateMotor1();
-	*/
+	//Set up Timer2 to automatically update currents and encoders!!!!!!!!!!!!!!
+    TCCR2B = 0x00;        //Disbale Timer2 while we set it up
+    TCNT2  = 130;         //Reset Timer Count to 130 out of 255
+    TIFR2  = 0x00;        //Timer2 INT Flag Reg: Clear Timer Overflow Flag
+    TIMSK2 = 0x01;        //Timer2 INT Reg: Timer2 Overflow Interrupt Enable
+    TCCR2A = 0x00;        //Timer2 Control Reg A: Normal port operation, Wave Gen Mode normal
+    TCCR2B = 0x05;        //Timer2 Control Reg B: Timer Prescaler set to 128
+	
 	
 	// Initialize the status and control registers
-	data_reg[0] = 0x10;
-	data_reg[1] = 0x10;
+	data_reg[0] = 0x0B;
+	data_reg[1] = 0x0B;
 	for (int i = 0x02; i < REGISTER_SIZE; i++) {	data_reg[i] = 0x00;}
 	
 	TCCR0A = _BV(COM0A1) | _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);// Setup pins 5 and 6 for fast PWM
@@ -255,9 +226,8 @@ void MotorDriver::init()
 		I2C_ADDRESS = DEFAULT_MOTOR_DRIVER_I2C_ADDRESS;
 	#endif
 	TWBR = 400000L;// Set up I2C for 400kHz
-	Wire.begin(0x03); // Begin I2C at slave address I2C_ADDRESS (defaults to 0x02)
+	Wire.begin(0x03); // Begin I2C at slave address I2C_ADDRESS (defaults to 0x03)
 }
-
 
 
 /** \brief Takes incoming I2C data into the rxBuffer
@@ -267,19 +237,23 @@ void MotorDriver::init()
 int MotorDriver::getData(int bytes)
 {
 	active_reg = Wire.read();
-	
-	if (active_reg == M1_ENCODER) {	updateEnc1Reg(bytes);}
-	else if (active_reg == M2_ENCODER) {	updateEnc2Reg(bytes);}
 
-	else if (active_reg == M1_CURRENT)	{ updateM1Current();}
+	if (active_reg == M1_CURRENT)	{ updateM1Current();}
 	else if (active_reg == M2_CURRENT)	{ updateM2Current();}
 	
-	for (char i = 1; i < bytes && Wire.available(); i++)
+	while (Wire.available())
 	{
-		if (active_reg >= REGISTER_SIZE) {	return 0;}
+		if (active_reg >= REGISTER_SIZE) {	active_reg = active_reg % REGISTER_SIZE; return 0;}
 		
-		else {
-			data_reg[active_reg] = Wire.read();
+		else if (active_reg == M1_ENCODER) {	updateEnc1Reg();}
+		else if (active_reg == M2_ENCODER) {	updateEnc2Reg();}
+		
+		else if (active_reg == M1_RATE) {	updateMotor1Rate();}
+		else if (active_reg == M2_RATE) {	updateMotor2Rate();}
+		
+		else 
+		{
+			data_reg[active_reg] = checkReadOnly(Wire.read());
 			active_reg++;
 		}
 	}
@@ -291,15 +265,13 @@ int MotorDriver::getData(int bytes)
 
 
 /** \brief Sends requested I2C data
-	\param[out] error Returns 0 if register overflows, 1 if data is successfully transferred
 **/
-int MotorDriver::sendData()
+void MotorDriver::sendData()
 {	
 	byte temp[REGISTER_SIZE - active_reg];
 	for (int i = 0; i < REGISTER_SIZE - active_reg; i++)
 	{
-		temp[i] = data_reg[active_reg];
-		active_reg++;
+		temp[i] = data_reg[active_reg + i];
 	}
 	Wire.write(temp, REGISTER_SIZE - active_reg);
 }
@@ -320,11 +292,23 @@ int MotorDriver::update()
 **/
 void MotorDriver::updateMotor1()
 {
-	bool dir = data_reg[M1_CONTROL] & DIRECTION;
-	digitalWrite(M1A, dir);
-	digitalWrite(M1B, !dir);
-
-	analogWrite(M1, data_reg[M1_POWER]);
+	if (data_reg[M1_POWER] == 0) 
+	{
+		if (data_reg[M1_CONTROL] & BRAKE) 
+		{
+			digitalWrite(M1A, HIGH);
+			digitalWrite(M1B, HIGH);
+			digitalWrite(M1, HIGH);
+		}
+		else {	digitalWrite(M1, LOW);}
+	}
+	else if (!(data_reg[M1_CONTROL] & SPEED))
+	{
+		bool dir = data_reg[M1_CONTROL] & DIRECTION;
+		digitalWrite(M1A, dir);
+		digitalWrite(M1B, !dir);
+		analogWrite(M1, data_reg[M1_POWER]);
+	}
 }
 
 
@@ -333,57 +317,146 @@ void MotorDriver::updateMotor1()
 **/
 void MotorDriver::updateMotor2()
 {
-	bool dir = data_reg[M2_CONTROL] & DIRECTION;
-	digitalWrite(M2A, !dir);
-	digitalWrite(M2B, dir);
+	if (data_reg[M2_POWER] == 0) 
+	{
+		if (data_reg[M2_CONTROL] & BRAKE) 
+		{
+			digitalWrite(M2A, HIGH);
+			digitalWrite(M2B, HIGH);
+			digitalWrite(M2, HIGH);
+		}
+		else {	digitalWrite(M2, LOW);}
+	}
 	
-	analogWrite(M2, data_reg[M2_POWER]);
+	else if (!(data_reg[M2_CONTROL] & SPEED))
+	{
+		bool dir = data_reg[M2_CONTROL] & DIRECTION;
+		digitalWrite(M2A, !dir);
+		digitalWrite(M2B, dir);
+		analogWrite(M2, data_reg[M2_POWER]);
+	}
 }
 
 
 
-/** \brief Updates the encoder 1 data registers with the encoder 1 value as a 4 byte array or writes received values to encoder
-	\param[in] Takes the number of bytes received over I2C, if less than 5 it updates the register, otherwise it writes a new value to the encoder
+/** \brief Updates the encoder 1 data registers with the encoder 1 value as a 4 byte array or writes received values to encoder.
+	Also updates RPS registers with rotations/sec
 **/
-void MotorDriver::updateEnc1Reg(int bytes)
+void MotorDriver::updateEnc1Reg()
 {
-	if (Wire.available() >= 4) {
+	if (Wire.available() >= 4 && active_reg == M1_ENCODER) 
+	{
 		for (int i = 0; i < 4; i++)
 		{
 			enc_union.bytes[i] = Wire.read();
 			active_reg++;
 		}
 		m1Encoder.write(enc_union.int32);
+		data_reg[M1_CONTROL] ^= ENCD;
 	}
 	
-	else {
-		enc_union.int32 = m1Encoder.read();
+	else if (data_reg[M1_CONTROL] & ENC)
+	{
+		long old_enc = M1_encoder;
+		
+		M1_encoder = m1Encoder.read();
+		enc_union.int32 = M1_encoder;
+		
+		//rot_union.flt = ((M1_encoder - old_enc) / (TICKS_PER_REV * GEAR_RATIO)) * REFRESH_FREQ;
+		
 		for (int i = 0; i < 4; i++)
 		{
 			data_reg[M1_ENCODER + i] = enc_union.bytes[i];
+			//if (!data_reg[M1_CONTROL] & SPEED) {	data_reg[M1_RPS + i] = rot_union.bytes[i];}
 		}
+		
+		enc_union.int32 = (enc_union.int32 - old_enc);// * REFRESH_FREQ;
+		M1_speed_actual = enc_union.int32;
+		for (int i = 0; i < 4; i++) {
+			data_reg[M1_RATE + i] = enc_union.bytes[i];
+		}
+		
+		if (data_reg[M1_CONTROL] & SPEED) {	updateMotor1Rate();}
+		
+		data_reg[M1_CONTROL] |= ENCD;
 	}
 }
 
-/** \brief Updates the encoder 2 data registers with the encoder 2 value as a 4 byte array or writes received values to encoder
-	\param[in] Takes the number of bytes received over I2C, if less than 5 it updates the register, otherwise it writes a new value to the encoder
+/** \brief Updates the encoder 2 data registers with the encoder 2 value as a 4 byte array or writes received values to encoder.
+	Also updates RPS registers with rotations/sec
 **/
-void MotorDriver::updateEnc2Reg(int bytes)
+void MotorDriver::updateEnc2Reg()
 {
-	if (Wire.available() >= 4) {
+	if (Wire.available() >= 4 && active_reg == M2_ENCODER)
+	{
 		for (int i = 0; i < 4; i++)
 		{
 			enc_union.bytes[i] = Wire.read();
 			active_reg++;
 		}
 		m2Encoder.write(enc_union.int32);
+		data_reg[M2_CONTROL] &= !ENCD;
 	}
 	
-	else {
-		enc_union.int32 = m2Encoder.read();
+	else if (data_reg[M2_CONTROL] & ENC)
+	{
+		long old_enc = M2_encoder;
+		
+		M2_encoder = m2Encoder.read();
+		enc_union.int32 = M2_encoder;
+		
+		rot_union.flt = ((M2_encoder - old_enc) / (TICKS_PER_REV * GEAR_RATIO)) * REFRESH_FREQ;
+		
 		for (int i = 0; i < 4; i++)
 		{
 			data_reg[M2_ENCODER + i] = enc_union.bytes[i];
+			if (!data_reg[M2_CONTROL] & SPEED) {	data_reg[M2_RATE + i] = rot_union.bytes[i];}
+		}
+		
+		data_reg[M2_CONTROL] |= ENCD;
+	}
+}
+
+
+
+/** \brief Updates the register value of motor 1's current draw. The analog reading necessary is slow so this function must be called manually.
+**/
+void MotorDriver::updateMotor1Rate() {
+	if (Wire.available() >= 4 && active_reg == M1_RATE) 
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			enc_union.bytes[i] = Wire.read();
+			data_reg[active_reg] = enc_union.bytes[i];
+			active_reg++;
+		}
+		M1_speed = enc_union.int32;
+	}
+	else
+	{
+		bool dir = M1_speed > 0 ? true : false;
+		digitalWrite(M1A, dir);
+		digitalWrite(M1B, !dir);
+		if (abs(M1_speed - M1_speed_actual) >= 2) {
+			int16_t diff = (M1_speed - M1_speed_actual) / 50;
+			if (M1_speed > M1_speed_actual && data_reg[M1_POWER] + 2 + diff <= 255) {	data_reg[M1_POWER] += 2 + diff;}
+			if (M1_speed < M1_speed_actual && data_reg[M1_POWER] - 2 - diff >= 0) {	data_reg[M1_POWER] -= 2 + diff;}
+			//M1_power += M1_speed < M1_speed_actual ? -2 : 2;
+		}
+		digitalWrite(LED, data_reg[M1_POWER] == 255);
+		analogWrite(M1, data_reg[M1_POWER]);
+	}
+}
+
+/** \brief Updates the register value of motor 1's current draw. The analog reading necessary is slow so this function must be called manually.
+**/
+void MotorDriver::updateMotor2Rate() {
+	if (Wire.available() >= 4 && active_reg == M2_RATE) 
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			data_reg[active_reg] = Wire.read();
+			active_reg++;
 		}
 	}
 }
@@ -395,6 +468,7 @@ void MotorDriver::updateEnc2Reg(int bytes)
 void MotorDriver::updateM1Current()
 {
 	data_reg[M1_CURRENT] = analogRead(M1_SENSE);
+	data_reg[M1_CONTROL] |= CURD;
 }
 
 /** \brief Updates the register value of motor 2's current draw. The analog reading necessary is slow so this function must be called manually.
@@ -402,6 +476,19 @@ void MotorDriver::updateM1Current()
 void MotorDriver::updateM2Current()
 {
 	data_reg[M2_CURRENT] = analogRead(M2_SENSE);
+	data_reg[M2_CONTROL] |= CURD;
+}
+
+
+
+/** \brief Checks to make sure that current data register is not read-only before writing
+	\param[in] Value to write
+	\param[out] Value to actually be written
+**/
+uint8_t MotorDriver::checkReadOnly(uint8_t val)
+{
+	if (active_reg < 21) {	return val;}
+	else {	return data_reg[active_reg];}
 }
 
 // End add-on class information
