@@ -31,6 +31,7 @@ MotorDriver motors;
 
 int motor1 = 0;
 int motor2 = 0;
+uint16_t count = 0;
 
 void setup() {
 	motors.init();
@@ -40,7 +41,6 @@ void setup() {
 	
 	motors.init();
 	
-	//digitalWrite(M1, HIGH);
 	digitalWrite(M1A, HIGH);
 	digitalWrite(M1B, LOW);
 
@@ -57,38 +57,29 @@ uint8_t enc5, enc6, enc7, enc8;
 int power = 0;
 
 void loop() {
-	//digitalWrite(LED, motors.data_reg[motors.M1_CONTROL] & 0x01);
-	//analogWrite(M1, motors.data_reg[motors.M1_POWER]);
-	//analogWrite(M2, motors.data_reg[motors.M2_POWER]);
-	
-	/*
-	for (int i = 0; i < 256; i++) {
-		analogWrite(M1, i);
-		analogWrite(M2, i);
-		digitalWrite(10, HIGH);
-		delay(640);
-	}
-	for (int i = 255; i > 0; i--) {
-		analogWrite(M1, i);
-		analogWrite(M2, i);
-		digitalWrite(10, LOW);
-		delay(640);
-	}
-	digitalWrite(M1A, !digitalRead(M1A));
-	digitalWrite(M2A, !digitalRead(M2A));
-	digitalWrite(M1B, !digitalRead(M1B));
-	digitalWrite(M2B, !digitalRead(M2B));
-*/
-	//motors.update();// This function should be called as frequently as possible to keep everything up to speed
-	analogWrite(LED, map(analogRead(M1_SENSE), 0, 410, 0, 255));
+	// Purely testing code, everything else is handled by interrupt routines
 }
+
 
 void receiveEvent(int bytes) {
 	motors.getData(bytes);
-	//digitalWrite(10, HIGH);
 }
 
 void requestEvent() {
 	motors.sendData();
-	//digitalWrite(10, LOW);
+}
+
+ISR(TIMER2_OVF_vect) {
+	count++;
+	if (count == 500 / REFRESH_FREQ)// Updates encoder 1 after 5 counter overflows (5ms)
+	{
+		motors.updateEnc1Reg();
+	}
+	if (count == 1000 / REFRESH_FREQ)// Updates encoder 2 after 10 counter overflows (10ms) and clears the counter
+	{
+		motors.updateEnc2Reg();
+		count = 0;
+	}
+	TCNT2 = 130;
+	TIFR2 = 0x00;
 }

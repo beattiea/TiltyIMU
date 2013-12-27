@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Arduino.h"
 
 // ========== I2C Settings ==========
-#define REGISTER_SIZE 14
+#define REGISTER_SIZE 22
 #define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
 // ========== I2C Settings ==========
 
@@ -56,14 +56,12 @@ class MotorDriver {
 		bool M1_direction = true;
 		bool M1_brake = false;
 		bool M1_control = false;
-		bool M1_invert = false;
 		bool M1_enc = true;
 		
 		uint8_t M2_control_reg;
 		bool M2_direction = true;
 		bool M2_brake = false;
 		bool M2_control = false;
-		bool M2_invert = false;
 		bool M2_enc = true;
 
 		// I2C register data
@@ -78,9 +76,11 @@ class MotorDriver {
 		static const uint8_t M2_POWER = 0x03;
 		static const uint8_t M1_ENCODER = 0x04;
 		static const uint8_t M2_ENCODER = 0x09;
+		static const uint8_t M1_RPM = 0x0D;
+		static const uint8_t M2_RPM = 0x11;
 		// Read only registers
-		static const uint8_t M1_CURRENT = 0x0D;
-		static const uint8_t M2_CURRENT = 0x0E;
+		static const uint8_t M1_CURRENT = 0x15;
+		static const uint8_t M2_CURRENT = 0x16;
 
 	private:
 		// Register update function
@@ -96,7 +96,7 @@ class MotorDriver {
 		static const uint8_t DIRECTION = 0x01;// Sets motor direction.
 		static const uint8_t BRAKE = 0x02;// Motor brake/cost. 1 brakes, 0 coasts.
 		static const uint8_t CONTROL = 0x04;// Speed/Power control setting. 0 is power, 1 is speed (RPM).
-		static const uint8_t EN_ENC = 0x08;// Sets whether to enable the encoder
+		static const uint8_t ENC = 0x08;// Sets whether to enable the encoder
 
 };
 
@@ -137,6 +137,12 @@ class MotorDriver {
 #define ENC2B 3 // Interrupt pin
 // ========== Encoder pins ==========
 
+// ========== Motor Characteristics ==========
+#define TICKS_PER_REV 1336
+#define GEAR_RATIO 9.28
+// ========== Motor Characteristics ==========
+
+#define REFRESH_FREQ 100 // Frequency at which to update encoders and motor powers if in speed control mode
 #define LED 10
 
 // ========== Command identifiers ==========
@@ -159,7 +165,7 @@ class MotorDriver {
 		
 		// I2C data handlers
 		int getData(int bytes);
-		int sendData();
+		void sendData();
 		
 		// Update functions
 		int update();
@@ -168,8 +174,11 @@ class MotorDriver {
 		void updateMotor1();
 		void updateMotor2();
 		
-		void updateEnc1Reg(int bytes);
-		void updateEnc2Reg(int bytes);
+		void updateEnc1Reg();
+		void updateEnc2Reg();
+		
+		void updateMotor1Rate();
+		void updateMotor2Rate();
 		
 		void updateM1Current();
 		void updateM2Current();
@@ -181,6 +190,8 @@ class MotorDriver {
 		uint8_t M2_power;
 		volatile int32_t M1_encoder;
 		volatile int32_t M2_encoder;
+		volatile float M1_speed;
+		volatile float M2_speed;
 		uint8_t M1_current;// Unused
 		uint8_t M2_current;// Unused
 		
@@ -196,9 +207,11 @@ class MotorDriver {
 		static const uint8_t M2_POWER = 0x03;
 		static const uint8_t M1_ENCODER = 0x04;
 		static const uint8_t M2_ENCODER = 0x09;
+		static const uint8_t M1_RATE = 0x0D;
+		static const uint8_t M2_RATE = 0x11;
 		// Read only registers
-		static const uint8_t M1_CURRENT = 0x0D;
-		static const uint8_t M2_CURRENT = 0x0E;
+		static const uint8_t M1_CURRENT = 0x15;
+		static const uint8_t M2_CURRENT = 0x16;
 
 	private:
 		// Encoder union variable for converting 32 bit integer to byte array
@@ -207,12 +220,26 @@ class MotorDriver {
 			int32_t int32;
 		} enc_union;
 		
+		// Encoder union variable for cconverting rotations per second to 4 byte array
+		union rot_union {
+			uint8_t bytes[4];
+			float flt;
+		} rot_union;
+		
+		// Actual motor speeds used to calculate PID for speed control
+		volatile float M1_speed_actual;
+		volatile float M2_speed_actual;
+		
 		// Motor control register bit values
 		static const uint8_t DIRECTION = 0x01;// Sets motor direction.
 		static const uint8_t BRAKE = 0x02;// Motor brake/cost. 1 brakes, 0 coasts.
 		static const uint8_t SPEED = 0x04;// Speed/Power control setting. 0 is power, 1 is speed (RPM).
-		static const uint8_t INVERT = 0x08;// Motor direction inversion. 0 is normal, 1 is inverted.
-		static const uint8_t EN_ENC = 0x10;// Sets whether to enable the encoder
+		static const uint8_t ENC = 0x08;// Sets whether to enable the encoder
+		static const uint8_t ENCD = 0x10;// Set to 1 when new encoder data is available
+		static const uint8_t CURD = 0x20;// Set to 1 when new current sense data is available
+		
+		uint8_t checkReadOnly(uint8_t val);// Checks if a register is read only before allowing it to be written
+		uint16_t count;
 	
 };
 // End add-on class information
