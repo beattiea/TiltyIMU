@@ -45,6 +45,8 @@ THE SOFTWARE.
 #ifndef _I2CDEV_H_
 #define _I2CDEV_H_
 
+#define BUFFER_LENGTH 259
+
 // comment this out if you are using a non-optimal IDE/implementation setting
 // but want the compiler to shut up about it
 #define I2CDEV_IMPLEMENTATION_WARNINGS
