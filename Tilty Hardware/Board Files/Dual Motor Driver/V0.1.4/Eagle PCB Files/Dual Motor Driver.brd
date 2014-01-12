@@ -22,9 +22,9 @@
 <layer number="26" name="bNames" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
-<layer number="29" name="tStop" color="7" fill="3" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
-<layer number="31" name="tCream" color="7" fill="4" visible="yes" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
 <layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
 <layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
@@ -2766,7 +2766,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="D12" library="SparkFun-DiscreteSemi" package="SMB-DIODE" value="" x="20.828" y="9.144" smashed="yes" rot="R180">
 <attribute name="VALUE" x="22.733" y="12.573" size="1.27" layer="27" rot="R180"/>
-<attribute name="PART#" value="SK24-TP" x="20.828" y="9.144" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="PART#" value="SK42BL-TPMSDKR-ND" x="20.828" y="9.144" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="SJ3" library="SparkFun-Passives" package="SJ_2S" value="SOLDERJUMPERNC" x="17.526" y="4.572" smashed="yes" rot="R180">
 <attribute name="VALUE" x="18.4758" y="6.223" size="0.4064" layer="27" rot="R180"/>
