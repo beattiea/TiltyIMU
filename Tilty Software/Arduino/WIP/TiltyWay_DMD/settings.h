@@ -51,9 +51,9 @@ and being mounted upright (logo is visible from above) */
 
 
 //================= PID Control Settings =================//
-#define TILT_kP 17            // Proportional PID scalar. Scales with tilt.
-#define TILT_kI 0.25            // Integral PID scalar. Scales with time and tilt.
-#define TILT_kD 25            // Derivative PID scalar. Scales with rate of tilt.
+#define TILT_kP 20            // Proportional PID scalar. Scales with tilt.
+#define TILT_kI 0.125            // Integral PID scalar. Scales with time and tilt.
+#define TILT_kD 12.5            // Derivative PID scalar. Scales with rate of tilt.
 #define MAX_PID 255  // Maximum value allowed for P + I + D.
 //========================================================//
 

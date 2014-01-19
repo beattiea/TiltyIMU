@@ -25,7 +25,10 @@
 FreeIMU fIMU = FreeIMU();
 
 void setup() {
-	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_800);
+	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_400);
+
+	//while (!Serial) {}
+	
 	delay(5);
 	imu = MPU6050();
 	imu.reset();
@@ -56,6 +59,7 @@ void loop() {
 		printPID();
 		//printPID();
 		checkToRun();
+		delay(5);
 	}
 }
 
@@ -97,6 +101,7 @@ void checkToStart() {
 		
 			if (millis() - startup_timer >= REQUIRED_TIME && startup_timer != 0) {	conditions |= 0b00000010;}
 		}
+		//delay(3);
 	}
 	tilt_power = 0;
 	tiltPID.reset();
