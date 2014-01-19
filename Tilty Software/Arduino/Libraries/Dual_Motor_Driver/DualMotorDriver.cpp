@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "i2c_t3.h"
 
 MotorDriver::MotorDriver()
-{	textma
+{
 	i2c_address = 0x03;
 }
 
@@ -106,7 +106,7 @@ uint8_t MotorDriver::setPowers(uint8_t power1, uint8_t power2)
 	\param[in] power 255 to -255 value to indicate motor power and direction
 	\param[out] error Returns 0 if everything went ok, 1 if add-on was not detected, and 2 if motor number was out of bounds
 **/
-uint8_t MotorDriver::setMotor(uint8_t motor, uint16_t power)
+uint8_t MotorDriver::setMotor(uint8_t motor, int16_t power)
 {
 	
 }
@@ -120,6 +120,9 @@ uint8_t MotorDriver::setMotor(uint8_t motor, uint16_t power)
 **/
 uint8_t MotorDriver::setMotors(int16_t power1, int16_t power2)
 {
+	Wire.pinConfigure(I2C_PINS_16_17, I2C_PULLUP_EXT);
+	delayMicroseconds(100);
+	
 	Wire.beginTransmission(i2c_address);
 	Wire.write(M1_CONTROL);
 	Wire.write(power1 < 0 ? 0 : 1);
@@ -127,7 +130,12 @@ uint8_t MotorDriver::setMotors(int16_t power1, int16_t power2)
 	Wire.write(power1 < 0 ? power1 ^ 0xFF : power1 & 0xFF);
 	Wire.write(power2 < 0 ? power2 ^ 0xFF : power2 & 0xFF);
 	
-	return Wire.endTransmission();
+	uint8_t result = Wire.endTransmission();
+	
+	delayMicroseconds(100);
+	Wire.pinConfigure(I2C_PINS_18_19, I2C_PULLUP_EXT);
+	
+	return result;
 }
 
 
@@ -149,9 +157,8 @@ uint8_t MotorDriver::updateControlReg(bool dir, bool brake, bool cont, bool inv,
 		
 		if (dir) {	temp_byte |= DIRECTION;}
 		if (brake) {	temp_byte |= BRAKE;}
-		if (cont) {	temp_byte |= CONTROL;}
-		if (inv) {	temp_byte |= INVERT;}
-		if (enc) {	temp_byte |= EN_ENC;}
+		if (cont) {	temp_byte |= SPEED;}
+		if (enc) {	temp_byte |= ENC;}
 		
 		return temp_byte;
 }
@@ -340,7 +347,7 @@ void MotorDriver::updateMotor2()
 
 
 /** \brief Updates the encoder 1 data registers with the encoder 1 value as a 4 byte array or writes received values to encoder.
-	Also updates RPS registers with rotations/sec
+	Also updates RPS registers with rotations/cycle
 **/
 void MotorDriver::updateEnc1Reg()
 {
@@ -383,7 +390,7 @@ void MotorDriver::updateEnc1Reg()
 }
 
 /** \brief Updates the encoder 2 data registers with the encoder 2 value as a 4 byte array or writes received values to encoder.
-	Also updates RPS registers with rotations/sec
+	Also updates RPS registers with rotations/cycle
 **/
 void MotorDriver::updateEnc2Reg()
 {
@@ -419,7 +426,7 @@ void MotorDriver::updateEnc2Reg()
 
 
 
-/** \brief Updates the register value of motor 1's current draw. The analog reading necessary is slow so this function must be called manually.
+/** \brief 
 **/
 void MotorDriver::updateMotor1Rate() {
 	if (Wire.available() >= 4 && active_reg == M1_RATE) 
@@ -437,18 +444,18 @@ void MotorDriver::updateMotor1Rate() {
 		bool dir = M1_speed > 0 ? true : false;
 		digitalWrite(M1A, dir);
 		digitalWrite(M1B, !dir);
-		if (abs(M1_speed - M1_speed_actual) >= 2) {
-			int16_t diff = (M1_speed - M1_speed_actual) / 50;
-			if (M1_speed > M1_speed_actual && data_reg[M1_POWER] + 2 + diff <= 255) {	data_reg[M1_POWER] += 2 + diff;}
-			if (M1_speed < M1_speed_actual && data_reg[M1_POWER] - 2 - diff >= 0) {	data_reg[M1_POWER] -= 2 + diff;}
-			//M1_power += M1_speed < M1_speed_actual ? -2 : 2;
-		}
-		digitalWrite(LED, data_reg[M1_POWER] == 255);
+		
+		int16_t diff = M1_speed - M1_speed_actual;
+		PID_P1 = data_reg[PID_KP] * diff;
+		PID_I1 += data_reg[PID_KI] * diff;
+		PID_D1 = 0;//												DERIVATIVE VALUE NOT IMPLEMENTED
+		data_reg[M1_POWER] = constrain(PID_P1 + PID_I1 + PID_D1, 0, 255);
+		
 		analogWrite(M1, data_reg[M1_POWER]);
 	}
 }
 
-/** \brief Updates the register value of motor 1's current draw. The analog reading necessary is slow so this function must be called manually.
+/** \brief 
 **/
 void MotorDriver::updateMotor2Rate() {
 	if (Wire.available() >= 4 && active_reg == M2_RATE) 

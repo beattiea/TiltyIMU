@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Arduino.h"
 
 // ========== I2C Settings ==========
-#define REGISTER_SIZE 22
+#define REGISTER_SIZE 25
 #define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
 // ========== I2C Settings ==========
 
@@ -47,6 +47,7 @@ class MotorDriver {
 		
 		uint8_t setPower(uint8_t motor, uint16_t power);
 		uint8_t setMotors(int16_t power1, int16_t power2);
+		uint8_t setMotor(uint8_t motor, int16_t power);
 		
 		// I2C address
 		uint8_t i2c_address;
@@ -70,17 +71,20 @@ class MotorDriver {
 
 		// I2C register addresses
 		// Read/Write registers
-		static const uint8_t M1_CONTROL = 0x00;
-		static const uint8_t M2_CONTROL = 0x01;
-		static const uint8_t M1_POWER = 0x02;
-		static const uint8_t M2_POWER = 0x03;
-		static const uint8_t M1_ENCODER = 0x04;
-		static const uint8_t M2_ENCODER = 0x09;
-		static const uint8_t M1_RPM = 0x0D;
-		static const uint8_t M2_RPM = 0x11;
+		static const uint8_t M1_CONTROL = 0x00;		// Motor control settings
+		static const uint8_t M2_CONTROL = 0x01;		// Motor control settings
+		static const uint8_t M1_POWER = 0x02;		// Raw PWM duty cycle
+		static const uint8_t M2_POWER = 0x03;		// Raw PWM duty cycle
+		static const uint8_t M1_ENCODER = 0x04;		// Raw encoder values
+		static const uint8_t M2_ENCODER = 0x09;		// Raw encoder values
+		static const uint8_t M1_RATE = 0x0D;		// Rotation Rate control
+		static const uint8_t M2_RATE = 0x11;		// Rotation Rate control
+		static const uint8_t PID_KP = 0x17;
+		static const uint8_t PID_KI = 0x18;
+		static const uint8_t PID_KD = 0x19;
 		// Read only registers
-		static const uint8_t M1_CURRENT = 0x15;
-		static const uint8_t M2_CURRENT = 0x16;
+		static const uint8_t M1_CURRENT = 0x15;		// Motor current draw
+		static const uint8_t M2_CURRENT = 0x16;		// Motor current draw
 
 	private:
 		// Register update function
@@ -95,8 +99,10 @@ class MotorDriver {
 		// Motor control register bit values
 		static const uint8_t DIRECTION = 0x01;// Sets motor direction.
 		static const uint8_t BRAKE = 0x02;// Motor brake/cost. 1 brakes, 0 coasts.
-		static const uint8_t CONTROL = 0x04;// Speed/Power control setting. 0 is power, 1 is speed (RPM).
+		static const uint8_t SPEED = 0x04;// Speed/Power control setting. 0 is power, 1 is speed (RPM).
 		static const uint8_t ENC = 0x08;// Sets whether to enable the encoder
+		static const uint8_t ENCD = 0x10;// Set to 1 when new encoder data is available
+		static const uint8_t CURD = 0x20;// Set to 1 when new current sense data is available
 
 };
 
@@ -140,9 +146,14 @@ class MotorDriver {
 // ========== Motor Characteristics ==========
 #define TICKS_PER_REV 1336
 #define GEAR_RATIO 9.28
+#define DEFAULT_KP 1
+#define DEFAULT_KI 1
+#define DEFAULT_KD 0
 // ========== Motor Characteristics ==========
 
-#define REFRESH_FREQ 100 // Frequency at which to update encoders and motor powers if in speed control mode
+#ifndef REFRESH_FREQ
+	#define REFRESH_FREQ 100 // Frequency at which to update encoders and motor powers if in speed control mode
+#endif
 #define LED 10
 
 // ========== Command identifiers ==========
@@ -194,6 +205,9 @@ class MotorDriver {
 		volatile float M2_speed;
 		uint8_t M1_current;// Unused
 		uint8_t M2_current;// Unused
+		uint8_t PID_P1, PID_P2;
+		uint8_t PID_I1, PID_I2;
+		uint8_t PID_D1, PID_D2;
 		
 		// I2C register data
 		uint8_t data_reg[REGISTER_SIZE];
@@ -201,17 +215,20 @@ class MotorDriver {
 		
 		// I2C register addresses
 		// Read/Write registers
-		static const uint8_t M1_CONTROL = 0x00;
-		static const uint8_t M2_CONTROL = 0x01;
-		static const uint8_t M1_POWER = 0x02;
-		static const uint8_t M2_POWER = 0x03;
-		static const uint8_t M1_ENCODER = 0x04;
-		static const uint8_t M2_ENCODER = 0x09;
-		static const uint8_t M1_RATE = 0x0D;
-		static const uint8_t M2_RATE = 0x11;
+		static const uint8_t M1_CONTROL = 0x00;		// Motor control settings
+		static const uint8_t M2_CONTROL = 0x01;		// Motor control settings
+		static const uint8_t M1_POWER = 0x02;		// Raw PWM duty cycle
+		static const uint8_t M2_POWER = 0x03;		// Raw PWM duty cycle
+		static const uint8_t M1_ENCODER = 0x04;		// Raw encoder values
+		static const uint8_t M2_ENCODER = 0x09;		// Raw encoder values
+		static const uint8_t M1_RATE = 0x0D;		// Rotation Rate control
+		static const uint8_t M2_RATE = 0x11;		// Rotation Rate control
+		static const uint8_t PID_KP = 0x17;
+		static const uint8_t PID_KI = 0x18;
+		static const uint8_t PID_KD = 0x19;
 		// Read only registers
-		static const uint8_t M1_CURRENT = 0x15;
-		static const uint8_t M2_CURRENT = 0x16;
+		static const uint8_t M1_CURRENT = 0x15;		// Motor current draw
+		static const uint8_t M2_CURRENT = 0x16;		// Motor current draw
 
 	private:
 		// Encoder union variable for converting 32 bit integer to byte array
