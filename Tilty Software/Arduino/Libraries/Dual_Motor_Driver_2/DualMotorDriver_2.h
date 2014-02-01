@@ -33,6 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#define pid_kp 108
 	#define pid_ki 109
 	#define pid_kd 110
+	#define led	111
 	#define eeprom 200
 #endif
 

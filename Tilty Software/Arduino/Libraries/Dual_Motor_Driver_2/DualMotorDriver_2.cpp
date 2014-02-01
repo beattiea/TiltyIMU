@@ -47,7 +47,7 @@ void MotorDriver::init()
 	
 	pinMode(LED, OUTPUT);	digitalWrite(LED, LOW);
 	
-	pinMode(ENC1A, INPUT);
+	pinMode(ENC1A, INPUT);	digitalWrite(ENC1A, LOW);
 	pinMode(ENC1B, INPUT);
 	pinMode(ENC2A, INPUT);
 	pinMode(ENC2B, INPUT);
@@ -63,47 +63,41 @@ void MotorDriver::init()
 	
 	// Set all data register values to their defaults except device ID
 	// which we'll try to load to be sure we start on the right I2C address
-	/*
 	if (EEPROM.read(EEPROM_LOAD) != 255 || EEPROM.read(EEPROM_LOAD + 1) != 255 || EEPROM.read(EEPROM_LOAD + 2) != 255)
 	{
-		data_reg[EEPROM_LOAD] = EEPROM.load(EEPROM_LOAD) << 16;
-		data_reg[EEPROM_LOAD + 1] = EEPROM.load(EEPROM_LOAD) << 8;
-		data_reg[EEPROM_LOAD + 2] = EEPROM.load(EEPROM_LOAD);
-		loadToDataReg();
+		data_reg[EEPROM_LOAD] = EEPROM.read(EEPROM_LOAD) << 16;
+		data_reg[EEPROM_LOAD + 1] = EEPROM.read(EEPROM_LOAD) << 8;
+		data_reg[EEPROM_LOAD + 2] = EEPROM.read(EEPROM_LOAD);
+		//loadToDataReg();
 	}
-	*/
-	//else {
-	data_reg[M1_CONTROL] = DEFAULT_M1_CONTROL;
-	data_reg[M2_CONTROL] = DEFAULT_M2_CONTROL;
-	data_reg[M1_POWER] = DEFAULT_M1_POWER;
-	data_reg[M2_POWER] = DEFAULT_M2_POWER;
-	longToDataReg(M1_ENCODER, DEFAULT_M1_ENCODER);
-	longToDataReg(M2_ENCODER, DEFAULT_M2_ENCODER);
-	data_reg[M1_CURRENT] = DEFAULT_M1_CURRENT;
-	data_reg[M2_CURRENT] = DEFAULT_M2_CURRENT;
-	longToDataReg(M1_RATE, DEFAULT_M1_RATE);
-	longToDataReg(M1_RATE, DEFAULT_M1_RATE);
-	floatToDataReg(PID_KP, DEFAULT_PID_KP);
-	longToDataReg(M1_RATE, DEFAULT_M1_RATE);
-	floatToDataReg(PID_KP, DEFAULT_PID_KP);
-	floatToDataReg(PID_KI, DEFAULT_PID_KI);
-	floatToDataReg(PID_KD, DEFAULT_PID_KD);
-	longToDataReg(TICKS_REV, DEFAULT_TICKS_REV);
-	data_reg[LOOP_TIME] = DEFAULT_LOOP_TIME;	loop_frequency = 1000 / data_reg[LOOP_TIME];
-	intToDataReg(EEPROM_SAVE, DEFAULT_EEPROM_SAVE);
-	intToDataReg(EEPROM_LOAD, DEFAULT_EEPROM_LOAD);
-	//}
+	else
+	{
+		data_reg[M1_CONTROL] = DEFAULT_M1_CONTROL;
+		data_reg[M2_CONTROL] = DEFAULT_M2_CONTROL;
+		data_reg[M1_POWER] = DEFAULT_M1_POWER;
+		data_reg[M2_POWER] = DEFAULT_M2_POWER;
+		longToDataReg(M1_ENCODER, DEFAULT_M1_ENCODER);
+		longToDataReg(M2_ENCODER, DEFAULT_M2_ENCODER);
+		data_reg[M1_CURRENT] = DEFAULT_M1_CURRENT;
+		data_reg[M2_CURRENT] = DEFAULT_M2_CURRENT;
+		longToDataReg(M1_RATE, DEFAULT_M1_RATE);
+		longToDataReg(M1_RATE, DEFAULT_M1_RATE);
+		floatToDataReg(PID_KP, DEFAULT_PID_KP);
+		longToDataReg(M1_RATE, DEFAULT_M1_RATE);
+		longToDataReg(M2_RATE, DEFAULT_M2_RATE);
+		floatToDataReg(PID_KP, DEFAULT_PID_KP);
+		floatToDataReg(PID_KI, DEFAULT_PID_KI);
+		floatToDataReg(PID_KD, DEFAULT_PID_KD);
+		longToDataReg(TICKS_REV, DEFAULT_TICKS_REV);
+		data_reg[LOOP_TIME] = DEFAULT_LOOP_TIME;	loop_frequency = 1000 / data_reg[LOOP_TIME];
+		intToDataReg(EEPROM_SAVE, DEFAULT_EEPROM_SAVE);
+		intToDataReg(EEPROM_LOAD, DEFAULT_EEPROM_LOAD);
+	}
 	
 	// Set up the actual PID scalars so we don't need to load them from the data register every time we use them
 	PID_kP = DEFAULT_PID_KP;
 	PID_kI = DEFAULT_PID_KI;
 	PID_kD = DEFAULT_PID_KD;
-	
-	// Check to see if encoders can be detected, enable them if so, disable them otherwise
-	if (digitalRead(ENC1A) || digitalRead(ENC1B)) {	data_reg[M1_CONTROL] |= ENCODER;}
-	else {	data_reg[M1_CONTROL] &= !ENCODER;}
-	if (digitalRead(ENC2A) || digitalRead(ENC2B)) {	data_reg[M2_CONTROL] |= ENCODER;}
-	else {	data_reg[M2_CONTROL] &= !ENCODER;}
 	
 	// Attempt to load device ID from EEPROM. If loaded value > 127 the default value is used
 	uint8_t device_id = EEPROM.read(DEVICE_ID);
@@ -117,6 +111,12 @@ void MotorDriver::init()
 	//Setup the I2C bus
 	TWBR = 400000L;		// Set up I2C for 400kHz
 	Wire.begin(data_reg[DEVICE_ID]);	// Begin I2C at slave address I2C_ADDRESS (defaults to 0x03)
+	
+	// Check to see if encoders can be detected, enable them if so, disable them otherwise
+	if (digitalRead(ENC1A) || digitalRead(ENC1B)) {	data_reg[M1_CONTROL] |= ENCODER;}
+	else {	data_reg[M1_CONTROL] &= !ENCODER;}
+	if (digitalRead(ENC2A) || digitalRead(ENC2B)) {	data_reg[M2_CONTROL] |= ENCODER;}
+	else {	data_reg[M2_CONTROL] &= !ENCODER;}
 }
 
 
@@ -138,6 +138,9 @@ uint8_t MotorDriver::getData(int bytes)
 			case M2_CURRENT: updateM2Current(); data_reg[M2_CONTROL] &= !CURD; break;
 			case EEPROM_SAVE: saveDataRegister();
 			case EEPROM_LOAD: loadDataRegister();
+			#ifdef DEBUG_MOTOR_DRIVER
+			case led: digitalWrite(LED, !digitalRead(LED));
+			#endif
 		}
 	}
 	
@@ -193,14 +196,18 @@ void MotorDriver::sendData()
 		case pid_kd: write32(PID_kD); break;
 	}
 	
-	if (active_reg >= 200) {	Wire.write(EEPROM.read(active_reg - 200));}
-	
-	return;
+	if (active_reg >= 200)
+	{
+		Wire.write(EEPROM.read(active_reg - 200)); return;
+	}
 	#endif
 	
-	int temp_size = REGISTER_SIZE - active_reg;
-	if (temp_size > BUFFER_SIZE) {	temp_size = 32;}
-	Wire.write(&data_reg[active_reg], temp_size);
+	if (active_reg < REGISTER_SIZE)
+	{
+		int temp_size = REGISTER_SIZE - active_reg;
+		if (temp_size > BUFFER_SIZE) {	temp_size = 32;}
+		Wire.write(&data_reg[active_reg], temp_size);
+	}
 }
 
 
@@ -214,6 +221,9 @@ int MotorDriver::update()
 	{
 		updateMotor1();
 		updateMotor2();
+		
+		digitalWrite(LED, digitalRead(ENC1A));
+		
 		count = 0;
 	}
 }
