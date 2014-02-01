@@ -55,9 +55,9 @@ void loop() {
 			Serial.print("Buffer ");
 			Serial.print(buf_index);
 			Serial.print(": ");
-			Serial.print(val);
-			Serial.print("\t(");
 			Serial.print(val, HEX);
+			Serial.print("\t(");
+			Serial.print(val, DEC);
 			Serial.println(")");
 			buf_index++;
 		}
@@ -109,7 +109,11 @@ void requestData() {
 		else {
 			for (int i = 0; i < num; i++) {
 				Serial.print("Received value: ");
-				Serial.println(Wire.read(), HEX);
+				char data = Wire.read();
+				Serial.print(data, HEX);
+				Serial.print("\t(");
+				Serial.print(data, DEC);
+				Serial.println(")");
 			}
 		}
 		Serial.println();
@@ -142,7 +146,10 @@ void get4Bytes() {
 	for (int i = 0; i < 4; i++) {
 		int32_union.bytes[i] = Wire.read();
 		Serial.print("Received value: ");
-		Serial.println(int32_union.bytes[i], HEX);
+		Serial.print(int32_union.bytes[i], HEX);
+		Serial.print("\t(");
+		Serial.print(int32_union.bytes[i], DEC);
+		Serial.println(")");
 	}
 	
 	Serial.print("Parsed integer value: ");

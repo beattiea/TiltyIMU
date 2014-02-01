@@ -20,8 +20,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Arduino.h"
 
+#define DEBUG_MOTOR_DRIVER
+#ifdef DEBUG_MOTOR_DRIVER
+	#define m1_power 100
+	#define m1_p 101
+	#define m1_i 102
+	#define m1_d 103
+	#define m2_power 104
+	#define m2_p 105
+	#define m2_i 106
+	#define m2_d 107
+	#define pid_kp 108
+	#define pid_ki 109
+	#define pid_kd 110
+	#define eeprom 200
+#endif
+
+
 // ========== I2C Settings ==========
-#define REGISTER_SIZE 48
+#define REGISTER_SIZE 46
 #define BUFFER_SIZE 32
 #define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
 // ========== I2C Settings ==========
@@ -78,8 +95,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 // ========== Default Register Values ==========
-#define DEFAULT_M1_CONTROL		DIRECTION | BRAKE | ENCODER
-#define DEFAULT_M2_CONTROL		DIRECTION | BRAKE | ENCODER
+#define DEFAULT_M1_CONTROL		DIRECTION | BRAKE | ENCODER | SPEED
+#define DEFAULT_M2_CONTROL		DIRECTION | BRAKE | ENCODER | SPEED
 #define DEFAULT_M1_POWER		0
 #define DEFAULT_M2_POWER		0
 #define DEFAULT_M1_ENCODER		0
@@ -88,8 +105,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEFAULT_M2_CURRENT		0
 #define DEFAULT_M1_RATE			0
 #define DEFAULT_M2_RATE			0
-#define DEFAULT_PID_KP			1.0
-#define DEFAULT_PID_KI			0.0
+#define DEFAULT_PID_KP			0.33
+#define DEFAULT_PID_KI			0.05
 #define DEFAULT_PID_KD			0.0
 #define DEFAULT_TICKS_REV		1336
 #define DEFAULT_LOOP_TIME		5
@@ -113,7 +130,7 @@ class MotorDriver {
 		void init();
 		
 		// I2C data handlers
-		int getData(int bytes);
+		uint8_t getData(int bytes);
 		void sendData();
 		
 		// Update functions
@@ -146,9 +163,10 @@ class MotorDriver {
 		float PID_kP;
 		float PID_kI;
 		float PID_kD;
-		uint8_t PID_P1, PID_P2;
-		uint8_t PID_I1, PID_I2;
-		uint8_t PID_D1, PID_D2;
+		long ticks_rev;
+		float PID_P1, PID_P2;
+		float PID_I1, PID_I2;
+		float PID_D1, PID_D2;
 		float loop_frequency;
 		
 		// I2C register data
@@ -174,9 +192,13 @@ class MotorDriver {
 		static const uint8_t TICKS_REV = 0x22;		// Encoder ticks revolution		Long			34-37
 		static const uint8_t LOOP_TIME = 0x26;		// Ms between motor updates		Byte			38
 		static const uint8_t DEVICE_ID = 0x27;		// I2C device address			7-bit byte		39
-		static const uint8_t EEPROM_SAVE = 0x28;	// Save register to EEPROM		Int				40-43
-		static const uint8_t EEPROM_LOAD = 0x2C;	// Load register to EEPROM		Int				44-47
-		
+		static const uint8_t EEPROM_SAVE = 0x28;	// Save register to EEPROM		3-Bytes			40-42
+		static const uint8_t EEPROM_LOAD = 0x2B;	// Load register from EEPROM	3-Bytes			43-45
+	
+
+	#ifdef DEBUG_MOTOR_DRIVER
+		uint8_t write32(float val);
+	#endif
 
 	private:
 		// Data register handling functions
@@ -185,6 +207,7 @@ class MotorDriver {
 		uint8_t floatToDataReg(uint8_t reg, float value);
 		
 		uint8_t wireIntToDataReg(uint8_t reg);
+		uint8_t wire3BytesToDataReg(uint8_t reg);
 		uint8_t wireLongToDataReg(uint8_t reg);
 		
 		uint16_t intFromDataReg(uint8_t reg);
@@ -195,14 +218,16 @@ class MotorDriver {
 		uint16_t loadInt(uint16_t address);
 		uint32_t loadLong(uint16_t address);
 		uint8_t  loadIntRegister(uint16_t address, uint8_t reg);
+		uint8_t  load3ByteRegister(uint16_t address, uint8_t reg);
 		uint8_t  loadLongRegister(uint16_t address, uint8_t reg);
-		uint8_t  loadDataRegister(uint16_t values);
+		uint8_t  loadDataRegister();
 		
 		uint8_t saveInt(uint16_t address, uint32_t value);
 		uint8_t saveLong(uint16_t address, uint32_t value);
 		uint8_t saveIntRegister(uint16_t address, uint8_t reg);
+		uint8_t save3ByteRegister(uint16_t address, uint8_t reg);
 		uint8_t saveLongRegister(uint16_t address, uint8_t reg);
-		uint8_t saveDataRegister(uint16_t values);
+		uint8_t saveDataRegister();
 		
 		// Data union for transferring different 4 byte types to/from data register
 		union data_union {

@@ -57,6 +57,7 @@ void requestEvent() {
 
 ISR(TIMER2_OVF_vect) {
 	motors.update();
+	//count = 0;
 	
 	TCNT2 = 130;
 	TIFR2 = 0x00;
