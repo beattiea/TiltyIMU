@@ -48,7 +48,7 @@ void MotorDriver::init()
 	pinMode(LED, OUTPUT);	digitalWrite(LED, LOW);
 	
 	pinMode(ENC1A, INPUT);	digitalWrite(ENC1A, LOW);
-	pinMode(ENC1B, INPUT);
+	pinMode(ENC1B, INPUT);	digitalWrite(ENC1B, LOW);
 	pinMode(ENC2A, INPUT);
 	pinMode(ENC2B, INPUT);
 	
@@ -63,50 +63,42 @@ void MotorDriver::init()
 	
 	// Set all data register values to their defaults except device ID
 	// which we'll try to load to be sure we start on the right I2C address
-	if (EEPROM.read(EEPROM_LOAD) != 255 || EEPROM.read(EEPROM_LOAD + 1) != 255 || EEPROM.read(EEPROM_LOAD + 2) != 255)
-	{
-		data_reg[EEPROM_LOAD] = EEPROM.read(EEPROM_LOAD) << 16;
-		data_reg[EEPROM_LOAD + 1] = EEPROM.read(EEPROM_LOAD) << 8;
-		data_reg[EEPROM_LOAD + 2] = EEPROM.read(EEPROM_LOAD);
-		//loadToDataReg();
-	}
-	else
-	{
-		data_reg[M1_CONTROL] = DEFAULT_M1_CONTROL;
-		data_reg[M2_CONTROL] = DEFAULT_M2_CONTROL;
-		data_reg[M1_POWER] = DEFAULT_M1_POWER;
-		data_reg[M2_POWER] = DEFAULT_M2_POWER;
-		longToDataReg(M1_ENCODER, DEFAULT_M1_ENCODER);
-		longToDataReg(M2_ENCODER, DEFAULT_M2_ENCODER);
-		data_reg[M1_CURRENT] = DEFAULT_M1_CURRENT;
-		data_reg[M2_CURRENT] = DEFAULT_M2_CURRENT;
-		longToDataReg(M1_RATE, DEFAULT_M1_RATE);
-		longToDataReg(M1_RATE, DEFAULT_M1_RATE);
-		floatToDataReg(PID_KP, DEFAULT_PID_KP);
-		longToDataReg(M1_RATE, DEFAULT_M1_RATE);
-		longToDataReg(M2_RATE, DEFAULT_M2_RATE);
-		floatToDataReg(PID_KP, DEFAULT_PID_KP);
-		floatToDataReg(PID_KI, DEFAULT_PID_KI);
-		floatToDataReg(PID_KD, DEFAULT_PID_KD);
-		longToDataReg(TICKS_REV, DEFAULT_TICKS_REV);
-		data_reg[LOOP_TIME] = DEFAULT_LOOP_TIME;	loop_frequency = 1000 / data_reg[LOOP_TIME];
-		intToDataReg(EEPROM_SAVE, DEFAULT_EEPROM_SAVE);
-		intToDataReg(EEPROM_LOAD, DEFAULT_EEPROM_LOAD);
-	}
+	data_reg[M1_CONTROL] = DEFAULT_M1_CONTROL;
+	data_reg[M2_CONTROL] = DEFAULT_M2_CONTROL;
+	data_reg[M1_POWER] = DEFAULT_M1_POWER;
+	data_reg[M2_POWER] = DEFAULT_M2_POWER;
+	longToDataReg(M1_ENCODER, DEFAULT_M1_ENCODER);
+	longToDataReg(M2_ENCODER, DEFAULT_M2_ENCODER);
+	data_reg[M1_CURRENT] = DEFAULT_M1_CURRENT;
+	data_reg[M2_CURRENT] = DEFAULT_M2_CURRENT;
+	longToDataReg(M1_RATE, DEFAULT_M1_RATE);
+	longToDataReg(M1_RATE, DEFAULT_M1_RATE);
+	floatToDataReg(PID_KP, DEFAULT_PID_KP);
+	longToDataReg(M1_RATE, DEFAULT_M1_RATE);
+	longToDataReg(M2_RATE, DEFAULT_M2_RATE);
+	floatToDataReg(PID_KP, DEFAULT_PID_KP);
+	floatToDataReg(PID_KI, DEFAULT_PID_KI);
+	floatToDataReg(PID_KD, DEFAULT_PID_KD);
+	data_reg[MIN_POWER] = DEFAULT_MIN_POWER;
+	longToDataReg(TICKS_REV, DEFAULT_TICKS_REV);
+	data_reg[LOOP_TIME] = DEFAULT_LOOP_TIME;	loop_frequency = 1000 / data_reg[LOOP_TIME];
+	data_reg[DEVICE_ID] = DEFAULT_DEVICE_ID;
+	intToDataReg(EEPROM_SAVE, DEFAULT_EEPROM_SAVE);
+	intToDataReg(EEPROM_LOAD, DEFAULT_EEPROM_LOAD);
 	
 	// Set up the actual PID scalars so we don't need to load them from the data register every time we use them
 	PID_kP = DEFAULT_PID_KP;
 	PID_kI = DEFAULT_PID_KI;
 	PID_kD = DEFAULT_PID_KD;
 	
-	// Attempt to load device ID from EEPROM. If loaded value > 127 the default value is used
-	uint8_t device_id = EEPROM.read(DEVICE_ID);
-	if (device_id & 0x80) {	data_reg[DEVICE_ID] = DEFAULT_DEVICE_ID;}
-	else {	data_reg[DEVICE_ID] = device_id;}
+	// Attempt to load a saved configuration
+	loadIntoRegister(EEPROM_SAVE, EEPROM_LOAD, 2);
+	if (data_reg[EEPROM_LOAD] != 255 && data_reg[EEPROM_LOAD + 1] != 255) {	loadDataRegister();}
+	else {	intToDataReg(EEPROM_LOAD, 0);}
 	
 	// Setup the pwm pins
 	TCCR0A = _BV(COM0A1) | _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);	// Setup pins 5 and 6 for fast PWM
-	TCCR0B = _BV(CS00);												// Set PWM frequency to 62.5kHz (fastest possible)
+	TCCR0B = 0x00;//_BV(CS00);												// Set PWM frequency to 62.5kHz (fastest possible)
 	
 	//Setup the I2C bus
 	TWBR = 400000L;		// Set up I2C for 400kHz
@@ -136,8 +128,8 @@ uint8_t MotorDriver::getData(int bytes)
 			case M2_ENCODER: updateM2Encoder(); data_reg[M2_CONTROL] &= !ENCD; break;
 			case M1_CURRENT: updateM1Current(); data_reg[M1_CONTROL] &= !CURD; break;
 			case M2_CURRENT: updateM2Current(); data_reg[M2_CONTROL] &= !CURD; break;
-			case EEPROM_SAVE: saveDataRegister();
-			case EEPROM_LOAD: loadDataRegister();
+			//case EEPROM_SAVE: saveDataRegister();
+			//case EEPROM_LOAD: loadDataRegister();
 			#ifdef DEBUG_MOTOR_DRIVER
 			case led: digitalWrite(LED, !digitalRead(LED));
 			#endif
@@ -152,22 +144,21 @@ uint8_t MotorDriver::getData(int bytes)
 			case M2_CONTROL: data_reg[M2_CONTROL] = Wire.read(); active_reg++; break;
 			case M1_POWER: data_reg[M1_POWER] = Wire.read(); active_reg++; break;
 			case M2_POWER: data_reg[M2_POWER] = Wire.read(); active_reg++; break;
-			case M1_ENCODER: wireLongToDataReg(M1_ENCODER); active_reg += 4; break;// CAHNGE ENCODERS TO WRITE TO THE ENCODER ITSELF INSTEAD OF DATA REGISTER
-			case M2_ENCODER: wireLongToDataReg(M2_ENCODER); active_reg += 4; break;
+			case M1_ENCODER: wireToDataReg(M1_ENCODER, 4); active_reg += 4; break;// CAHNGE ENCODERS TO WRITE TO THE ENCODER ITSELF INSTEAD OF DATA REGISTER
+			case M2_ENCODER: wireToDataReg(M2_ENCODER, 4); active_reg += 4; break;
 			case M1_CURRENT: updateM1Current(); Wire.read(); active_reg++; break;
 			case M2_CURRENT: updateM2Current(); Wire.read(); active_reg++; break;
-			case M1_RATE: wireLongToDataReg(M1_RATE); active_reg += 4; break;
-			case M2_RATE: wireLongToDataReg(M2_RATE); active_reg += 4; break;
-			case PID_KP: wireLongToDataReg(PID_KP); active_reg += 4; PID_kP = floatFromDataReg(PID_KP); break;
-			case PID_KI: wireLongToDataReg(PID_KI); active_reg += 4; PID_kI = floatFromDataReg(PID_KI); break;
-			case PID_KD: wireLongToDataReg(PID_KD); active_reg += 4; PID_kD = floatFromDataReg(PID_KD); break;
-			case TICKS_REV: wireLongToDataReg(TICKS_REV); active_reg += 4; break;
+			case M1_RATE: wireToDataReg(M1_RATE, 4); active_reg += 4; break;
+			case M2_RATE: wireToDataReg(M2_RATE, 4); active_reg += 4; break;
+			case PID_KP: wireToDataReg(PID_KP, 4); active_reg += 4; PID_kP = floatFromDataReg(PID_KP); break;
+			case PID_KI: wireToDataReg(PID_KI, 4); active_reg += 4; PID_kI = floatFromDataReg(PID_KI); break;
+			case PID_KD: wireToDataReg(PID_KD, 4); active_reg += 4; PID_kD = floatFromDataReg(PID_KD); break;
+			case MIN_POWER: data_reg[MIN_POWER] = Wire.read(); active_reg++; break;
+			case TICKS_REV: wireToDataReg(TICKS_REV, 4); active_reg += 4; break;
 			case LOOP_TIME: data_reg[LOOP_TIME] = Wire.read(); active_reg++; loop_frequency = 1000 / data_reg[LOOP_TIME]; break;
 			case DEVICE_ID: data_reg[DEVICE_ID] = Wire.read() & 0x7F; active_reg++; break;
-			case EEPROM_SAVE: wire3BytesToDataReg(EEPROM_SAVE); break;
-			//saveDataRegister((Wire.read() << 16) | (Wire.read() << 8) | Wire.read()); active_reg += 3; break;// Always reads as 0
-			case EEPROM_LOAD: wire3BytesToDataReg(EEPROM_LOAD); break;
-			//loadDataRegister((Wire.read() << 16) | (Wire.read() << 8) | Wire.read()); active_reg += 3; break;// Always reads as 0
+			case EEPROM_SAVE: wireToDataReg(EEPROM_SAVE, 3); saveDataRegister(); active_reg += 3; break;
+			case EEPROM_LOAD: wireToDataReg(EEPROM_LOAD, 3); loadDataRegister(); active_reg += 3; break;
 			default: if (active_reg < REGISTER_SIZE) {	data_reg[active_reg] = Wire.read();}; break;// Fills data_reg with received value if it can
 		}
 	}
@@ -222,8 +213,6 @@ int MotorDriver::update()
 		updateMotor1();
 		updateMotor2();
 		
-		digitalWrite(LED, digitalRead(ENC1A));
-		
 		count = 0;
 	}
 }
@@ -248,9 +237,8 @@ void MotorDriver::updateMotor1()
 			analogWrite(M1, M1_power);
 		}
 		*/
-		
 		// (Possibly) Temporary ramping control code instead of actual encoder based version
-		if (data_reg[M1_CONTROL] && ENCODER)// Update the encoder if it's enabled
+		if (data_reg[M1_CONTROL] & ENCODER)// Update the encoder if it's enabled
 		{
 			updateM1Encoder();
 		}
@@ -258,8 +246,18 @@ void MotorDriver::updateMotor1()
 		{
 			PID_P1 = (data_reg[M1_POWER] - M1_power) * PID_kP;
 			PID_I1 += (data_reg[M1_POWER] - M1_power) * PID_kI;
-			if (M1_power + PID_P1 + PID_I1 > 256) {	M1_power = 255;}
-			else if (M1_power + PID_P1 + PID_I1 < 0) {	M1_power = 0;}
+			if (M1_power + PID_P1 + PID_I1 > 255)
+			{
+				M1_power = 255;
+				PID_P1 = 0.0;
+				PID_I1 = 0.0;
+			}
+			else if (M1_power + PID_P1 + PID_I1 < 0)
+			{
+				M1_power = 0;
+				PID_P1 = 0.0;
+				PID_I1 = 0.0;
+			}
 			else {	M1_power += PID_P1 + PID_I1;}
 			analogWrite(M1, M1_power);
 		}
@@ -269,6 +267,14 @@ void MotorDriver::updateMotor1()
 			uint8_t dir = M1_control & DIRECTION;
 			digitalWrite(M1A, dir);
 			digitalWrite(M1B, !dir);
+		}
+		if (M1_power == 0)
+		{
+			uint8_t pin_state = data_reg[M1_CONTROL] & BRAKE;
+			M1_power = 0;
+			digitalWrite(M1A, pin_state);
+			digitalWrite(M1B, pin_state);
+			digitalWrite(M1, pin_state);
 		}
 	}
 	else
@@ -291,16 +297,17 @@ void MotorDriver::updateMotor1()
 				}
 				else {
 					M1_power = data_reg[M1_POWER];
-					analogWrite(M1, data_reg[M1_POWER]);
+					analogWrite(M1, M1_power);
 				}
 			}
 		}
 		else// Check for braking
 		{
-			uint8_t pin = data_reg[M1_CONTROL] & BRAKE;
-			digitalWrite(M1A, pin);
-			digitalWrite(M1B, pin);
-			digitalWrite(M1, pin);
+			uint8_t pin_state = data_reg[M1_CONTROL] & BRAKE;
+			M1_power = 0;
+			digitalWrite(M1A, pin_state);
+			digitalWrite(M1B, pin_state);
+			digitalWrite(M1, pin_state);
 		}
 	}
 	if ((data_reg[M1_CONTROL] & ENCODER) && (!data_reg[M1_CONTROL] & SPEED))
@@ -418,25 +425,9 @@ uint8_t MotorDriver::floatToDataReg(uint8_t reg, float value)
 }
 
 
-uint8_t MotorDriver::wire3BytesToDataReg(uint8_t reg)
+uint8_t MotorDriver::wireToDataReg(uint8_t reg, uint8_t bytes)
 {
-	for (int i = 0; i < 3; i++)
-	{
-		data_reg[reg + i] = Wire.read();
-	}
-}
-
-uint8_t MotorDriver::wireIntToDataReg(uint8_t reg)
-{
-	for (int i = 0; i < 2; i++)
-	{
-		data_reg[reg + i] = Wire.read();
-	}
-}
-
-uint8_t MotorDriver::wireLongToDataReg(uint8_t reg)
-{
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < bytes; i++)
 	{
 		data_reg[reg + i] = Wire.read();
 	}
@@ -481,31 +472,11 @@ uint32_t MotorDriver::loadLong(uint16_t address)
 	return (EEPROM.read(address) << 24) | (EEPROM.read(address + 1) << 16) | (EEPROM.read(address + 2) << 8) | EEPROM.read(address + 3);
 }
 
-/** \brief Loads a 16 bit integer value into the data register
+/** \brief loads a bytes into register from EEPROM
 **/
-uint8_t MotorDriver::loadIntRegister(uint16_t address, uint8_t reg)
+uint8_t MotorDriver::loadIntoRegister(uint16_t address, uint8_t reg, uint8_t bytes) 
 {
-	for (int i = 0; i < 2; i++)
-	{
-		data_reg[reg + i] = EEPROM.read(address + i);
-	}
-}
-
-/** \brief loads a 24 bit register value from EEPROM
-**/
-uint8_t MotorDriver::load3ByteRegister(uint16_t address, uint8_t reg) 
-{
-	for (int i = 0; i < 3; i++) 
-	{
-		data_reg[reg + i] = EEPROM.read(address + i);
-	}
-}
-
-/** \brief Loads a 32 bit value into the data register
-**/
-uint8_t MotorDriver::loadLongRegister(uint16_t address, uint8_t reg)
-{
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < bytes; i++) 
 	{
 		data_reg[reg + i] = EEPROM.read(address + i);
 	}
@@ -517,25 +488,31 @@ uint8_t MotorDriver::loadLongRegister(uint16_t address, uint8_t reg)
 **/
 uint8_t MotorDriver::loadDataRegister()
 {
-	uint32_t values = (data_reg[EEPROM_LOAD] << 16) | (data_reg[EEPROM_LOAD + 1] << 8) | data_reg[EEPROM_LOAD + 2];
-	if (values & 0x0001) {	data_reg[M1_CONTROL] = EEPROM.read(M1_CONTROL);}
-	if (values & 0x0002) {	data_reg[M2_CONTROL] = EEPROM.read(M2_CONTROL);}
-	if (values & 0x0004) {	data_reg[M1_POWER] = EEPROM.read(M1_POWER);}
-	if (values & 0x0008) {	data_reg[M2_POWER] = EEPROM.read(M2_POWER);}
-	if (values & 0x0010) {	loadLongRegister(M1_ENCODER, M1_ENCODER);}
-	if (values & 0x0020) {	loadLongRegister(M2_ENCODER, M2_ENCODER);}
-	if (values & 0x0040) {	data_reg[M1_CURRENT] = EEPROM.read(M1_CURRENT);}
-	if (values & 0x0080) {	data_reg[M2_CURRENT] = EEPROM.read(M2_CURRENT);}
-	if (values & 0x0100) {	loadLongRegister(M1_RATE, M1_RATE);}
-	if (values & 0x0200) {	loadLongRegister(M2_RATE, M2_RATE);}
-	if (values & 0x0400) {	loadLongRegister(PID_KP, PID_KP);}
-	if (values & 0x0800) {	loadLongRegister(PID_KI, PID_KI);}
-	if (values & 0x1000) {	loadLongRegister(PID_KD, PID_KD);}
-	if (values & 0x2000) {	loadLongRegister(TICKS_REV, TICKS_REV);}
-	if (values & 0x4000) {	data_reg[LOOP_TIME] = EEPROM.read(LOOP_TIME); loop_frequency = 1000 / data_reg[LOOP_TIME];}
-	if (values & 0x8000) {	data_reg[DEVICE_ID] = EEPROM.read(DEVICE_ID);}
-	if (values & 0x010000){	load3ByteRegister(EEPROM_SAVE, EEPROM_SAVE);}
-	if (values & 0x020000){	load3ByteRegister(EEPROM_LOAD, EEPROM_LOAD);}
+	uint16_t values = intFromDataReg(EEPROM_LOAD);
+	
+	if (values == 0xEFFF)// Loads the entire data register from EEPROM if EEPROM_LOAD is all 1's except for the fisrt bit
+	{
+		for (int i = 0; i < REGISTER_SIZE; i++) 
+		{
+			data_reg[i] = EEPROM.read(i);
+		} 
+	}
+	else 
+	{
+		if (values & 0x0001) {	data_reg[M1_CONTROL] = EEPROM.read(M1_CONTROL);}
+		if (values & 0x0002) {	data_reg[M2_CONTROL] = EEPROM.read(M2_CONTROL);}
+		if (values & 0x0004) {	loadIntoRegister(M1_ENCODER, M1_ENCODER, 4);}
+		if (values & 0x0008) {	loadIntoRegister(M2_ENCODER, M2_ENCODER, 4);}
+		if (values & 0x0010) {	data_reg[M1_CURRENT] = EEPROM.read(M1_CURRENT);}
+		if (values & 0x0020) {	data_reg[M2_CURRENT] = EEPROM.read(M2_CURRENT);}
+		if (values & 0x0040) {	loadIntoRegister(PID_KP, PID_KP, 4);	PID_kP = floatFromDataReg(PID_KP);}
+		if (values & 0x0080) {	loadIntoRegister(PID_KI, PID_KI, 4);	PID_kI = floatFromDataReg(PID_KI);}
+		if (values & 0x0100) {	loadIntoRegister(PID_KD, PID_KD, 4);	PID_kD = floatFromDataReg(PID_KD);}
+		if (values & 0x0200) {  data_reg[MIN_POWER] = EEPROM.read(MIN_POWER);}
+		if (values & 0x0400) {	loadIntoRegister(TICKS_REV, TICKS_REV, 4);	ticks_rev = longFromDataReg(TICKS_REV);}
+		if (values & 0x0800) {	data_reg[LOOP_TIME] = EEPROM.read(LOOP_TIME); loop_frequency = 1000 / data_reg[LOOP_TIME];}
+		if (values & 0x1000) {	data_reg[DEVICE_ID] = EEPROM.read(DEVICE_ID);}
+	}
 }
 
 
@@ -557,31 +534,11 @@ uint8_t MotorDriver::saveLong(uint16_t address, uint32_t value)
 	EEPROM.write(address, value & 0xFF);
 }
 
-/** \brief saves a 16 bit register value into EEPROM
+/** \brief saves bytes from a register into EEPROM
 **/
-uint8_t MotorDriver::saveIntRegister(uint16_t address, uint8_t reg)
+uint8_t MotorDriver::saveFromRegister(uint16_t address, uint8_t reg, uint8_t bytes)
 {
-	for (int i = 0; i < 2; i++)
-	{
-		EEPROM.write(address + i, data_reg[reg + i]);
-	}
-}
-
-/** \brief saves a 24 bit register value into EEPROM
-**/
-uint8_t MotorDriver::save3ByteRegister(uint16_t address, uint8_t reg) 
-{
-	for (int i = 0; i < 3; i++) 
-	{
-		EEPROM.write(address + i, data_reg[reg + i]);
-	}
-}
-
-/** \brief saves a 32 bit register value into EEPROM
-**/
-uint8_t MotorDriver::saveLongRegister(uint16_t address, uint8_t reg)
-{
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < bytes; i++)
 	{
 		EEPROM.write(address + i, data_reg[reg + i]);
 	}
@@ -593,25 +550,32 @@ uint8_t MotorDriver::saveLongRegister(uint16_t address, uint8_t reg)
 **/
 uint8_t MotorDriver::saveDataRegister()
 {
-	uint32_t values = (data_reg[EEPROM_SAVE] << 16) | (data_reg[EEPROM_SAVE + 1] << 8) | data_reg[EEPROM_SAVE + 2]; 
-	if (values & 0x01) {	EEPROM.write(M1_CONTROL, data_reg[M1_CONTROL]);}
-	if (values & 0x02) {	EEPROM.write(M2_CONTROL, data_reg[M2_CONTROL]);}
-	if (values & 0x04) {	EEPROM.write(M1_POWER, data_reg[M1_POWER]);}
-	if (values & 0x08) {	EEPROM.write(M2_POWER, data_reg[M2_POWER]);}
-	if (values & 0x10) {	saveLongRegister(M1_ENCODER, M1_ENCODER);}
-	if (values & 0x20) {	saveLongRegister(M2_ENCODER, M2_ENCODER);}
-	if (values & 0x40) {	EEPROM.write(M1_CURRENT, data_reg[M1_CURRENT]);}
-	if (values & 0x80) {	EEPROM.write(M2_CURRENT, data_reg[M2_CURRENT]);}
-	if (values & 0x0100) {	saveLongRegister(M1_RATE, M1_RATE);}
-	if (values & 0x0200) {	saveLongRegister(M2_RATE, M2_RATE);}
-	if (values & 0x0400) {	saveLongRegister(PID_KP, PID_KP);}
-	if (values & 0x0800) {	saveLongRegister(PID_KI, PID_KI);}
-	if (values & 0x1000) {	saveLongRegister(PID_KD, PID_KD);}
-	if (values & 0x2000) {	saveLongRegister(TICKS_REV, TICKS_REV);}
-	if (values & 0x4000) {	EEPROM.write(LOOP_TIME, data_reg[LOOP_TIME]);}
-	if (values & 0x8000) {	EEPROM.write(DEVICE_ID, data_reg[DEVICE_ID]);}
-	if (values & 0x010000) {save3ByteRegister(EEPROM_SAVE, EEPROM_SAVE);}
-	if (values & 0x020000) {save3ByteRegister(EEPROM_LOAD, EEPROM_LOAD);}
+	uint16_t values = intFromDataReg(EEPROM_SAVE);
+	
+	if (values == 0xEFFF)// Saves the entire data register to EEPROM if EEPROM_SAVE is all 1's except for the fisrt bit
+	{
+		for (int i = 0; i < REGISTER_SIZE; i++) 
+		{
+			EEPROM.write(i, data_reg[i]);
+		}  
+	}
+	else
+	{
+		if (values & 0x01) {	EEPROM.write(M1_CONTROL, data_reg[M1_CONTROL]);}
+		if (values & 0x02) {	EEPROM.write(M2_CONTROL, data_reg[M2_CONTROL]);}
+		if (values & 0x04) {	saveFromRegister(M1_ENCODER, M1_ENCODER, 4);}
+		if (values & 0x08) {	saveFromRegister(M2_ENCODER, M2_ENCODER, 4);}
+		if (values & 0x10) {	EEPROM.write(M1_CURRENT, data_reg[M1_CURRENT]);}
+		if (values & 0x20) {	EEPROM.write(M2_CURRENT, data_reg[M2_CURRENT]);}
+		if (values & 0x40) {	saveFromRegister(PID_KP, PID_KP, 4);}
+		if (values & 0x80) {	saveFromRegister(PID_KI, PID_KI, 4);}
+		if (values & 0x0100) {	saveFromRegister(PID_KD, PID_KD, 4);}
+		if (values & 0x0200) {  EEPROM.write(MIN_POWER, MIN_POWER);}
+		if (values & 0x0400) {	saveFromRegister(TICKS_REV, TICKS_REV, 4);}
+		if (values & 0x0800) {	EEPROM.write(LOOP_TIME, data_reg[LOOP_TIME]);}
+		if (values & 0x1000) {	EEPROM.write(DEVICE_ID, data_reg[DEVICE_ID]);}
+		saveFromRegister(EEPROM_SAVE, EEPROM_SAVE, 2);
+	}
 }
 
 

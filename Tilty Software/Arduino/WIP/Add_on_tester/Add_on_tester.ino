@@ -8,7 +8,7 @@ void setup() {
 	
 	delay(20);
 	
-	Wire.begin(I2C_MASTER, 0, I2C_PINS_16_17, I2C_PULLUP_EXT, I2C_RATE_400);
+	Wire.begin(I2C_MASTER, 0, I2C_PINS_16_17, I2C_PULLUP_EXT, I2C_RATE_100);
 	
 	delay(10);
 }

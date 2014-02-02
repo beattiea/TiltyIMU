@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // ========== I2C Settings ==========
-#define REGISTER_SIZE 46
+#define REGISTER_SIZE 45
 #define BUFFER_SIZE 32
 #define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
 // ========== I2C Settings ==========
@@ -109,6 +109,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEFAULT_PID_KP			0.33
 #define DEFAULT_PID_KI			0.05
 #define DEFAULT_PID_KD			0.0
+#define DEFAULT_MIN_POWER		75
 #define DEFAULT_TICKS_REV		1336
 #define DEFAULT_LOOP_TIME		5
 #define DEFAULT_DEVICE_ID		0x03
@@ -190,11 +191,12 @@ class MotorDriver {
 		static const uint8_t PID_KP = 0x16;			// PID P scalar					Float			22-25
 		static const uint8_t PID_KI = 0x1A;			// PID I scalar					Float			26-29
 		static const uint8_t PID_KD = 0x1E;			// PID D scalar					Float			30-33
-		static const uint8_t TICKS_REV = 0x22;		// Encoder ticks revolution		Long			34-37
-		static const uint8_t LOOP_TIME = 0x26;		// Ms between motor updates		Byte			38
-		static const uint8_t DEVICE_ID = 0x27;		// I2C device address			7-bit byte		39
-		static const uint8_t EEPROM_SAVE = 0x28;	// Save register to EEPROM		3-Bytes			40-42
-		static const uint8_t EEPROM_LOAD = 0x2B;	// Load register from EEPROM	3-Bytes			43-45
+		static const uint8_t MIN_POWER = 0x22;		// Minimum PWM to turn motor	Byte			34
+		static const uint8_t TICKS_REV = 0x23;		// Encoder ticks revolution		Long			35-38
+		static const uint8_t LOOP_TIME = 0x27;		// Ms between motor updates		Byte			39
+		static const uint8_t DEVICE_ID = 0x28;		// I2C device address			7-bit byte		40
+		static const uint8_t EEPROM_SAVE = 0x29;	// Save register to EEPROM		Integer			41-42
+		static const uint8_t EEPROM_LOAD = 0x2C;	// Load register from EEPROM	Integer			43-44
 	
 
 	#ifdef DEBUG_MOTOR_DRIVER
@@ -207,6 +209,7 @@ class MotorDriver {
 		uint8_t longToDataReg(uint8_t reg, uint32_t value);
 		uint8_t floatToDataReg(uint8_t reg, float value);
 		
+		uint8_t wireToDataReg(uint8_t reg, uint8_t bytes);
 		uint8_t wireIntToDataReg(uint8_t reg);
 		uint8_t wire3BytesToDataReg(uint8_t reg);
 		uint8_t wireLongToDataReg(uint8_t reg);
@@ -218,16 +221,12 @@ class MotorDriver {
 		// EEPROM functions
 		uint16_t loadInt(uint16_t address);
 		uint32_t loadLong(uint16_t address);
-		uint8_t  loadIntRegister(uint16_t address, uint8_t reg);
-		uint8_t  load3ByteRegister(uint16_t address, uint8_t reg);
-		uint8_t  loadLongRegister(uint16_t address, uint8_t reg);
+		uint8_t	 loadIntoRegister(uint16_t address, uint8_t reg, uint8_t bytes);
 		uint8_t  loadDataRegister();
 		
 		uint8_t saveInt(uint16_t address, uint32_t value);
 		uint8_t saveLong(uint16_t address, uint32_t value);
-		uint8_t saveIntRegister(uint16_t address, uint8_t reg);
-		uint8_t save3ByteRegister(uint16_t address, uint8_t reg);
-		uint8_t saveLongRegister(uint16_t address, uint8_t reg);
+		uint8_t saveFromRegister(uint16_t address, uint8_t reg, uint8_t bytes);
 		uint8_t saveDataRegister();
 		
 		// Data union for transferring different 4 byte types to/from data register
