@@ -274,7 +274,7 @@ void MotorDriver::updateMotor1()
 			M1_power = 0;
 			digitalWrite(M1A, pin_state);
 			digitalWrite(M1B, pin_state);
-			digitalWrite(M1, pin_state);
+			digitalWrite(M1, LOW);
 		}
 	}
 	else
@@ -288,26 +288,25 @@ void MotorDriver::updateMotor1()
 				digitalWrite(M1A, dir);
 				digitalWrite(M1B, !dir);
 			}
-			if (M1_power != data_reg[M1_POWER])// Check for a new speed
+			//if (M1_power != data_reg[M1_POWER])// Check for a new speed
+			if (data_reg[M1_POWER])
 			{
 				if (M1_power == 0) {
-					uint8_t dir = M1_control & DIRECTION;
-					digitalWrite(M1A, dir);
-					digitalWrite(M1B, !dir);
+					uint8_t pin_state = data_reg[M1_CONTROL] & BRAKE;
+					M1_power = 0;
+					digitalWrite(M1A, pin_state);
+					digitalWrite(M1B, pin_state);
+					digitalWrite(M1, LOW);
 				}
 				else {
-					M1_power = data_reg[M1_POWER];
+					M1_power = data_reg[M1_POWER];// + data_reg[MIN_POWER];
+					//analogWrite(M1, M1_power);
+					uint8_t dir = data_reg[M1_CONTROL] & DIRECTION;
+					digitalWrite(M1A, dir);
+					digitalWrite(M1B, !dir);
 					analogWrite(M1, M1_power);
 				}
 			}
-		}
-		else// Check for braking
-		{
-			uint8_t pin_state = data_reg[M1_CONTROL] & BRAKE;
-			M1_power = 0;
-			digitalWrite(M1A, pin_state);
-			digitalWrite(M1B, pin_state);
-			digitalWrite(M1, pin_state);
 		}
 	}
 	if ((data_reg[M1_CONTROL] & ENCODER) && (!data_reg[M1_CONTROL] & SPEED))
