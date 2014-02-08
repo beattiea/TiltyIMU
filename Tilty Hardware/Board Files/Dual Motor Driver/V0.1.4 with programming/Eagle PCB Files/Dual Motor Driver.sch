@@ -6380,7 +6380,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="-1.27" y1="-0.635" x2="-0.635" y2="-1.27" width="0.2032" layer="21"/>
 <wire x1="0.635" y1="-1.27" x2="-0.635" y2="-1.27" width="0.2032" layer="21"/>
 <wire x1="8.89" y1="0.635" x2="8.89" y2="-0.635" width="0.2032" layer="21"/>
-<pad name="1" x="0" y="0" drill="1.016" diameter="1.8796" shape="square" rot="R90"/>
+<pad name="1" x="0" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
 <pad name="2" x="2.54" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
 <pad name="3" x="5.08" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
 <pad name="4" x="7.62" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
@@ -9208,14 +9208,14 @@ QFN is non-stock</description>
 <wire x1="-10.16" y1="1.27" x2="10.16" y2="1.27" width="0.254" layer="23"/>
 <wire x1="10.16" y1="1.27" x2="10.16" y2="-1.27" width="0.254" layer="23"/>
 <wire x1="10.16" y1="-1.27" x2="-10.16" y2="-1.27" width="0.254" layer="23"/>
-<pad name="P$1" x="-8.89" y="-0.127" drill="0.889"/>
-<pad name="P$2" x="-6.35" y="0.127" drill="0.889"/>
-<pad name="P$3" x="-3.81" y="-0.127" drill="0.889"/>
-<pad name="P$4" x="-1.27" y="0.127" drill="0.889"/>
-<pad name="P$5" x="1.27" y="-0.127" drill="0.889"/>
-<pad name="P$6" x="3.81" y="0" drill="0.889"/>
-<pad name="P$7" x="6.35" y="-0.127" drill="0.889"/>
-<pad name="P$8" x="8.89" y="0" drill="0.889"/>
+<pad name="P$1" x="-8.89" y="-0.127" drill="0.8"/>
+<pad name="P$2" x="-6.35" y="0.127" drill="0.8"/>
+<pad name="P$3" x="-3.81" y="-0.127" drill="0.8"/>
+<pad name="P$4" x="-1.27" y="0.127" drill="0.8"/>
+<pad name="P$5" x="1.27" y="-0.127" drill="0.8"/>
+<pad name="P$6" x="3.81" y="0.127" drill="0.8"/>
+<pad name="P$7" x="6.35" y="-0.127" drill="0.8"/>
+<pad name="P$8" x="8.89" y="0.127" drill="0.8"/>
 </package>
 </packages>
 <symbols>
@@ -9836,6 +9836,9 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 <sheets>
 <sheet>
 <plain>
+<text x="187.96" y="0" size="1.778" layer="91">Headers can connect Tilty pin 0
+to Reset and programming pins
+are connected to SPI pins</text>
 </plain>
 <instances>
 <instance part="U2" gate="G$1" x="53.34" y="111.76"/>
@@ -10744,4 +10747,10 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 </sheets>
 </schematic>
 </drawing>
+<compatibility>
+<note version="6.3" minversion="6.2.2" severity="warning">
+Since Version 6.2.2 text objects can contain more than one line,
+which will not be processed correctly with this version.
+</note>
+</compatibility>
 </eagle>
