@@ -9709,9 +9709,7 @@ Sparkfun button</text>
 <instance part="C6" gate="G$1" x="233.68" y="68.58"/>
 <instance part="C7" gate="G$1" x="198.12" y="68.58"/>
 <instance part="GND11" gate="1" x="60.96" y="127" rot="R180"/>
-<instance part="SJ1" gate="1" x="256.54" y="83.82" smashed="yes">
-<attribute name="NAME" x="254" y="86.36" size="1.778" layer="95"/>
-</instance>
+<instance part="SJ1" gate="1" x="256.54" y="83.82" smashed="yes"/>
 <instance part="Q1" gate="G$1" x="45.72" y="38.1" rot="R90">
 <attribute name="PART#" x="45.72" y="38.1" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
@@ -10179,6 +10177,11 @@ Sparkfun button</text>
 <wire x1="101.6" y1="7.62" x2="111.76" y2="7.62" width="0.1524" layer="91"/>
 <label x="106.68" y="7.62" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="JP3" gate="G$1" pin="4"/>
+<wire x1="246.38" y1="50.8" x2="259.08" y2="50.8" width="0.1524" layer="91"/>
+<label x="254" y="50.8" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="MOSI" class="0">
 <segment>
@@ -10190,6 +10193,11 @@ Sparkfun button</text>
 <wire x1="101.6" y1="12.7" x2="111.76" y2="12.7" width="0.1524" layer="91"/>
 <label x="106.68" y="12.7" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="JP2" gate="G$1" pin="4"/>
+<wire x1="246.38" y1="78.74" x2="264.16" y2="78.74" width="0.1524" layer="91"/>
+<label x="259.08" y="78.74" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="MISO" class="0">
 <segment>
@@ -10200,6 +10208,11 @@ Sparkfun button</text>
 <pinref part="U1" gate="G$1" pin="PB4(MISO)"/>
 <wire x1="101.6" y1="10.16" x2="111.76" y2="10.16" width="0.1524" layer="91"/>
 <label x="106.68" y="10.16" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP2" gate="G$1" pin="3"/>
+<wire x1="246.38" y1="81.28" x2="264.16" y2="81.28" width="0.1524" layer="91"/>
+<label x="259.08" y="81.28" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -10468,6 +10481,13 @@ Sparkfun button</text>
 <pinref part="SJ2" gate="1" pin="1"/>
 <wire x1="182.88" y1="96.52" x2="177.8" y2="96.52" width="0.1524" layer="91"/>
 <label x="177.8" y="96.52" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="RST" class="0">
+<segment>
+<pinref part="JP2" gate="G$1" pin="5"/>
+<wire x1="246.38" y1="76.2" x2="264.16" y2="76.2" width="0.1524" layer="91"/>
+<label x="259.08" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
