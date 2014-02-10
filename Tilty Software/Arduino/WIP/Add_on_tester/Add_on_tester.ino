@@ -1,6 +1,6 @@
 #include <i2c_t3.h>
 
-#define BUFFER_SIZE 10
+#define BUFFER_SIZE 32
 
 void setup() {
 	Serial.begin(115200);
