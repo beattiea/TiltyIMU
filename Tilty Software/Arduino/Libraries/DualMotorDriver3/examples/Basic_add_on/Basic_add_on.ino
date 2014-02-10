@@ -53,3 +53,14 @@ void receiveEvent(int bytes) {
 void requestEvent() {
 	motors.sendData();
 }
+
+ISR(TIMER2_COMPA_vect)
+{
+	// Motor 1 updates will go here
+	motors.updateMotor(&motors.motor1);
+}
+
+ISR(TIMER2_COMPB_vect)
+{
+	// Motor 2 updates will go here
+}

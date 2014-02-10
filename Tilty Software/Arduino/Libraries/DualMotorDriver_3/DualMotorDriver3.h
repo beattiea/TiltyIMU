@@ -120,7 +120,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // ========== Default Register Values ==========
-#define DEFAULT_M1_CONTROL		DIRECTION | ENCODER | RAMPING
+#define DEFAULT_M1_CONTROL		DIRECTION | ENCODER | RAMPING | BRAKE
 #define DEFAULT_M2_CONTROL		ENCODER | RAMPING
 #define DEFAULT_M1_POWER		0
 #define DEFAULT_M2_POWER		0
@@ -207,17 +207,21 @@ class MotorDriver {
 		Motor motor1;
 		Motor motor2;
 		
+		void updateMotor(Motor *motor);
+		
 	private:
 #ifdef DEBUG_MOTOR_DRIVER
 		void ledOn();
 		void ledOff();
 		void ledToggle();
 #endif
-		
-		inline void updateMotor(Motor *motor);
+		inline void updateMotorControl(Motor *motor);
+		//inline void updateMotorRPM(Motor *motor);
+		inline void updateMotorPower(Motor *motor);
 		
 		inline void motorPWM(Motor *motor);
 		inline void setMotorDirection(Motor *motor);
+		inline void setMotorBraking(Motor *motor);
 		
 		void encoderToVar(int32_t *var, Encoder *enc);
 		

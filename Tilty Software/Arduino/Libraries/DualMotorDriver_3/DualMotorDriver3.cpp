@@ -31,7 +31,7 @@ MotorDriver::MotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 	pinMode(M1A, OUTPUT);	digitalWrite(M1A, LOW);
 	pinMode(M1B, OUTPUT);	digitalWrite(M1B, HIGH);
 	pinMode(M2A, OUTPUT);	digitalWrite(M2A, LOW);
-	pinMode(M2B, OUTPUT);	digitalWrite(M2B, HIGH);
+	pinMode(M2B, OUTPUT);	digitalWrite(M2B, LOW);
 	
 	pinMode(LED, OUTPUT);	digitalWrite(LED, LOW);
 	
@@ -88,8 +88,9 @@ MotorDriver::MotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 	motor1.high_pin = M1A;
 	motor1.low_pin = M1B;
 	
-	*motor1.cur_pwr = 127;
-	motorPWM(&motor1);
+	ramping_rate = 1;
+	
+	M1_control = DEFAULT_M1_CONTROL;
 }
 
 MotorDriver::~MotorDriver() 
@@ -161,31 +162,45 @@ void MotorDriver::sendData()
 // Updates everything based on updated_vars
 void MotorDriver::updateVars()
 {
+	if (updated_vars & (1 << M1_CONTROL))	updateMotorControl(&motor1);
 	if (updated_vars & (1 << M1_POWER)) 
 	{
 		M1_power ? M1_scaled_power = map(M1_power, 0, 255, min_power, 255) : M1_scaled_power = 0;
-		updateMotor(&motor1);
+		//if (M1_control & RPM) updateMotorRPM(&motor1);
+		updateMotorPower(&motor1);
 	}
-	if (updated_vars & (1 << M1_CONTROL))	updateMotor(&motor1);
 }
 
 
-// Updates a motor based on its control data and power/speed
-inline void MotorDriver::updateMotor(Motor *motor)
+void MotorDriver::updateMotor(Motor *motor)
 {
-	if (*motor->control & (RPM | RAMPING))
+	//if (*motor->control & RPM) updateMotorRPM(motor);
+	setMotorDirection(motor);
+	if (*motor->control & RAMPING) updateMotorPower(motor);
+}
+
+
+inline void MotorDriver::updateMotorControl(Motor *motor)
+{
+	setMotorDirection(motor);
+}
+
+/*
+inline void MotorDriver::updateMotorRPM(Motor *motor)
+{
+	*motor->enc_val = motor->encoder->read();
+}
+*/
+
+
+inline void MotorDriver::updateMotorPower(Motor *motor)
+{
+	if (*motor->control & RAMPING)
 	{
-		if (*motor->control & RPM)
-		{
-			// RPM control code goes here!!!!!!!!!!!
-		}
-		else
-		{
-			if (*motor->cur_pwr < *motor->scaled_pwr) *motor->cur_pwr += ramping_rate;
-			else if (*motor->cur_pwr > *motor->scaled_pwr) *motor->cur_pwr -= ramping_rate;
-		}
+		if (*motor->cur_pwr < *motor->scaled_pwr) *motor->cur_pwr += ramping_rate;
+		else if (*motor->cur_pwr > *motor->scaled_pwr) *motor->cur_pwr -= ramping_rate;
+		motorPWM(motor);
 	}
-	
 	else
 	{
 		*motor->cur_pwr = *motor->scaled_pwr;
@@ -193,14 +208,48 @@ inline void MotorDriver::updateMotor(Motor *motor)
 	}
 }
 
+
 // More efficient analogWrite for motor control pins
 inline void MotorDriver::motorPWM(Motor *motor)
 {
 	switch (*motor->cur_pwr)
 	{
-		case 0: 	TCCR0A &= ~motor->COM0x; cbi(PORTD, motor->speed_pin);		break;
+		case 0: 	TCCR0A &= ~motor->COM0x; setMotorBraking(motor);			break;
 		case 255:	TCCR0A &= ~motor->COM0x; sbi(PORTD, motor->speed_pin);		break;
-		default: 	TCCR0A |= motor->COM0x;  *motor->OCR0x = *motor->cur_pwr;	 break;
+		default: 	TCCR0A |= motor->COM0x;  *motor->OCR0x = *motor->cur_pwr;	break;
+	}
+}
+
+// More efficent digitalWrite for just the motor direction/braking pins
+inline void MotorDriver::setMotorDirection(Motor *motor)
+{
+	if (~(*motor->control & BRAKE) && *motor->cur_pwr != 0)
+	{
+		if (*motor->control & DIRECTION)
+		{
+			PORTD |= 1 << motor->high_pin;
+			PORTB &= ~(motor->low_pin >> 3);
+		}
+		else
+		{
+			PORTD &= ~(1 << motor->high_pin);
+			PORTB |= motor->low_pin >> 3;
+		}
+	}
+}
+
+// More efficent digitalWrite for just the motor direction/braking pins
+inline void MotorDriver::setMotorBraking(Motor *motor)
+{
+	if (*motor->control & BRAKE)
+	{
+		PORTD |= (1 << motor->high_pin) | (1 << motor->speed_pin);
+		//PORTB |= motor->low_pin >> 3;
+		digitalWrite(motor->low_pin, HIGH);
+	}
+	else
+	{
+		cbi(PORTD, motor->speed_pin);
 	}
 }
 
@@ -246,14 +295,4 @@ ISR(TIMER2_OVF_vect)
 	
 	TCNT2 = 130;
 	TIFR2 = 0x00;
-}
-
-ISR(TIMER2_COMPA_vect)
-{
-	// Motor 1 updates will go here
-}
-
-ISR(TIMER2_COMPB_vect)
-{
-	// Motor 2 updates will go here
 }
