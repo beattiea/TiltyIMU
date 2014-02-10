@@ -56,6 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#define m1_power 103
 	#define m1_encoder 104
 	#define m1_rate 105
+	#define m1_target_rate 106
 	#define m1_p 
 	#define m1_i 
 	#define m1_d 
@@ -123,7 +124,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // ========== Default Register Values ==========
-#define DEFAULT_M1_CONTROL		ENCODER | RAMPING | BRAKE | RPM
+#define DEFAULT_M1_CONTROL		ENCODER | RAMPING | BRAKE
 #define DEFAULT_M2_CONTROL		DIRECTION | ENCODER | RAMPING
 #define DEFAULT_M1_POWER		0
 #define DEFAULT_M2_POWER		0
@@ -133,10 +134,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEFAULT_M2_CURRENT		0
 #define DEFAULT_M1_RATE			0
 #define DEFAULT_M2_RATE			0
-#define DEFAULT_PID_KP			0.33
-#define DEFAULT_PID_KI			0.05
-#define DEFAULT_PID_KD			0.0
-#define DEFAULT_MIN_POWER		60
+#define DEFAULT_PID_KP			0.5
+#define DEFAULT_PID_KI			0.033
+#define DEFAULT_PID_KD			0.1
+#define DEFAULT_MIN_POWER		55
 #define DEFAULT_TICKS_REV		1336
 #define DEFAULT_LOOP_TIME		5
 #define DEFAULT_DMD_ADDRESS		0x03
@@ -180,6 +181,8 @@ class MotorDriver {
 		uint8_t M2_current_power;// Current power assigned by software, not user editable
 		uint8_t M1_scaled_power;// Scaled motor power for minimum PWM control, assigned by software and not user editable
 		uint8_t M2_scaled_power;// Scaled motor power for minimum PWM control, assigned by software and not user editable
+		int16_t M1_target_rate;
+		
 		
 		float PID_P1, PID_P2;
 		float PID_I1, PID_I2;
@@ -191,11 +194,11 @@ class MotorDriver {
 			uint8_t *control;	// Motor control byte
 			uint8_t *power;		// Assigned motor power
 			int32_t *enc_val;	// Current motor encoder value
-			float 	*rate;		// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
+			float 	*cur_rate;		// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
 			uint8_t *cur_pwr;	// Motor's current ramping power
 			uint8_t *scaled_pwr;// Scaled motor power for minimum PWM control
 			
-			short assigned_rate;
+			int16_t *targ_rate;
 			
 			float *PID_P;
 			float *PID_I;

@@ -74,15 +74,19 @@ MotorDriver::MotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 #endif
 	
 	min_power = DEFAULT_MIN_POWER;
+	PID_kP = DEFAULT_PID_KP;
+	PID_kI = DEFAULT_PID_KI;
+	PID_kD = DEFAULT_PID_KD;
 	
 	// Setup motor structs
 	//Motor motor2 = {&M2_control, &M2_power, &M2_encoder, &M2_rate, &M2_current_power, &M2_scaled_power, &m2Encoder, (uint8_t*)&OCR0B, 0x80, M2, M2A, M2B};
 	motor1.control = &M1_control;
 	motor1.power = &M1_power;
 	motor1.enc_val = &M1_encoder;
-	motor1.rate = &M1_rate;
+	motor1.cur_rate = &M1_rate;
 	motor1.cur_pwr = &M1_current_power;
 	motor1.scaled_pwr = &M1_scaled_power;
+	motor1.targ_rate = &M1_target_rate;
 	motor1.PID_P = &PID_P1;
 	motor1.PID_I = &PID_I1;
 	motor1.PID_D = &PID_D1;
@@ -124,7 +128,7 @@ uint8_t MotorDriver::getData(int bytes)
 				case M1_RATE: 		wireToVar(&M1_rate);	 updated_vars |= 1 << active_var;	break;	
 				case DEVICE_ID: 	TWAR = Wire.read() << 1; updated_vars |= 1 << active_var;	break;
 #ifdef DEBUG_MOTOR_DRIVER
-				case 50: motor1.assigned_rate = Wire.read(); break;
+				case 50: wireToVar((uint16_t*)&M1_target_rate); break;
 #endif
 			}
 			if (Wire.available()) active_var++;
@@ -156,7 +160,8 @@ void MotorDriver::sendData()
 			case m1_current_power: Wire.write(motor1.cur_pwr, 1); break;
 			case m1_power: Wire.write(motor1.power, 1); break;
 			case m1_encoder: Wire.write((uint8_t*)motor1.enc_val, 4); break;
-			case m1_rate: Wire.write((uint8_t*)motor1.rate, 4); break;
+			case m1_rate: Wire.write((uint8_t*)motor1.cur_rate, 4); break;
+			case m1_target_rate: Wire.write((uint8_t*)motor1.targ_rate, 4); break;
 			case led: ledToggle(); break;
 		}
 	}
@@ -202,7 +207,17 @@ inline void MotorDriver::updateMotorControl(Motor *motor)
 
 inline void MotorDriver::updateMotorRPM(Motor *motor)
 {
+	float old_rate = *motor->cur_rate;
 	updateEncoder(motor);
+	
+	*motor->enc_val = motor->encoder->read();
+	
+	*motor->PID_P = PID_kP * *motor->targ_rate;
+	*motor->PID_I += PID_kI * (*motor->targ_rate - *motor->cur_rate);
+	*motor->PID_D = PID_kD * (old_rate - *motor->cur_rate);
+	
+	*motor->cur_pwr = (uint8_t)(*motor->PID_P + *motor->PID_I + *motor->PID_D);
+	setMotorPWM(motor);
 }
 
 
@@ -223,32 +238,9 @@ inline void MotorDriver::updateMotorPower(Motor *motor)
 
 
 inline void MotorDriver::updateEncoder(Motor *motor)
-{
-	float old_rate = *motor->rate;
-	
-	*motor->rate = ((float)(motor->encoder->read() - *motor->enc_val) / TICKS_PER_ROT) * REFRESH_FREQ *682; //		Arbitrary hack job to get reasonably realistic rotation speeds. DO NOT LET THIS BE USED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	
+{	
+	*motor->cur_rate = ((float)(motor->encoder->read() - *motor->enc_val) / TICKS_PER_ROT) * REFRESH_FREQ *682; //		Arbitrary hack job to get reasonably realistic rotation speeds. DO NOT LET THIS BE USED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	*motor->enc_val = motor->encoder->read();
-	
-	*motor->PID_P = 0.5 * motor->assigned_rate;
-	*motor->PID_I += 0.025 * (motor->assigned_rate - *motor->rate);
-	*motor->PID_D = 0.1 * (old_rate - *motor->rate);
-	
-	*motor->cur_pwr = (uint8_t)(*motor->PID_P + *motor->PID_I + *motor->PID_D);
-	setMotorPWM(motor);
-	/*
-	if (abs(*motor->rate) < 120)
-	{
-		
-		*motor->cur_pwr += (120 - *motor->rate) * 0.025;
-		setMotorPWM(motor);
-	}
-	else if (abs(*motor->rate) > 120)
-	{
-		*motor->cur_pwr -= (*motor->rate - 120) * 0.025;
-		setMotorPWM(motor);
-	}
-	*/
 }
 
 
