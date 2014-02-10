@@ -35,10 +35,12 @@ MotorDriver::MotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 	
 	pinMode(LED, OUTPUT);	digitalWrite(LED, LOW);
 	
-	pinMode(ENC1A, INPUT);
-	pinMode(ENC1B, INPUT);
+	
+	pinMode(ENC1A, INPUT);	digitalWrite(ENC1A, HIGH);
+	pinMode(ENC1B, INPUT);	digitalWrite(ENC2A, HIGH);
 	pinMode(ENC2A, INPUT);
 	pinMode(ENC2B, INPUT);
+	
 	
 	// Set up Timer2 to automatically update currents and encoders
 	// Timer is set up to interrupt every 2.5ms to update motors and encoders when necessary
@@ -81,6 +83,9 @@ MotorDriver::MotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 	motor1.rate = &M1_rate;
 	motor1.cur_pwr = &M1_current_power;
 	motor1.scaled_pwr = &M1_scaled_power;
+	motor1.PID_P = &PID_P1;
+	motor1.PID_I = &PID_I1;
+	motor1.PID_D = &PID_D1;
 	motor1.encoder = &m1Encoder;
 	motor1.OCR0x = (uint8_t*)&OCR0B;
 	motor1.COM0x = 0x20;
@@ -88,7 +93,7 @@ MotorDriver::MotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 	motor1.high_pin = M1A;
 	motor1.low_pin = M1B;
 	
-	ramping_rate = 1;
+	ramping_rate = 5;
 	
 	M1_control = DEFAULT_M1_CONTROL;
 }
@@ -116,7 +121,11 @@ uint8_t MotorDriver::getData(int bytes)
 				case M1_POWER: 		wireToVar(&M1_power); 	 updated_vars |= 1 << active_var;	break;
 				case M2_POWER: 		wireToVar(&M2_power);	 updated_vars |= 1 << active_var;	break;
 				case M1_ENCODER: 	wireToVar(&M1_encoder);	 updated_vars |= 1 << active_var;	break;
+				case M1_RATE: 		wireToVar(&M1_rate);	 updated_vars |= 1 << active_var;	break;	
 				case DEVICE_ID: 	TWAR = Wire.read() << 1; updated_vars |= 1 << active_var;	break;
+#ifdef DEBUG_MOTOR_DRIVER
+				case 50: motor1.assigned_rate = Wire.read(); break;
+#endif
 			}
 			if (Wire.available()) active_var++;
 		}
@@ -129,6 +138,7 @@ uint8_t MotorDriver::getData(int bytes)
 		case M1_POWER: 		active_var_ptr = &M1_power;		break;
 		case M2_POWER: 		active_var_ptr = &M2_power;		break;
 		case M1_ENCODER: 	active_var_ptr = &M1_encoder;	break;
+		case M1_RATE: 		active_var_ptr = &M1_rate;		break;
 	}
 	updateVars();
 }
@@ -145,6 +155,8 @@ void MotorDriver::sendData()
 			case m1_scaled_power: Wire.write(motor1.scaled_pwr, 1); break;
 			case m1_current_power: Wire.write(motor1.cur_pwr, 1); break;
 			case m1_power: Wire.write(motor1.power, 1); break;
+			case m1_encoder: Wire.write((uint8_t*)motor1.enc_val, 4); break;
+			case m1_rate: Wire.write((uint8_t*)motor1.rate, 4); break;
 			case led: ledToggle(); break;
 		}
 	}
@@ -169,12 +181,14 @@ void MotorDriver::updateVars()
 		//if (M1_control & RPM) updateMotorRPM(&motor1);
 		updateMotorPower(&motor1);
 	}
+	
+	updated_vars = 0;
 }
 
 
 void MotorDriver::updateMotor(Motor *motor)
 {
-	//if (*motor->control & RPM) updateMotorRPM(motor);
+	if (*motor->control & RPM) updateMotorRPM(motor);
 	setMotorDirection(motor);
 	if (*motor->control & RAMPING) updateMotorPower(motor);
 }
@@ -185,12 +199,11 @@ inline void MotorDriver::updateMotorControl(Motor *motor)
 	setMotorDirection(motor);
 }
 
-/*
+
 inline void MotorDriver::updateMotorRPM(Motor *motor)
 {
-	*motor->enc_val = motor->encoder->read();
+	updateEncoder(motor);
 }
-*/
 
 
 inline void MotorDriver::updateMotorPower(Motor *motor)
@@ -199,18 +212,48 @@ inline void MotorDriver::updateMotorPower(Motor *motor)
 	{
 		if (*motor->cur_pwr < *motor->scaled_pwr) *motor->cur_pwr += ramping_rate;
 		else if (*motor->cur_pwr > *motor->scaled_pwr) *motor->cur_pwr -= ramping_rate;
-		motorPWM(motor);
+		setMotorPWM(motor);
 	}
 	else
 	{
 		*motor->cur_pwr = *motor->scaled_pwr;
-		motorPWM(motor);
+		setMotorPWM(motor);
 	}
 }
 
 
+inline void MotorDriver::updateEncoder(Motor *motor)
+{
+	float old_rate = *motor->rate;
+	
+	*motor->rate = ((float)(motor->encoder->read() - *motor->enc_val) / TICKS_PER_ROT) * REFRESH_FREQ *682; //		Arbitrary hack job to get reasonably realistic rotation speeds. DO NOT LET THIS BE USED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
+	*motor->enc_val = motor->encoder->read();
+	
+	*motor->PID_P = 0.5 * motor->assigned_rate;
+	*motor->PID_I += 0.025 * (motor->assigned_rate - *motor->rate);
+	*motor->PID_D = 0.1 * (old_rate - *motor->rate);
+	
+	*motor->cur_pwr = (uint8_t)(*motor->PID_P + *motor->PID_I + *motor->PID_D);
+	setMotorPWM(motor);
+	/*
+	if (abs(*motor->rate) < 120)
+	{
+		
+		*motor->cur_pwr += (120 - *motor->rate) * 0.025;
+		setMotorPWM(motor);
+	}
+	else if (abs(*motor->rate) > 120)
+	{
+		*motor->cur_pwr -= (*motor->rate - 120) * 0.025;
+		setMotorPWM(motor);
+	}
+	*/
+}
+
+
 // More efficient analogWrite for motor control pins
-inline void MotorDriver::motorPWM(Motor *motor)
+inline void MotorDriver::setMotorPWM(Motor *motor)
 {
 	switch (*motor->cur_pwr)
 	{
@@ -283,16 +326,8 @@ void MotorDriver::wireToVar(float *var)
 	*var = ((int32_t)Wire.read() << 24) | ((int32_t)Wire.read() << 16) | (Wire.read() << 8) | Wire.read();
 }
 
-
-void MotorDriver::ledOn() {	digitalWrite(LED, HIGH);}
-void MotorDriver::ledOff() {	digitalWrite(LED, LOW);}
-void MotorDriver::ledToggle() {	digitalWrite(LED, !digitalRead(LED));}
-
-ISR(TIMER2_OVF_vect) 
-{
-	//motors.update();
-	//count = 0;
-	
-	TCNT2 = 130;
-	TIFR2 = 0x00;
-}
+#ifdef DEBUG_MOTOR_DRIVER
+void MotorDriver::ledOn() {	sbi(PORTB, 4);}
+void MotorDriver::ledOff() {	cbi(PORTB, 4);}
+void MotorDriver::ledToggle() {	PORTB ^= 0x04;}
+#endif

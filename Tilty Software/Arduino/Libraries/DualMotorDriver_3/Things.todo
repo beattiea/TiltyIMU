@@ -1,14 +1,20 @@
 ========== Cleanup ==========
 Variable register values need to be re-worked to represent which need to be in updated_vars (and so updated post I2C message) and which can be updated on-the-fly (so as to remove them from updated_vars)
 
-Change how power, speed, and control data updates are handled so that power can be changed without handling direction, braking, etc.
+Needs default register values defined
+
 
 
 ========== Features ==========
 Add a "kick" of higher power when going from <min_power to any value to get the motor turning
+
+Add decreasing power for direction changes when ramping is on
+
 
 
 ========== Fixes ==========
 For some reason motor PWM is running at 1kHz now, no idea why...
 
 Max motor PWM actually yields an 98% duty cycle signal, not true 100%
+
+Encoders are counting WAY faster than they should be for some unknown reason

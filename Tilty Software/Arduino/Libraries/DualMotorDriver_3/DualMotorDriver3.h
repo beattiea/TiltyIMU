@@ -25,12 +25,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ========== Code Settings ==========
 // You can change/comment these values
-#define DEBUG_MOTOR_DRIVER	// Enable to include debug code in program
-#define PHASE_CORRECT_PWM	// Disable to change to fast PWM mode (doubles frequency but lowers resolution)
-//#define I2C_FREQ 100000	// Enable to set I2C to 100kHz frequency
-//#define I2C_FREQ 200000	// Enable to set I2C to 200kHz frequency
-#define I2C_FREQ 400000		// Enable to set I2C to 400kHz frequency
-#define REFRESH_FREQ 100	// Millisecond delay between uencoder and motor updates if in RPM control mode
+#define DEBUG_MOTOR_DRIVER				// Enable to include debug code in program
+#define PHASE_CORRECT_PWM				// Disable to change to fast PWM mode (doubles frequency but lowers resolution)
+//#define I2C_FREQ 100000				// Enable to set I2C to 100kHz frequency
+//#define I2C_FREQ 200000				// Enable to set I2C to 200kHz frequency
+#define I2C_FREQ 400000					// Enable to set I2C to 400kHz frequency
+#define REFRESH_FREQ 100 				// Millisecond delay between uencoder and motor updates if in RPM control mode, cannot be less than 62 and should not be greater than 1561 (technically it can be, but don't do it)
 // ========== Code Settings ==========
 
 
@@ -54,6 +54,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#define m1_scaled_power 101
 	#define m1_current_power 102
 	#define m1_power 103
+	#define m1_encoder 104
+	#define m1_rate 105
 	#define m1_p 
 	#define m1_i 
 	#define m1_d 
@@ -106,7 +108,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef GEAR_RATIO
 	#define GEAR_RATIO 9.28	// Motor gear ratio, set to 1 if encoder is on gearbox output instead of motor output
 #endif
-#define TICKS_PER_ROT (TICKS_PER_REV * GEAR_RATIO) // Encoder pulses per rotation of the output shaft
+#define TICKS_PER_ROT ((float)TICKS_PER_REV * GEAR_RATIO) / ENCODER_SCALER // Encoder pulses per rotation of the output shaft
+#define ENCODER_SCALER 2566
 // ========== Default Motor Characteristics ==========
 
 
@@ -120,8 +123,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // ========== Default Register Values ==========
-#define DEFAULT_M1_CONTROL		DIRECTION | ENCODER | RAMPING | BRAKE
-#define DEFAULT_M2_CONTROL		ENCODER | RAMPING
+#define DEFAULT_M1_CONTROL		ENCODER | RAMPING | BRAKE | RPM
+#define DEFAULT_M2_CONTROL		DIRECTION | ENCODER | RAMPING
 #define DEFAULT_M1_POWER		0
 #define DEFAULT_M2_POWER		0
 #define DEFAULT_M1_ENCODER		0
@@ -181,7 +184,6 @@ class MotorDriver {
 		float PID_P1, PID_P2;
 		float PID_I1, PID_I2;
 		float PID_D1, PID_D2;
-		float loop_frequency;
 		
 		uint16_t updated_vars;//	Indicates which variables were changed in the last I2C update
 		
@@ -192,6 +194,12 @@ class MotorDriver {
 			float 	*rate;		// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
 			uint8_t *cur_pwr;	// Motor's current ramping power
 			uint8_t *scaled_pwr;// Scaled motor power for minimum PWM control
+			
+			short assigned_rate;
+			
+			float *PID_P;
+			float *PID_I;
+			float *PID_D;
 			
 			
 			Encoder *encoder;	// Motor encoder pointer
@@ -216,10 +224,11 @@ class MotorDriver {
 		void ledToggle();
 #endif
 		inline void updateMotorControl(Motor *motor);
-		//inline void updateMotorRPM(Motor *motor);
+		inline void updateMotorRPM(Motor *motor);
 		inline void updateMotorPower(Motor *motor);
+		inline void updateEncoder(Motor* motor);
 		
-		inline void motorPWM(Motor *motor);
+		inline void setMotorPWM(Motor *motor);
 		inline void setMotorDirection(Motor *motor);
 		inline void setMotorBraking(Motor *motor);
 		

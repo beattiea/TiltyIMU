@@ -155,5 +155,5 @@ void get4Bytes() {
 	Serial.print("Parsed integer value: ");
 	Serial.println(int32_union.int32);
 	Serial.print("Parsed float value: ");
-	Serial.println(int32_union.flt);
+	Serial.println(int32_union.flt, 5);
 }
