@@ -1,0 +1,5 @@
+Variable register values need to be re-worked to represent which need to be in updated_vars (and so updated post I2C message) and which can be updated on-the-fly (so as to remove them from updated_vars)
+
+For some reason motor PWM is running at 1kHz now, no idea why...
+
+Max motor PWM actually yields an 98% duty cycle signal, not true 100%
