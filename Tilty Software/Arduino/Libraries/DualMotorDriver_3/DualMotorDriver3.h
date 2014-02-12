@@ -90,10 +90,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // ========== Encoder pins ==========
-#define ENC1A 2 // Interrupt pin
-#define ENC1B A1
-#define ENC2A A0
-#define ENC2B 3 // Interrupt pin
+#define ENC1A 3 // Interrupt pin
+#define ENC1B A0
+#define ENC2A A1
+#define ENC2B 2 // Interrupt pin
 // ========== Encoder pins ==========
 
 
@@ -303,6 +303,7 @@ extern DualMotorDriver MotorDriver;
 
 void receiveEvent(int bytes);
 void requestEvent();
+void readEncoder1();
 
 extern unsigned long ms;
 

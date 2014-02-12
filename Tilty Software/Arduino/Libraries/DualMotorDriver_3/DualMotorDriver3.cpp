@@ -32,28 +32,29 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	pinMode(M1A, OUTPUT);	digitalWrite(M1A, LOW);
 	pinMode(M1B, OUTPUT);	digitalWrite(M1B, HIGH);
 	pinMode(M2A, OUTPUT);	digitalWrite(M2A, LOW);
-	pinMode(M2B, OUTPUT);	digitalWrite(M2B, LOW);
+	pinMode(M2B, OUTPUT);	digitalWrite(M2B, HIGH);
 	
 	pinMode(LED, OUTPUT);	digitalWrite(LED, LOW);
 	
 	
 	pinMode(ENC1A, INPUT);	digitalWrite(ENC1A, HIGH);
 	pinMode(ENC1B, INPUT);	digitalWrite(ENC2A, HIGH);
-	pinMode(ENC2A, INPUT);
-	pinMode(ENC2B, INPUT);
+	pinMode(ENC2A, INPUT);	digitalWrite(ENC1B, HIGH);
+	pinMode(ENC2B, INPUT);	digitalWrite(ENC2B, HIGH);
 	
 	// Enable interrupts for encoders
-	EIMSK = 0x03;	// Enable external interrupt INT0
-	EICRA = 0x05;	// Set interrupt for change
+	attachInterrupt(1, readEncoder1, RISING);
+	//EIMSK = 0x03;	// Enable both external interrupts
+	//EICRA = 0x05;	// Set interrupt for change
 	
 	
 	
 #ifdef ENABLE_WATCHDOG_TIMER
 	// Check for reset problems
-	if (MCUSR & (WDRF | BORF)) { }
-	MCUSR = 0;
-	WDTCSR = _BV(WDCE) | _BV(WDE);
-	WDTCSR = _BV(WDIE) | _BV(WDE) | LOW_WDP | HIGH_WDP;
+//	if (MCUSR & (WDRF | BORF)) { }
+//	MCUSR = 0;
+//	WDTCSR = _BV(WDCE) | _BV(WDE);
+//	WDTCSR = _BV(WDIE) | _BV(WDE) | LOW_WDP | HIGH_WDP;
 #endif
 	
 	// Set up Timer2 to automatically update currents and encoders
@@ -61,18 +62,19 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
     TCCR2B = 0x00;			// Disbale Timer2 while we set it up
 	TCNT2 = 0x00;			// Set initial timer value to 0
 	OCR2A = OCR2A_VALUE;	// Set the value to count to for desired refresh rate
+	OCR2B = OCR2A_VALUE / 2;// Set compare 2 to half compare 1 rate
 	TCCR2A = TIMER2A_MODE;	// Timer2 Control Reg A: Set to mode 7, counts from 0x00 to OCR2A
 	TCCR2B = TIMER2B_MODE | TIMER2_PRESCALER;// Timer2 Control Reg B: Timer Prescaler set to 1024 and timer mode set to mode 7
 	
 	// Set up Timer1 cause why not
 	// 64 prescaler, 250 counts per millisecond, Fast PWM mode
-	TCCR1B = 0;
-	TCCR1A = 0x03;//_BV(WGM11) | _BV(WGM10);
-	TCCR1C = 0;
-	TCNT1 = 0;
-	OCR1A = 250;
-	TIMSK1 = 1;
-	TCCR1B = 0x1B;//_BV(WGM13) | _BV(WGM12) | _BV(CS11) | _BV(CS10);
+//	TCCR1B = 0;
+//	TCCR1A = 0x03;//_BV(WGM11) | _BV(WGM10);
+//	TCCR1C = 0;
+//	TCNT1 = 0;
+//	OCR1A = 250;
+//	TIMSK1 = 1;
+//	TCCR1B = 0x1B;//_BV(WGM13) | _BV(WGM12) | _BV(CS11) | _BV(CS10);
 
 	//Setup the I2C bus
 	Wire.begin(DEFAULT_DMD_ADDRESS);	// Begin I2C at slave address I2C_ADDRESS (defaults to 0x03)
@@ -129,7 +131,7 @@ void DualMotorDriver::init()
 	
 	// Setup Timer0 for the PWM pins, I don't know why this needed to be here, but it wasn't setting correctly in the class constructor
 	TCCR0B = 0;				// Disable the timer while we set it up
-	TCCR0A = 0x03;			// Setup pins 5 and 6 for phase correct PWM (31.25kHz)
+	TCCR0A = 0x03;			// Setup pins 5 and 6 for phase fast PWM
 	TCNT0 = 0;
 	TCCR0B = 0x01;			// Set PWM prescaler to 1 (lowest possible)
 }
@@ -383,15 +385,14 @@ void requestEvent() {
 }
 
 // Interrupt Service Routine attached to INT0 vector
-ISR(EXT_INT0_vect)
+void readEncoder1()
 {
-	PINC & 0x02 ? MotorDriver.M1_encoder++ : MotorDriver.M1_encoder--;
-	
+	PINC & 0x01 ? MotorDriver.M1_encoder++ : MotorDriver.M1_encoder--;
 }
 
-ISR(EXT_INT1_vect)
+void readEncoder2()
 {
-	
+	PINC & 0x02 ? MotorDriver.M2_encoder++ : MotorDriver.M2_encoder--;
 }
 
 ISR(WDT_vect)
