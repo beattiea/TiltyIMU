@@ -26,11 +26,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // ========== Code Settings ==========
 // You can change/comment these values
 #define DEBUG_MOTOR_DRIVER				// Enable to include debug code in program
-#define PHASE_CORRECT_PWM				// Disable to change to fast PWM mode (doubles frequency but lowers resolution)
 //#define I2C_FREQ 100000				// Enable to set I2C to 100kHz frequency
 //#define I2C_FREQ 200000				// Enable to set I2C to 200kHz frequency
 #define I2C_FREQ 400000					// Enable to set I2C to 400kHz frequency
 #define REFRESH_FREQ 100 				// Millisecond delay between uencoder and motor updates if in RPM control mode, cannot be less than 62 and should not be greater than 1561 (technically it can be, but don't do it)
+//#define ENABLE_WATCHDOG_TIMER			// Watchdog timer will cause a system reset if any functions freeze, preventing the motor driver from freezing for longer than the watchdog timer limit (which is set below)
 // ========== Code Settings ==========
 
 
@@ -46,6 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Wire.h"
 #include "EEPROM.h"
 #include "Encoder.h"
+
 // ========== Library includes ==========
 
 
@@ -123,6 +124,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // ========== Timer Characteristics ==========
 
 
+// ========== Timer Characteristics ==========
+#ifdef ENABLE_WATCHDOG_TIMER
+#define WATCHDOG_TIME 3 // Change this to change time before reset if code freezes
+#define LOW_WDP (WATCHDOG_TIME & 0x07)
+#define HIGH_WDP (WATCHDOG_TIME & 0x08) << 5
+// WATCHDOG_TIME values and their times
+// 0 => 16ms    3 => 0.125s    6 => 1.0s    9 => 8.0s
+// 1 => 32ms    4 => 0.250s    7 => 2.0s
+// 2 => 64ms    5 => 0.500s    8 => 4.0s
+#endif
+// ========== Timer Characteristics ==========
+
+
+
 // ========== Default Register Values ==========
 #define DEFAULT_M1_CONTROL		ENCODER | RAMPING | BRAKE
 #define DEFAULT_M2_CONTROL		DIRECTION | ENCODER | RAMPING
@@ -145,11 +160,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEFAULT_EEPROM_LOAD		0
 // ========== Default Register Values ==========
 
-class MotorDriver {
+class DualMotorDriver {
 	public:
 		// Constructors
-		MotorDriver();
-		~MotorDriver();
+		DualMotorDriver();
+		~DualMotorDriver();
+		
+		void init();
 		
 		// Encoder objects
 		Encoder m1Encoder;
@@ -234,8 +251,7 @@ class MotorDriver {
 		inline void setMotorPWM(Motor *motor);
 		inline void setMotorDirection(Motor *motor);
 		inline void setMotorBraking(Motor *motor);
-		
-		void encoderToVar(int32_t *var, Encoder *enc);
+		inline void setTimerB(Motor *motor);
 		
 		void wireToVar(uint8_t *var);
 		void wireToVar(uint16_t *var);
@@ -244,7 +260,7 @@ class MotorDriver {
 		
 		uint8_t active_var;
 		void *active_var_ptr;
-		
+
 		// Data union for transferring different 4 byte types to/from data register
 		union data_union {
 			uint8_t bytes[4];
@@ -283,4 +299,12 @@ class MotorDriver {
 		static const uint8_t PID_KI = 0x0B;
 		static const uint8_t PID_KD = 0x0C;
 };
+
+extern DualMotorDriver MotorDriver;
+
+void receiveEvent(int bytes);
+void requestEvent();
+
+extern unsigned long ms;
+
 #endif

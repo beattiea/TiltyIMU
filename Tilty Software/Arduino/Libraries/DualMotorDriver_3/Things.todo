@@ -3,6 +3,8 @@ Variable register values need to be re-worked to represent which need to be in u
 
 Needs default register values defined
 
+Change RAMPING and RPM settings to be speed control enable and speed control type select
+
 
 
 ========== Features ==========
@@ -10,11 +12,17 @@ Add a "kick" of higher power when going from <min_power to any value to get the 
 
 Add decreasing power for direction changes when ramping is on
 
+Watchdog code
+
 
 
 ========== Fixes ==========
-For some reason motor PWM is running at 1kHz now, no idea why...
+All my #defines spontaneously broke and I have no idea why
 
 Max motor PWM actually yields an 98% duty cycle signal, not true 100%
 
 Encoders are counting WAY faster than they should be for some unknown reason
+
+Timer1 not working at all (~61 Hz when it should be 1000)
+
+Disable internal I2C pullups
