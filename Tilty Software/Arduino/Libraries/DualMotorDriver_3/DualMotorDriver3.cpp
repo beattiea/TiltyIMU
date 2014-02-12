@@ -43,11 +43,8 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	pinMode(ENC2B, INPUT);
 	
 	// Enable interrupts for encoders
-	/*
-	sei();			// Enable global interrupts
 	EIMSK = 0x03;	// Enable external interrupt INT0
 	EICRA = 0x05;	// Set interrupt for change
-	*/
 	
 	
 	
@@ -55,7 +52,6 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	// Check for reset problems
 	if (MCUSR & (WDRF | BORF)) { }
 	MCUSR = 0;
-	ledOn();
 	WDTCSR = _BV(WDCE) | _BV(WDE);
 	WDTCSR = _BV(WDIE) | _BV(WDE) | LOW_WDP | HIGH_WDP;
 #endif
@@ -116,7 +112,7 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	
 	M1_control = DEFAULT_M1_CONTROL;
 	
-	ledOn();
+	sei();			// Enable global interrupts
 }
 
 DualMotorDriver::~DualMotorDriver() 
@@ -385,19 +381,19 @@ void receiveEvent(int bytes) {
 void requestEvent() {
 	MotorDriver.sendData();
 }
-/*
+
 // Interrupt Service Routine attached to INT0 vector
 ISR(EXT_INT0_vect)
 {
 	PINC & 0x02 ? MotorDriver.M1_encoder++ : MotorDriver.M1_encoder--;
-	PORTB ^= 0x04;
+	
 }
 
 ISR(EXT_INT1_vect)
 {
-	PORTB ^= 0x04;
+	
 }
-*/
+
 ISR(WDT_vect)
 {
 	sbi(PORTB, 4);
@@ -416,7 +412,6 @@ ISR(TIMER2_COMPA_vect)
 {
 	// Motor 1 updates will go here
 	MotorDriver.updateMotor(&MotorDriver.motor1);
-	PORTB ^= 0x04;
 }
 
 ISR(TIMER2_COMPB_vect)

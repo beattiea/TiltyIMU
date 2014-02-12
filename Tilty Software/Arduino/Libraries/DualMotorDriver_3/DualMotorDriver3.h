@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define I2C_FREQ 200000				// Enable to set I2C to 200kHz frequency
 #define I2C_FREQ 400000					// Enable to set I2C to 400kHz frequency
 #define REFRESH_FREQ 100 				// Millisecond delay between uencoder and motor updates if in RPM control mode, cannot be less than 62 and should not be greater than 1561 (technically it can be, but don't do it)
-//#define ENABLE_WATCHDOG_TIMER			// Watchdog timer will cause a system reset if any functions freeze, preventing the motor driver from freezing for longer than the watchdog timer limit (which is set below)
+#define ENABLE_WATCHDOG_TIMER			// Watchdog timer will cause a system reset if any functions freeze, preventing the motor driver from freezing for longer than the watchdog timer limit (which is set below)
 // ========== Code Settings ==========
 
 
@@ -46,7 +46,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Wire.h"
 #include "EEPROM.h"
 #include "Encoder.h"
-
 // ========== Library includes ==========
 
 
