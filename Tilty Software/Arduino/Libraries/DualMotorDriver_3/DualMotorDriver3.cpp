@@ -1,5 +1,5 @@
 /*
-DualDualMotorDriver.cpp - Software library to program and control the TiltyIMU Dual Motor Driver Shield
+DualMotorDriver.cpp - Software library to program and control the TiltyIMU Dual Motor Driver Shield
 Copyright (C) 2013-2014 Alex Beattie <alexbeattie at tiltyimu dot com>
 
 This program is free software: you can redistribute it and/or modify
@@ -17,13 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Arduino.h"
 #include "wiring_private.h"
-#include "DualDualMotorDriver3.h"
+#include "DualMotorDriver3.h"
 
 
 DualMotorDriver MotorDriver;
 
 // Add-on/shield code
-
 DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 {	
 	// Initialize all of the I/O pins
@@ -367,11 +366,6 @@ void DualMotorDriver::wireToVar(float *var)
 
 
 #ifdef DEBUG_MOTOR_DRIVER
-<<<<<<< Local Changes
-void DualMotorDriver::ledOn() {	sbi(PORTB, 4);}
-void DualMotorDriver::ledOff() {	cbi(PORTB, 4);}
-void DualMotorDriver::ledToggle() {	PORTB ^= 0x04;}
-#endif=======
 void DualMotorDriver::ledOn() {	sbi(PORTB, 4);}
 void DualMotorDriver::ledOff() {	cbi(PORTB, 4);}
 void DualMotorDriver::ledToggle() {	PORTB ^= 0x04;}
@@ -423,4 +417,4 @@ ISR(TIMER2_COMPA_vect)
 ISR(TIMER2_COMPB_vect)
 {
 	// Motor 2 updates will go here
-}>>>>>>> External Changes
+}
