@@ -22,18 +22,45 @@ However this is a global change and will affect all Arduino code, not just this 
 #include "Encoder.h"
 
 // Included to ensure no compatibility errors
-#ifdef _mk20dx128_
 #include "RCadapter.h"
 #include "SatelliteRX.h"
 #include "Servo.h"
-#endif
 //===========================================
 
+MotorDriver motors;
+
 void setup() {
-	MotorDriver.init();
+	//motors.init();
+	//Wire.begin(0x03);
+	
+	//pinMode(10, OUTPUT);
+	
+	Wire.onReceive(receiveEvent);
+	Wire.onRequest(requestEvent);
 }
 
 
 void loop() {
 	// Purely testing code, everything else is handled by interrupt routines
+}
+
+
+void receiveEvent(int bytes) {
+	//digitalWrite(10, !digitalRead(10));
+	motors.getData(bytes);
+}
+
+void requestEvent() {
+	motors.sendData();
+}
+
+ISR(TIMER2_COMPA_vect)
+{
+	// Motor 1 updates will go here
+	motors.updateMotor(&motors.motor1);
+}
+
+ISR(TIMER2_COMPB_vect)
+{
+	// Motor 2 updates will go here
 }
