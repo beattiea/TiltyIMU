@@ -18,12 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Arduino.h"
 #include "wiring_private.h"
 #include "DualMotorDriver3.h"
+#include <util/delay.h>
 
 
 DualMotorDriver MotorDriver;
 
 // Add-on/shield code
-DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
+DualMotorDriver::DualMotorDriver()
 {	
 	// Initialize all of the I/O pins
 	pinMode(M1, OUTPUT);	digitalWrite(M1, LOW);
@@ -44,6 +45,7 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	
 	// Enable interrupts for encoders
 	attachInterrupt(1, readEncoder1, RISING);
+	attachInterrupt(0, readEncoder2, RISING);
 	//EIMSK = 0x03;	// Enable both external interrupts
 	//EICRA = 0x05;	// Set interrupt for change
 	
@@ -51,10 +53,10 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	
 #ifdef ENABLE_WATCHDOG_TIMER
 	// Check for reset problems
-//	if (MCUSR & (WDRF | BORF)) { }
-//	MCUSR = 0;
-//	WDTCSR = _BV(WDCE) | _BV(WDE);
-//	WDTCSR = _BV(WDIE) | _BV(WDE) | LOW_WDP | HIGH_WDP;
+	if (MCUSR & (WDRF | BORF)) { }
+	MCUSR = 0;
+	WDTCSR = _BV(WDCE) | _BV(WDE);
+	WDTCSR = _BV(WDIE) | _BV(WDE) | LOW_WDP | HIGH_WDP;
 #endif
 	
 	// Set up Timer2 to automatically update currents and encoders
@@ -65,16 +67,6 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	OCR2B = OCR2A_VALUE / 2;// Set compare 2 to half compare 1 rate
 	TCCR2A = TIMER2A_MODE;	// Timer2 Control Reg A: Set to mode 7, counts from 0x00 to OCR2A
 	TCCR2B = TIMER2B_MODE | TIMER2_PRESCALER;// Timer2 Control Reg B: Timer Prescaler set to 1024 and timer mode set to mode 7
-	
-	// Set up Timer1 cause why not
-	// 64 prescaler, 250 counts per millisecond, Fast PWM mode
-//	TCCR1B = 0;
-//	TCCR1A = 0x03;//_BV(WGM11) | _BV(WGM10);
-//	TCCR1C = 0;
-//	TCNT1 = 0;
-//	OCR1A = 250;
-//	TIMSK1 = 1;
-//	TCCR1B = 0x1B;//_BV(WGM13) | _BV(WGM12) | _BV(CS11) | _BV(CS10);
 
 	//Setup the I2C bus
 	Wire.begin(DEFAULT_DMD_ADDRESS);	// Begin I2C at slave address I2C_ADDRESS (defaults to 0x03)
@@ -85,6 +77,8 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 #else
 	TWBR = 12;							// Set up I2C for 400kHz. Forumla is: Bit Rate = 16MHz / (16 + 2 * TWBR)
 #endif
+	digitalWrite(A4, LOW);				// Disable internal pull-ups
+	digitalWrite(A5, LOW);				// Disable internal pull-ups
 	
 	min_power = DEFAULT_MIN_POWER;
 	PID_kP = DEFAULT_PID_KP;
@@ -103,7 +97,7 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	motor1.PID_P = &PID_P1;
 	motor1.PID_I = &PID_I1;
 	motor1.PID_D = &PID_D1;
-	motor1.encoder = &m1Encoder;
+	motor1.old_enc = 0;
 	motor1.OCR0x = (uint8_t*)&OCR0B;
 	motor1.COM0x = 0x20;
 	motor1.speed_pin = M1;
@@ -129,11 +123,23 @@ void DualMotorDriver::init()
 	Wire.onReceive(receiveEvent);
 	Wire.onRequest(requestEvent);
 	
-	// Setup Timer0 for the PWM pins, I don't know why this needed to be here, but it wasn't setting correctly in the class constructor
+	// The below timer setups were placed here cause Arduino screws with them otherwise as they'd usually be used by other functions/libraries
+	
+	// Setup Timer0 for the PWM pins
 	TCCR0B = 0;				// Disable the timer while we set it up
 	TCCR0A = 0x03;			// Setup pins 5 and 6 for phase fast PWM
 	TCNT0 = 0;
 	TCCR0B = 0x01;			// Set PWM prescaler to 1 (lowest possible)
+	
+	// Set up Timer1 cause why not
+	// 64 prescaler, 250 counts per millisecond, Fast PWM mode
+	TCCR1B = 0;
+	TCCR1A = 0x03;//_BV(WGM11) | _BV(WGM10);
+	TCCR1C = 0;
+	TCNT1 = 0;
+	OCR1A = 250;
+	TIMSK1 = 1;
+	TCCR1B = 0x1B;//_BV(WGM13) | _BV(WGM12) | _BV(CS11) | _BV(CS10);
 }
 
 
@@ -171,7 +177,9 @@ uint8_t DualMotorDriver::getData(int bytes)
 		case M1_POWER: 		active_var_ptr = &M1_power;		break;
 		case M2_POWER: 		active_var_ptr = &M2_power;		break;
 		case M1_ENCODER: 	active_var_ptr = &M1_encoder;	break;
+		case M2_ENCODER: 	active_var_ptr = &M2_encoder;	break;
 		case M1_RATE: 		active_var_ptr = &M1_rate;		break;
+		case M2_RATE: 		active_var_ptr = &M2_rate;		break;
 	}
 	updateVars();
 }
@@ -192,7 +200,8 @@ void DualMotorDriver::sendData()
 			case m1_rate: Wire.write((uint8_t*)motor1.cur_rate, 4); break;
 			case m1_target_rate: Wire.write((uint8_t*)motor1.targ_rate, 4); break;
 			case led: ledToggle(); break;
-			case 127: Wire.write(TCCR2B);
+			case ms: Wire.write((uint8_t*)MS, 4);
+			case 127: Wire.write(TCCR1A);
 		}
 	}
 	else
@@ -240,8 +249,6 @@ inline void DualMotorDriver::updateMotorRPM(Motor *motor)
 	float old_rate = *motor->cur_rate;
 	updateEncoder(motor);
 	
-	*motor->enc_val = motor->encoder->read();
-	
 	*motor->PID_P = PID_kP * *motor->targ_rate;
 	*motor->PID_I += PID_kI * (*motor->targ_rate - *motor->cur_rate);
 	*motor->PID_D = PID_kD * (old_rate - *motor->cur_rate);
@@ -269,8 +276,8 @@ inline void DualMotorDriver::updateMotorPower(Motor *motor)
 
 inline void DualMotorDriver::updateEncoder(Motor *motor)
 {	
-	*motor->cur_rate = ((float)(motor->encoder->read() - *motor->enc_val) / TICKS_PER_ROT) * REFRESH_FREQ *682; //		Arbitrary hack job to get reasonably realistic rotation speeds. DO NOT LET THIS BE USED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	*motor->enc_val = motor->encoder->read();
+	*motor->cur_rate = ((float)(*motor->enc_val - motor->old_enc) / TICKS_PER_ROT) * REFRESH_FREQ * 60;
+	motor->old_enc = *motor->enc_val;
 }
 
 
@@ -395,18 +402,28 @@ void readEncoder2()
 	PINC & 0x02 ? MotorDriver.M2_encoder++ : MotorDriver.M2_encoder--;
 }
 
+void delayMillis(unsigned long time)
+{
+	short i;
+	uint32_t start = MS;
+	while (MS - start < time)
+	{
+		i++;
+	}
+	return;
+}
+
 ISR(WDT_vect)
 {
 	sbi(PORTB, 4);
 }
 
-unsigned long ms;
+volatile unsigned long MS = 0;
 
 ISR(TIMER1_OVF_vect)
 {
-	ms++;
-	//PORTB ^= 4;
-	//__asm__ __volatile__ ("wdr");
+	MS++;
+	__asm__ __volatile__ ("wdr");
 }
 
 ISR(TIMER2_COMPA_vect)

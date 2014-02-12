@@ -45,7 +45,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // ========== Library includes ==========
 #include "Wire.h"
 #include "EEPROM.h"
-#include "Encoder.h"
 // ========== Library includes ==========
 
 
@@ -57,6 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#define m1_encoder 104
 	#define m1_rate 105
 	#define m1_target_rate 106
+	#define ms 107
 	#define m1_p 
 	#define m1_i 
 	#define m1_d 
@@ -104,13 +104,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ========== Default Motor Characteristics ==========
 #ifndef TICKS_PER_REV
-	#define TICKS_PER_REV 1336 // Encoder pulses per axle revolution
+	#define TICKS_PER_REV 334 // Encoder pulses per axle revolution
 #endif
 #ifndef GEAR_RATIO
 	#define GEAR_RATIO 9.28	// Motor gear ratio, set to 1 if encoder is on gearbox output instead of motor output
 #endif
-#define TICKS_PER_ROT ((float)TICKS_PER_REV * GEAR_RATIO) / ENCODER_SCALER // Encoder pulses per rotation of the output shaft
-#define ENCODER_SCALER 2566
+#define TICKS_PER_ROT ((float)TICKS_PER_REV * GEAR_RATIO) // Encoder pulses per rotation of the output shaft
 // ========== Default Motor Characteristics ==========
 
 
@@ -123,7 +122,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // ========== Timer Characteristics ==========
 
 
-// ========== Timer Characteristics ==========
+// ========== Watchdog Timer Characteristics ==========
 #ifdef ENABLE_WATCHDOG_TIMER
 #define WATCHDOG_TIME 3 // Change this to change time before reset if code freezes
 #define LOW_WDP (WATCHDOG_TIME & 0x07)
@@ -133,7 +132,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // 1 => 32ms    4 => 0.250s    7 => 2.0s
 // 2 => 64ms    5 => 0.500s    8 => 4.0s
 #endif
-// ========== Timer Characteristics ==========
+// ========== Watchdog Timer Characteristics ==========
 
 
 
@@ -166,10 +165,6 @@ class DualMotorDriver {
 		~DualMotorDriver();
 		
 		void init();
-		
-		// Encoder objects
-		Encoder m1Encoder;
-		Encoder m2Encoder;
 		
 		uint8_t getData(int bytes);
 		void sendData();
@@ -220,11 +215,10 @@ class DualMotorDriver {
 			float *PID_I;
 			float *PID_D;
 			
-			
-			Encoder *encoder;	// Motor encoder pointer
-			
 			uint8_t *OCR0x;// Pointer to pin output compare register
 			uint8_t COM0x;// Pin setup in TCCR0A
+			
+			long old_enc;
 			
 			uint8_t speed_pin;// PWM/enable pin
 			uint8_t high_pin;// Direction/braking control pin 1
@@ -303,8 +297,12 @@ extern DualMotorDriver MotorDriver;
 
 void receiveEvent(int bytes);
 void requestEvent();
-void readEncoder1();
 
-extern unsigned long ms;
+void readEncoder1();
+void readEncoder2();
+
+void delayMillis(unsigned long time);
+
+extern volatile unsigned long MS;
 
 #endif
