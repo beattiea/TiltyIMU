@@ -1,5 +1,5 @@
 /*
-DualMotorDriver.cpp - Software library to program and control the TiltyIMU Dual Motor Driver Shield
+DualDualMotorDriver.cpp - Software library to program and control the TiltyIMU Dual Motor Driver Shield
 Copyright (C) 2013-2014 Alex Beattie <alexbeattie at tiltyimu dot com>
 
 This program is free software: you can redistribute it and/or modify
@@ -17,12 +17,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Arduino.h"
 #include "wiring_private.h"
-#include "DualMotorDriver3.h"
+#include "DualDualMotorDriver3.h"
 
+
+DualMotorDriver MotorDriver;
 
 // Add-on/shield code
 
-MotorDriver::MotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
+DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 {	
 	// Initialize all of the I/O pins
 	pinMode(M1, OUTPUT);	digitalWrite(M1, LOW);
@@ -41,27 +43,37 @@ MotorDriver::MotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 	pinMode(ENC2A, INPUT);
 	pinMode(ENC2B, INPUT);
 	
+	// Enable interrupts for encoders
+	EIMSK = 0x03;	// Enable external interrupt INT0
+	EICRA = 0x05;	// Set interrupt for change
+	
+	
+	
+#ifdef ENABLE_WATCHDOG_TIMER
+	// Check for reset problems
+	if (MCUSR & (WDRF | BORF)) { }
+	MCUSR = 0;
+	WDTCSR = _BV(WDCE) | _BV(WDE);
+	WDTCSR = _BV(WDIE) | _BV(WDE) | LOW_WDP | HIGH_WDP;
+#endif
 	
 	// Set up Timer2 to automatically update currents and encoders
-	// Timer is set up to interrupt every 2.5ms to update motors and encoders when necessary
+	// Timer is set up to interrupt every 10ms by default in order to update motors and encoders when necessary
     TCCR2B = 0x00;			// Disbale Timer2 while we set it up
 	TCNT2 = 0x00;			// Set initial timer value to 0
-	TIMSK2 = TIMER2_IMSK;	// Timer2 INT Reg: Timer2 Capture/Compare A and B enable
+	OCR2A = OCR2A_VALUE;	// Set the value to count to for desired refresh rate
 	TCCR2A = TIMER2A_MODE;	// Timer2 Control Reg A: Set to mode 7, counts from 0x00 to OCR2A
-	OCR2A = OCR2A_VALUE;	// Count from 0-77 -> ~200Hz -> ~0.005 second period
-	OCR2B = OCR2A / 2;		// Count to 1/2 of OCR2A to evenly distribute the workload over time
-	if (DEFAULT_M1_CONTROL & (RAMPING | RPM) | DEFAULT_M2_CONTROL & (RAMPING | RPM))// Only turns on Timer2 if it's needed
-	{
-		TCCR2B = TIMER2B_MODE | TIMER2_PRESCALER;// Timer2 Control Reg B: Timer Prescaler set to 1024 and timer mode set to mode 7
-	}
+	TCCR2B = TIMER2B_MODE | TIMER2_PRESCALER;// Timer2 Control Reg B: Timer Prescaler set to 1024 and timer mode set to mode 7
 	
-	// Setup the PWM pins
-#ifdef PHASE_CORRECT_PWM
-	TCCR0A = 0x01;			// Setup pins 5 and 6 for phase correct PWM (31.25kHz)
-#else
-	TCCR0A = 0x03;			// Setup pins 5 and 6 for fast PWM (62.5kHz)
-#endif
-	TCCR0B = 0x01;			// Set PWM prescaler to 1 (lowest possible)
+	// Set up Timer1 cause why not
+	// 64 prescaler, 250 counts per millisecond, Fast PWM mode
+	TCCR1B = 0;
+	TCCR1A = 0x03;//_BV(WGM11) | _BV(WGM10);
+	TCCR1C = 0;
+	TCNT1 = 0;
+	OCR1A = 250;
+	TIMSK1 = 1;
+	TCCR1B = 0x1B;//_BV(WGM13) | _BV(WGM12) | _BV(CS11) | _BV(CS10);
 
 	//Setup the I2C bus
 	Wire.begin(DEFAULT_DMD_ADDRESS);	// Begin I2C at slave address I2C_ADDRESS (defaults to 0x03)
@@ -69,7 +81,7 @@ MotorDriver::MotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 	TWBR = 72;							// Set up I2C for 100kHz. Forumla is: Bit Rate = 16MHz / (16 + 2 * TWBR)
 #elif I2C_FREQ == 200000
 	TWBR = 32;							// Set up I2C for 200kHz. Forumla is: Bit Rate = 16MHz / (16 + 2 * TWBR)
-#else I2C_FREQ
+#else
 	TWBR = 12;							// Set up I2C for 400kHz. Forumla is: Bit Rate = 16MHz / (16 + 2 * TWBR)
 #endif
 	
@@ -100,17 +112,33 @@ MotorDriver::MotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, ENC2A)
 	ramping_rate = 5;
 	
 	M1_control = DEFAULT_M1_CONTROL;
+	
+	sei();			// Enable global interrupts
 }
 
-MotorDriver::~MotorDriver() 
+DualMotorDriver::~DualMotorDriver() 
 {
 	// Do nothing
 }
 
 
+// Called to initialize the motor driver ISR's
+void DualMotorDriver::init()
+{
+	Wire.onReceive(receiveEvent);
+	Wire.onRequest(requestEvent);
+	
+	// Setup Timer0 for the PWM pins, I don't know why this needed to be here, but it wasn't setting correctly in the class constructor
+	TCCR0B = 0;				// Disable the timer while we set it up
+	TCCR0A = 0x03;			// Setup pins 5 and 6 for phase correct PWM (31.25kHz)
+	TCNT0 = 0;
+	TCCR0B = 0x01;			// Set PWM prescaler to 1 (lowest possible)
+}
+
+
 
 // Handles reading in I2C data
-uint8_t MotorDriver::getData(int bytes)
+uint8_t DualMotorDriver::getData(int bytes)
 {
 	active_var = Wire.read();
 	
@@ -148,7 +176,7 @@ uint8_t MotorDriver::getData(int bytes)
 }
 
 
-void MotorDriver::sendData()
+void DualMotorDriver::sendData()
 {
 #ifdef DEBUG_MOTOR_DRIVER
 	if (active_var > 100)
@@ -163,21 +191,21 @@ void MotorDriver::sendData()
 			case m1_rate: Wire.write((uint8_t*)motor1.cur_rate, 4); break;
 			case m1_target_rate: Wire.write((uint8_t*)motor1.targ_rate, 4); break;
 			case led: ledToggle(); break;
+			case 127: Wire.write(TCCR2B);
 		}
 	}
 	else
 	{
-#endif
-	
 		Wire.write((uint8_t*)active_var_ptr, TX_BUFFER_SIZE);// Holy s**t this worked first try! Pointers FTW!
-#ifdef DEBUG_MOTOR_DRIVER
 	}
+#else
+	Wire.write((uint8_t*)active_var_ptr, TX_BUFFER_SIZE);// Holy s**t this worked first try! Pointers FTW!
 #endif
 }
 
 
 // Updates everything based on updated_vars
-void MotorDriver::updateVars()
+void DualMotorDriver::updateVars()
 {
 	if (updated_vars & (1 << M1_CONTROL))	updateMotorControl(&motor1);
 	if (updated_vars & (1 << M1_POWER)) 
@@ -191,7 +219,7 @@ void MotorDriver::updateVars()
 }
 
 
-void MotorDriver::updateMotor(Motor *motor)
+void DualMotorDriver::updateMotor(Motor *motor)
 {
 	if (*motor->control & RPM) updateMotorRPM(motor);
 	setMotorDirection(motor);
@@ -199,13 +227,14 @@ void MotorDriver::updateMotor(Motor *motor)
 }
 
 
-inline void MotorDriver::updateMotorControl(Motor *motor)
+inline void DualMotorDriver::updateMotorControl(Motor *motor)
 {
 	setMotorDirection(motor);
+	setTimerB(motor);
 }
 
 
-inline void MotorDriver::updateMotorRPM(Motor *motor)
+inline void DualMotorDriver::updateMotorRPM(Motor *motor)
 {
 	float old_rate = *motor->cur_rate;
 	updateEncoder(motor);
@@ -221,7 +250,7 @@ inline void MotorDriver::updateMotorRPM(Motor *motor)
 }
 
 
-inline void MotorDriver::updateMotorPower(Motor *motor)
+inline void DualMotorDriver::updateMotorPower(Motor *motor)
 {
 	if (*motor->control & RAMPING)
 	{
@@ -237,7 +266,7 @@ inline void MotorDriver::updateMotorPower(Motor *motor)
 }
 
 
-inline void MotorDriver::updateEncoder(Motor *motor)
+inline void DualMotorDriver::updateEncoder(Motor *motor)
 {	
 	*motor->cur_rate = ((float)(motor->encoder->read() - *motor->enc_val) / TICKS_PER_ROT) * REFRESH_FREQ *682; //		Arbitrary hack job to get reasonably realistic rotation speeds. DO NOT LET THIS BE USED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	*motor->enc_val = motor->encoder->read();
@@ -245,7 +274,7 @@ inline void MotorDriver::updateEncoder(Motor *motor)
 
 
 // More efficient analogWrite for motor control pins
-inline void MotorDriver::setMotorPWM(Motor *motor)
+inline void DualMotorDriver::setMotorPWM(Motor *motor)
 {
 	switch (*motor->cur_pwr)
 	{
@@ -256,7 +285,7 @@ inline void MotorDriver::setMotorPWM(Motor *motor)
 }
 
 // More efficent digitalWrite for just the motor direction/braking pins
-inline void MotorDriver::setMotorDirection(Motor *motor)
+inline void DualMotorDriver::setMotorDirection(Motor *motor)
 {
 	if (~(*motor->control & BRAKE) && *motor->cur_pwr != 0)
 	{
@@ -274,7 +303,7 @@ inline void MotorDriver::setMotorDirection(Motor *motor)
 }
 
 // More efficent digitalWrite for just the motor direction/braking pins
-inline void MotorDriver::setMotorBraking(Motor *motor)
+inline void DualMotorDriver::setMotorBraking(Motor *motor)
 {
 	if (*motor->control & BRAKE)
 	{
@@ -288,38 +317,110 @@ inline void MotorDriver::setMotorBraking(Motor *motor)
 	}
 }
 
-// Takes a pointer to a variable and an encoder reads the current encoder value into the variable
-void encoderToVar(int32_t *var, Encoder *enc)
+// Enables and disables the interrupts that control motor and encoder updates
+inline void DualMotorDriver::setTimerB(Motor *motor)
 {
-	*var = enc->read();
+	if (*motor->control & (RAMPING | RPM))// Enable the interrupt routine that updates the given motor
+	{
+	    TCCR2B = 0x00;			// Disbale Timer2 while we set it up
+		switch (motor->speed_pin)
+		{
+			case M1: 	TIMSK2 |= 0x02;	break;
+			case M2: 	TIMSK2 |= 0x04;	break;
+		}
+		TCCR2B = TIMER2B_MODE | TIMER2_PRESCALER;// Re-enable Timer2
+	}
+	else // Disable the interrupts that control motor updates if they are unnecessary
+	{
+		switch (motor->speed_pin)
+		{
+			case M1: 	TIMSK2 &= ~0x02;	break;
+			case M2: 	TIMSK2 &= ~0x04;	break;
+		}
+	}
 }
 
+
 // Takes a pointer to a variable and reads a new value into it from I2C
-void MotorDriver::wireToVar(uint8_t *var)
+void DualMotorDriver::wireToVar(uint8_t *var)
 {
 	*var = Wire.read();
 }
 
 // Takes a pointer to a variable and reads a new value into it from I2C
-void MotorDriver::wireToVar(uint16_t *var)
+void DualMotorDriver::wireToVar(uint16_t *var)
 {
 	*var = (Wire.read() << 8) | Wire.read();
 }
 
 // Takes a pointer to a variable and reads a new value into it from I2C
-void MotorDriver::wireToVar(int32_t *var)
+void DualMotorDriver::wireToVar(int32_t *var)
 {
 	*var = ((int32_t)Wire.read() << 24) | ((int32_t)Wire.read() << 16) | (Wire.read() << 8) | Wire.read();
 }
 
 // Takes a pointer to a variable and reads a new value into it from I2C
-void MotorDriver::wireToVar(float *var)
+void DualMotorDriver::wireToVar(float *var)
 {
 	*var = ((int32_t)Wire.read() << 24) | ((int32_t)Wire.read() << 16) | (Wire.read() << 8) | Wire.read();
 }
 
+
 #ifdef DEBUG_MOTOR_DRIVER
-void MotorDriver::ledOn() {	sbi(PORTB, 4);}
-void MotorDriver::ledOff() {	cbi(PORTB, 4);}
-void MotorDriver::ledToggle() {	PORTB ^= 0x04;}
+<<<<<<< Local Changes
+void DualMotorDriver::ledOn() {	sbi(PORTB, 4);}
+void DualMotorDriver::ledOff() {	cbi(PORTB, 4);}
+void DualMotorDriver::ledToggle() {	PORTB ^= 0x04;}
+#endif=======
+void DualMotorDriver::ledOn() {	sbi(PORTB, 4);}
+void DualMotorDriver::ledOff() {	cbi(PORTB, 4);}
+void DualMotorDriver::ledToggle() {	PORTB ^= 0x04;}
 #endif
+// ========== End of class ==========
+
+// I2C receive event
+void receiveEvent(int bytes) {
+	MotorDriver.getData(bytes);
+}
+
+// I2C request event
+void requestEvent() {
+	MotorDriver.sendData();
+}
+
+// Interrupt Service Routine attached to INT0 vector
+ISR(EXT_INT0_vect)
+{
+	PINC & 0x02 ? MotorDriver.M1_encoder++ : MotorDriver.M1_encoder--;
+	
+}
+
+ISR(EXT_INT1_vect)
+{
+	
+}
+
+ISR(WDT_vect)
+{
+	sbi(PORTB, 4);
+}
+
+unsigned long ms;
+
+ISR(TIMER1_OVF_vect)
+{
+	ms++;
+	//PORTB ^= 4;
+	//__asm__ __volatile__ ("wdr");
+}
+
+ISR(TIMER2_COMPA_vect)
+{
+	// Motor 1 updates will go here
+	MotorDriver.updateMotor(&MotorDriver.motor1);
+}
+
+ISR(TIMER2_COMPB_vect)
+{
+	// Motor 2 updates will go here
+}>>>>>>> External Changes
