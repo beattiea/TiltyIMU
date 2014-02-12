@@ -43,9 +43,11 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	pinMode(ENC2B, INPUT);
 	
 	// Enable interrupts for encoders
+	/*
 	sei();			// Enable global interrupts
 	EIMSK = 0x03;	// Enable external interrupt INT0
 	EICRA = 0x05;	// Set interrupt for change
+	*/
 	
 	
 	
@@ -82,7 +84,7 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	TWBR = 72;							// Set up I2C for 100kHz. Forumla is: Bit Rate = 16MHz / (16 + 2 * TWBR)
 #elif I2C_FREQ == 200000
 	TWBR = 32;							// Set up I2C for 200kHz. Forumla is: Bit Rate = 16MHz / (16 + 2 * TWBR)
-#else I2C_FREQ
+#else
 	TWBR = 12;							// Set up I2C for 400kHz. Forumla is: Bit Rate = 16MHz / (16 + 2 * TWBR)
 #endif
 	
@@ -113,6 +115,8 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	ramping_rate = 5;
 	
 	M1_control = DEFAULT_M1_CONTROL;
+	
+	ledOn();
 }
 
 DualMotorDriver::~DualMotorDriver() 
@@ -190,7 +194,7 @@ void DualMotorDriver::sendData()
 			case m1_rate: Wire.write((uint8_t*)motor1.cur_rate, 4); break;
 			case m1_target_rate: Wire.write((uint8_t*)motor1.targ_rate, 4); break;
 			case led: ledToggle(); break;
-			case 127: Wire.write(TCCR0A);
+			case 127: Wire.write(TCCR2B);
 		}
 	}
 	else
@@ -381,7 +385,7 @@ void receiveEvent(int bytes) {
 void requestEvent() {
 	MotorDriver.sendData();
 }
-
+/*
 // Interrupt Service Routine attached to INT0 vector
 ISR(EXT_INT0_vect)
 {
@@ -393,7 +397,7 @@ ISR(EXT_INT1_vect)
 {
 	PORTB ^= 0x04;
 }
-
+*/
 ISR(WDT_vect)
 {
 	sbi(PORTB, 4);
@@ -412,6 +416,7 @@ ISR(TIMER2_COMPA_vect)
 {
 	// Motor 1 updates will go here
 	MotorDriver.updateMotor(&MotorDriver.motor1);
+	PORTB ^= 0x04;
 }
 
 ISR(TIMER2_COMPB_vect)

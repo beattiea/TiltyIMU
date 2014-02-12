@@ -24,3 +24,5 @@ Max motor PWM actually yields an 98% duty cycle signal, not true 100%
 Encoders are counting WAY faster than they should be for some unknown reason
 
 Timer1 not working at all (~61 Hz when it should be 1000)
+
+Disable internal I2C pullups
