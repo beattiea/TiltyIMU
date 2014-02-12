@@ -260,7 +260,7 @@ class DualMotorDriver {
 		
 		uint8_t active_var;
 		void *active_var_ptr;
-		
+
 		// Data union for transferring different 4 byte types to/from data register
 		union data_union {
 			uint8_t bytes[4];

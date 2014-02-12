@@ -42,6 +42,13 @@ DualMotorDriver::DualMotorDriver() : m1Encoder(ENC1A, ENC1B), m2Encoder(ENC2B, E
 	pinMode(ENC2A, INPUT);
 	pinMode(ENC2B, INPUT);
 	
+	// Enable interrupts for encoders
+	sei();			// Enable global interrupts
+	EIMSK = 0x03;	// Enable external interrupt INT0
+	EICRA = 0x05;	// Set interrupt for change
+	
+	
+	
 #ifdef ENABLE_WATCHDOG_TIMER
 	// Check for reset problems
 	if (MCUSR & (WDRF | BORF)) { }
@@ -373,6 +380,18 @@ void receiveEvent(int bytes) {
 // I2C request event
 void requestEvent() {
 	MotorDriver.sendData();
+}
+
+// Interrupt Service Routine attached to INT0 vector
+ISR(EXT_INT0_vect)
+{
+	PINC & 0x02 ? MotorDriver.M1_encoder++ : MotorDriver.M1_encoder--;
+	PORTB ^= 0x04;
+}
+
+ISR(EXT_INT1_vect)
+{
+	PORTB ^= 0x04;
 }
 
 ISR(WDT_vect)
