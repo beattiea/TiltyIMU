@@ -267,8 +267,8 @@ class DualMotorDriver {
 		// Motor control register bit values
 		static const uint8_t DIRECTION = 0x01;// Sets motor direction.
 		static const uint8_t BRAKE = 0x02;// Motor brake/cost. 1 brakes, 0 coasts.
-		static const uint8_t RAMPING = 0x04;// Motor power ramping, only useful when not using rotation rate control
-		static const uint8_t RPM = 0x08;// Sets whether to use rotation rate or power control (0 uses power, 1 uses rotation which requires encoders)
+		static const uint8_t SPEED = 0x04;// Enables/Disables automatic speed control
+		static const uint8_t MODE = 0x08;// Sets speed control type. Ramping power or RPM control
 		static const uint8_t ENCODER = 0x10;// Sets whether to enable the encoder
 		static const uint8_t CURRENT = 0x20;// Sets whether to read motor currents or not
 		static const uint8_t ENCD = 0x20;// Set to 1 when new encoder data is available

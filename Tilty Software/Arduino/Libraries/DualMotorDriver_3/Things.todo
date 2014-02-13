@@ -3,6 +3,8 @@ Variable register values need to be re-worked to represent which need to be in u
 
 Change RAMPING and RPM settings to be speed control enable and speed control type select
 
+Interrupts could be more efficient (arduino goes through an if statement before running the function)
+
 
 
 ========== Features ==========
@@ -15,8 +17,10 @@ Watchdog checking/handling code (setup works just fine)
 
 
 ========== Fixes ==========
-Needs default register values defined
+Needs default register values redefined
 
 Max motor PWM actually yields an 98% duty cycle signal, not true 100%
 
 delayMillis() timing doesn't work (time interrupt triggers, but counter doesn't seem to increment properly)
+
+Needs to reset P, I, and D when switching between RPM and power controlled modes

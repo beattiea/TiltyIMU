@@ -253,7 +253,7 @@ inline void DualMotorDriver::updateMotorRPM(Motor *motor)
 	*motor->PID_I += PID_kI * (*motor->targ_rate - *motor->cur_rate);
 	*motor->PID_D = PID_kD * (old_rate - *motor->cur_rate);
 	
-	*motor->cur_pwr = (uint8_t)(*motor->PID_P + *motor->PID_I + *motor->PID_D);
+	*motor->cur_pwr = constrain((*motor->PID_P + *motor->PID_I + *motor->PID_D), 0, 255);
 	setMotorPWM(motor);
 }
 
