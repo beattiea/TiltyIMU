@@ -1,16 +1,12 @@
 ========== Cleanup ==========
 Variable register values need to be re-worked to represent which need to be in updated_vars (and so updated post I2C message) and which can be updated on-the-fly (so as to remove them from updated_vars)
 
-Change RAMPING and RPM settings to be speed control enable and speed control type select
-
 Interrupts could be more efficient (arduino goes through an if statement before running the function)
 
 
 
 ========== Features ==========
 Add a "kick" of higher power when going from <min_power to any value to get the motor turning
-
-Add decreasing power for direction changes when ramping is on
 
 Watchdog checking/handling code (setup works just fine)
 
@@ -24,3 +20,8 @@ Max motor PWM actually yields an 98% duty cycle signal, not true 100%
 delayMillis() timing doesn't work (time interrupt triggers, but counter doesn't seem to increment properly)
 
 Needs to reset P, I, and D when switching between RPM and power controlled modes
+
+PID tuninig needs serious work, has a tendency to exceed limits with medium-large changes in rate.
+PID also has a tendency to run away when changing direction between values > ~75
+
+Check that motor 2 turns positive when in the same direction setting as motor 1, or else PID direction code will break

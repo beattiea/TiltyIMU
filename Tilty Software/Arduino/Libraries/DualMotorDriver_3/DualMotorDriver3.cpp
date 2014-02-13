@@ -86,7 +86,6 @@ DualMotorDriver::DualMotorDriver()
 	PID_kD = DEFAULT_PID_KD;
 	
 	// Setup motor structs
-	//Motor motor2 = {&M2_control, &M2_power, &M2_encoder, &M2_rate, &M2_current_power, &M2_scaled_power, &m2Encoder, (uint8_t*)&OCR0B, 0x80, M2, M2A, M2B};
 	motor1.control = &M1_control;
 	motor1.power = &M1_power;
 	motor1.enc_val = &M1_encoder;
@@ -198,10 +197,13 @@ void DualMotorDriver::sendData()
 			case m1_power: Wire.write(motor1.power, 1); break;
 			case m1_encoder: Wire.write((uint8_t*)motor1.enc_val, 4); break;
 			case m1_rate: Wire.write((uint8_t*)motor1.cur_rate, 4); break;
-			case m1_target_rate: Wire.write((uint8_t*)motor1.targ_rate, 4); break;
+			case m1_target_rate: Wire.write((uint8_t*)motor1.targ_rate, 2); break;
 			case led: ledToggle(); break;
-			case ms: Wire.write((uint8_t*)MS, 4);
-			case 127: Wire.write(TCCR1A);
+			case ms: Wire.write((uint8_t*)MS, 4); break;
+			case m1_p: Wire.write((uint8_t*)motor1.PID_P, 4); break;
+			case m1_i: Wire.write((uint8_t*)motor1.PID_I, 4); break;
+			case m1_d: Wire.write((uint8_t*)motor1.PID_D, 4); break;
+			case 127: Wire.write(TCCR1A); break;
 		}
 	}
 	else
@@ -218,12 +220,7 @@ void DualMotorDriver::sendData()
 void DualMotorDriver::updateVars()
 {
 	if (updated_vars & (1 << M1_CONTROL))	updateMotorControl(&motor1);
-	if (updated_vars & (1 << M1_POWER)) 
-	{
-		M1_power ? M1_scaled_power = map(M1_power, 0, 255, min_power, 255) : M1_scaled_power = 0;
-		//if (M1_control & RPM) updateMotorRPM(&motor1);
-		updateMotorPower(&motor1);
-	}
+	if (updated_vars & (1 << M1_POWER)) 	updateMotor(&motor1);
 	
 	updated_vars = 0;
 }
@@ -231,15 +228,34 @@ void DualMotorDriver::updateVars()
 
 void DualMotorDriver::updateMotor(Motor *motor)
 {
-	if (*motor->control & RPM) updateMotorRPM(motor);
-	setMotorDirection(motor);
-	if (*motor->control & RAMPING) updateMotorPower(motor);
+	if (*motor->control & SPEED) 
+	{
+		if (*motor->control & MODE) { updateMotorRPM(motor);}
+		else 
+		{ 
+			*motor->power ? *motor->scaled_pwr = map(*motor->power, 0, 255, min_power, 255) : *motor->scaled_pwr = 0;
+			updateMotorPower(motor);
+		}
+	}
+	else if (*motor->control & MODE)
+	{
+		*motor->power ? *motor->scaled_pwr = map(*motor->power, 0, 255, min_power, 255) : *motor->scaled_pwr = 0;
+		updateMotorPower(motor);
+	}
+	else 
+	{
+		*motor->cur_pwr = *motor->power;
+		setMotorPWM(motor);
+	}
 }
 
 
 inline void DualMotorDriver::updateMotorControl(Motor *motor)
 {
-	setMotorDirection(motor);
+	if (!(*motor->control & SPEED))
+	{
+		setMotorDirection(motor);
+	}
 	setTimerB(motor);
 }
 
@@ -253,22 +269,37 @@ inline void DualMotorDriver::updateMotorRPM(Motor *motor)
 	*motor->PID_I += PID_kI * (*motor->targ_rate - *motor->cur_rate);
 	*motor->PID_D = PID_kD * (old_rate - *motor->cur_rate);
 	
-	*motor->cur_pwr = constrain((*motor->PID_P + *motor->PID_I + *motor->PID_D), 0, 255);
+	*motor->cur_pwr = constrain(abs(*motor->PID_P + *motor->PID_I + *motor->PID_D), min_power, 255);
+	
+	if (*motor->targ_rate < 0 && *motor->cur_rate < 5 && !(*motor->control & DIRECTION))
+	{
+		*motor->control |= DIRECTION;
+		setMotorDirection(motor);
+	}
+	else if (*motor->targ_rate > 0 && *motor->cur_rate > -5 && *motor->control & DIRECTION)
+	{
+		*motor->control &= ~DIRECTION;
+		setMotorDirection(motor);
+	}
 	setMotorPWM(motor);
 }
 
 
 inline void DualMotorDriver::updateMotorPower(Motor *motor)
 {
-	if (*motor->control & RAMPING)
+	if (*motor->control & SPEED)
 	{
-		if (*motor->cur_pwr < *motor->scaled_pwr) *motor->cur_pwr += ramping_rate;
-		else if (*motor->cur_pwr > *motor->scaled_pwr) *motor->cur_pwr -= ramping_rate;
-		setMotorPWM(motor);
-	}
-	else
-	{
-		*motor->cur_pwr = *motor->scaled_pwr;
+		if ((PIND & 1 << motor->high_pin && *motor->control & DIRECTION) || (!(PIND & 1 << motor->high_pin) && !(*motor->control & DIRECTION)))// Check to see if motor is turning the same direction as indicated by motor control register
+		{
+			if (*motor->cur_pwr < *motor->scaled_pwr) *motor->cur_pwr = constrain(*motor->cur_pwr + ramping_rate, min_power, 255);
+			else if (*motor->cur_pwr > *motor->scaled_pwr) *motor->cur_pwr = constrain(*motor->cur_pwr - ramping_rate, min_power, 255);
+		}
+		else
+		{
+			*motor->cur_pwr = constrain(*motor->cur_pwr - ramping_rate, min_power, 255);
+			if (*motor->cur_pwr == min_power) setMotorDirection(motor);
+		}
+		
 		setMotorPWM(motor);
 	}
 }
@@ -328,7 +359,7 @@ inline void DualMotorDriver::setMotorBraking(Motor *motor)
 // Enables and disables the interrupts that control motor and encoder updates
 inline void DualMotorDriver::setTimerB(Motor *motor)
 {
-	if (*motor->control & (RAMPING | RPM))// Enable the interrupt routine that updates the given motor
+	if (*motor->control & SPEED)// Enable the interrupt routine that updates the given motor
 	{
 	    TCCR2B = 0x00;			// Disbale Timer2 while we set it up
 		switch (motor->speed_pin)
@@ -375,8 +406,8 @@ void DualMotorDriver::wireToVar(float *var)
 
 
 #ifdef DEBUG_MOTOR_DRIVER
-void DualMotorDriver::ledOn() {	sbi(PORTB, 4);}
-void DualMotorDriver::ledOff() {	cbi(PORTB, 4);}
+void DualMotorDriver::ledOn() {	sbi(PORTB, 2);}
+void DualMotorDriver::ledOff() {	cbi(PORTB, 2);}
 void DualMotorDriver::ledToggle() {	PORTB ^= 0x04;}
 #endif
 // ========== End of class ==========

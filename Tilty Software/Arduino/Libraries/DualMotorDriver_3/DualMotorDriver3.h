@@ -57,9 +57,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#define m1_rate 105
 	#define m1_target_rate 106
 	#define ms 107
-	#define m1_p 
-	#define m1_i 
-	#define m1_d 
+	#define m1_p 108
+	#define m1_i 109
+	#define m1_d 110
 	#define m2_power 
 	#define m2_p 
 	#define m2_i 
@@ -137,8 +137,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // ========== Default Register Values ==========
-#define DEFAULT_M1_CONTROL		ENCODER | RAMPING | BRAKE
-#define DEFAULT_M2_CONTROL		DIRECTION | ENCODER | RAMPING
+#define DEFAULT_M1_CONTROL		ENCODER | BRAKE | SPEED
+#define DEFAULT_M2_CONTROL		DIRECTION | ENCODER | MODE
 #define DEFAULT_M1_POWER		0
 #define DEFAULT_M2_POWER		0
 #define DEFAULT_M1_ENCODER		0
@@ -273,6 +273,12 @@ class DualMotorDriver {
 		static const uint8_t CURRENT = 0x20;// Sets whether to read motor currents or not
 		static const uint8_t ENCD = 0x20;// Set to 1 when new encoder data is available
 		static const uint8_t CURD = 0x40;// Set to 1 when new current sense data is available
+		//======== Motor control type settings ========
+		//	|  SPEED  |  MODE  |  RESULT
+		//  |    0    |    0   |  No automatic control, power written to motor power register scaled via the min_power register and then directly applied to PWM
+		//  |    0    |    1   |  No automatic power smoothing, but power is mapped 0%-100% to min_power-255
+		//  |    1    |    0   |  Automatic power ramping for smoother transitions between speeds
+		//  |    1    |    1   |  RPM control via the motor rate registers, will automatically enable encoders
 		
 		// Active variable values, control which variable is modified when an I2C write is performed
 		static const uint8_t M1_CONTROL = 0x00;
