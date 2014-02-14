@@ -46,8 +46,7 @@ DualMotorDriver::DualMotorDriver()
 	// Enable interrupts for encoders
 	attachInterrupt(1, readEncoder1, RISING);
 	attachInterrupt(0, readEncoder2, RISING);
-	//EIMSK = 0x03;	// Enable both external interrupts
-	//EICRA = 0x05;	// Set interrupt for change
+	EICRA = ENCODER_RESOLUTION;	// Set interrupt for change
 	
 	
 	
@@ -203,7 +202,7 @@ void DualMotorDriver::sendData()
 			case m1_p: Wire.write((uint8_t*)motor1.PID_P, 4); break;
 			case m1_i: Wire.write((uint8_t*)motor1.PID_I, 4); break;
 			case m1_d: Wire.write((uint8_t*)motor1.PID_D, 4); break;
-			case 127: Wire.write(TCCR1A); break;
+			case 127: Wire.write(EICRA); break;
 		}
 	}
 	else
@@ -252,10 +251,15 @@ void DualMotorDriver::updateMotor(Motor *motor)
 
 inline void DualMotorDriver::updateMotorControl(Motor *motor)
 {
-	if (!(*motor->control & SPEED))
+	if (!(*motor->control & SPEED)) setMotorDirection(motor);
+	if ((*motor->control & 0x0C) != 12)// If not in RPM mode, reset the PID values and target rate setting
 	{
-		setMotorDirection(motor);
+		*motor->PID_P = 0;
+		*motor->PID_I = 0;
+		*motor->PID_D = 0;
+		*motor->targ_rate = 0;
 	}
+	
 	setTimerB(motor);
 }
 
@@ -403,13 +407,6 @@ void DualMotorDriver::wireToVar(float *var)
 {
 	*var = ((int32_t)Wire.read() << 24) | ((int32_t)Wire.read() << 16) | (Wire.read() << 8) | Wire.read();
 }
-
-
-#ifdef DEBUG_MOTOR_DRIVER
-void DualMotorDriver::ledOn() {	sbi(PORTB, 2);}
-void DualMotorDriver::ledOff() {	cbi(PORTB, 2);}
-void DualMotorDriver::ledToggle() {	PORTB ^= 0x04;}
-#endif
 // ========== End of class ==========
 
 // I2C receive event
@@ -430,7 +427,7 @@ void readEncoder1()
 
 void readEncoder2()
 {
-	PINC & 0x02 ? MotorDriver.M2_encoder++ : MotorDriver.M2_encoder--;
+	PINC & 0x02 ? MotorDriver.M2_encoder-- : MotorDriver.M2_encoder++;
 }
 
 void delayMillis(unsigned long time)
@@ -467,3 +464,11 @@ ISR(TIMER2_COMPB_vect)
 {
 	// Motor 2 updates will go here
 }
+
+
+
+#ifdef DEBUG_MOTOR_DRIVER
+void ledOn() {	sbi(PORTB, 2);}
+void ledOff() {	cbi(PORTB, 2);}
+void ledToggle() {	PORTB ^= 0x04;}
+#endif

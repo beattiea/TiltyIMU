@@ -31,6 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define I2C_FREQ 400000					// Enable to set I2C to 400kHz frequency
 #define REFRESH_FREQ 100 				// Millisecond delay between uencoder and motor updates if in RPM control mode, cannot be less than 62 and should not be greater than 1561 (technically it can be, but don't do it)
 #define ENABLE_WATCHDOG_TIMER			// Watchdog timer will cause a system reset if any functions freeze, preventing the motor driver from freezing for longer than the watchdog timer limit (which is set below)
+#define ENCODER_RESOLUTION SINGLE		// Change to DOUBLE to read the rising and falling edge of the encoder, which doubles the resolution, but also the CPU load
 // ========== Code Settings ==========
 
 
@@ -96,6 +97,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENC2B 2 // Interrupt pin
 // ========== Encoder pins ==========
 
+// ========== Encoder resolutions ==========
+#define SINGLE 0x0F
+#define DOUBLE 0x05
+// ========== Encoder resolutions ==========
+
 
 // ========== LED pin ==========
 #define LED 10
@@ -104,12 +110,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ========== Default Motor Characteristics ==========
 #ifndef TICKS_PER_REV
-	#define TICKS_PER_REV 334 // Encoder pulses per axle revolution
+#define TICKS_PER_REV 334 // Encoder pulses per axle revolution
 #endif
 #ifndef GEAR_RATIO
 	#define GEAR_RATIO 9.28	// Motor gear ratio, set to 1 if encoder is on gearbox output instead of motor output
 #endif
-#define TICKS_PER_ROT ((float)TICKS_PER_REV * GEAR_RATIO) // Encoder pulses per rotation of the output shaft
+#if ENCODER_RESOLUTION == SINGLE
+	#define ENCODER_MULTIPLIER 1
+#elif ENCODER_RESOLUTION == DOUBLE
+	#define ENCODER_MULTIPLIER 2
+#endif
+#define TICKS_PER_ROT ((float)TICKS_PER_REV * GEAR_RATIO) * ENCODER_MULTIPLIER // Encoder pulses per rotation of the output shaft
 // ========== Default Motor Characteristics ==========
 
 
@@ -172,19 +183,19 @@ class DualMotorDriver {
 		void updateVars();
 		
 		// Motor status/control variables
-		uint8_t M1_control;
-		uint8_t M2_control;
-		uint8_t M1_power;
-		uint8_t M2_power;
-		int32_t M1_encoder;
-		int32_t M2_encoder;
-		float M1_rate;		// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
-		float M2_rate;		// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
-		uint8_t M1_current;
+		uint8_t M1_control;		// Motor 1 control byte
+		uint8_t M2_control;		// Motor 2 control byte
+		uint8_t M1_power;		// Motor 1 set power value
+		uint8_t M2_power;		// Motor 2 set power value
+		int32_t M1_encoder;		// Motor 1 current encoder value
+		int32_t M2_encoder;		// Motor 2 current encoder value
+		float M1_rate;			// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
+		float M2_rate;			// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
+		uint8_t M1_current;		// 
 		uint8_t M2_current;
-		float PID_kP;
-		float PID_kI;
-		float PID_kD;
+		float PID_kP;			// PID D scalar for RPM control
+		float PID_kI;			// PID D scalar for RPM control
+		float PID_kD;			// PID D scalar for RPM control
 		uint32_t ticks_rev;
 		uint8_t min_power;// Minimum PWM to apply to the motor
 		uint8_t ramping_rate;// Amount to add/subtract each time ramping code is checked
@@ -231,11 +242,6 @@ class DualMotorDriver {
 		void updateMotor(Motor *motor);
 		
 	private:
-#ifdef DEBUG_MOTOR_DRIVER
-		void ledOn();
-		void ledOff();
-		void ledToggle();
-#endif
 		inline void updateMotorControl(Motor *motor);
 		inline void updateMotorRPM(Motor *motor);
 		inline void updateMotorPower(Motor *motor);
@@ -255,11 +261,13 @@ class DualMotorDriver {
 		void *active_var_ptr;
 
 		// Data union for transferring different 4 byte types to/from data register
+		/*
 		union data_union {
 			uint8_t bytes[4];
 			uint32_t int32;
 			float float32;
 		} data_union;
+		*/
 		
 		// Counter variable for timing
 		uint8_t count;
@@ -271,11 +279,10 @@ class DualMotorDriver {
 		static const uint8_t MODE = 0x08;// Sets speed control type. Ramping power or RPM control
 		static const uint8_t ENCODER = 0x10;// Sets whether to enable the encoder
 		static const uint8_t CURRENT = 0x20;// Sets whether to read motor currents or not
-		static const uint8_t ENCD = 0x20;// Set to 1 when new encoder data is available
 		static const uint8_t CURD = 0x40;// Set to 1 when new current sense data is available
 		//======== Motor control type settings ========
 		//	|  SPEED  |  MODE  |  RESULT
-		//  |    0    |    0   |  No automatic control, power written to motor power register scaled via the min_power register and then directly applied to PWM
+		//  |    0    |    0   |  No automatic control, power is written directly to PWM
 		//  |    0    |    1   |  No automatic power smoothing, but power is mapped 0%-100% to min_power-255
 		//  |    1    |    0   |  Automatic power ramping for smoother transitions between speeds
 		//  |    1    |    1   |  RPM control via the motor rate registers, will automatically enable encoders
@@ -310,5 +317,12 @@ void readEncoder2();
 void delayMillis(unsigned long time);
 
 extern volatile unsigned long MS;
+
+
+#ifdef DEBUG_MOTOR_DRIVER
+		void ledOn();
+		void ledOff();
+		void ledToggle();
+#endif
 
 #endif

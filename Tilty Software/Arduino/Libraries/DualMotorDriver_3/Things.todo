@@ -3,12 +3,16 @@ Variable register values need to be re-worked to represent which need to be in u
 
 Interrupts could be more efficient (arduino goes through an if statement before running the function)
 
+Set it so that a write to the rate register updates the target rate in RPM mode, but the register always reads as the actual rate of the motors.
+
 
 
 ========== Features ==========
 Add a "kick" of higher power when going from <min_power to any value to get the motor turning
 
 Watchdog checking/handling code (setup works just fine)
+
+Find something to fill the last spot in motor control register
 
 
 
@@ -24,4 +28,6 @@ Needs to reset P, I, and D when switching between RPM and power controlled modes
 PID tuninig needs serious work, has a tendency to exceed limits with medium-large changes in rate.
 PID also has a tendency to run away when changing direction between values > ~75
 
-Check that motor 2 turns positive when in the same direction setting as motor 1, or else PID direction code will break
+Check that motor 2 turns positive when in the same direction setting as motor 1, or else PID direction code will break (semi-tested, doesn't seem to so the code is reversed for encoder 2)
+
+Double encoder resolution setting doesn't work, each tick seems to cancel out the previous one
