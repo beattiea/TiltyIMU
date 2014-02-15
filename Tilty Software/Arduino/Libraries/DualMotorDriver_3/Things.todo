@@ -28,8 +28,6 @@ delayMillis() timing doesn't work (time interrupt triggers, but counter doesn't 
 PID tuninig needs serious work, has a tendency to exceed limits with medium-large changes in rate.
 PID also has a tendency to run away when changing direction between values > ~75
 
-PID is not being properly reset on mode change apparently
-
 Check that motor 2 turns positive when in the same direction setting as motor 1, or else PID direction code will break (semi-tested, doesn't seem to so the code is reversed for encoder 2)
 
 Double encoder resolution setting doesn't work, each tick seems to cancel out the previous one

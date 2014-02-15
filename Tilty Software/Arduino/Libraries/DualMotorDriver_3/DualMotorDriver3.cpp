@@ -84,8 +84,8 @@ DualMotorDriver::DualMotorDriver()
 	M2 = (Pin){(uint8_t*)&PORTD, (uint8_t*)&PIND, 1<<6, 6, 6, 0x04};
 	M1H = (Pin){(uint8_t*)&PORTD, (uint8_t*)&PIND, 1<<7, 7, 7, 0x00};
 	M1L = (Pin){(uint8_t*)&PORTB, (uint8_t*)&PINB, 1<<0, 0, 8, 0x00};
-	M2H = (Pin){(uint8_t*)&PORTD, (uint8_t*)&PIND, 1<<4, 4, 4, 0x00};
-	M2L = (Pin){(uint8_t*)&PORTB, (uint8_t*)&PINB, 1<<1, 9, 9, 0x00};
+	M2H = (Pin){(uint8_t*)&PORTB, (uint8_t*)&PINB, 1<<1, 9, 9, 0x00};
+	M2L = (Pin){(uint8_t*)&PORTD, (uint8_t*)&PIND, 1<<4, 4, 4, 0x00};
 	
 	// Setup motor structs
 	motor1.control = &M1_control;
@@ -278,6 +278,28 @@ void DualMotorDriver::updateVars()
 }
 
 
+inline void DualMotorDriver::updateMotorControl(Motor *motor)
+{
+	if (!(*motor->control & SPEED)) setMotorDirection(motor);
+	if ((*motor->control & 0x0C) != 12)// If not in RPM mode, reset the PID values and target rate setting
+	{
+		*motor->PID_P = 0;
+		*motor->PID_I = 0;
+		*motor->PID_D = 0;
+		*motor->targ_rate = 0;
+		updateMotor(motor);
+	}
+	else // If in RPM mode, disable braking and enable the encoder
+	{
+		*motor->control &= ~BRAKE;
+		*motor->control |= ENCODER;
+		setMotorDirection(motor);
+	}
+	
+	setTimerB(motor);
+}
+
+
 void DualMotorDriver::updateMotor(Motor *motor)
 {
 	if (*motor->control & SPEED) 
@@ -299,21 +321,11 @@ void DualMotorDriver::updateMotor(Motor *motor)
 		*motor->cur_pwr = *motor->power;
 		setMotorPWM(motor);
 	}
-}
-
-
-inline void DualMotorDriver::updateMotorControl(Motor *motor)
-{
-	if (!(*motor->control & SPEED)) setMotorDirection(motor);
-	if ((*motor->control & 0x0C) != 12)// If not in RPM mode, reset the PID values and target rate setting
-	{
-		*motor->PID_P = 0;
-		*motor->PID_I = 0;
-		*motor->PID_D = 0;
-		*motor->targ_rate = 0;
-	}
 	
-	setTimerB(motor);
+	if (*motor->control & ENCODER)
+	{
+		updateEncoder(motor);
+	}
 }
 
 
@@ -326,14 +338,16 @@ inline void DualMotorDriver::updateMotorRPM(Motor *motor)
 	*motor->PID_I += PID_kI * (*motor->targ_rate - *motor->cur_rate);
 	*motor->PID_D = PID_kD * (old_rate - *motor->cur_rate);
 	
-	*motor->cur_pwr = constrain(abs(*motor->PID_P + *motor->PID_I + *motor->PID_D), min_power, 255);
+	float PID_power = *motor->PID_P + *motor->PID_I + *motor->PID_D;
 	
-	if (*motor->targ_rate < 0 && *motor->cur_rate < 5 && !(*motor->control & DIRECTION))
+	*motor->cur_pwr = constrain(abs(PID_power), min_power, 255);
+
+	if (PID_power < 0 && !(*motor->control & DIRECTION))
 	{
 		*motor->control |= DIRECTION;
 		setMotorDirection(motor);
 	}
-	else if (*motor->targ_rate > 0 && *motor->cur_rate > -5 && *motor->control & DIRECTION)
+	else if (PID_power > 0 && *motor->control & DIRECTION)
 	{
 		*motor->control &= ~DIRECTION;
 		setMotorDirection(motor);
@@ -344,16 +358,22 @@ inline void DualMotorDriver::updateMotorRPM(Motor *motor)
 
 inline void DualMotorDriver::updateMotorPower(Motor *motor)
 {
-	if (!(digitalRead(motor->high_pin->number) ^ (*motor->control & DIRECTION)))// Check to see if motor is turning the same direction as indicated by motor control register.
-		//((*motor->high_pin->out_port ^ (*motor->control << motor->high_pin->bit)) & motor->high_pin->bit_mask)// This has potential to be a far cleaner solution, by removing the digitalRead(), but it doesn't work!
-	{
-		if (*motor->cur_pwr < *motor->scaled_pwr) *motor->cur_pwr = constrain(*motor->cur_pwr + ramping_rate, min_power, *motor->scaled_pwr);
-		else if (*motor->cur_pwr > *motor->scaled_pwr) *motor->cur_pwr = constrain(*motor->cur_pwr - ramping_rate, *motor->scaled_pwr, 255);
+	if (*motor->power) {
+		if (!(digitalRead(motor->high_pin->number) ^ (*motor->control & DIRECTION)))// Check to see if motor is turning the same direction as indicated by motor control register.
+			//((*motor->high_pin->out_port ^ (*motor->control << motor->high_pin->bit)) & motor->high_pin->bit_mask)// This has potential to be a far cleaner solution, by removing the digitalRead(), but it doesn't work!
+		{
+			if (*motor->cur_pwr < *motor->scaled_pwr) *motor->cur_pwr = constrain(*motor->cur_pwr + ramping_rate, min_power, *motor->scaled_pwr);
+			else if (*motor->cur_pwr > *motor->scaled_pwr) *motor->cur_pwr = constrain(*motor->cur_pwr - ramping_rate, *motor->scaled_pwr, 255);
+		}
+		else // If motor direction and control direction differ, slow down to minimum power then change direction and continue as normal
+		{
+			*motor->cur_pwr = constrain(*motor->cur_pwr - ramping_rate, min_power, 255);
+			if (*motor->cur_pwr == min_power) setMotorDirection(motor);
+		}
 	}
-	else // If motor direction and control direction differ, slow down to minimum power then change direction and continue as normal
+	else
 	{
-		*motor->cur_pwr = constrain(*motor->cur_pwr - ramping_rate, min_power, 255);
-		if (*motor->cur_pwr == min_power) setMotorDirection(motor);
+		*motor->cur_pwr = 0;
 	}
 	setMotorPWM(motor);
 }
@@ -380,7 +400,7 @@ inline void DualMotorDriver::setMotorPWM(Motor *motor)
 // More efficent digitalWrite for just the motor direction/braking pins
 inline void DualMotorDriver::setMotorDirection(Motor *motor)
 {
-	if (~(*motor->control & BRAKE) && *motor->cur_pwr != 0)
+	if (~(*motor->control & BRAKE))
 	{
 		if (*motor->control & DIRECTION)
 		{
@@ -410,13 +430,14 @@ inline void DualMotorDriver::setMotorBraking(Motor *motor)
 	{
 		//cbi(PORTD, motor->speed_pin);
 		*motor->speed_pin->out_port &= ~motor->speed_pin->bit_mask;
+		setMotorDirection(motor);
 	}
 }
 
 // Enables and disables the interrupts that control motor and encoder updates
 inline void DualMotorDriver::setTimerB(Motor *motor)
 {
-	if (*motor->control & SPEED)// Enable the interrupt routine that updates the given motor
+	if (*motor->control & (SPEED | ENCODER))// Enable the interrupt routine that updates the given motor
 	{
 		TCCR2B = 0x00;			// Disbale Timer2 while we set it up
 		TIMSK2 |= motor->speed_pin->TIMSK2_mask;
@@ -440,7 +461,7 @@ void DualMotorDriver::wireToVar(uint8_t *var)
 // Takes a pointer to a variable and reads a new value into it from I2C
 void DualMotorDriver::wireToVar(uint16_t *var)
 {
-	*var = (Wire.read() << 8) | Wire.read();
+	*var = ((int16_t)Wire.read() << 8) | Wire.read();
 }
 
 // Takes a pointer to a variable and reads a new value into it from I2C

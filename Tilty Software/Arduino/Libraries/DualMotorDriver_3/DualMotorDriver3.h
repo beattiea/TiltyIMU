@@ -164,9 +164,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEFAULT_M2_CURRENT		0
 #define DEFAULT_M1_RATE			0
 #define DEFAULT_M2_RATE			0
-#define DEFAULT_PID_KP			0.5
-#define DEFAULT_PID_KI			0.033
-#define DEFAULT_PID_KD			0.1
+#define DEFAULT_PID_KP			0.75
+#define DEFAULT_PID_KI			0.05
+#define DEFAULT_PID_KD			0.25
 #define DEFAULT_MIN_POWER		55
 #define DEFAULT_TICKS_REV		1336
 #define DEFAULT_LOOP_TIME		5
@@ -292,7 +292,7 @@ class DualMotorDriver {
 		uint8_t count;
 		
 		// Motor control register bit values
-		static const uint8_t DIRECTION = 0x01;// Sets motor direction.
+		static const uint8_t DIRECTION = 0x01;// Sets motor direction. 0 is forwards, 1 is reverse.
 		static const uint8_t BRAKE = 0x02;// Motor brake/cost. 1 brakes, 0 coasts.
 		static const uint8_t SPEED = 0x04;// Enables/Disables automatic speed control
 		static const uint8_t MODE = 0x08;// Sets speed control type. Ramping power or RPM control
