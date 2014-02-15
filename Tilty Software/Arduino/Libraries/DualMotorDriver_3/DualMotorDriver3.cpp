@@ -27,13 +27,13 @@ DualMotorDriver MotorDriver;
 DualMotorDriver::DualMotorDriver()
 {	
 	// Initialize all of the I/O pins
-	pinMode(M1, OUTPUT);	digitalWrite(M1, LOW);
-	pinMode(M2, OUTPUT);	digitalWrite(M2, LOW);
+	pinMode(5, OUTPUT);	digitalWrite(5, LOW);// M1
+	pinMode(6, OUTPUT);	digitalWrite(6, LOW);// M2
 	
-	pinMode(M1A, OUTPUT);	digitalWrite(M1A, LOW);
-	pinMode(M1B, OUTPUT);	digitalWrite(M1B, HIGH);
-	pinMode(M2A, OUTPUT);	digitalWrite(M2A, LOW);
-	pinMode(M2B, OUTPUT);	digitalWrite(M2B, HIGH);
+	pinMode(7, OUTPUT);	digitalWrite(7, LOW);// M1H
+	pinMode(8, OUTPUT);	digitalWrite(8, HIGH);// M1L
+	pinMode(4, OUTPUT);	digitalWrite(4, LOW);// M2H
+	pinMode(9, OUTPUT);	digitalWrite(9, HIGH);// M2L
 	
 	pinMode(LED, OUTPUT);	digitalWrite(LED, LOW);
 	
@@ -79,10 +79,13 @@ DualMotorDriver::DualMotorDriver()
 	digitalWrite(A4, LOW);				// Disable internal pull-ups
 	digitalWrite(A5, LOW);				// Disable internal pull-ups
 	
-	min_power = DEFAULT_MIN_POWER;
-	PID_kP = DEFAULT_PID_KP;
-	PID_kI = DEFAULT_PID_KI;
-	PID_kD = DEFAULT_PID_KD;
+	// Setup pin structs
+	M1 = (Pin){(uint8_t*)&PORTD, (uint8_t*)&PIND, 1<<5, 5, 5, 0x02};
+	M2 = (Pin){(uint8_t*)&PORTD, (uint8_t*)&PIND, 1<<6, 6, 6, 0x04};
+	M1H = (Pin){(uint8_t*)&PORTD, (uint8_t*)&PIND, 1<<7, 7, 7, 0x00};
+	M1L = (Pin){(uint8_t*)&PORTB, (uint8_t*)&PINB, 1<<0, 0, 8, 0x00};
+	M2H = (Pin){(uint8_t*)&PORTD, (uint8_t*)&PIND, 1<<4, 4, 4, 0x00};
+	M2L = (Pin){(uint8_t*)&PORTB, (uint8_t*)&PINB, 1<<1, 9, 9, 0x00};
 	
 	// Setup motor structs
 	motor1.control = &M1_control;
@@ -98,13 +101,39 @@ DualMotorDriver::DualMotorDriver()
 	motor1.old_enc = 0;
 	motor1.OCR0x = (uint8_t*)&OCR0B;
 	motor1.COM0x = 0x20;
-	motor1.speed_pin = M1;
-	motor1.high_pin = M1A;
-	motor1.low_pin = M1B;
+	motor1.speed_pin = &M1;
+	motor1.high_pin = &M1H;
+	motor1.low_pin = &M1L;
+	
+	motor2.control = &M2_control;
+	motor2.power = &M2_power;
+	motor2.enc_val = &M2_encoder;
+	motor2.cur_rate = &M2_rate;
+	motor2.cur_pwr = &M2_current_power;
+	motor2.scaled_pwr = &M2_scaled_power;
+	motor2.targ_rate = &M2_target_rate;
+	motor2.PID_P = &PID_P2;
+	motor2.PID_I = &PID_I2;
+	motor2.PID_D = &PID_D2;
+	motor2.old_enc = 0;
+	motor2.OCR0x = (uint8_t*)&OCR0A;
+	motor2.COM0x = 0x80;
+	motor2.speed_pin = &M2;
+	motor2.high_pin = &M2H;
+	motor2.low_pin = &M2L;
 	
 	ramping_rate = 5;
 	
 	M1_control = DEFAULT_M1_CONTROL;
+	M2_control = DEFAULT_M2_CONTROL;
+	
+	min_power = DEFAULT_MIN_POWER;
+	PID_kP = DEFAULT_PID_KP;
+	PID_kI = DEFAULT_PID_KI;
+	PID_kD = DEFAULT_PID_KD;
+	
+	setTimerB(&motor1);
+	setTimerB(&motor2);
 	
 	sei();			// Enable global interrupts
 }
@@ -153,13 +182,15 @@ uint8_t DualMotorDriver::getData(int bytes)
 		{
 			switch (active_var)
 			{
-				case M1_CONTROL:	wireToVar(&M1_control);  updated_vars |= 1 << active_var;	break;
-				case M2_CONTROL:	wireToVar(&M2_control);	 updated_vars |= 1 << active_var;	break;
-				case M1_POWER: 		wireToVar(&M1_power); 	 updated_vars |= 1 << active_var;	break;
-				case M2_POWER: 		wireToVar(&M2_power);	 updated_vars |= 1 << active_var;	break;
-				case M1_ENCODER: 	wireToVar(&M1_encoder);	 updated_vars |= 1 << active_var;	break;
-				case M1_RATE: 		wireToVar(&M1_rate);	 updated_vars |= 1 << active_var;	break;	
-				case DEVICE_ID: 	TWAR = Wire.read() << 1; updated_vars |= 1 << active_var;	break;
+				case M1_CONTROL:	wireToVar(&M1_control);  				updated_vars |= 1 << active_var;	break;
+				case M2_CONTROL:	wireToVar(&M2_control);	 				updated_vars |= 1 << active_var;	break;
+				case M1_POWER: 		wireToVar(&M1_power); 	 				updated_vars |= 1 << active_var;	break;
+				case M2_POWER: 		wireToVar(&M2_power);	 				updated_vars |= 1 << active_var;	break;
+				case M1_ENCODER: 	wireToVar(&M1_encoder);					updated_vars |= 1 << active_var;	break;
+				case M2_ENCODER: 	wireToVar(&M2_encoder);					updated_vars |= 1 << active_var;	break;
+				case M1_RATE: 		wireToVar((uint16_t*)&M1_target_rate);	updated_vars |= 1 << active_var;	break;
+				case M2_RATE: 		wireToVar((uint16_t*)&M2_target_rate);	updated_vars |= 1 << active_var;	break;
+				case DEVICE_ID: 	TWAR = Wire.read() << 1; 				updated_vars |= 1 << active_var;	break;
 #ifdef DEBUG_MOTOR_DRIVER
 				case 50: wireToVar((uint16_t*)&M1_target_rate); break;
 #endif
@@ -202,7 +233,27 @@ void DualMotorDriver::sendData()
 			case m1_p: Wire.write((uint8_t*)motor1.PID_P, 4); break;
 			case m1_i: Wire.write((uint8_t*)motor1.PID_I, 4); break;
 			case m1_d: Wire.write((uint8_t*)motor1.PID_D, 4); break;
-			case 127: Wire.write(EICRA); break;
+			
+			case m2_scaled_power: Wire.write(motor2.scaled_pwr, 1); break;
+			case m2_current_power: Wire.write(motor2.cur_pwr, 1); break;
+			case m2_power: Wire.write(motor2.power, 1); break;
+			case m2_encoder: Wire.write((uint8_t*)motor2.enc_val, 4); break;
+			case m2_rate: Wire.write((uint8_t*)motor2.cur_rate, 4); break;
+			case m2_target_rate: Wire.write((uint8_t*)motor2.targ_rate, 2); break;
+			case m2_p: Wire.write((uint8_t*)motor2.PID_P, 4); break;
+			case m2_i: Wire.write((uint8_t*)motor2.PID_I, 4); break;
+			case m2_d: Wire.write((uint8_t*)motor2.PID_D, 4); break;
+			
+			case pin1s: Wire.write((uint8_t*)&M1, sizeof(M1)); break;
+			case pin2s: Wire.write((uint8_t*)&M1, sizeof(M2)); break;
+			case pin1H: Wire.write((uint8_t*)&M1, sizeof(M1H)); break;
+			case pin1L: Wire.write((uint8_t*)&M1, sizeof(M1L)); break;
+			case pin2H: Wire.write((uint8_t*)&M1, sizeof(M2H)); break;
+			case pin2L: Wire.write((uint8_t*)&M1, sizeof(M2L)); break;
+			
+			case 199: Wire.write(*motor1.control & DIRECTION); break;
+			case 200: Wire.write(digitalRead(motor1.high_pin->number)); break;
+			case 201: Wire.write(digitalRead(motor1.high_pin->number) ^ (*motor1.control & DIRECTION)); break;
 		}
 	}
 	else
@@ -219,7 +270,9 @@ void DualMotorDriver::sendData()
 void DualMotorDriver::updateVars()
 {
 	if (updated_vars & (1 << M1_CONTROL))	updateMotorControl(&motor1);
+	if (updated_vars & (1 << M2_CONTROL))	updateMotorControl(&motor2);
 	if (updated_vars & (1 << M1_POWER)) 	updateMotor(&motor1);
+	if (updated_vars & (1 << M2_POWER)) 	updateMotor(&motor2);
 	
 	updated_vars = 0;
 }
@@ -238,8 +291,8 @@ void DualMotorDriver::updateMotor(Motor *motor)
 	}
 	else if (*motor->control & MODE)
 	{
-		*motor->power ? *motor->scaled_pwr = map(*motor->power, 0, 255, min_power, 255) : *motor->scaled_pwr = 0;
-		updateMotorPower(motor);
+		*motor->power ? *motor->cur_pwr = map(*motor->power, 0, 255, min_power, 255) : *motor->cur_pwr = 0;
+		setMotorPWM(motor);
 	}
 	else 
 	{
@@ -291,21 +344,18 @@ inline void DualMotorDriver::updateMotorRPM(Motor *motor)
 
 inline void DualMotorDriver::updateMotorPower(Motor *motor)
 {
-	if (*motor->control & SPEED)
+	if (!(digitalRead(motor->high_pin->number) ^ (*motor->control & DIRECTION)))// Check to see if motor is turning the same direction as indicated by motor control register.
+		//((*motor->high_pin->out_port ^ (*motor->control << motor->high_pin->bit)) & motor->high_pin->bit_mask)// This has potential to be a far cleaner solution, by removing the digitalRead(), but it doesn't work!
 	{
-		if ((PIND & 1 << motor->high_pin && *motor->control & DIRECTION) || (!(PIND & 1 << motor->high_pin) && !(*motor->control & DIRECTION)))// Check to see if motor is turning the same direction as indicated by motor control register
-		{
-			if (*motor->cur_pwr < *motor->scaled_pwr) *motor->cur_pwr = constrain(*motor->cur_pwr + ramping_rate, min_power, 255);
-			else if (*motor->cur_pwr > *motor->scaled_pwr) *motor->cur_pwr = constrain(*motor->cur_pwr - ramping_rate, min_power, 255);
-		}
-		else
-		{
-			*motor->cur_pwr = constrain(*motor->cur_pwr - ramping_rate, min_power, 255);
-			if (*motor->cur_pwr == min_power) setMotorDirection(motor);
-		}
-		
-		setMotorPWM(motor);
+		if (*motor->cur_pwr < *motor->scaled_pwr) *motor->cur_pwr = constrain(*motor->cur_pwr + ramping_rate, min_power, *motor->scaled_pwr);
+		else if (*motor->cur_pwr > *motor->scaled_pwr) *motor->cur_pwr = constrain(*motor->cur_pwr - ramping_rate, *motor->scaled_pwr, 255);
 	}
+	else // If motor direction and control direction differ, slow down to minimum power then change direction and continue as normal
+	{
+		*motor->cur_pwr = constrain(*motor->cur_pwr - ramping_rate, min_power, 255);
+		if (*motor->cur_pwr == min_power) setMotorDirection(motor);
+	}
+	setMotorPWM(motor);
 }
 
 
@@ -321,9 +371,9 @@ inline void DualMotorDriver::setMotorPWM(Motor *motor)
 {
 	switch (*motor->cur_pwr)
 	{
-		case 0: 	TCCR0A &= ~motor->COM0x; setMotorBraking(motor);			break;
-		case 255:	TCCR0A &= ~motor->COM0x; sbi(PORTD, motor->speed_pin);		break;
-		default: 	TCCR0A |= motor->COM0x;  *motor->OCR0x = *motor->cur_pwr;	break;
+		case 0: 	TCCR0A &= ~motor->COM0x; setMotorBraking(motor);				break;
+		case 255:	TCCR0A &= ~motor->COM0x; sbi(PORTD, motor->speed_pin->number);	break;
+		default: 	TCCR0A |= motor->COM0x;  *motor->OCR0x = *motor->cur_pwr;		break;
 	}
 }
 
@@ -334,13 +384,13 @@ inline void DualMotorDriver::setMotorDirection(Motor *motor)
 	{
 		if (*motor->control & DIRECTION)
 		{
-			PORTD |= 1 << motor->high_pin;
-			PORTB &= ~(motor->low_pin >> 3);
+			*motor->high_pin->out_port |= motor->high_pin->bit_mask;
+			*motor->low_pin->out_port &= ~motor->low_pin->bit_mask;
 		}
 		else
 		{
-			PORTD &= ~(1 << motor->high_pin);
-			PORTB |= motor->low_pin >> 3;
+			*motor->high_pin->out_port &= ~motor->high_pin->bit_mask;
+			*motor->low_pin->out_port |= motor->low_pin->bit_mask;
 		}
 	}
 }
@@ -350,13 +400,16 @@ inline void DualMotorDriver::setMotorBraking(Motor *motor)
 {
 	if (*motor->control & BRAKE)
 	{
-		PORTD |= (1 << motor->high_pin) | (1 << motor->speed_pin);
-		//PORTB |= motor->low_pin >> 3;
-		digitalWrite(motor->low_pin, HIGH);
+		//PORTD |= (1 << motor->high_pin) | (1 << motor->speed_pin);
+		//digitalWrite(motor->low_pin, HIGH);
+		*motor->speed_pin->out_port |= motor->speed_pin->bit_mask;
+		*motor->high_pin->out_port |= motor->high_pin->bit_mask;
+		*motor->low_pin->out_port |= motor->low_pin->bit_mask;
 	}
 	else
 	{
-		cbi(PORTD, motor->speed_pin);
+		//cbi(PORTD, motor->speed_pin);
+		*motor->speed_pin->out_port &= ~motor->speed_pin->bit_mask;
 	}
 }
 
@@ -365,21 +418,15 @@ inline void DualMotorDriver::setTimerB(Motor *motor)
 {
 	if (*motor->control & SPEED)// Enable the interrupt routine that updates the given motor
 	{
-	    TCCR2B = 0x00;			// Disbale Timer2 while we set it up
-		switch (motor->speed_pin)
-		{
-			case M1: 	TIMSK2 |= 0x02;	break;
-			case M2: 	TIMSK2 |= 0x04;	break;
-		}
+		TCCR2B = 0x00;			// Disbale Timer2 while we set it up
+		TIMSK2 |= motor->speed_pin->TIMSK2_mask;
 		TCCR2B = TIMER2B_MODE | TIMER2_PRESCALER;// Re-enable Timer2
 	}
 	else // Disable the interrupts that control motor updates if they are unnecessary
 	{
-		switch (motor->speed_pin)
-		{
-			case M1: 	TIMSK2 &= ~0x02;	break;
-			case M2: 	TIMSK2 &= ~0x04;	break;
-		}
+		TCCR2B = 0x00;			// Disbale Timer2 while we set it up
+		TIMSK2 &= ~motor->speed_pin->TIMSK2_mask;
+		TCCR2B = TIMER2B_MODE | TIMER2_PRESCALER;// Re-enable Timer2
 	}
 }
 
@@ -463,6 +510,7 @@ ISR(TIMER2_COMPA_vect)
 ISR(TIMER2_COMPB_vect)
 {
 	// Motor 2 updates will go here
+	MotorDriver.updateMotor(&MotorDriver.motor2);
 }
 
 

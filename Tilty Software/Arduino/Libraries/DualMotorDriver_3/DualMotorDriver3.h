@@ -45,7 +45,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ========== Library includes ==========
 #include "Wire.h"
-#include "EEPROM.h"
+//#include "EEPROM.h"
+#include <avr/eeprom.h>
 // ========== Library includes ==========
 
 
@@ -61,10 +62,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#define m1_p 108
 	#define m1_i 109
 	#define m1_d 110
-	#define m2_power 
-	#define m2_p 
-	#define m2_i 
-	#define m2_d 
+
+	#define m2_scaled_power 111
+	#define m2_current_power 112
+	#define m2_power 113
+	#define m2_encoder 114
+	#define m2_rate 115
+	#define m2_target_rate 116
+	#define m2_p 117
+	#define m2_i 118
+	#define m2_d 119
+
+	#define pin1s 140
+	#define pin2s 141
+	#define pin1H 142
+	#define pin1L 143
+	#define pin2H 144
+	#define pin2L 145
+
 	#define pid_kp 
 	#define pid_ki 
 	#define pid_kd 
@@ -75,19 +90,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // ========== Debug Defines ==========
 
 
-// ========== Motor control pins ==========
-// Motor PWM pins
-#define M1 5
-#define M2 6
-// Motor direction control pins
-#define M1A 7
-#define M1B 8
-#define M2A 4
-#define M2B 9
-// Motor current sense pins
+// ========== Motor current sense pins ==========
 #define M1_SENSE A2
 #define M2_SENSE A3
-// ========== Motor control pins ==========
+// ========== Motor current sense pins ==========
 
 
 // ========== Encoder pins ==========
@@ -183,27 +189,28 @@ class DualMotorDriver {
 		void updateVars();
 		
 		// Motor status/control variables
-		uint8_t M1_control;		// Motor 1 control byte
-		uint8_t M2_control;		// Motor 2 control byte
-		uint8_t M1_power;		// Motor 1 set power value
-		uint8_t M2_power;		// Motor 2 set power value
-		int32_t M1_encoder;		// Motor 1 current encoder value
-		int32_t M2_encoder;		// Motor 2 current encoder value
-		float M1_rate;			// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
-		float M2_rate;			// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
-		uint8_t M1_current;		// 
-		uint8_t M2_current;
-		float PID_kP;			// PID D scalar for RPM control
-		float PID_kI;			// PID D scalar for RPM control
-		float PID_kD;			// PID D scalar for RPM control
-		uint32_t ticks_rev;
-		uint8_t min_power;// Minimum PWM to apply to the motor
-		uint8_t ramping_rate;// Amount to add/subtract each time ramping code is checked
-		uint8_t M1_current_power;// Current power assigned by software, not user editable
-		uint8_t M2_current_power;// Current power assigned by software, not user editable
-		uint8_t M1_scaled_power;// Scaled motor power for minimum PWM control, assigned by software and not user editable
-		uint8_t M2_scaled_power;// Scaled motor power for minimum PWM control, assigned by software and not user editable
-		int16_t M1_target_rate;
+		uint8_t M1_control;			// Motor 1 control byte
+		uint8_t M2_control;			// Motor 2 control byte
+		uint8_t M1_power;			// Motor 1 set power value
+		uint8_t M2_power;			// Motor 2 set power value
+		int32_t M1_encoder;			// Motor 1 current encoder value
+		int32_t M2_encoder;			// Motor 2 current encoder value
+		float M1_rate;				// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
+		float M2_rate;				// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
+		uint8_t M1_current;			// Current draw of motor 1
+		uint8_t M2_current;			// Current draw of motor 2
+		float PID_kP;				// PID D scalar for RPM control
+		float PID_kI;				// PID D scalar for RPM control
+		float PID_kD;				// PID D scalar for RPM control
+		uint32_t ticks_rev;			// Encoder ticks per revolution
+		uint8_t min_power;			// Minimum PWM to apply to the motor
+		uint8_t ramping_rate;		// Amount to add/subtract each time ramping code is checked
+		uint8_t M1_current_power;	// Current power assigned by software, not user editable
+		uint8_t M2_current_power;	// Current power assigned by software, not user editable
+		uint8_t M1_scaled_power;	// Scaled motor power for minimum PWM control, assigned by software and not user editable
+		uint8_t M2_scaled_power;	// Scaled motor power for minimum PWM control, assigned by software and not user editable
+		int16_t M1_target_rate;		// Target RPM of motor 1 in RPM mode
+		int16_t M2_target_rate;		// Target RPM of motor 2 in RPM mode
 		
 		
 		float PID_P1, PID_P2;
@@ -211,6 +218,18 @@ class DualMotorDriver {
 		float PID_D1, PID_D2;
 		
 		uint16_t updated_vars;//	Indicates which variables were changed in the last I2C update
+		
+		typedef struct Pin {
+			uint8_t *out_port;
+			uint8_t *in_port;
+			uint8_t bit_mask;
+			uint8_t bit;
+			uint8_t number;
+			int8_t  TIMSK2_mask;
+		} Pin;
+		
+		Pin M1, M2;// PWM pins
+		Pin M1H, M1L, M2H, M2L;// Direction/braking control pins
 		
 		typedef struct Motor {
 			uint8_t *control;	// Motor control byte
@@ -231,9 +250,9 @@ class DualMotorDriver {
 			
 			long old_enc;
 			
-			uint8_t speed_pin;// PWM/enable pin
-			uint8_t high_pin;// Direction/braking control pin 1
-			uint8_t low_pin;// Direction/braking control pin 2
+			Pin *speed_pin;// PWM/enable pin
+			Pin *high_pin;// Direction/braking control pin 1
+			Pin *low_pin;// Direction/braking control pin 2
 		} Motor;
 		
 		Motor motor1;
@@ -284,7 +303,7 @@ class DualMotorDriver {
 		//	|  SPEED  |  MODE  |  RESULT
 		//  |    0    |    0   |  No automatic control, power is written directly to PWM
 		//  |    0    |    1   |  No automatic power smoothing, but power is mapped 0%-100% to min_power-255
-		//  |    1    |    0   |  Automatic power ramping for smoother transitions between speeds
+		//  |    1    |    0   |  Automatic power ramping for smoother transitions between speeds, also mapped min_power-255
 		//  |    1    |    1   |  RPM control via the motor rate registers, will automatically enable encoders
 		
 		// Active variable values, control which variable is modified when an I2C write is performed

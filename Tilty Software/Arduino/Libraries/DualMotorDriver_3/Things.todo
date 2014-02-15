@@ -5,6 +5,8 @@ Interrupts could be more efficient (arduino goes through an if statement before 
 
 Set it so that a write to the rate register updates the target rate in RPM mode, but the register always reads as the actual rate of the motors.
 
+Direction change in ramping modes should get rid of digitalRead()
+
 
 
 ========== Features ==========
@@ -23,10 +25,10 @@ Max motor PWM actually yields an 98% duty cycle signal, not true 100%
 
 delayMillis() timing doesn't work (time interrupt triggers, but counter doesn't seem to increment properly)
 
-Needs to reset P, I, and D when switching between RPM and power controlled modes
-
 PID tuninig needs serious work, has a tendency to exceed limits with medium-large changes in rate.
 PID also has a tendency to run away when changing direction between values > ~75
+
+PID is not being properly reset on mode change apparently
 
 Check that motor 2 turns positive when in the same direction setting as motor 1, or else PID direction code will break (semi-tested, doesn't seem to so the code is reversed for encoder 2)
 
