@@ -17,8 +17,13 @@ Add a "kick" of higher power when going from <min_power to any value to get the 
 Watchdog checking/handling code (setup works just fine)
 
 Find something to fill the last spot in motor control register
+Find something to fill the last two slots of EEPROM saving
 
 Change data input to read data from a buffer instead of directly from I2C (I2C/Serial/SPI data goes into buffer, buffer gets passed to update functions, buffer is parsed as though data is directly from communications port)
+
+Maybe add ticks per rotation and gear ratio back in for changeable encoder RPM readings
+
+Fix/apply current sensing
 
 
 

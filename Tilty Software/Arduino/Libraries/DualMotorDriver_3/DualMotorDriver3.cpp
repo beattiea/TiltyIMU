@@ -99,9 +99,9 @@ DualMotorDriver::DualMotorDriver()
 	motor1.cur_pwr = &M1_current_power;
 	motor1.scaled_pwr = &M1_scaled_power;
 	motor1.targ_rate = &M1_target_rate;
-	motor1.PID_P = &PID_P1;
-	motor1.PID_I = &PID_I1;
-	motor1.PID_D = &PID_D1;
+	motor1.PID_P = 0;
+	motor1.PID_I = 0;
+	motor1.PID_D = 0;
 	motor1.old_enc = 0;
 	motor1.OCR0x = (uint8_t*)&OCR0B;
 	motor1.COM0x = 0x20;
@@ -116,9 +116,9 @@ DualMotorDriver::DualMotorDriver()
 	motor2.cur_pwr = &M2_current_power;
 	motor2.scaled_pwr = &M2_scaled_power;
 	motor2.targ_rate = &M2_target_rate;
-	motor2.PID_P = &PID_P2;
-	motor2.PID_I = &PID_I2;
-	motor2.PID_D = &PID_D2;
+	motor2.PID_P = 0;
+	motor2.PID_I = 0;
+	motor2.PID_D = 0;
 	motor2.old_enc = 0;
 	motor2.OCR0x = (uint8_t*)&OCR0A;
 	motor2.COM0x = 0x80;
@@ -178,13 +178,20 @@ void DualMotorDriver::init()
 
 void DualMotorDriver::saveSettings(uint8_t vals)
 {
+	// If there are already saved values, add to them. Otherwise, write an initial value.
+	uint8_t saved_vals = eeprom_read_byte((uint8_t*)SAVED_VALS_ADDRESS);
+	if (!(saved_vals & 0x80)) vals |= saved_vals; 
+	
 	eeprom_write_byte((uint8_t*)SAVED_VALS_ADDRESS, vals);
-	if (vals & 0x01) eeprom_write_byte((uint8_t*)M1_CONTROL_ADDRESS, M1_control);
-	if (vals & 0x02) eeprom_write_byte((uint8_t*)M2_CONTROL_ADDRESS, M2_control);
-	if (vals & 0x04) eeprom_write_byte((uint8_t*) MIN_POWER_ADDRESS, min_power);
-	if (vals & 0x08) eeprom_write_byte((uint8_t*)RAMPING_RATE_ADDRESS, ramping_rate);
-	if (vals & 0x10) eeprom_write_byte((uint8_t*)I2C_ADDR_ADDRESS, TWAR);
-	if (vals & 0x20) eeprom_write_block((void*)&PID_kP, (void*)PID_SCALARS_ADDRESS, 12);
+	if (vals & 0x01) 
+	{
+		eeprom_write_byte((uint8_t*)M1_CONTROL_ADDRESS, M1_control);
+		eeprom_write_byte((uint8_t*)M2_CONTROL_ADDRESS, M2_control);
+	}
+	if (vals & 0x02) eeprom_write_byte((uint8_t*) MIN_POWER_ADDRESS, min_power);
+	if (vals & 0x04) eeprom_write_byte((uint8_t*)RAMPING_RATE_ADDRESS, ramping_rate);
+	if (vals & 0x08) eeprom_write_byte((uint8_t*)I2C_ADDR_ADDRESS, TWAR);
+	if (vals & 0x10) eeprom_write_block((void*)&PID_kP, (void*)PID_SCALARS_ADDRESS, 12);
 }
 
 void DualMotorDriver::loadSettings()
@@ -223,11 +230,8 @@ uint8_t DualMotorDriver::getData(int bytes)
 				case PID_KP: 		wireToVar(&PID_kP);						updated_vars |= 1 << active_var;	break;
 				case PID_KI: 		wireToVar(&PID_kI);						updated_vars |= 1 << active_var;	break;
 				case PID_KD: 		wireToVar(&PID_kD);						updated_vars |= 1 << active_var;	break;
-				case DEVICE_ID: 	TWAR = Wire.read() << 1; 				updated_vars |= 1 << active_var;	break;
+				case DEVICE_ID: 	TWAR = Wire.read() << 1; saveSettings(0x08);								break;
 				case EEPROM_SAVE: 	saveSettings(Wire.read());				break;
-#ifdef DEBUG_MOTOR_DRIVER
-				case 50: wireToVar((uint16_t*)&M1_target_rate); break;
-#endif
 			}
 			if (Wire.available()) active_var++;
 		}
@@ -268,9 +272,9 @@ void DualMotorDriver::sendData()
 			case m1_target_rate: Wire.write((uint8_t*)motor1.targ_rate, 2); break;
 			case led: ledToggle(); break;
 			case ms: Wire.write((uint8_t*)MS, 4); break;
-			case m1_p: Wire.write((uint8_t*)motor1.PID_P, 4); break;
-			case m1_i: Wire.write((uint8_t*)motor1.PID_I, 4); break;
-			case m1_d: Wire.write((uint8_t*)motor1.PID_D, 4); break;
+			case m1_p: Wire.write((uint8_t*)&motor1.PID_P, 4); break;
+			case m1_i: Wire.write((uint8_t*)&motor1.PID_I, 4); break;
+			case m1_d: Wire.write((uint8_t*)&motor1.PID_D, 4); break;
 			
 			case m2_scaled_power: Wire.write(motor2.scaled_pwr, 1); break;
 			case m2_current_power: Wire.write(motor2.cur_pwr, 1); break;
@@ -278,9 +282,9 @@ void DualMotorDriver::sendData()
 			case m2_encoder: Wire.write((uint8_t*)motor2.enc_val, 4); break;
 			case m2_rate: Wire.write((uint8_t*)motor2.cur_rate, 4); break;
 			case m2_target_rate: Wire.write((uint8_t*)motor2.targ_rate, 2); break;
-			case m2_p: Wire.write((uint8_t*)motor2.PID_P, 4); break;
-			case m2_i: Wire.write((uint8_t*)motor2.PID_I, 4); break;
-			case m2_d: Wire.write((uint8_t*)motor2.PID_D, 4); break;
+			case m2_p: Wire.write((uint8_t*)&motor2.PID_P, 4); break;
+			case m2_i: Wire.write((uint8_t*)&motor2.PID_I, 4); break;
+			case m2_d: Wire.write((uint8_t*)&motor2.PID_D, 4); break;
 			
 			case pin1s: Wire.write((uint8_t*)&M1, sizeof(M1)); break;
 			case pin2s: Wire.write((uint8_t*)&M1, sizeof(M2)); break;
@@ -323,9 +327,9 @@ inline void DualMotorDriver::updateMotorControl(Motor *motor)
 	if (!(*motor->control & SPEED)) setMotorDirection(motor);
 	if ((*motor->control & 0x0C) != 12)// If not in RPM mode, reset the PID values and target rate setting
 	{
-		*motor->PID_P = 0;
-		*motor->PID_I = 0;
-		*motor->PID_D = 0;
+		motor->PID_P = 0;
+		motor->PID_I = 0;
+		motor->PID_D = 0;
 		*motor->targ_rate = 0;
 		updateMotor(motor);
 	}
@@ -374,11 +378,11 @@ inline void DualMotorDriver::updateMotorRPM(Motor *motor)
 	float old_rate = *motor->cur_rate;
 	//updateEncoder(motor);
 	
-	*motor->PID_P = PID_kP * *motor->targ_rate;
-	*motor->PID_I += PID_kI * (*motor->targ_rate - *motor->cur_rate);
-	*motor->PID_D = PID_kD * (old_rate - *motor->cur_rate);
+	motor->PID_P = PID_kP * *motor->targ_rate;
+	motor->PID_I += PID_kI * (*motor->targ_rate - *motor->cur_rate);
+	motor->PID_D = PID_kD * (old_rate - *motor->cur_rate);
 	
-	float PID_power = *motor->PID_P + *motor->PID_I + *motor->PID_D;
+	float PID_power = motor->PID_P + motor->PID_I + motor->PID_D;
 	
 	*motor->cur_pwr = constrain(abs(PID_power), min_power, 255);
 

@@ -160,11 +160,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RAMPING_RATE_ADDRESS	0x04
 #define I2C_ADDR_ADDRESS		0x05
 #define PID_SCALARS_ADDRESS		0x06
-/*
-#define PID_KP_ADDRESS			0x06
-#define PID_KI_ADDRESS			0x0A
-#define PID_KD_ADDRESS			0x0E
-*/
 // ========== EEPROM Addresses ==========
 
 
@@ -210,27 +205,21 @@ class DualMotorDriver {
 		uint8_t M2_power;			// Motor 2 set power value
 		int32_t M1_encoder;			// Motor 1 current encoder value
 		int32_t M2_encoder;			// Motor 2 current encoder value
-		float M1_rate;				// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
-		float M2_rate;				// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
-		uint8_t M1_current;			// Current draw of motor 1
-		uint8_t M2_current;			// Current draw of motor 2
+		float M1_rate;				// Current motor rate if encoder is enabled, when written to it updates the target RPM in RPM mode
+		float M2_rate;				// Current motor rate if encoder is enabled, when written to it updates the target RPM in RPM mode
 		float PID_kP;				// PID D scalar for RPM control
 		float PID_kI;				// PID D scalar for RPM control
 		float PID_kD;				// PID D scalar for RPM control
-		uint32_t ticks_rev;			// Encoder ticks per revolution
-		uint8_t min_power;			// Minimum PWM to apply to the motor
+		uint8_t min_power;			// Minimum PWM to apply to the motor in all modes except when SPEED and MODE bits are 0
 		uint8_t ramping_rate;		// Amount to add/subtract each time ramping code is checked
+		
+		// Background variables, these are used by the motor driver but the user doesn't need to worry about them
 		uint8_t M1_current_power;	// Current power assigned by software, not user editable
 		uint8_t M2_current_power;	// Current power assigned by software, not user editable
 		uint8_t M1_scaled_power;	// Scaled motor power for minimum PWM control, assigned by software and not user editable
 		uint8_t M2_scaled_power;	// Scaled motor power for minimum PWM control, assigned by software and not user editable
 		int16_t M1_target_rate;		// Target RPM of motor 1 in RPM mode
 		int16_t M2_target_rate;		// Target RPM of motor 2 in RPM mode
-		
-		
-		float PID_P1, PID_P2;
-		float PID_I1, PID_I2;
-		float PID_D1, PID_D2;
 		
 		uint16_t updated_vars;//	Indicates which variables were changed in the last I2C update
 		
@@ -256,9 +245,9 @@ class DualMotorDriver {
 			
 			int16_t *targ_rate;
 			
-			float *PID_P;
-			float *PID_I;
-			float *PID_D;
+			float PID_P;
+			float PID_I;
+			float PID_D;
 			
 			uint8_t *OCR0x;// Pointer to pin output compare register
 			uint8_t COM0x;// Pin setup in TCCR0A
@@ -274,10 +263,11 @@ class DualMotorDriver {
 		Motor motor2;
 		
 		void updateMotor(Motor *motor);
+		
+	private:
 		void saveSettings(uint8_t vals);
 		void loadSettings();
 		
-	private:
 		inline void updateMotorControl(Motor *motor);
 		inline void updateMotorRPM(Motor *motor);
 		inline void updateMotorPower(Motor *motor);
@@ -331,7 +321,6 @@ class DualMotorDriver {
 		static const uint8_t M2_RATE = 0x07;
 		static const uint8_t M1_CURRENT = 0x08;
 		static const uint8_t M2_CURRENT = 0x09;
-		static const uint8_t TICKS_REV = 0x0D;
 		// These can handle updates in the I2C receive code, and don't need indicators in updated_vars
 		static const uint8_t DEVICE_ID = 0x0E;
 		static const uint8_t PID_KP = 0x0A;
