@@ -7,6 +7,8 @@ Set it so that a write to the rate register updates the target rate in RPM mode,
 
 Direction change in ramping modes should get rid of digitalRead()
 
+PID tuning could be optimized more
+
 
 
 ========== Features ==========
@@ -16,18 +18,15 @@ Watchdog checking/handling code (setup works just fine)
 
 Find something to fill the last spot in motor control register
 
+Change data input to read data from a buffer instead of directly from I2C (I2C/Serial/SPI data goes into buffer, buffer gets passed to update functions, buffer is parsed as though data is directly from communications port)
+
 
 
 ========== Fixes ==========
 Needs default register values redefined
 
-Max motor PWM actually yields an 98% duty cycle signal, not true 100%
-
 delayMillis() timing doesn't work (time interrupt triggers, but counter doesn't seem to increment properly)
 
-PID tuninig needs serious work, has a tendency to exceed limits with medium-large changes in rate.
-PID also has a tendency to run away when changing direction between values > ~75
-
-Check that motor 2 turns positive when in the same direction setting as motor 1, or else PID direction code will break (semi-tested, doesn't seem to so the code is reversed for encoder 2)
-
 Double encoder resolution setting doesn't work, each tick seems to cancel out the previous one
+
+Current sensing is screwy, but that may be a hardware issue

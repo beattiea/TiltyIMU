@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Arduino.h"
 #include "wiring_private.h"
 #include "DualMotorDriver3.h"
-#include <util/delay.h>
 
 
 DualMotorDriver MotorDriver;
@@ -34,6 +33,9 @@ DualMotorDriver::DualMotorDriver()
 	pinMode(8, OUTPUT);	digitalWrite(8, HIGH);// M1L
 	pinMode(4, OUTPUT);	digitalWrite(4, LOW);// M2H
 	pinMode(9, OUTPUT);	digitalWrite(9, HIGH);// M2L
+	
+	pinMode(M1_SENSE, INPUT);
+	pinMode(M2_SENSE, INPUT);
 	
 	pinMode(LED, OUTPUT);	digitalWrite(LED, LOW);
 	
@@ -86,6 +88,8 @@ DualMotorDriver::DualMotorDriver()
 	M1L = (Pin){(uint8_t*)&PORTB, (uint8_t*)&PINB, 1<<0, 0, 8, 0x00};
 	M2H = (Pin){(uint8_t*)&PORTB, (uint8_t*)&PINB, 1<<1, 9, 9, 0x00};
 	M2L = (Pin){(uint8_t*)&PORTD, (uint8_t*)&PIND, 1<<4, 4, 4, 0x00};
+	
+	
 	
 	// Setup motor structs
 	motor1.control = &M1_control;
@@ -170,6 +174,30 @@ void DualMotorDriver::init()
 }
 
 
+void DualMotorDriver::saveSettings(uint8_t vals)
+{
+	eeprom_write_byte((uint8_t*)SAVED_VALS_ADDRESS, vals);
+	if (vals & 0x01) eeprom_write_byte((uint8_t*)M1_CONTROL_ADDRESS, M1_control);
+	if (vals & 0x02) eeprom_write_byte((uint8_t*)M2_CONTROL_ADDRESS, M2_control);
+	if (vals & 0x04) eeprom_write_byte((uint8_t*) MIN_POWER_ADDRESS, min_power);
+	if (vals & 0x08) eeprom_write_byte((uint8_t*)RAMPING_RATE_ADDRESS, ramping_rate);
+	if (vals & 0x10) eeprom_write_byte((uint8_t*)I2C_ADDR_ADDRESS, TWAR);
+	if (vals & 0x20) eeprom_write_block((void*)&PID_kP, (void*)PID_SCALARS_ADDRESS, 12);
+}
+
+void DualMotorDriver::loadSettings()
+{
+	uint8_t vals = EEPROM.read(SAVED_VALS_ADDRESS);
+	if (!(vals & 0x80))
+	{
+		if (vals & 0x01) M1_control = eeprom_read_byte((uint8_t*)M1_CONTROL_ADDRESS);
+		if (vals & 0x02) M2_control = eeprom_read_byte((uint8_t*)M2_CONTROL_ADDRESS);
+		if (vals & 0x04) min_power = eeprom_read_byte((uint8_t*)RAMPING_RATE_ADDRESS);
+		if (vals & 0x10) TWAR = eeprom_read_byte((uint8_t*)I2C_ADDR_ADDRESS);
+		if (vals & 0x20) eeprom_read_block((void*)&PID_kP, (void*)PID_SCALARS_ADDRESS, 12);
+	}
+}
+
 
 // Handles reading in I2C data
 uint8_t DualMotorDriver::getData(int bytes)
@@ -190,7 +218,11 @@ uint8_t DualMotorDriver::getData(int bytes)
 				case M2_ENCODER: 	wireToVar(&M2_encoder);					updated_vars |= 1 << active_var;	break;
 				case M1_RATE: 		wireToVar((uint16_t*)&M1_target_rate);	updated_vars |= 1 << active_var;	break;
 				case M2_RATE: 		wireToVar((uint16_t*)&M2_target_rate);	updated_vars |= 1 << active_var;	break;
+				case PID_KP: 		wireToVar(&PID_kP);						updated_vars |= 1 << active_var;	break;
+				case PID_KI: 		wireToVar(&PID_kI);						updated_vars |= 1 << active_var;	break;
+				case PID_KD: 		wireToVar(&PID_kD);						updated_vars |= 1 << active_var;	break;
 				case DEVICE_ID: 	TWAR = Wire.read() << 1; 				updated_vars |= 1 << active_var;	break;
+				case EEPROM_SAVE: 	saveSettings(Wire.read());				break;
 #ifdef DEBUG_MOTOR_DRIVER
 				case 50: wireToVar((uint16_t*)&M1_target_rate); break;
 #endif
@@ -209,6 +241,10 @@ uint8_t DualMotorDriver::getData(int bytes)
 		case M2_ENCODER: 	active_var_ptr = &M2_encoder;	break;
 		case M1_RATE: 		active_var_ptr = &M1_rate;		break;
 		case M2_RATE: 		active_var_ptr = &M2_rate;		break;
+		case PID_KP: 		active_var_ptr = &PID_kP;		break;
+		case PID_KI: 		active_var_ptr = &PID_kI;		break;
+		case PID_KD: 		active_var_ptr = &PID_kD;		break;
+		case EEPROM_LOAD: 	loadSettings();
 	}
 	updateVars();
 }
@@ -250,6 +286,8 @@ void DualMotorDriver::sendData()
 			case pin1L: Wire.write((uint8_t*)&M1, sizeof(M1L)); break;
 			case pin2H: Wire.write((uint8_t*)&M1, sizeof(M2H)); break;
 			case pin2L: Wire.write((uint8_t*)&M1, sizeof(M2L)); break;
+			
+			case read_eeprom: Wire.write(EEPROM.read(SAVED_VALS_ADDRESS)); break;
 			
 			case 199: Wire.write(*motor1.control & DIRECTION); break;
 			case 200: Wire.write(digitalRead(motor1.high_pin->number)); break;
@@ -302,6 +340,11 @@ inline void DualMotorDriver::updateMotorControl(Motor *motor)
 
 void DualMotorDriver::updateMotor(Motor *motor)
 {
+	if (*motor->control & ENCODER)
+	{
+		updateEncoder(motor);
+	}
+	
 	if (*motor->control & SPEED) 
 	{
 		if (*motor->control & MODE) { updateMotorRPM(motor);}
@@ -321,18 +364,13 @@ void DualMotorDriver::updateMotor(Motor *motor)
 		*motor->cur_pwr = *motor->power;
 		setMotorPWM(motor);
 	}
-	
-	if (*motor->control & ENCODER)
-	{
-		updateEncoder(motor);
-	}
 }
 
 
 inline void DualMotorDriver::updateMotorRPM(Motor *motor)
 {
 	float old_rate = *motor->cur_rate;
-	updateEncoder(motor);
+	//updateEncoder(motor);
 	
 	*motor->PID_P = PID_kP * *motor->targ_rate;
 	*motor->PID_I += PID_kI * (*motor->targ_rate - *motor->cur_rate);
@@ -473,7 +511,12 @@ void DualMotorDriver::wireToVar(int32_t *var)
 // Takes a pointer to a variable and reads a new value into it from I2C
 void DualMotorDriver::wireToVar(float *var)
 {
-	*var = ((int32_t)Wire.read() << 24) | ((int32_t)Wire.read() << 16) | (Wire.read() << 8) | Wire.read();
+	data_union.bytes[0] = Wire.read();
+	data_union.bytes[1] = Wire.read();
+	data_union.bytes[2] = Wire.read();
+	data_union.bytes[3] = Wire.read();
+	//*var = (Wire.read() << 24) | (Wire.read() << 16) | (Wire.read() << 8) | Wire.read();
+	*var = data_union.float32;
 }
 // ========== End of class ==========
 

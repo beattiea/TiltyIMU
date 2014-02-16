@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ========== Library includes ==========
 #include "Wire.h"
-//#include "EEPROM.h"
+#include "EEPROM.h"
 #include <avr/eeprom.h>
 // ========== Library includes ==========
 
@@ -84,8 +84,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#define pid_ki 
 	#define pid_kd 
 	
-	#define led	255
-	#define eeprom 
+	#define led	127
+	#define read_eeprom 255
 #endif
 // ========== Debug Defines ==========
 
@@ -151,6 +151,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 // ========== Watchdog Timer Characteristics ==========
 
+
+// ========== EEPROM Addresses ==========
+#define SAVED_VALS_ADDRESS		0x00
+#define M1_CONTROL_ADDRESS		0x01
+#define M2_CONTROL_ADDRESS		0x02
+#define MIN_POWER_ADDRESS		0x03
+#define RAMPING_RATE_ADDRESS	0x04
+#define I2C_ADDR_ADDRESS		0x05
+#define PID_SCALARS_ADDRESS		0x06
+/*
+#define PID_KP_ADDRESS			0x06
+#define PID_KI_ADDRESS			0x0A
+#define PID_KD_ADDRESS			0x0E
+*/
+// ========== EEPROM Addresses ==========
 
 
 // ========== Default Register Values ==========
@@ -259,6 +274,8 @@ class DualMotorDriver {
 		Motor motor2;
 		
 		void updateMotor(Motor *motor);
+		void saveSettings(uint8_t vals);
+		void loadSettings();
 		
 	private:
 		inline void updateMotorControl(Motor *motor);
@@ -280,13 +297,10 @@ class DualMotorDriver {
 		void *active_var_ptr;
 
 		// Data union for transferring different 4 byte types to/from data register
-		/*
 		union data_union {
 			uint8_t bytes[4];
-			uint32_t int32;
 			float float32;
 		} data_union;
-		*/
 		
 		// Counter variable for timing
 		uint8_t count;
@@ -323,6 +337,8 @@ class DualMotorDriver {
 		static const uint8_t PID_KP = 0x0A;
 		static const uint8_t PID_KI = 0x0B;
 		static const uint8_t PID_KD = 0x0C;
+		static const uint8_t EEPROM_SAVE = 0x0D;
+		static const uint8_t EEPROM_LOAD = 0x0E;
 };
 
 extern DualMotorDriver MotorDriver;
