@@ -171,6 +171,8 @@ void DualMotorDriver::init()
 	OCR1A = 250;
 	TIMSK1 = 1;
 	TCCR1B = 0x1B;//_BV(WGM13) | _BV(WGM12) | _BV(CS11) | _BV(CS10);
+	
+	loadSettings();
 }
 
 
@@ -187,7 +189,7 @@ void DualMotorDriver::saveSettings(uint8_t vals)
 
 void DualMotorDriver::loadSettings()
 {
-	uint8_t vals = EEPROM.read(SAVED_VALS_ADDRESS);
+	uint8_t vals = eeprom_read_byte((uint8_t*)SAVED_VALS_ADDRESS);
 	if (!(vals & 0x80))
 	{
 		if (vals & 0x01) M1_control = eeprom_read_byte((uint8_t*)M1_CONTROL_ADDRESS);
