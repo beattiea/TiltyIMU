@@ -264,9 +264,10 @@ class DualMotorDriver {
 		
 		void updateMotor(Motor *motor);
 		
-	private:
 		void saveSettings(uint8_t vals);
 		void loadSettings();
+		
+		inline void reset();
 		
 		inline void updateMotorControl(Motor *motor);
 		inline void updateMotorRPM(Motor *motor);
@@ -283,6 +284,7 @@ class DualMotorDriver {
 		void wireToVar(int32_t *var);
 		void wireToVar(float *var);
 		
+	private:
 		uint8_t active_var;
 		void *active_var_ptr;
 
@@ -328,6 +330,9 @@ class DualMotorDriver {
 		static const uint8_t PID_KD = 0x0C;
 		static const uint8_t EEPROM_SAVE = 0x0D;
 		static const uint8_t EEPROM_LOAD = 0x0E;
+		static const uint8_t RAMPING_RATE = 0x0F;
+		static const uint8_t MIN_POWER = 0x10;
+		static const uint8_t RESET = 0x11;
 };
 
 extern DualMotorDriver MotorDriver;

@@ -54,7 +54,7 @@ DualMotorDriver::DualMotorDriver()
 	
 #ifdef ENABLE_WATCHDOG_TIMER
 	// Check for reset problems
-	if (MCUSR & (WDRF | BORF)) { }
+	if (MCUSR & WDRF) { ledOn();}
 	MCUSR = 0;
 	WDTCSR = _BV(WDCE) | _BV(WDE);
 	WDTCSR = _BV(WDIE) | _BV(WDE) | LOW_WDP | HIGH_WDP;
@@ -139,6 +139,8 @@ DualMotorDriver::DualMotorDriver()
 	setTimerB(&motor1);
 	setTimerB(&motor2);
 	
+	//ledOn();
+	
 	sei();			// Enable global interrupts
 }
 
@@ -208,6 +210,15 @@ void DualMotorDriver::loadSettings()
 }
 
 
+// Function to force reset the motor driver. Reset will activate ~16ms after funtion call
+inline void DualMotorDriver::reset()
+{
+	TCCR1B &= ~0x07;				// Disable timer to reset watchdog timer
+	WDTCSR = _BV(WDCE) | _BV(WDE);	// Setup wtachdog register for writing
+	WDTCSR = _BV(WDE);					// Set watchdog timer to expire and reset in minimum time (16ms)
+}
+
+
 // Handles reading in I2C data
 uint8_t DualMotorDriver::getData(int bytes)
 {
@@ -230,6 +241,8 @@ uint8_t DualMotorDriver::getData(int bytes)
 				case PID_KP: 		wireToVar(&PID_kP);						updated_vars |= 1 << active_var;	break;
 				case PID_KI: 		wireToVar(&PID_kI);						updated_vars |= 1 << active_var;	break;
 				case PID_KD: 		wireToVar(&PID_kD);						updated_vars |= 1 << active_var;	break;
+				case RAMPING_RATE: 	wireToVar(&ramping_rate);				break;
+				case MIN_POWER: 	wireToVar(&min_power);					break;
 				case DEVICE_ID: 	TWAR = Wire.read() << 1; saveSettings(0x08);								break;
 				case EEPROM_SAVE: 	saveSettings(Wire.read());				break;
 			}
@@ -250,7 +263,8 @@ uint8_t DualMotorDriver::getData(int bytes)
 		case PID_KP: 		active_var_ptr = &PID_kP;		break;
 		case PID_KI: 		active_var_ptr = &PID_kI;		break;
 		case PID_KD: 		active_var_ptr = &PID_kD;		break;
-		case EEPROM_LOAD: 	loadSettings();
+		case EEPROM_LOAD: 	loadSettings();					break;
+		case RESET:			reset();						break;
 	}
 	updateVars();
 }
