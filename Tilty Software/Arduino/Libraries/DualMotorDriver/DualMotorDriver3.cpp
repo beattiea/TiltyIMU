@@ -54,8 +54,8 @@ DualMotorDriver::DualMotorDriver()
 	
 #ifdef ENABLE_WATCHDOG_TIMER
 	// Check for reset problems
-	if (MCUSR & WDRF) { ledOn();}
-	MCUSR = 0;
+	//if (MCUSR & WDRF) { ledOn();}
+	//MCUSR = 0;
 	WDTCSR = _BV(WDCE) | _BV(WDE);
 	WDTCSR = _BV(WDIE) | _BV(WDE) | LOW_WDP | HIGH_WDP;
 #endif
@@ -139,8 +139,6 @@ DualMotorDriver::DualMotorDriver()
 	setTimerB(&motor1);
 	setTimerB(&motor2);
 	
-	//ledOn();
-	
 	sei();			// Enable global interrupts
 }
 
@@ -173,6 +171,12 @@ void DualMotorDriver::init()
 	OCR1A = 250;
 	TIMSK1 = 1;
 	TCCR1B = 0x1B;//_BV(WGM13) | _BV(WGM12) | _BV(CS11) | _BV(CS10);
+	
+	if (MCUSR & 0x08) // Setup Timer1 to flash LED? Pin: PB2, using Timer1A OCR
+	{
+		TIMSK1 |= 0x04;
+	}
+	///else delete &reset_led_counter;
 	
 	loadSettings();
 }
@@ -215,7 +219,7 @@ inline void DualMotorDriver::reset()
 {
 	TCCR1B &= ~0x07;				// Disable timer to reset watchdog timer
 	WDTCSR = _BV(WDCE) | _BV(WDE);	// Setup wtachdog register for writing
-	WDTCSR = _BV(WDE);					// Set watchdog timer to expire and reset in minimum time (16ms)
+	WDTCSR = _BV(WDE);				// Set watchdog timer to expire and reset in minimum time (16ms)
 }
 
 
@@ -308,6 +312,8 @@ void DualMotorDriver::sendData()
 			case pin2L: Wire.write((uint8_t*)&M1, sizeof(M2L)); break;
 			
 			case read_eeprom: Wire.write(EEPROM.read(SAVED_VALS_ADDRESS)); break;
+			
+			case mcusr: Wire.write(MCUSR);
 			
 			case 199: Wire.write(*motor1.control & DIRECTION); break;
 			case 200: Wire.write(digitalRead(motor1.high_pin->number)); break;
@@ -583,6 +589,16 @@ ISR(TIMER1_OVF_vect)
 {
 	MS++;
 	__asm__ __volatile__ ("wdr");
+}
+
+ISR(TIMER1_COMPB_vect)
+{
+	ledOn();
+	MotorDriver.reset_led_counter++;
+	if (MotorDriver.reset_led_counter > 500) 
+	{
+		MotorDriver.reset_led_counter = 0;
+	}
 }
 
 ISR(TIMER2_COMPA_vect)

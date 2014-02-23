@@ -35,3 +35,7 @@ delayMillis() timing doesn't work (time interrupt triggers, but counter doesn't 
 Double encoder resolution setting doesn't work, each tick seems to cancel out the previous one
 
 Current sensing is screwy, but that may be a hardware issue
+
+Reset indicator doesn't toggle LED as it should
+
+Implement pin change interrupt for other two encoder pins (low priority)

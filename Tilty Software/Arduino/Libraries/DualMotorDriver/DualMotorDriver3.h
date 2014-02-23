@@ -80,6 +80,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#define pin2H 144
 	#define pin2L 145
 
+	#define mcusr 150
+
 	#define pid_kp 
 	#define pid_ki 
 	#define pid_kd 
@@ -284,6 +286,9 @@ class DualMotorDriver {
 		void wireToVar(int32_t *var);
 		void wireToVar(float *var);
 		
+		// Counter variable for timing
+		uint8_t reset_led_counter;
+		
 	private:
 		uint8_t active_var;
 		void *active_var_ptr;
@@ -293,9 +298,6 @@ class DualMotorDriver {
 			uint8_t bytes[4];
 			float float32;
 		} data_union;
-		
-		// Counter variable for timing
-		uint8_t count;
 		
 		// Motor control register bit values
 		static const uint8_t DIRECTION = 0x01;// Sets motor direction. 0 is forwards, 1 is reverse.
