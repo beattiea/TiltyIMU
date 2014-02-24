@@ -9,10 +9,12 @@ Direction change in ramping modes should get rid of digitalRead()
 
 PID tuning could be optimized more
 
+Should be able to individually enable/disable current sensing on each motor (add variable that's either 0x00 or 0x01 and use that as the toggle for the ADC ISR)
+
 
 
 ========== Features ==========
-Add a "kick" of higher power when going from <min_power to any value to get the motor turning
+Add a "kick" of higher power when going from < min_power to any value to get the motor turning
 
 Watchdog checking/handling code (setup works just fine)
 
@@ -21,21 +23,24 @@ Find something to fill the last two slots of EEPROM saving
 
 Change data input to read data from a buffer instead of directly from I2C (I2C/Serial/SPI data goes into buffer, buffer gets passed to update functions, buffer is parsed as though data is directly from communications port)
 
-Maybe add ticks per rotation and gear ratio back in for changeable encoder RPM readings
+Maybe add ticks per rotation and gear ratio back into registers for changeable encoder RPM readings
 
-Fix/apply current sensing
+Make it so that current power can be read even in mapping/ramping/RPM modes when it is automatically set
 
+Actually implement a way to read the "Who am I" value
+
+Add one-shot reading of current if current register is accessed but auto-reading is disabled
+
+Set up current sense so that reference voltage can be changed via I2C
 
 
 ========== Fixes ==========
+Motor doesn't start in ramping mode if direction was changed while stopped and brake enabled
+
 Needs default register values redefined
 
 delayMillis() timing doesn't work (time interrupt triggers, but counter doesn't seem to increment properly)
 
 Double encoder resolution setting doesn't work, each tick seems to cancel out the previous one
-
-Current sensing is screwy, but that may be a hardware issue
-
-Reset indicator doesn't toggle LED as it should
 
 Implement pin change interrupt for other two encoder pins (low priority)
