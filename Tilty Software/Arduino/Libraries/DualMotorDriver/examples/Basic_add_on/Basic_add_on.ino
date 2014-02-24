@@ -16,7 +16,7 @@ to
 However this is a global change and will affect all Arduino code, not just this program.
 */
 
-#include "DualMotorDriver3.h"
+#include "DualMotorDriver.h"
 #include "Wire.h"
 #include "EEPROM.h"
 
@@ -27,28 +27,10 @@ However this is a global change and will affect all Arduino code, not just this 
 //===========================================
 
 void setup() {
-	//motors.init();
-	
-	Wire.onReceive(receiveEvent);
-	Wire.onRequest(requestEvent);
+	MotorDriver.init();
 }
 
 
 void loop() {
 	// Purely testing code, everything else is handled by interrupt routines
-}
-
-
-void receiveEvent(int bytes) {
-}
-
-void requestEvent() {
-}
-
-ISR(TIMER2_OVF_vect) {
-	//motors.update();
-	//count = 0;
-	
-	TCNT2 = 130;
-	TIFR2 = 0x00;
 }
