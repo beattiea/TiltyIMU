@@ -16,6 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "Arduino.h"
+
+#ifndef __MK20DX128__
+
 #include "wiring_private.h"
 #include "DualMotorDriver.h"
 
@@ -53,11 +56,11 @@ DualMotorDriver::DualMotorDriver()
 	
 	
 #ifdef ENABLE_WATCHDOG_TIMER
-	// Check for reset problems
-	//if (MCUSR & WDRF) { ledOn();}
-	//MCUSR = 0;
 	WDTCSR = _BV(WDCE) | _BV(WDE);
 	WDTCSR = _BV(WDIE) | _BV(WDE) | LOW_WDP | HIGH_WDP;
+#else 
+	WDTCSR = _BV(WDCE);
+	WDTCSR = 0;
 #endif
 	
 	// Set up Timer2 to automatically update currents and encoders
@@ -84,7 +87,7 @@ DualMotorDriver::DualMotorDriver()
 	// Setup automatic analog conversion for current sensing
 	ADMUX = M1_SENSE_MASK;		// Setup ADC for Vcc reference and to read M1 sense pin (we'll change which pin it read in the ISR to alternate motors)
 	ADCSRA = 0xAF;			// Enable ADC and ADC interrupt with 128 prescaler in free-running mode
-	ADCSRB = 0;				// Set ADC to free running mode
+	ADCSRB = 6;				// Set ADC to free running mode
 	ADCSRA |= 0x40;			// Start the ADC conversions
 	
 	// Setup pin structs
@@ -234,51 +237,48 @@ uint8_t DualMotorDriver::getData(int bytes)
 {
 	active_var = Wire.read();
 	
-	if (Wire.available())
+	while (Wire.available())
 	{
-		while (Wire.available())
+		switch (active_var)
 		{
-			switch (active_var)
-			{
-				case M1_CONTROL:	wireToVar(&M1_control);  				updated_vars |= 1 << active_var;	break;
-				case M2_CONTROL:	wireToVar(&M2_control);	 				updated_vars |= 1 << active_var;	break;
-				case M1_POWER: 		wireToVar(&M1_power); 	 				updated_vars |= 1 << active_var;	break;
-				case M2_POWER: 		wireToVar(&M2_power);	 				updated_vars |= 1 << active_var;	break;
-				case M1_ENCODER: 	wireToVar(&M1_encoder);					updated_vars |= 1 << active_var;	break;
-				case M2_ENCODER: 	wireToVar(&M2_encoder);					updated_vars |= 1 << active_var;	break;
-				case M1_RATE: 		wireToVar((uint16_t*)&M1_target_rate);	updated_vars |= 1 << active_var;	break;
-				case M2_RATE: 		wireToVar((uint16_t*)&M2_target_rate);	updated_vars |= 1 << active_var;	break;
-				case PID_KP: 		wireToVar(&PID_kP);						updated_vars |= 1 << active_var;	break;
-				case PID_KI: 		wireToVar(&PID_kI);						updated_vars |= 1 << active_var;	break;
-				case PID_KD: 		wireToVar(&PID_kD);						updated_vars |= 1 << active_var;	break;
-				case RAMPING_RATE: 	wireToVar(&ramping_rate);				break;
-				case MIN_POWER: 	wireToVar(&min_power);					break;
-				case DEVICE_ID: 	TWAR = Wire.read() << 1; saveSettings(0x08);								break;
-				case EEPROM_SAVE: 	saveSettings(Wire.read());				break;
-			}
-			if (Wire.available()) active_var++;
+			case M1_CONTROL:	wireToVar(&M1_control);  				updated_vars |= 1 << active_var;	break;
+			case M2_CONTROL:	wireToVar(&M2_control);	 				updated_vars |= 1 << active_var;	break;
+			case M1_POWER: 		wireToVar(&M1_power); 	 				updated_vars |= 1 << active_var;	break;
+			case M2_POWER: 		wireToVar(&M2_power);	 				updated_vars |= 1 << active_var;	break;
+			case M1_ENCODER: 	wireToVar(&M1_encoder);					updated_vars |= 1 << active_var;	break;
+			case M2_ENCODER: 	wireToVar(&M2_encoder);					updated_vars |= 1 << active_var;	break;
+			case M1_RATE: 		wireToVar((uint16_t*)&M1_target_rate);	updated_vars |= 1 << active_var;	break;
+			case M2_RATE: 		wireToVar((uint16_t*)&M2_target_rate);	updated_vars |= 1 << active_var;	break;
+			case PID_KP: 		wireToVar(&PID_kP);						updated_vars |= 1 << active_var;	break;
+			case PID_KI: 		wireToVar(&PID_kI);						updated_vars |= 1 << active_var;	break;
+			case PID_KD: 		wireToVar(&PID_kD);						updated_vars |= 1 << active_var;	break;
+			case RAMPING_RATE: 	wireToVar(&ramping_rate);				break;
+			case MIN_POWER: 	wireToVar(&min_power);					break;
+			case DEVICE_ADDRESS: 	TWAR = Wire.read() << 1; 			saveSettings(0x08);					break;
+			case EEPROM_SAVE: 	saveSettings(Wire.read());				break;
 		}
+		if (Wire.available()) active_var++;
 	}
 	
 	switch (active_var)
 	{
-		case M1_CONTROL: 	active_var_ptr = &M1_control;	break;
-		case M2_CONTROL: 	active_var_ptr = &M2_control;	break;
-		case M1_POWER: 		active_var_ptr = &M1_power;		break;
-		case M2_POWER: 		active_var_ptr = &M2_power;		break;
-		case M1_ENCODER: 	active_var_ptr = &M1_encoder;	break;
-		case M2_ENCODER: 	active_var_ptr = &M2_encoder;	break;
-		case M1_RATE: 		active_var_ptr = &M1_rate;		break;
-		case M2_RATE: 		active_var_ptr = &M2_rate;		break;
-		case M1_CURRENT:	active_var_ptr = &M1_current;	break;
-		case M2_CURRENT:	active_var_ptr = &M2_current;	break;
-		case PID_KP: 		active_var_ptr = &PID_kP;		break;
-		case PID_KI: 		active_var_ptr = &PID_kI;		break;
-		case PID_KD: 		active_var_ptr = &PID_kD;		break;
-		case RAMPING_RATE: 	active_var_ptr = &ramping_rate;	break;
-		case MIN_POWER: 	active_var_ptr = &min_power;	break;
-		case EEPROM_LOAD: 	loadSettings();					break;
-		case RESET:			reset();						break;
+		case M1_CONTROL: 	active_var_ptr = &M1_control;		break;
+		case M2_CONTROL: 	active_var_ptr = &M2_control;		break;
+		case M1_POWER: 		active_var_ptr = &M1_current_power;		break;
+		case M2_POWER: 		active_var_ptr = &M2_current_power;		break;
+		case M1_ENCODER: 	active_var_ptr = &M1_encoder;		break;
+		case M2_ENCODER: 	active_var_ptr = &M2_encoder;		break;
+		case M1_RATE: 		active_var_ptr = &M1_rate;			break;
+		case M2_RATE: 		active_var_ptr = &M2_rate;			break;
+		case M1_CURRENT:	active_var_ptr = &M1_current;		break;
+		case M2_CURRENT:	active_var_ptr = &M2_current;		break;
+		case PID_KP: 		active_var_ptr = &PID_kP;			break;
+		case PID_KI: 		active_var_ptr = &PID_kI;			break;
+		case PID_KD: 		active_var_ptr = &PID_kD;			break;
+		case RAMPING_RATE: 	active_var_ptr = &ramping_rate;		break;
+		case MIN_POWER: 	active_var_ptr = &min_power;		break;
+		case EEPROM_LOAD: 	loadSettings();						break;
+		case RESET:			reset();							break;
 	}
 	updateVars();
 }
@@ -638,4 +638,5 @@ ISR(ADC_vect)
 void ledOn() {	sbi(PORTB, 2);}
 void ledOff() {	cbi(PORTB, 2);}
 void ledToggle() {	PORTB ^= 0x04;}
+#endif
 #endif

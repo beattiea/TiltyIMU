@@ -11,12 +11,17 @@ PID tuning could be optimized more
 
 Should be able to individually enable/disable current sensing on each motor (add variable that's either 0x00 or 0x01 and use that as the toggle for the ADC ISR)
 
+Make sure that default register identifiers stay neat (ongoing)
+
 
 
 ========== Features ==========
+Add ability to read/write a motor from a register value by reading the whole struct (HIGH PRIORITY)
+Add ability to read/write all control settings via a register value (HIGH PRIORITY)
+
 Add a "kick" of higher power when going from < min_power to any value to get the motor turning
 
-Watchdog checking/handling code (setup works just fine)
+Watchdog checking/handling code (setup works just fine, as does resetting via watchdog)
 
 Find something to fill the last spot in motor control register
 Find something to fill the last two slots of EEPROM saving
@@ -33,11 +38,13 @@ Add one-shot reading of current if current register is accessed but auto-reading
 
 Set up current sense so that reference voltage can be changed via I2C
 
+Add ability to detect encoders and poll whether they're available via the master board
+
+Custom slave only I2C for faster ISR servicing? (have to look at how Wire handles the code)
+
 
 ========== Fixes ==========
 Motor doesn't start in ramping mode if direction was changed while stopped and brake enabled
-
-Needs default register values redefined
 
 delayMillis() timing doesn't work (time interrupt triggers, but counter doesn't seem to increment properly)
 

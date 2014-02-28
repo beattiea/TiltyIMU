@@ -18,6 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef DualMotorDriver_h
 #define DualMotorDriver_h
 
+#ifdef __MK20DX128__
+#include "DualMotorDriverAddOn.h"
+
+#else
+
 #include "Arduino.h"
 
 //==========================================================================================//
@@ -40,14 +45,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // ========== I2C Settings ==========
 // Neither buffer size can exceed 32 bytes! That is the limit imposed by the Wire library
 #define RX_BUFFER_SIZE 32
-#define TX_BUFFER_SIZE 16
+#define TX_BUFFER_SIZE 36
 #define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
 // ========== I2C Settings ==========
 
 
 // ========== Library includes ==========
 #include "Wire.h"
-#include "EEPROM.h"
 #include <avr/eeprom.h>
 // ========== Library includes ==========
 
@@ -158,7 +162,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ========== Watchdog Timer Characteristics ==========
 #ifdef ENABLE_WATCHDOG_TIMER
-#define WATCHDOG_TIME 3 // Change this to change time before reset if code freezes
+#define WATCHDOG_TIME 6 // Change this to change time before reset if code freezes
 #define LOW_WDP (WATCHDOG_TIME & 0x07)
 #define HIGH_WDP (WATCHDOG_TIME & 0x08) << 5
 // WATCHDOG_TIME values and their approximate delay-till-reset times
@@ -245,8 +249,6 @@ class DualMotorDriver {
 		int16_t M1_target_rate;		// Target RPM of motor 1 in RPM mode
 		int16_t M2_target_rate;		// Target RPM of motor 2 in RPM mode
 		
-		uint16_t updated_vars;//	Indicates which variables were changed in the last I2C update
-		
 		typedef struct Pin {
 			uint8_t *out_port;
 			uint8_t *in_port;
@@ -276,7 +278,7 @@ class DualMotorDriver {
 			uint8_t *OCR0x;// Pointer to pin output compare register
 			uint8_t COM0x;// Pin setup in TCCR0A
 			
-			long old_enc;
+			int32_t old_enc;
 			
 			Pin *speed_pin;// PWM/enable pin
 			Pin *high_pin;// Direction/braking control pin 1
@@ -314,6 +316,8 @@ class DualMotorDriver {
 	private:
 		uint8_t active_var;
 		void *active_var_ptr;
+		
+		uint16_t updated_vars;//	Indicates which variables were changed in the last I2C update
 
 		// Data union for transferring different 4 byte types to/from data register
 		union data_union {
@@ -341,22 +345,21 @@ class DualMotorDriver {
 		static const uint8_t M2_CONTROL = 0x01;
 		static const uint8_t M1_POWER = 0x02;
 		static const uint8_t M2_POWER = 0x03;
-		static const uint8_t M1_ENCODER = 0x04;
-		static const uint8_t M2_ENCODER = 0x05;
-		static const uint8_t M1_RATE = 0x06;
-		static const uint8_t M2_RATE = 0x07;
-		static const uint8_t M1_CURRENT = 0x08;
-		static const uint8_t M2_CURRENT = 0x09;
-		// These can handle updates in the I2C receive code, and don't need indicators in updated_vars
-		static const uint8_t DEVICE_ID = 0x0E;
-		static const uint8_t PID_KP = 0x0A;
-		static const uint8_t PID_KI = 0x0B;
-		static const uint8_t PID_KD = 0x0C;
-		static const uint8_t EEPROM_SAVE = 0x0D;
-		static const uint8_t EEPROM_LOAD = 0x0E;
-		static const uint8_t RAMPING_RATE = 0x0F;
-		static const uint8_t MIN_POWER = 0x10;
-		static const uint8_t RESET = 0x11;
+		static const uint8_t M1_CURRENT = 0x04;
+		static const uint8_t M2_CURRENT = 0x05;
+		static const uint8_t RAMPING_RATE = 0x06;
+		static const uint8_t MIN_POWER = 0x07;
+		static const uint8_t M1_RATE = 0x08;
+		static const uint8_t M2_RATE = 0x09;
+		static const uint8_t M1_ENCODER = 0x0A;
+		static const uint8_t M2_ENCODER = 0x0B;
+		static const uint8_t PID_KP = 0x0C;
+		static const uint8_t PID_KI = 0x0D;
+		static const uint8_t PID_KD = 0x0E;
+		static const uint8_t EEPROM_SAVE = 0x0F;
+		static const uint8_t EEPROM_LOAD = 0x10;
+		static const uint8_t DEVICE_ADDRESS = 0x20;
+		static const uint8_t RESET = 0x30;
 };
 
 extern DualMotorDriver MotorDriver;
@@ -378,4 +381,6 @@ extern volatile unsigned long MS;
 		void ledToggle();
 #endif
 
+#endif
+		
 #endif
