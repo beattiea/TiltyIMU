@@ -319,11 +319,12 @@ void DualMotorDriver::sendData()
 			case pin1L: Wire.write((uint8_t*)&M1, sizeof(M1L)); break;
 			case pin2H: Wire.write((uint8_t*)&M1, sizeof(M2H)); break;
 			case pin2L: Wire.write((uint8_t*)&M1, sizeof(M2L)); break;
-			*/
+
 			case mcusr: Wire.write(MCUSR); break;
 			case admux: Wire.write(ADMUX); break;
 			case adcsra: Wire.write(ADCSRA); break;
-			
+			*/
+			case elapsed_millis: Wire.write((uint8_t*)&blahblah, 4); break;
 			case 203: Wire.write((uint8_t*)&motor1.state, sizeof(motor1.state)); break;
 			
 			case led: ledToggle(); break;
@@ -576,11 +577,13 @@ void readEncoder2()
 	PINC & 0x02 ? MotorDriver.motor1.state.encoder_value-- : MotorDriver.motor1.state.encoder_value++;
 }
 
+volatile unsigned long blahblah;
+
 void delayMillis(unsigned long time)
 {
 	short i;
-	uint32_t start = MS;
-	while (MS - start < time)
+	uint32_t start = blahblah;
+	while (blahblah - start < time)
 	{
 		i++;
 	}
@@ -592,11 +595,9 @@ ISR(WDT_vect)
 	sbi(PORTB, 4);
 }
 
-volatile unsigned long MS = 0;
-
 ISR(TIMER1_OVF_vect)
 {
-	MS++;
+	blahblah++;
 	__asm__ __volatile__ ("wdr");
 }
 

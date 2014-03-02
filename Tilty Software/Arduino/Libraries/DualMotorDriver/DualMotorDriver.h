@@ -96,6 +96,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#define pid_ki 
 	#define pid_kd 
 	
+	#define elapsed_millis 200
 	#define led	255
 #endif
 // ========== Debug Defines ==========
@@ -393,7 +394,7 @@ void readEncoder2();
 
 void delayMillis(unsigned long time);
 
-extern volatile unsigned long MS;
+extern volatile unsigned long blahblah;
 
 
 #ifdef DEBUG_MOTOR_DRIVER

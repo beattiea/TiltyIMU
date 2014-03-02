@@ -3,8 +3,6 @@ Variable register values need to be re-worked to represent which need to be in u
 
 Interrupts could be more efficient (arduino goes through an if statement before running the function)
 
-Set it so that a write to the rate register updates the target rate in RPM mode, but the register always reads as the actual rate of the motors.
-
 Direction change in ramping modes should get rid of digitalRead()
 
 PID tuning could be optimized more
@@ -12,6 +10,8 @@ PID tuning could be optimized more
 Should be able to individually enable/disable current sensing on each motor (add variable that's either 0x00 or 0x01 and use that as the toggle for the ADC ISR)
 
 Make sure that default register identifiers stay neat (ongoing)
+
+Implement pin change interrupt for other two encoder pins (low priority)
 
 
 
@@ -46,8 +46,4 @@ Custom slave only I2C for faster ISR servicing? (have to look at how Wire handle
 ========== Fixes ==========
 Motor doesn't start in ramping mode if direction was changed while stopped and brake enabled
 
-delayMillis() timing doesn't work (time interrupt triggers, but counter doesn't seem to increment properly)
-
 Double encoder resolution setting doesn't work, each tick seems to cancel out the previous one
-
-Implement pin change interrupt for other two encoder pins (low priority)

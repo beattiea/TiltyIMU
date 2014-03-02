@@ -33,4 +33,6 @@ void setup() {
 
 void loop() {
 	// Purely testing code, everything else is handled by interrupt routines
+	ledToggle();
+	delayMillis(500);
 }
