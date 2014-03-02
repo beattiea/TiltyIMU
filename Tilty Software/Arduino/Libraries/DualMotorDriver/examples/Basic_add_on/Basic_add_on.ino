@@ -17,12 +17,12 @@ However this is a global change and will affect all Arduino code, not just this 
 */
 
 #include "DualMotorDriver.h"
-#include "Wire.h"
+//#include "Wire.h"
 #include "EEPROM.h"
 
 // Included to ensure no compatibility errors
-#include "RCadapter.h"
-#include "SatelliteRX.h"
+//#include "RCadapter.h"
+//#include "SatelliteRX.h"
 #include "Servo.h"
 //===========================================
 

@@ -51,7 +51,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // ========== Library includes ==========
-#include "Wire.h"
+//#include "Wire.h"
+#include "CustomWire.h"
 #include <avr/eeprom.h>
 // ========== Library includes ==========
 
@@ -257,6 +258,31 @@ class DualMotorDriver {
 			uint8_t number;
 			int8_t  TIMSK2_mask;
 		} Pin;
+		
+		typedef struct MotorState {
+			uint8_t control;
+			uint8_t set_power;
+			uint8_t scaled_power;
+			uint8_t current_power;
+			uint8_t min_power;
+			
+#if CURRENT_SENSE_SENSITIVITY
+			uint16_t M1_current;		// High sensitivity motor 1 current draw (16-bit)
+			uint16_t M2_current;		// High sensitivity motor 2 current draw (16-bit)
+#else
+			uint8_t M1_current;			// Low sensitivity motor 1 current draw (8-bit)
+			uint8_t M2_current;			// Low sensitivity motor 2 current draw (8-bit)
+#endif
+			
+			int16_t set_rate;
+			float current_rate;
+			
+			float PID_P;
+			float PID_I;
+			float PID_D;
+			
+			int32_t encoder_value;
+		} MotorState;
 		
 		Pin M1, M2;// PWM pins
 		Pin M1H, M1L, M2H, M2L;// Direction/braking control pins

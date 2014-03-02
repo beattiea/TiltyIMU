@@ -325,6 +325,8 @@ void DualMotorDriver::sendData()
 			case adcsra: Wire.write(ADCSRA); break;
 			case adcsrb: Wire.write(ADCSRB); break;
 			
+			case 203: Wire.write((uint8_t*)&motor1, sizeof(motor1)); break;
+			
 			case led: ledToggle(); break;
 		}
 	}

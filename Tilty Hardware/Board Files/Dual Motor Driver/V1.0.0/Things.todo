@@ -2,3 +2,4 @@ Voltage divider for voltage sensing and/or voltage reference for current sensing
 All pin numbers labeled on board bottom
 Tilty connected pins labeled on top
 Change reset pin to one not used anywhere else (eg. pin 2 on the Teensy)
+Add transistor level shifting to I2C so it can be attached to 3v3 bus
