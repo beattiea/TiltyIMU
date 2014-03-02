@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_WATCHDOG_TIMER			// Watchdog timer will cause a system reset if any functions freeze, preventing the motor driver from freezing for longer than the watchdog timer limit (which is set below)
 #define ENCODER_RESOLUTION SINGLE		// Change to DOUBLE to read the rising and falling edge of the encoder, which doubles the resolution, but also the CPU load
 #define WHO_AM_I 0x11					// Arbitrary value set so that the motor driver can be recognized as such
-#define CURRENT_SENSE_SENSITIVITY LOW	// Change to LOW if current sensing seems to exceed one byte (255)
+#define CURRENT_SENSE_SENSITIVITY HIGH	// Change to LOW if current sensing seems to exceed one byte (255)
 // ========== Code Settings ==========
 
 
@@ -180,14 +180,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define M2_CONTROL_ADDRESS		0x02
 #define MIN_POWER_ADDRESS		0x03
 #define RAMPING_RATE_ADDRESS	0x04
-#define I2C_ADDR_ADDRESS		0x05
-#define PID_SCALARS_ADDRESS		0x06
+#define MIN_POWER_ADDRESS		0x05
+#define I2C_ADDR_ADDRESS		0x06
+#define PID_SCALARS_ADDRESS		0x07
 // ========== EEPROM Addresses ==========
 
 
 // ========== Default Register Values ==========
-#define DEFAULT_M1_CONTROL		ENCODER | BRAKE | SPEED
-#define DEFAULT_M2_CONTROL		DIRECTION | ENCODER | MODE
+#define DEFAULT_CONTROL		ENCODER | BRAKE | SPEED
 #define DEFAULT_M1_POWER		0
 #define DEFAULT_M2_POWER		0
 #define DEFAULT_M1_ENCODER		0
@@ -221,6 +221,7 @@ class DualMotorDriver {
 		void updateVars();
 		
 		// Motor status/control variables
+		/*
 		uint8_t M1_control;			// Motor 1 control byte
 		uint8_t M2_control;			// Motor 2 control byte
 		uint8_t M1_power;			// Motor 1 set power value
@@ -249,6 +250,13 @@ class DualMotorDriver {
 		uint8_t M2_scaled_power;	// Scaled motor power for minimum PWM control, assigned by software and not user editable
 		int16_t M1_target_rate;		// Target RPM of motor 1 in RPM mode
 		int16_t M2_target_rate;		// Target RPM of motor 2 in RPM mode
+		*/
+		float PID_kP;				// PID D scalar for RPM control
+		float PID_kI;				// PID D scalar for RPM control
+		float PID_kD;				// PID D scalar for RPM control
+		
+		uint8_t min_power;			// Minimum PWM to apply to the motor in all modes except when SPEED and MODE bits are 0
+		uint8_t ramping_rate;		// Amount to add/subtract each time ramping code is checked
 		
 		typedef struct Pin {
 			uint8_t *out_port;
@@ -264,17 +272,14 @@ class DualMotorDriver {
 			uint8_t set_power;
 			uint8_t scaled_power;
 			uint8_t current_power;
-			uint8_t min_power;
 			
 #if CURRENT_SENSE_SENSITIVITY
-			uint16_t M1_current;		// High sensitivity motor 1 current draw (16-bit)
-			uint16_t M2_current;		// High sensitivity motor 2 current draw (16-bit)
+			uint16_t current_draw;	// High sensitivity motor 1 current draw (16-bit)
 #else
-			uint8_t M1_current;			// Low sensitivity motor 1 current draw (8-bit)
-			uint8_t M2_current;			// Low sensitivity motor 2 current draw (8-bit)
+			uint8_t current_draw;	// Low sensitivity motor 1 current draw (8-bit)
 #endif
 			
-			int16_t set_rate;
+			int16_t target_rate;
 			float current_rate;
 			
 			float PID_P;
@@ -288,18 +293,7 @@ class DualMotorDriver {
 		Pin M1H, M1L, M2H, M2L;// Direction/braking control pins
 		
 		typedef struct Motor {
-			uint8_t *control;	// Motor control byte
-			uint8_t *power;		// Assigned motor power
-			int32_t *enc_val;	// Current motor encoder value
-			float 	*cur_rate;		// Motor's rate assigned by user if in RPM mode, or current motor rate if encoder is enabled
-			uint8_t *cur_pwr;	// Motor's current ramping power
-			uint8_t *scaled_pwr;// Scaled motor power for minimum PWM control
-			
-			int16_t *targ_rate;
-			
-			float PID_P;
-			float PID_I;
-			float PID_D;
+			MotorState state;	// Motor state holder, holds all data relevant to the user
 			
 			uint8_t *OCR0x;// Pointer to pin output compare register
 			uint8_t COM0x;// Pin setup in TCCR0A
@@ -332,6 +326,7 @@ class DualMotorDriver {
 		inline void setTimerB(Motor *motor);
 		
 		void wireToVar(uint8_t *var);
+		void wireToVar(int16_t *var);
 		void wireToVar(uint16_t *var);
 		void wireToVar(int32_t *var);
 		void wireToVar(float *var);
