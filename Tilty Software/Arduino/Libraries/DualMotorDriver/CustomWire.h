@@ -25,7 +25,7 @@
 #include <inttypes.h>
 #include "Arduino.h"
 
-#define BUFFER_LENGTH 64
+#define BUFFER_LENGTH 32
 
 extern "C" void i2c0_isr(void);
 

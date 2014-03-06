@@ -32,7 +32,5 @@ void setup() {
 
 
 void loop() {
-	// Purely testing code, everything else is handled by interrupt routines
-	ledToggle();
-	delayMillis(500);
+	// Anything involving Serial, or SPI can goe here when the motor driver is a slave I2C device (an add-on board)
 }
