@@ -26,12 +26,15 @@ DualMotorDriver MotorDriver;
 DualMotorDriver::DualMotorDriver()
 {	
 	I2C_bus = 1;
+	device_address = 0x03;
 }
 
 DualMotorDriver::DualMotorDriver(uint8_t bus)
 {	
 	if (bus) I2C_bus = 1;
 	else I2C_bus = 0;
+	
+	device_address = 0x03;
 }
 
 DualMotorDriver::~DualMotorDriver() 
@@ -45,6 +48,107 @@ void DualMotorDriver::init()
 {
 	
 }
+
+
+void DualMotorDriver::setMotorSpeed(uint8_t motor)
+{
+	setI2Cpins();
+	Wire.beginTransmission(device_address);
+	Wire.write(motor==1 ? M1_STATE : M2_STATE);
+	Wire.write((uint8_t*) &ptr, sizeof(MotorState));
+	Wire.endTransmission();
+}
+
+void DualMotorDriver::readMotor(uint8_t motor)
+{
+	uint8_t *ptr;
+	
+	setI2Cpins();
+	Wire.beginTransmission(device_address);
+	Wire.write(motor==1 ? M1_STATE : M2_STATE);
+	Wire.endTransmission();
+	
+	delayMicroseconds(DELAY);
+	
+	Wire.requestFrom(device_address, sizeof(MotorState));
+	
+	motor==1 ? ptr = (uint8_t*) &motor1 : ptr = (uint8_t*) &motor2;
+	while (!Wire.done());
+	for (int i = 0; i < sizeof(MotorState); i++)
+	{
+		*ptr = Wire.read();
+		ptr++;
+	}
+}
+
+
+void DualMotorDriver::setMotorSpeed(uint8_t motor, uint8_t speed)
+{
+	setI2Cpins();
+	Wire.beginTransmission(device_address);
+	Wire.write(motor==1 ? M1_POWER : M2_POWER);
+	Wire.write(speed);
+	Wire.endTransmission();
+}
+
+uint8_t DualMotorDriver::readMotorSpeed(uint8_t motor)
+{
+	setI2Cpins();
+	Wire.beginTransmission(device_address);
+	Wire.write(motor==1 ? M1_POWER : M2_POWER);
+	Wire.endTransmission();
+	
+	delayMicroseconds(DELAY);
+	
+	Wire.requestFrom(device_address, 1);
+	return Wire.read();
+}
+
+void DualMotorDriver::setMotorRPM(uint8_t motor, int16_t speed)
+{
+	setI2Cpins();
+	Wire.beginTransmission(device_address);
+	Wire.write(motor==1 ? M1_RATE : M2_RATE);
+	//Wire.write((uint8_t*) &speed, 2);
+	Wire.write(speed >> 8);
+	Wire.write(speed & 0xFF);
+	Wire.endTransmission();
+}
+
+float DualMotorDriver::readMotorRPM(uint8_t motor)
+{
+	setI2Cpins();
+	Wire.beginTransmission(device_address);
+	Wire.write(motor==1 ? M1_RATE : M2_RATE);
+	Wire.endTransmission();
+	
+	delayMicroseconds(DELAY);
+	
+	Wire.requestFrom(device_address, 4);
+	
+	data_union.bytes[0] = Wire.read();
+	data_union.bytes[1] = Wire.read();
+	data_union.bytes[2] = Wire.read();
+	data_union.bytes[3] = Wire.read();
+	
+	return data_union.float32;
+}
+
+
+void DualMotorDriver::setPID(float p, float i, float d)
+{
+	setI2Cpins();
+	Wire.beginTransmission(device_address);
+	Wire.write(PID_KP);
+	Wire.write((uint8_t*) &p, 4);
+	Wire.write((uint8_t*) &i, 4);
+	Wire.write((uint8_t*) &d, 4);
+	Wire.endTransmission();
+}
+
+
+
+
 
 // Sets the I2C bus pins on the Teensy to the bus used by the motor driver
 inline void DualMotorDriver::setI2Cpins()
@@ -110,5 +214,6 @@ inline void DualMotorDriver::wireToVar(float *var)
 	//*var = (Wire.read() << 24) | (Wire.read() << 16) | (Wire.read() << 8) | Wire.read();
 	*var = data_union.float32;
 }
+
 // ========== End of class ==========
 #endif

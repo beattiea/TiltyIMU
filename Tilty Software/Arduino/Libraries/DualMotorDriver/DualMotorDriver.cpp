@@ -243,7 +243,7 @@ uint8_t DualMotorDriver::getData(int bytes)
 			case M1_CONTROL:	wireToVar(&motor1.state.control);  		updated_vars |= 1 << active_var;	break;
 			case M2_CONTROL:	wireToVar(&motor2.state.control);	 	updated_vars |= 1 << active_var;	break;
 			case M1_POWER: 		wireToVar(&motor1.state.set_power); 	updated_vars |= 1 << active_var;	break;
-			case M2_POWER: 		wireToVar(&motor1.state.set_power);		updated_vars |= 1 << active_var;	break;
+			case M2_POWER: 		wireToVar(&motor2.state.set_power);		updated_vars |= 1 << active_var;	break;
 			case M1_ENCODER: 	wireToVar(&motor1.state.encoder_value); updated_vars |= 1 << active_var;	break;
 			case M2_ENCODER: 	wireToVar(&motor2.state.encoder_value);	updated_vars |= 1 << active_var;	break;
 			case M1_RATE: 		wireToVar(&motor1.state.target_rate);	updated_vars |= 1 << active_var;	break;
@@ -255,6 +255,8 @@ uint8_t DualMotorDriver::getData(int bytes)
 			case MIN_POWER: 	wireToVar(&min_power);					break;
 			case DEVICE_ADDRESS: 	TWAR = Wire.read() << 1; 			saveSettings(0x08);					break;
 			case EEPROM_SAVE: 	saveSettings(Wire.read());				break;
+			case M1_STATE: 		wireToVar(&motor1.state);				break;// Needs to be updated to reflect in updated_vars
+			case M2_STATE: 		wireToVar(&motor2.state);				break;// Needs to be updated to reflect in updated_vars
 		}
 		if (Wire.available()) active_var++;
 	}
@@ -278,6 +280,8 @@ uint8_t DualMotorDriver::getData(int bytes)
 		case MIN_POWER: 	active_var_ptr = &min_power;						break;
 		case EEPROM_LOAD: 	loadSettings();										break;
 		case RESET:			reset();											break;
+		case M1_STATE: 		active_var_ptr = &motor1.state;						break;
+		case M2_STATE: 		active_var_ptr = &motor2.state;						break;
 	}
 	updateVars();
 }
@@ -553,6 +557,19 @@ void DualMotorDriver::wireToVar(float *var)
 	data_union.bytes[3] = Wire.read();
 	//*var = (Wire.read() << 24) | (Wire.read() << 16) | (Wire.read() << 8) | Wire.read();
 	*var = data_union.float32;
+}
+
+// Takes a pointer to a motor state variable and reads a new set of values into it from I2C
+void DualMotorDriver::wireToVar(MotorState *var)
+{
+	/*
+	uint8_t *ptr = (uint8_t*) var;
+	for (int i = 0; i < sizeof(MotorState); i++)
+	{
+		*ptr = Wire.read();
+		ptr++;
+	}
+	*/
 }
 // ========== End of class ==========
 

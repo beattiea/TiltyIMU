@@ -13,6 +13,8 @@ Make sure that default register identifiers stay neat (ongoing)
 
 Implement pin change interrupt for other two encoder pins (low priority)
 
+Setup current and encoder ready bits so they only set when data has changed
+
 
 
 ========== Features ==========
@@ -47,3 +49,5 @@ Custom slave only I2C for faster ISR servicing? (have to look at how Wire handle
 Motor doesn't start in ramping mode if direction was changed while stopped and brake enabled
 
 Double encoder resolution setting doesn't work, each tick seems to cancel out the previous one
+
+wireToVar for motor state needs to be tested

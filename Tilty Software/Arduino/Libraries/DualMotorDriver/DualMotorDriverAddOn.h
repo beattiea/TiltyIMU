@@ -19,6 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "i2c_t3.h"
 
+// Motor control modes
+#define NONE	0
+#define MAPPED	0x08
+#define SMOOTH	0x04
+#define RPM		0x0C
+
 class DualMotorDriver {
 	public:
 		// Constructors
@@ -27,6 +33,9 @@ class DualMotorDriver {
 		~DualMotorDriver();
 		
 		void init();
+		
+		// Device Settings
+		uint8_t device_address;
 		
 		// Motor status/control variables
 		uint8_t M1_control;			// Motor 1 control byte
@@ -44,8 +53,8 @@ class DualMotorDriver {
 #endif
 		float M1_rate;				// Current motor rate if encoder is enabled, when written to it updates the target RPM in RPM mode
 		float M2_rate;				// Current motor rate if encoder is enabled, when written to it updates the target RPM in RPM mode
-		float PID_kP;				// PID D scalar for RPM control
-		float PID_kI;				// PID D scalar for RPM control
+		float PID_kP;				// PID P scalar for RPM control
+		float PID_kI;				// PID I scalar for RPM control
 		float PID_kD;				// PID D scalar for RPM control
 		uint8_t min_power;			// Minimum PWM to apply to the motor in all modes except when SPEED and MODE bits are 0
 		uint8_t ramping_rate;		// Amount to add/subtract each time ramping code is checked
@@ -58,10 +67,43 @@ class DualMotorDriver {
 		int16_t M1_target_rate;		// Target RPM of motor 1 in RPM mode
 		int16_t M2_target_rate;		// Target RPM of motor 2 in RPM mode
 		
-		// Counter variable for timing
-		uint8_t reset_led_counter;
+		typedef struct MotorState {
+			uint8_t control;
+			uint8_t set_power;
+			uint8_t scaled_power;
+			uint8_t current_power;
+			
+#if CURRENT_SENSE_SENSITIVITY
+			uint16_t current_draw;	// High sensitivity motor 1 current draw (16-bit)
+#else
+			uint8_t current_draw;	// Low sensitivity motor 1 current draw (8-bit)
+#endif
+			
+			int16_t target_rate;
+			float current_rate;
+			
+			float PID_P;
+			float PID_I;
+			float PID_D;
+			
+			int32_t encoder_value;
+		} MotorState;
+		
+		MotorState motor1;
+		MotorState motor2;
+		
+		void readMotor(uint8_t motor);
+		
+		void setMotorSpeed(uint8_t motor, uint8_t speed);		// Sets only motor 1 speed
+		uint8_t readMotorSpeed(uint8_t motor);
+		void setMotorRPM(uint8_t motor, int16_t speed);
+		float readMotorRPM(uint8_t motor);
+		
+		void setPID(float p, float i, float d);
 		
 	private:
+		static const uint8_t DELAY = 150;		// Microsecond delay between reads and writes
+		
 		// I2C bus switching control
 		uint8_t I2C_bus;						// 0 means use pins 18-19, 1 means use pins 16-17
 		static const uint16_t I2C_config = 612;	// Core pin config when pin is setup as I2C pin
@@ -102,22 +144,23 @@ class DualMotorDriver {
 		static const uint8_t M2_CONTROL = 0x01;
 		static const uint8_t M1_POWER = 0x02;
 		static const uint8_t M2_POWER = 0x03;
-		static const uint8_t M1_ENCODER = 0x04;
-		static const uint8_t M2_ENCODER = 0x05;
-		static const uint8_t M1_RATE = 0x06;
-		static const uint8_t M2_RATE = 0x07;
-		static const uint8_t M1_CURRENT = 0x08;
-		static const uint8_t M2_CURRENT = 0x09;
-		// These can handle updates in the I2C receive code, and don't need indicators in updated_vars
-		static const uint8_t DEVICE_ID = 0x0E;
-		static const uint8_t PID_KP = 0x0A;
-		static const uint8_t PID_KI = 0x0B;
-		static const uint8_t PID_KD = 0x0C;
-		static const uint8_t EEPROM_SAVE = 0x0D;
-		static const uint8_t EEPROM_LOAD = 0x0E;
-		static const uint8_t RAMPING_RATE = 0x0F;
-		static const uint8_t MIN_POWER = 0x10;
-		static const uint8_t RESET = 0x11;
+		static const uint8_t M1_CURRENT = 0x04;
+		static const uint8_t M2_CURRENT = 0x05;
+		static const uint8_t RAMPING_RATE = 0x06;
+		static const uint8_t MIN_POWER = 0x07;
+		static const uint8_t M1_RATE = 0x08;
+		static const uint8_t M2_RATE = 0x09;
+		static const uint8_t M1_ENCODER = 0x0A;
+		static const uint8_t M2_ENCODER = 0x0B;
+		static const uint8_t PID_KP = 0x0C;
+		static const uint8_t PID_KI = 0x0D;
+		static const uint8_t PID_KD = 0x0E;
+		static const uint8_t EEPROM_SAVE = 0x0F;
+		static const uint8_t EEPROM_LOAD = 0x10;
+		static const uint8_t DEVICE_ADDRESS = 0x20;
+		static const uint8_t RESET = 0x30;
+		static const uint8_t M1_STATE = 0x31;
+		static const uint8_t M2_STATE = 0x32;
 };
 
 extern DualMotorDriver MotorDriver;

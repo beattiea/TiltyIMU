@@ -44,8 +44,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ========== I2C Settings ==========
 // Neither buffer size can exceed 32 bytes! That is the limit imposed by the Wire library
-#define RX_BUFFER_SIZE 32
-#define TX_BUFFER_SIZE 36
+#define RX_BUFFER_SIZE 30
+#define TX_BUFFER_SIZE 30
 #define DEFAULT_MOTOR_DRIVER_I2C_ADDRESS 0x03
 // ========== I2C Settings ==========
 
@@ -197,7 +197,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEFAULT_M2_CURRENT		0
 #define DEFAULT_M1_RATE			0
 #define DEFAULT_M2_RATE			0
-#define DEFAULT_PID_KP			0.75
+#define DEFAULT_PID_KP			0.0
 #define DEFAULT_PID_KI			0.05
 #define DEFAULT_PID_KD			0.25
 #define DEFAULT_MIN_POWER		55
@@ -220,38 +220,7 @@ class DualMotorDriver {
 		void sendData();
 		
 		void updateVars();
-		
-		// Motor status/control variables
-		/*
-		uint8_t M1_control;			// Motor 1 control byte
-		uint8_t M2_control;			// Motor 2 control byte
-		uint8_t M1_power;			// Motor 1 set power value
-		uint8_t M2_power;			// Motor 2 set power value
-		int32_t M1_encoder;			// Motor 1 current encoder value
-		int32_t M2_encoder;			// Motor 2 current encoder value
-#if CURRENT_SENSE_SENSITIVITY
-		uint16_t M1_current;		// High sensitivity motor 1 current draw (16-bit)
-		uint16_t M2_current;		// High sensitivity motor 2 current draw (16-bit)
-#else
-		uint8_t M1_current;			// Low sensitivity motor 1 current draw (8-bit)
-		uint8_t M2_current;			// Low sensitivity motor 2 current draw (8-bit)
-#endif
-		float M1_rate;				// Current motor rate if encoder is enabled, when written to it updates the target RPM in RPM mode
-		float M2_rate;				// Current motor rate if encoder is enabled, when written to it updates the target RPM in RPM mode
-		float PID_kP;				// PID D scalar for RPM control
-		float PID_kI;				// PID D scalar for RPM control
-		float PID_kD;				// PID D scalar for RPM control
-		uint8_t min_power;			// Minimum PWM to apply to the motor in all modes except when SPEED and MODE bits are 0
-		uint8_t ramping_rate;		// Amount to add/subtract each time ramping code is checked
-		
-		// Background variables, these are used by the motor driver but the user doesn't need to worry about them
-		uint8_t M1_current_power;	// Current power assigned by software, not user editable
-		uint8_t M2_current_power;	// Current power assigned by software, not user editable
-		uint8_t M1_scaled_power;	// Scaled motor power for minimum PWM control, assigned by software and not user editable
-		uint8_t M2_scaled_power;	// Scaled motor power for minimum PWM control, assigned by software and not user editable
-		int16_t M1_target_rate;		// Target RPM of motor 1 in RPM mode
-		int16_t M2_target_rate;		// Target RPM of motor 2 in RPM mode
-		*/
+
 		float PID_kP;				// PID D scalar for RPM control
 		float PID_kI;				// PID D scalar for RPM control
 		float PID_kD;				// PID D scalar for RPM control
@@ -331,6 +300,7 @@ class DualMotorDriver {
 		void wireToVar(uint16_t *var);
 		void wireToVar(int32_t *var);
 		void wireToVar(float *var);
+		void wireToVar(MotorState *var);
 		
 		// Counter variable for timing
 		uint8_t reset_led_counter;
@@ -382,6 +352,8 @@ class DualMotorDriver {
 		static const uint8_t EEPROM_LOAD = 0x10;
 		static const uint8_t DEVICE_ADDRESS = 0x20;
 		static const uint8_t RESET = 0x30;
+		static const uint8_t M1_STATE = 0x31;
+		static const uint8_t M2_STATE = 0x32;
 };
 
 extern DualMotorDriver MotorDriver;

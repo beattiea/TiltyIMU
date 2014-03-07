@@ -366,6 +366,7 @@ SIGNAL(TWI_vect)
 {
   switch(TW_STATUS){
     // All Master
+/*
     case TW_START:     // sent start condition
     case TW_REP_START: // sent repeated start condition
       // copy device address and r/w bit to output register and ack
@@ -437,7 +438,7 @@ SIGNAL(TWI_vect)
       twi_stop();
       break;
     // TW_MR_ARB_LOST handled by TW_MT_ARB_LOST case
-
+*/
     // Slave Receiver
     case TW_SR_SLA_ACK:   // addressed, returned ack
     case TW_SR_GCALL_ACK: // addressed generally, returned ack
