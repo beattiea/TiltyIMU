@@ -8,7 +8,7 @@ void setup() {
 	
 	delay(20);
 	
-	Wire.begin(I2C_MASTER, 0, I2C_PINS_16_17, I2C_PULLUP_EXT, I2C_RATE_100);
+	Wire.begin(I2C_MASTER, 0, I2C_PINS_16_17, I2C_PULLUP_EXT, I2C_RATE_400);
 	
 	delay(10);
 }
@@ -60,6 +60,16 @@ void loop() {
 			Serial.print(val, DEC);
 			Serial.println(")");
 			buf_index++;
+		}
+		
+		else if (Serial.peek() == 'd') {
+			Serial.print("Time: ");
+			long start = micros();
+			Wire.requestFrom(0x03, 28);
+			while (Wire.available() < 28) {}
+			Serial.println(micros() - start);
+			for (int i = 0; i < 28; i++) Serial.println(Wire.read());
+			Serial.read();
 		}
 		
 		else {	Serial.read();}
