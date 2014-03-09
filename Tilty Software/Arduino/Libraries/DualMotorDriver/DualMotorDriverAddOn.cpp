@@ -49,16 +49,6 @@ void DualMotorDriver::init()
 	
 }
 
-
-void DualMotorDriver::setMotorSpeed(uint8_t motor)
-{
-	setI2Cpins();
-	Wire.beginTransmission(device_address);
-	Wire.write(motor==1 ? M1_STATE : M2_STATE);
-	Wire.write((uint8_t*) &ptr, sizeof(MotorState));
-	Wire.endTransmission();
-}
-
 void DualMotorDriver::readMotor(uint8_t motor)
 {
 	uint8_t *ptr;
