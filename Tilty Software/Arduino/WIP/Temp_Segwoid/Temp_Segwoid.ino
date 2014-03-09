@@ -25,9 +25,9 @@ const short ROLL = 2;		// Roll position in ypr[]
 Servo go_servo;
 Servo turn_servo;
 
-float kP = 10.0;		// Proportional PID gain
-float kI = 0.25;	// Integral PID gain
-float kD = 5.0;		// Derivative PID gain
+float kP = 0.0;		// Proportional PID gain
+float kI = 0.0;	// Integral PID gain
+float kD = 0.0;		// Derivative PID gain
 float P, I, D;		// PID values
 
 const int MAX_STARTING_PITCH = 3; // Maximum pitch before segwoid will begin balancing (must be < this and > -this)
