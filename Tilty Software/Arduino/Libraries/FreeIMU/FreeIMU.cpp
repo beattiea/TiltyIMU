@@ -662,9 +662,12 @@ void FreeIMU::gravityCompensateAcc(float * acc, float * q) {
 void FreeIMU::getEulerRad(float * angles) {
   float q[4]; // quaternion
   getQ(q);
-  angles[0] = atan2(2 * q[1] * q[2] - 2 * q[0] * q[3], 2 * q[0]*q[0] + 2 * q[1] * q[1] - 1); // psi
-  angles[1] = -asin(2 * q[1] * q[3] + 2 * q[0] * q[2]); // theta
-  angles[2] = atan2(2 * q[2] * q[3] - 2 * q[0] * q[1], 2 * q[0] * q[0] + 2 * q[3] * q[3] - 1); // phi
+  angles[0] = atan2(2*q[0]*q[3] + 2*q[1]*q[2], q[0]*q[0] + q[1]*q[1] - q[2]*q[2] - q[3]*q[3]);
+  angles[1] = -asin(2*q[1]*q[3] - 2*q[0]*q[2]);
+  angles[2] = atan2(2*q[0]*q[1] + 2*q[2]*q[3], q[0]*q[0] - q[1]*q[1] - q[2]*q[2] + q[3]*q[3]);
+  //angles[0] = atan2(2 * q[1] * q[2] - 2 * q[0] * q[3], 2 * q[0]*q[0] + 2 * q[1] * q[1] - 1); // psi
+  //angles[1] = -asin(2 * q[1] * q[3] + 2 * q[0] * q[2]); // theta
+  //angles[2] = atan2(2 * q[2] * q[3] - 2 * q[0] * q[1], 2 * q[0] * q[0] + 2 * q[3] * q[3] - 1); // phi
 }
 
 
