@@ -47,15 +47,16 @@ void setup() {
 	
 	delay(5);
 	
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < 200; i++) {
 		readIMU();
-		delay(5);
+		delay(10);
 	}
 	
 	while (!Serial) { // wait for a serial connection just for debugging purposes
 		readIMU();
 		delay(10);
 	}
+	imu.zeroGyro();
 }
 
 void loop() {
@@ -67,7 +68,7 @@ void loop() {
 			
 			writeServos(P + I + D, 0);
 			
-			delay(10);
+			delay(5);
 		}
 	}
 	else resetPID();
@@ -76,12 +77,20 @@ void loop() {
 	writeServos(0, 0);
 	printDebugValues();
 	
-	delay(10);
+	delay(5);
 }
 
 void readIMU() {
 	for (int i = 0; i < 3; i++) {	old_ypr[i] = ypr[i];} // Save the old ypr values
-	imu.getYawPitchRoll(ypr); // read new ypr values
+	float vals[6];
+	imu.getValues(vals);
+	for (int i = 0; i < 6; i++) {
+		Serial.print("Vals ");
+		Serial.print(i+1);
+		Serial.print(": ");
+		Serial.println(vals[i]);
+	}
+	imu.getEuler(ypr); // read new ypr values
 }
 
 void printDebugValues() {
