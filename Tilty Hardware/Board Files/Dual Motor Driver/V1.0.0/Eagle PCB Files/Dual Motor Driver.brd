@@ -22,10 +22,10 @@
 <layer number="26" name="bNames" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
-<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
-<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
-<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
-<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="yes" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="yes" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="yes" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="yes" active="yes"/>
 <layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
@@ -898,7 +898,7 @@
 <wire x1="8.89" y1="15.621" x2="9.906" y2="15.621" width="0.2032" layer="25"/>
 <wire x1="28.448" y1="15.875" x2="29.464" y2="15.875" width="0.2032" layer="25"/>
 <wire x1="30.48" y1="17.145" x2="31.496" y2="17.145" width="0.2032" layer="25"/>
-<rectangle x1="17.78" y1="19.177" x2="20.574" y2="21.971" layer="31"/>
+<rectangle x1="17.78" y1="16.637" x2="20.574" y2="24.511" layer="31"/>
 <text x="14.9225" y="44.323" size="1.524" layer="25" ratio="15">P</text>
 <text x="12.446" y="48.514" size="1.524" layer="25" ratio="15">R</text>
 <text x="17.78" y="43.18" size="1.27" layer="26" ratio="15" rot="MR0">RST</text>
@@ -2545,7 +2545,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
 <packages>
 <package name="TO263">
-<smd name="P$1" x="0" y="2.794" dx="5.7912" dy="6.1976" layer="1"/>
+<smd name="P$1" x="0" y="2.794" dx="5.7912" dy="6.1976" layer="1" cream="no"/>
 <smd name="P$2" x="-2.286" y="-4.3942" dx="1.6002" dy="2.9972" layer="1"/>
 <smd name="P$3" x="2.286" y="-4.3942" dx="1.6002" dy="2.9972" layer="1"/>
 <wire x1="-3.175" y1="4.953" x2="-3.175" y2="-4.953" width="0.127" layer="51"/>
@@ -2554,6 +2554,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="3.175" y1="4.953" x2="-3.175" y2="4.953" width="0.127" layer="51"/>
 <text x="-2.54" y="6.35" size="1.27" layer="25">&gt;NAME</text>
 <text x="-3.175" y="-7.62" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-2.286" y1="0.635" x2="2.286" y2="4.953" layer="31"/>
 </package>
 </packages>
 </library>

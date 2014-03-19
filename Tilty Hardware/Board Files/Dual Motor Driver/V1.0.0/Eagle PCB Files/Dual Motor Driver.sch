@@ -9157,7 +9157,7 @@ QFN is non-stock</description>
 &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
 <packages>
 <package name="TO263">
-<smd name="P$1" x="0" y="2.794" dx="5.7912" dy="6.1976" layer="1"/>
+<smd name="P$1" x="0" y="2.794" dx="5.7912" dy="6.1976" layer="1" cream="no"/>
 <smd name="P$2" x="-2.286" y="-4.3942" dx="1.6002" dy="2.9972" layer="1"/>
 <smd name="P$3" x="2.286" y="-4.3942" dx="1.6002" dy="2.9972" layer="1"/>
 <wire x1="-3.175" y1="4.953" x2="-3.175" y2="-4.953" width="0.127" layer="51"/>
@@ -9166,6 +9166,7 @@ QFN is non-stock</description>
 <wire x1="3.175" y1="4.953" x2="-3.175" y2="4.953" width="0.127" layer="51"/>
 <text x="-2.54" y="6.35" size="1.27" layer="25">&gt;NAME</text>
 <text x="-3.175" y="-7.62" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-2.286" y1="0.635" x2="2.286" y2="4.953" layer="31"/>
 </package>
 </packages>
 <symbols>

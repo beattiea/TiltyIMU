@@ -146,8 +146,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <smd name="24" x="-1.25" y="2" dx="0.8" dy="0.3" layer="1" rot="R270"/>
 <text x="-2.45" y="2.8" size="1.27" layer="25">&gt;NAME</text>
 <text x="-2.5" y="-4.15" size="1.27" layer="27">&gt;VALUE</text>
-<rectangle x1="-1.016" y1="-1.016" x2="1.016" y2="1.016" layer="1"/>
-<rectangle x1="-0.508" y1="-0.508" x2="0.508" y2="0.508" layer="29"/>
+<smd name="P$1" x="0" y="0" dx="2.032" dy="2.032" layer="1" cream="no"/>
+<rectangle x1="-0.1905" y1="-0.1905" x2="0.1905" y2="0.1905" layer="31"/>
 </package>
 <package name="LGA8">
 <description>&lt;h4&gt;LGA8 Package&lt;/h4&gt; &lt;B&gt;**UNPROVEN**&lt;/b&gt;
@@ -6243,9 +6243,9 @@ www.scr.com</description>
 <pad name="P$3" x="-3.81" y="-0.127" drill="0.8"/>
 <pad name="P$4" x="-1.27" y="0.127" drill="0.8"/>
 <pad name="P$5" x="1.27" y="-0.127" drill="0.8"/>
-<pad name="P$6" x="3.81" y="0" drill="0.8"/>
+<pad name="P$6" x="3.81" y="0.127" drill="0.8"/>
 <pad name="P$7" x="6.35" y="-0.127" drill="0.8"/>
-<pad name="P$8" x="8.89" y="0" drill="0.8"/>
+<pad name="P$8" x="8.89" y="0.127" drill="0.8"/>
 </package>
 </packages>
 <symbols>
@@ -6446,7 +6446,7 @@ www.scr.com</description>
 &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
 <packages>
 <package name="TO263">
-<smd name="P$1" x="0" y="2.794" dx="5.7912" dy="6.1976" layer="1"/>
+<smd name="P$1" x="0" y="2.794" dx="5.7912" dy="6.1976" layer="1" cream="no"/>
 <smd name="P$2" x="-2.286" y="-4.3942" dx="1.6002" dy="2.9972" layer="1"/>
 <smd name="P$3" x="2.286" y="-4.3942" dx="1.6002" dy="2.9972" layer="1"/>
 <wire x1="-3.175" y1="4.953" x2="-3.175" y2="-4.953" width="0.127" layer="51"/>
@@ -6455,6 +6455,7 @@ www.scr.com</description>
 <wire x1="3.175" y1="4.953" x2="-3.175" y2="4.953" width="0.127" layer="51"/>
 <text x="-2.54" y="6.35" size="1.27" layer="25">&gt;NAME</text>
 <text x="-3.175" y="-7.62" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-2.286" y1="0.635" x2="2.286" y2="4.953" layer="31"/>
 </package>
 </packages>
 <symbols>
