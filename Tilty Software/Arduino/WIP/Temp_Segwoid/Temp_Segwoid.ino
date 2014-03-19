@@ -1,6 +1,9 @@
 #include <I2Cdev.h>
-#include <MPU6050.h>
+//#include <MPU6050.h>
 #include <EEPROM.h>
+
+#include "MPU6050_6Axis_MotionApps20.h"
+MPU6050 mpu;
 
 //#define DEBUG
 #include "DebugUtils.h"
@@ -11,8 +14,6 @@
 #include <SPI.h>
 
 #include "FastServo.h"
-
-#include "DualMotorDriver.h"
 
 #define GO_PIN 2
 #define STEER_PIN 3
@@ -32,7 +33,7 @@ Servo turn_servo;
 
 float kP = 25.0;		// Proportional PID gain
 float kI = 0.25;			// Integral PID gain
-float kD = 7.5;		// Derivative PID gain
+float kD = 5.0;		// Derivative PID gain
 float P, I, D;			// PID values
 
 int S = 255;
@@ -51,6 +52,7 @@ void setup() {
 	delay(5);
 	
 	imu.init();
+	//setupDMP();
 	
 	delay(5);
 	
@@ -64,9 +66,31 @@ void setup() {
 		delay(10);
 	}
 	*/
-	imu.zeroGyro();
-	
 	pinMode(13, OUTPUT);
+	digitalWrite(13, HIGH);
+	
+	short count;
+	while (true) {
+		float std_dev[255];
+		for (int i = 0; i < 255; i++) {
+			readIMU();
+			std_dev[i] = ypr[PITCH];
+			delay(5);
+		}
+		float val = standardDev(std_dev, 100);
+		Serial.print("Standard Deviation: ");
+		Serial.println(val, 3);
+		if (val < 0.125) {
+			count++;
+			if (count > 3) {
+				digitalWrite(13, LOW);
+				break;
+			}
+		}
+		else {	count = 0;}
+	}
+	
+	imu.zeroGyro();
 }
 
 void loop() {
@@ -91,7 +115,7 @@ void loop() {
 			writeServos(P + I + D, S / 2.5);
 			//writeServos(0, S / 2.5);
 			
-			delay(10);
+			//delay(10);
 		}
 	}
 	else resetPID();
@@ -106,16 +130,6 @@ void loop() {
 
 void readIMU() {
 	for (int i = 0; i < 3; i++) {	old_ypr[i] = ypr[i];} // Save the old ypr values
-	/*
-	float vals[6];
-	imu.getValues(vals);
-	for (int i = 0; i < 6; i++) {
-		Serial.print("Vals ");
-		Serial.print(i+1);
-		Serial.print(": ");
-		Serial.println(vals[i]);
-	}
-	*/
 	imu.getEuler(ypr); // read new ypr values
 }
 
@@ -126,13 +140,30 @@ void printDebugValues() {
 	Serial.print(ypr[1]);
 	Serial.print(" \tRoll: ");
 	Serial.print(ypr[2]);
+	
 	Serial.print("\t\tSteer: ");
 	Serial.print(analogRead(STEER_SENSE));
+	
 	Serial.print("\t\tP: ");
 	Serial.print(P);
 	Serial.print("\tI: ");
 	Serial.print(I);
 	Serial.print("\tD: ");
 	Serial.print(D);
+	
 	Serial.println();
+}
+
+float standardDev(float *vals, size_t size) {
+	float mean1, mean2;
+	float sum, diff[size];
+	
+	for (int i = 0; i < size; i++)	sum += vals[0];
+	mean1 = sum / size;
+	for (int i = 0; i < size; i++)	diff[i] = pow((vals[i] - mean1), 2);
+	sum = 0;
+	for (int i = 0; i < size; i++) sum += diff[i];
+	return (sum / size);
+	
+	
 }
