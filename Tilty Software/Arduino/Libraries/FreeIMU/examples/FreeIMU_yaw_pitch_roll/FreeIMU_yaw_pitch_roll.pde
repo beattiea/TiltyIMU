@@ -1,6 +1,7 @@
 #include <I2Cdev.h>
 #include <MPU6050.h>
 #include <EEPROM.h>
+#include <HMC58X3.h>
 
 //#define DEBUG
 #include "DebugUtils.h"
