@@ -22,10 +22,10 @@
 <layer number="26" name="bNames" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
-<layer number="29" name="tStop" color="7" fill="3" visible="yes" active="yes"/>
-<layer number="30" name="bStop" color="7" fill="6" visible="yes" active="yes"/>
-<layer number="31" name="tCream" color="7" fill="4" visible="yes" active="yes"/>
-<layer number="32" name="bCream" color="7" fill="5" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
 <layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
@@ -3133,7 +3133,7 @@ Please make sure your boards conform to these design rules.</description>
 <via x="17.145" y="20.066" extent="1-16" drill="0.508"/>
 <via x="19.812" y="13.97" extent="1-16" drill="0.381"/>
 </signal>
-<signal name="M1A">
+<signal name="M2A">
 <contactref element="D1" pad="1"/>
 <contactref element="U2" pad="4"/>
 <contactref element="D8" pad="2"/>
@@ -3156,7 +3156,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="33.054" y1="32.552" x2="33.054" y2="31.843" width="0.508" layer="1"/>
 <wire x1="33.054" y1="31.843" x2="33.655" y2="31.242" width="0.508" layer="1"/>
 </signal>
-<signal name="M1B">
+<signal name="M2B">
 <contactref element="U2" pad="5"/>
 <contactref element="D2" pad="1"/>
 <contactref element="D7" pad="2"/>
@@ -3182,7 +3182,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="34.29" y1="22.733" x2="36.449" y2="22.733" width="0.508" layer="16"/>
 <wire x1="36.449" y1="22.733" x2="37.211" y2="23.495" width="0.508" layer="16"/>
 </signal>
-<signal name="M2A">
+<signal name="M1A">
 <contactref element="U2" pad="16"/>
 <contactref element="D3" pad="1"/>
 <contactref element="D6" pad="2"/>
@@ -3205,7 +3205,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="5.30635" y1="42.69965" x2="4.318" y2="43.688" width="0.508" layer="1"/>
 <wire x1="4.318" y1="43.688" x2="1.397" y2="43.688" width="0.508" layer="1"/>
 </signal>
-<signal name="M2B">
+<signal name="M1B">
 <contactref element="U2" pad="17"/>
 <contactref element="D4" pad="1"/>
 <contactref element="D5" pad="2"/>
@@ -3571,7 +3571,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="25.908" y1="40.855" x2="27.52" y2="40.855" width="0.1524" layer="1"/>
 <wire x1="27.52" y1="40.855" x2="28.067" y2="41.402" width="0.1524" layer="1"/>
 </signal>
-<signal name="ENC1B">
+<signal name="ENC2B">
 <contactref element="U1" pad="24"/>
 <wire x1="30.107" y1="35.552" x2="29.5275" y2="36.1315" width="0.1524" layer="1"/>
 <wire x1="29.5275" y1="36.1315" x2="29.5275" y2="41.9735" width="0.1524" layer="1"/>
@@ -3586,7 +3586,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="31.496" y1="35.56" x2="30.115" y2="35.56" width="0.1524" layer="1"/>
 <wire x1="30.115" y1="35.56" x2="30.107" y2="35.552" width="0.1524" layer="1"/>
 </signal>
-<signal name="ENC1A">
+<signal name="ENC2A">
 <contactref element="JP6" pad="P$3"/>
 <contactref element="U1" pad="32"/>
 <wire x1="33.054" y1="34.552" x2="32.25" y2="34.552" width="0.1524" layer="1"/>
@@ -3608,7 +3608,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="16.123" y1="42.424" x2="16.383" y2="42.164" width="0.1524" layer="1"/>
 <wire x1="16.383" y1="42.164" x2="17.018" y2="42.164" width="0.1524" layer="1"/>
 </signal>
-<signal name="ENC2B">
+<signal name="ENC1B">
 <contactref element="U1" pad="1"/>
 <contactref element="JP5" pad="P$5"/>
 <via x="13.462" y="42.3545" extent="1-16" drill="0.3302"/>
@@ -3626,7 +3626,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="13.462" y1="42.3545" x2="14.5609" y2="42.3545" width="0.1524" layer="1"/>
 <wire x1="14.5609" y1="42.3545" x2="14.6304" y2="42.424" width="0.1524" layer="1"/>
 </signal>
-<signal name="ENC2A">
+<signal name="ENC1A">
 <contactref element="U1" pad="23"/>
 <via x="6.604" y="42.418" extent="1-16" drill="0.3302"/>
 <via x="24.638" y="41.275" extent="1-16" drill="0.3302"/>
@@ -3647,7 +3647,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="6.096" y1="35.56" x2="5.31435" y2="35.56" width="0.1524" layer="1"/>
 <wire x1="5.31435" y1="35.56" x2="5.30635" y2="35.552" width="0.1524" layer="1"/>
 </signal>
-<signal name="M1+">
+<signal name="M2+">
 <contactref element="U2" pad="7"/>
 <contactref element="U1" pad="2"/>
 <via x="24.511" y="22.479" extent="1-16" drill="0.3302"/>
@@ -3660,17 +3660,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="24.511" y1="22.479" x2="25.908" y2="22.479" width="0.254" layer="1"/>
 </signal>
 <signal name="M1-">
-<contactref element="U2" pad="9"/>
-<contactref element="U1" pad="13"/>
-<wire x1="25.908" y1="25.019" x2="24.13" y2="25.019" width="0.254" layer="1"/>
-<wire x1="24.13" y1="25.019" x2="23.4315" y2="25.7175" width="0.254" layer="1"/>
-<wire x1="23.4315" y1="25.7175" x2="23.368" y2="33.147" width="0.254" layer="1"/>
-<wire x1="23.368" y1="33.147" x2="22.987" y2="33.528" width="0.254" layer="1"/>
-<wire x1="19.323" y1="35.3314" x2="19.323" y2="33.89" width="0.254" layer="1"/>
-<wire x1="19.323" y1="33.89" x2="19.685" y2="33.528" width="0.254" layer="1"/>
-<wire x1="19.685" y1="33.528" x2="22.987" y2="33.528" width="0.254" layer="1"/>
-</signal>
-<signal name="M2-">
 <contactref element="U2" pad="15"/>
 <contactref element="U1" pad="12"/>
 <wire x1="12.446" y1="21.209" x2="14.224" y2="21.209" width="0.254" layer="1"/>
@@ -3681,7 +3670,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="18.523" y1="32.874" x2="17.907" y2="32.258" width="0.254" layer="1"/>
 <wire x1="17.907" y1="32.258" x2="15.113" y2="32.258" width="0.254" layer="1"/>
 </signal>
-<signal name="M2+">
+<signal name="M1+">
 <contactref element="U2" pad="13"/>
 <contactref element="U1" pad="11"/>
 <wire x1="12.446" y1="23.749" x2="13.462" y2="23.749" width="0.254" layer="1"/>
@@ -3692,7 +3681,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="17.723" y1="33.598" x2="17.145" y2="33.02" width="0.254" layer="1"/>
 <wire x1="17.145" y1="33.02" x2="14.351" y2="33.02" width="0.254" layer="1"/>
 </signal>
-<signal name="PWM2">
+<signal name="PWM1">
 <contactref element="U2" pad="14"/>
 <contactref element="U1" pad="9"/>
 <via x="13.843" y="22.479" extent="1-16" drill="0.3302"/>
@@ -3703,7 +3692,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="13.843" y1="34.8234" x2="14.351" y2="35.3314" width="0.254" layer="16"/>
 <wire x1="14.351" y1="35.3314" x2="15.0622" y2="35.3314" width="0.254" layer="16"/>
 </signal>
-<signal name="PWM1">
+<signal name="PWM2">
 <contactref element="U2" pad="8"/>
 <contactref element="U1" pad="10"/>
 <via x="24.511" y="23.749" extent="1-16" drill="0.3302"/>
@@ -3715,7 +3704,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="16.9164" y1="24.3586" x2="17.526" y2="23.749" width="0.254" layer="16"/>
 <wire x1="17.526" y1="23.749" x2="24.511" y2="23.749" width="0.254" layer="16"/>
 </signal>
-<signal name="SENSE_2">
+<signal name="SENSE_1">
 <contactref element="U2" pad="19"/>
 <contactref element="R4" pad="2"/>
 <contactref element="R5" pad="2"/>
@@ -3737,7 +3726,7 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="20.923" y1="43.9166" x2="20.923" y2="45.346" width="0.1524" layer="1"/>
 <wire x1="20.923" y1="45.346" x2="21.209" y2="45.378" width="0.1524" layer="1"/>
 </signal>
-<signal name="SENSE_1">
+<signal name="SENSE_2">
 <contactref element="R2" pad="2"/>
 <contactref element="R3" pad="2"/>
 <contactref element="U2" pad="2"/>
@@ -3906,6 +3895,17 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="13.97" y1="45.466" x2="14.6685" y2="46.1645" width="0.1524" layer="1"/>
 <wire x1="14.6685" y1="46.1645" x2="15.152" y2="46.1645" width="0.1524" layer="1"/>
 <wire x1="15.152" y1="46.1645" x2="15.5965" y2="46.609" width="0.1524" layer="1"/>
+</signal>
+<signal name="M2-">
+<contactref element="U1" pad="13"/>
+<contactref element="U2" pad="9"/>
+<wire x1="25.908" y1="25.019" x2="24.13" y2="25.019" width="0.254" layer="1"/>
+<wire x1="24.13" y1="25.019" x2="23.4315" y2="25.7175" width="0.254" layer="1"/>
+<wire x1="23.4315" y1="25.7175" x2="23.368" y2="33.147" width="0.254" layer="1"/>
+<wire x1="23.368" y1="33.147" x2="22.987" y2="33.528" width="0.254" layer="1"/>
+<wire x1="19.323" y1="33.89" x2="19.685" y2="33.528" width="0.254" layer="1"/>
+<wire x1="19.685" y1="33.528" x2="22.987" y2="33.528" width="0.254" layer="1"/>
+<wire x1="19.323" y1="33.89" x2="19.323" y2="35.3314" width="0.254" layer="1"/>
 </signal>
 </signals>
 <errors>

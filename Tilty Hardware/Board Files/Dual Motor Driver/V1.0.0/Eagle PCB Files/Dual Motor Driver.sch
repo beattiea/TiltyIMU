@@ -10137,7 +10137,7 @@ are connected to SPI pins</text>
 <wire x1="129.54" y1="48.26" x2="129.54" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="M1A" class="0">
+<net name="M2A" class="0">
 <segment>
 <pinref part="D1" gate="G$1" pin="C"/>
 <wire x1="109.22" y1="109.22" x2="109.22" y2="114.3" width="0.1524" layer="91"/>
@@ -10163,7 +10163,7 @@ are connected to SPI pins</text>
 <label x="147.32" y="40.64" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="M1B" class="0">
+<net name="M2B" class="0">
 <segment>
 <wire x1="116.84" y1="109.22" x2="116.84" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="116.84" y1="114.3" x2="116.84" y2="119.38" width="0.1524" layer="91"/>
@@ -10189,7 +10189,7 @@ are connected to SPI pins</text>
 <label x="147.32" y="38.1" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="M2A" class="0">
+<net name="M1A" class="0">
 <segment>
 <wire x1="124.46" y1="109.22" x2="124.46" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="114.3" x2="124.46" y2="119.38" width="0.1524" layer="91"/>
@@ -10215,7 +10215,7 @@ are connected to SPI pins</text>
 <label x="180.34" y="40.64" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
-<net name="M2B" class="0">
+<net name="M1B" class="0">
 <segment>
 <wire x1="132.08" y1="109.22" x2="132.08" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="132.08" y1="114.3" x2="132.08" y2="119.38" width="0.1524" layer="91"/>
@@ -10483,7 +10483,7 @@ are connected to SPI pins</text>
 <wire x1="73.66" y1="55.88" x2="96.52" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="ENC1B" class="0">
+<net name="ENC2B" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="PC1(ADC1)"/>
 <wire x1="73.66" y1="66.04" x2="83.82" y2="66.04" width="0.1524" layer="91"/>
@@ -10495,7 +10495,7 @@ are connected to SPI pins</text>
 <label x="147.32" y="30.48" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="ENC1A" class="0">
+<net name="ENC2A" class="0">
 <segment>
 <pinref part="JP6" gate="1" pin="3"/>
 <wire x1="152.4" y1="35.56" x2="147.32" y2="35.56" width="0.1524" layer="91"/>
@@ -10507,7 +10507,7 @@ are connected to SPI pins</text>
 <label x="76.2" y="40.64" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="ENC2B" class="0">
+<net name="ENC1B" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="PD3(INT1)"/>
 <wire x1="73.66" y1="38.1" x2="83.82" y2="38.1" width="0.1524" layer="91"/>
@@ -10519,7 +10519,7 @@ are connected to SPI pins</text>
 <label x="180.34" y="30.48" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
-<net name="ENC2A" class="0">
+<net name="ENC1A" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="PC0(ADC0)"/>
 <wire x1="73.66" y1="68.58" x2="83.82" y2="68.58" width="0.1524" layer="91"/>
@@ -10531,7 +10531,7 @@ are connected to SPI pins</text>
 <label x="180.34" y="35.56" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
-<net name="M1+" class="0">
+<net name="M2+" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="IN1"/>
 <wire x1="35.56" y1="109.22" x2="27.94" y2="109.22" width="0.1524" layer="91"/>
@@ -10545,18 +10545,6 @@ are connected to SPI pins</text>
 </net>
 <net name="M1-" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="IN2"/>
-<wire x1="35.56" y1="104.14" x2="27.94" y2="104.14" width="0.1524" layer="91"/>
-<label x="27.94" y="104.14" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="U1" gate="G$1" pin="PB1(OC1A)"/>
-<wire x1="73.66" y1="20.32" x2="83.82" y2="20.32" width="0.1524" layer="91"/>
-<label x="78.74" y="20.32" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="M2-" class="0">
-<segment>
 <pinref part="U2" gate="G$1" pin="IN4"/>
 <wire x1="71.12" y1="111.76" x2="78.74" y2="111.76" width="0.1524" layer="91"/>
 <label x="71.12" y="111.76" size="1.778" layer="95"/>
@@ -10567,7 +10555,7 @@ are connected to SPI pins</text>
 <label x="78.74" y="22.86" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="M2+" class="0">
+<net name="M1+" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="IN3"/>
 <wire x1="71.12" y1="106.68" x2="78.74" y2="106.68" width="0.1524" layer="91"/>
@@ -10579,7 +10567,7 @@ are connected to SPI pins</text>
 <label x="78.74" y="27.94" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="PWM2" class="0">
+<net name="PWM1" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="ENB"/>
 <wire x1="71.12" y1="109.22" x2="78.74" y2="109.22" width="0.1524" layer="91"/>
@@ -10591,7 +10579,7 @@ are connected to SPI pins</text>
 <label x="76.2" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="PWM1" class="0">
+<net name="PWM2" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="ENA"/>
 <wire x1="35.56" y1="106.68" x2="27.94" y2="106.68" width="0.1524" layer="91"/>
@@ -10603,7 +10591,7 @@ are connected to SPI pins</text>
 <label x="76.2" y="30.48" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="SENSE_2" class="0">
+<net name="SENSE_1" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="SENSE_B"/>
 <pinref part="R4" gate="G$1" pin="2"/>
@@ -10619,7 +10607,7 @@ are connected to SPI pins</text>
 <label x="73.66" y="60.96" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="SENSE_1" class="0">
+<net name="SENSE_2" class="0">
 <segment>
 <pinref part="R2" gate="G$1" pin="2"/>
 <pinref part="R3" gate="G$1" pin="2"/>
@@ -10741,6 +10729,18 @@ are connected to SPI pins</text>
 <pinref part="JP12" gate="G$1" pin="2"/>
 <wire x1="172.72" y1="0" x2="180.34" y2="0" width="0.1524" layer="91"/>
 <label x="172.72" y="0" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="M2-" class="0">
+<segment>
+<pinref part="U1" gate="G$1" pin="PB1(OC1A)"/>
+<wire x1="73.66" y1="20.32" x2="83.82" y2="20.32" width="0.1524" layer="91"/>
+<label x="78.74" y="20.32" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="IN2"/>
+<wire x1="35.56" y1="104.14" x2="27.94" y2="104.14" width="0.1524" layer="91"/>
+<label x="27.94" y="104.14" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
