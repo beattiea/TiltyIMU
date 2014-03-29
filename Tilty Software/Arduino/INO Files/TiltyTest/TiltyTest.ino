@@ -66,7 +66,7 @@ void setup()
 	while (!Serial && !available()) {}
 	
 	//Start the internal I2C Bus for the sensors 
-	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_800);
+	Wire.begin(I2C_MASTER, 0, I2C_PINS_18_19, I2C_PULLUP_EXT, I2C_RATE_200);
 	
 	delay(10);
 	
@@ -80,6 +80,8 @@ void setup()
 	if (imu_avail) {
 		setupDMP();
 	}
+	
+	//imu.setDLPFMode(1);
 	
 	// initialize the compass
 	compass_avail = compass.init();
