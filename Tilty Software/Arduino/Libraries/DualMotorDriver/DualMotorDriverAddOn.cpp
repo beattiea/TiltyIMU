@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifdef __MK20DX128__
+#if defined(__MK20DX128__) || defined(__MK20DX256__)
 
 #include "DualMotorDriverAddOn.h"
 
@@ -69,6 +69,7 @@ void DualMotorDriver::readMotor(uint8_t motor)
 		*ptr = Wire.read();
 		ptr++;
 	}
+	revertI2Cpins();
 }
 
 
@@ -79,6 +80,7 @@ void DualMotorDriver::setMotorSpeed(uint8_t motor, uint8_t speed)
 	Wire.write(motor==1 ? M1_POWER : M2_POWER);
 	Wire.write(speed);
 	Wire.endTransmission();
+	revertI2Cpins();
 }
 
 uint8_t DualMotorDriver::readMotorSpeed(uint8_t motor)
@@ -91,7 +93,12 @@ uint8_t DualMotorDriver::readMotorSpeed(uint8_t motor)
 	delayMicroseconds(DELAY);
 	
 	Wire.requestFrom(device_address, 1);
-	return Wire.read();
+	
+	uint8_t data = Wire.read();
+	
+	revertI2Cpins();
+	
+	return data;
 }
 
 void DualMotorDriver::setMotorRPM(uint8_t motor, int16_t speed)
@@ -103,6 +110,7 @@ void DualMotorDriver::setMotorRPM(uint8_t motor, int16_t speed)
 	Wire.write(speed >> 8);
 	Wire.write(speed & 0xFF);
 	Wire.endTransmission();
+	revertI2Cpins();
 }
 
 float DualMotorDriver::readMotorRPM(uint8_t motor)
@@ -121,6 +129,8 @@ float DualMotorDriver::readMotorRPM(uint8_t motor)
 	data_union.bytes[2] = Wire.read();
 	data_union.bytes[3] = Wire.read();
 	
+	revertI2Cpins();
+	
 	return data_union.float32;
 }
 
@@ -134,6 +144,7 @@ void DualMotorDriver::setPID(float p, float i, float d)
 	Wire.write((uint8_t*) &i, 4);
 	Wire.write((uint8_t*) &d, 4);
 	Wire.endTransmission();
+	revertI2Cpins();
 }
 
 
@@ -153,6 +164,18 @@ inline void DualMotorDriver::setI2Cpins()
 	}
 }
 
+// Reverts the I2C bus pins on the Teensy to the bus used prior to talking to the motor driver
+inline void DualMotorDriver::revertI2Cpins()
+{
+	if (revert)
+	{
+		if (CORE_PIN16_CONFIG != I2C_config) setI2Cpins1617();
+		else if (CORE_PIN18_CONFIG != I2C_config) setI2Cpins1819();
+		
+		revert = 0x00;
+	}
+}
+
 // Sets the I2C bus pins on the Teensy to 18 and 19
 inline void DualMotorDriver::setI2Cpins1819()
 {
@@ -162,6 +185,8 @@ inline void DualMotorDriver::setI2Cpins1819()
     CORE_PIN16_CONFIG = PORT_PCR_MUX(1);
     *portModeRegister(17) = 0; // input
     CORE_PIN17_CONFIG = PORT_PCR_MUX(1);
+	
+	revert = 0x01;
 }
 
 // Sets the I2C bus pins on the Teensy to 16 and 17
@@ -173,6 +198,8 @@ inline void DualMotorDriver::setI2Cpins1617()
     CORE_PIN18_CONFIG = PORT_PCR_MUX(1);
     *portModeRegister(19) = 0; // input
     CORE_PIN19_CONFIG = PORT_PCR_MUX(1);
+	
+	revert = 0x01;
 }
 
 

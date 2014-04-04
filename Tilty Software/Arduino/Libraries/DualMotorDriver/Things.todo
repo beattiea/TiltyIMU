@@ -44,10 +44,20 @@ Add ability to detect encoders and poll whether they're available via the master
 
 Custom slave only I2C for faster ISR servicing? (have to look at how Wire handles the code)
 
+Add ability to define a custom data packet by sending a command code, an unused command value, a byte size for the new packet, then send variable register values to populate the new packet structure. Eg: new_packet_cmd, (new command value), 16, M1_ENCODER, M1_RATE, M2_ENCODER, M2_RATE. The motor driver then puts the variable pointers in an array to send when requested with the newly defined command value.
+
 
 ========== Fixes ==========
 Motor doesn't start in ramping mode if direction was changed while stopped and brake enabled
 
+delayMillis() is still broken maybe(?) crapped out in encoder interrupt
+
 Double encoder resolution setting doesn't work, each tick seems to cancel out the previous one
 
 wireToVar for motor state needs to be tested
+
+Implement a checksum check to detect data transmission errors
+
+Watchdog timer doesn't properly disable when commented out
+
+Current ready bit is being set even when current should not be reading (it might be)

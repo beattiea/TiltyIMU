@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Arduino.h"
 
-#ifndef __MK20DX128__
+#if !defined(__MK20DX128__) && !defined(__MK20DX256__)
 
 #include "wiring_private.h"
 #include "DualMotorDriver.h"
@@ -37,6 +37,10 @@ DualMotorDriver::DualMotorDriver()
 	pinMode(4, OUTPUT);	digitalWrite(4, LOW);// M2H
 	pinMode(9, OUTPUT);	digitalWrite(9, HIGH);// M2L
 	
+#ifdef DEBUG_MOTOR_DRIVER
+	pinMode(0, OUTPUT);
+#endif
+	
 	pinMode(M1_SENSE, INPUT);
 	pinMode(M2_SENSE, INPUT);
 	
@@ -51,7 +55,7 @@ DualMotorDriver::DualMotorDriver()
 	// Enable interrupts for encoders
 	attachInterrupt(1, readEncoder1, RISING);
 	attachInterrupt(0, readEncoder2, RISING);
-	EICRA = ENCODER_RESOLUTION;	// Set interrupt for change
+	EICRA = ENCODER_RESOLUTION;	// Set interrupt for change or rising, depending on encoder reading resolution
 	
 	
 	
@@ -185,6 +189,9 @@ void DualMotorDriver::init()
 	///else delete &reset_led_counter;
 	
 	loadSettings();
+	
+	updateMotorControl(&motor1);
+	updateMotorControl(&motor2);
 }
 
 
@@ -200,11 +207,10 @@ void DualMotorDriver::saveSettings(uint8_t vals)
 		eeprom_write_byte((uint8_t*)M1_CONTROL_ADDRESS, motor1.state.control);
 		eeprom_write_byte((uint8_t*)M2_CONTROL_ADDRESS, motor2.state.control);
 	}
-	if (vals & 0x02) eeprom_write_byte((uint8_t*)MIN_POWER_ADDRESS, min_power);
-	if (vals & 0x04) eeprom_write_byte((uint8_t*)RAMPING_RATE_ADDRESS, ramping_rate);
-	if (vals & 0x08) eeprom_write_byte((uint8_t*)MIN_POWER_ADDRESS, min_power);
-	if (vals & 0x10) eeprom_write_byte((uint8_t*)I2C_ADDR_ADDRESS, TWAR);
-	if (vals & 0x20) eeprom_write_block((void*)&PID_kP, (void*)PID_SCALARS_ADDRESS, 12);
+	if (vals & 0x02) eeprom_write_byte((uint8_t*)RAMPING_RATE_ADDRESS, ramping_rate);
+	if (vals & 0x04) eeprom_write_byte((uint8_t*)MIN_POWER_ADDRESS, min_power);
+	if (vals & 0x08) eeprom_write_byte((uint8_t*)I2C_ADDR_ADDRESS, TWAR);
+	if (vals & 0x10) eeprom_write_block((void*)&PID_kP, (void*)PID_SCALARS_ADDRESS, 12);
 }
 
 void DualMotorDriver::loadSettings()
@@ -212,13 +218,22 @@ void DualMotorDriver::loadSettings()
 	uint8_t vals = eeprom_read_byte((uint8_t*)SAVED_VALS_ADDRESS);
 	if (!(vals & 0x80))
 	{
-		if (vals & 0x01) motor1.state.control = eeprom_read_byte((uint8_t*)M1_CONTROL_ADDRESS);
-		if (vals & 0x02) motor2.state.control = eeprom_read_byte((uint8_t*)M2_CONTROL_ADDRESS);
-		if (vals & 0x04) ramping_rate = eeprom_read_byte((uint8_t*)RAMPING_RATE_ADDRESS);
-		if (vals & 0x08) min_power = eeprom_read_byte((uint8_t*)MIN_POWER_ADDRESS);
-		if (vals & 0x10) TWAR = eeprom_read_byte((uint8_t*)I2C_ADDR_ADDRESS);
-		if (vals & 0x20) eeprom_read_block((void*)&PID_kP, (void*)PID_SCALARS_ADDRESS, 12);
+		if (vals & 0x01)
+		{
+			motor1.state.control = eeprom_read_byte((uint8_t*)M1_CONTROL_ADDRESS);
+			motor2.state.control = eeprom_read_byte((uint8_t*)M2_CONTROL_ADDRESS);
+		}
+		if (vals & 0x02) ramping_rate = eeprom_read_byte((uint8_t*)RAMPING_RATE_ADDRESS);
+		if (vals & 0x04) min_power = eeprom_read_byte((uint8_t*)MIN_POWER_ADDRESS);
+		if (vals & 0x08) TWAR = eeprom_read_byte((uint8_t*)I2C_ADDR_ADDRESS);
+		if (vals & 0x10) eeprom_read_block((void*)&PID_kP, (void*)PID_SCALARS_ADDRESS, 12);
 	}
+	
+	if (blahblah > 20) 
+	{
+		updateMotorControl(&motor1);
+		updateMotorControl(&motor2);
+	}	
 }
 
 
@@ -374,6 +389,9 @@ inline void DualMotorDriver::updateMotorControl(Motor *motor)
 		setMotorDirection(motor);
 	}
 	
+	if (motor->state.control & ENCODER) EIMSK |= 1 << (motor->speed_pin->number % 2);// 1 for M1, 0 for M2
+	else EIMSK &= ~(1 << (motor->speed_pin->number % 2));// 1 for M1, 0 for M2
+	
 	setTimerB(motor);
 }
 
@@ -469,7 +487,7 @@ inline void DualMotorDriver::setMotorPWM(Motor *motor)
 	{
 		case 0: 	TCCR0A &= ~motor->COM0x; setMotorBraking(motor);						break;
 		case 255:	TCCR0A &= ~motor->COM0x; sbi(PORTD, motor->speed_pin->number);			break;
-		default: 	TCCR0A |= motor->COM0x;  *motor->OCR0x = motor->state.current_power;		break;
+		default: 	TCCR0A |= motor->COM0x;  *motor->OCR0x = motor->state.current_power;	break;
 	}
 }
 
@@ -583,15 +601,29 @@ void requestEvent() {
 	MotorDriver.sendData();
 }
 
-// Interrupt Service Routine attached to INT0 vector
+// Interrupt Service Routine attached to INT1 vector
 void readEncoder1()
 {
+	PIND |= 0x01;
+#if ENCODER_RESOLUTION == SINGLE
 	PINC & 0x01 ? MotorDriver.motor1.state.encoder_value++ : MotorDriver.motor1.state.encoder_value--;
+#elif ENCODER_RESOLUTION == DOUBLE
+	if (EICRA & 0x04) PINC & 0x01 ? MotorDriver.motor1.state.encoder_value++ : MotorDriver.motor1.state.encoder_value--;
+	else PINC & 0x01 ? MotorDriver.motor1.state.encoder_value-- : MotorDriver.motor1.state.encoder_value++;
+	EICRA ^= 0x04;
+#endif
 }
 
+// Interrupt service routine attached to INT0 vector
 void readEncoder2()
 {
-	PINC & 0x02 ? MotorDriver.motor1.state.encoder_value-- : MotorDriver.motor1.state.encoder_value++;
+#if ENCODER_RESOLUTION == SINGLE
+	PINC & 0x02 ? MotorDriver.motor2.state.encoder_value++ : MotorDriver.motor2.state.encoder_value--;
+#elif ENCODER_RESOLUTION == DOUBLE
+	if (EICRA & 0x01) PINC & 0x02 ? MotorDriver.motor2.state.encoder_value++ : MotorDriver.motor2.state.encoder_value--;
+	else PINC & 0x02 ? MotorDriver.motor2.state.encoder_value-- : MotorDriver.motor2.state.encoder_value++;
+	EICRA ^= 0x01;
+#endif
 }
 
 volatile unsigned long blahblah;
@@ -628,19 +660,19 @@ ISR(TIMER1_COMPB_vect)
 	}
 }
 
-ISR(TIMER2_COMPA_vect)
+ISR(TIMER2_COMPA_vect, ISR_NOBLOCK)
 {
 	// Motor 1 updates go here
 	MotorDriver.updateMotor(&MotorDriver.motor1);
 }
 
-ISR(TIMER2_COMPB_vect)
+ISR(TIMER2_COMPB_vect, ISR_NOBLOCK)
 {
 	// Motor 2 updates go here
 	MotorDriver.updateMotor(&MotorDriver.motor2);
 }
 
-ISR(ADC_vect)
+ISR(ADC_vect, ISR_NOBLOCK)
 {
 	ADMUX ^= 0x01;	// Toggles between motor sense pins
 	
@@ -661,6 +693,6 @@ ISR(ADC_vect)
 #ifdef DEBUG_MOTOR_DRIVER
 void ledOn() {	sbi(PORTB, 2);}
 void ledOff() {	cbi(PORTB, 2);}
-void ledToggle() {	PORTB ^= 0x04;}
+void ledToggle() {	PINB |= 0x04;}
 #endif
 #endif

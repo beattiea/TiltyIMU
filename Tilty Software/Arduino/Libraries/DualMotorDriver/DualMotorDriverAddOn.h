@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifdef __MK20DX128__
+#if defined(__MK20DX128__) || defined(__MK20DX256__)
 
 #include "i2c_t3.h"
 
@@ -106,9 +106,11 @@ class DualMotorDriver {
 		
 		// I2C bus switching control
 		uint8_t I2C_bus;						// 0 means use pins 18-19, 1 means use pins 16-17
+		uint8_t revert;							// Boolean value to indicate if the I2C bus was changed or not
 		static const uint16_t I2C_config = 612;	// Core pin config when pin is setup as I2C pin
 		static const uint16_t IO_pin = 256;		// Core pin config when pin is setup as general I/O
 		inline void setI2Cpins();				// Automatically makes sure Teensy is using the right I2C bus pins
+		inline void revertI2Cpins();			// Automatically revert to the previously set I2C pins if necessary
 		inline void setI2Cpins1819();			// Setup pins 18 and 19 for use by the I2C bus
 		inline void setI2Cpins1617();			// Setup pins 16 and 17 for use by the I2C bus
 		

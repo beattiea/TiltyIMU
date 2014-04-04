@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef DualMotorDriver_h
 #define DualMotorDriver_h
 
-#ifdef __MK20DX128__
+#if defined(__MK20DX128__) || defined(__MK20DX256__)
 #include "DualMotorDriverAddOn.h"
 
 #else
@@ -32,8 +32,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // You can change/comment these values
 #define DEBUG_MOTOR_DRIVER				// Enable to include debug code in program
 //#define I2C_FREQ 100000				// Enable to set I2C to 100kHz frequency
-//#define I2C_FREQ 200000				// Enable to set I2C to 200kHz frequency
-#define I2C_FREQ 400000					// Enable to set I2C to 400kHz frequency
+#define I2C_FREQ 200000					// Enable to set I2C to 200kHz frequency
+//#define I2C_FREQ 400000				// Enable to set I2C to 400kHz frequency
 #define REFRESH_FREQ 100 				// Frequency at which to update encoder and motor if in any auto-control mode, cannot be less than 62 and should not be greater than 1561 (technically it can be, but don't do it)
 #define ENABLE_WATCHDOG_TIMER			// Watchdog timer will cause a system reset if any functions freeze, preventing the motor driver from freezing for longer than the watchdog timer limit (which is set below)
 #define ENCODER_RESOLUTION SINGLE		// Change to DOUBLE to read the rising and falling edge of the encoder, which doubles the resolution, but also the CPU load
@@ -138,7 +138,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #elif ENCODER_RESOLUTION == DOUBLE
 	#define ENCODER_MULTIPLIER 2
 #endif
-#define TICKS_PER_ROT ((float)TICKS_PER_REV * GEAR_RATIO) * ENCODER_MULTIPLIER // Encoder pulses per rotation of the output shaft
+#define TICKS_PER_ROT ((TICKS_PER_REV * GEAR_RATIO) * ENCODER_MULTIPLIER) // Encoder pulses per rotation of the output shaft
 // ========== Default Motor Characteristics ==========
 
 
