@@ -192,6 +192,8 @@ void DualMotorDriver::init()
 	
 	updateMotorControl(&motor1);
 	updateMotorControl(&motor2);
+	
+	digitalWrite(LED, LOW);
 }
 
 
