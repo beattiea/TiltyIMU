@@ -46,6 +46,7 @@ Custom slave only I2C for faster ISR servicing? (have to look at how Wire handle
 
 Add ability to define a custom data packet by sending a command code, an unused command value, a byte size for the new packet, then send variable register values to populate the new packet structure. Eg: new_packet_cmd, (new command value), 16, M1_ENCODER, M1_RATE, M2_ENCODER, M2_RATE. The motor driver then puts the variable pointers in an array to send when requested with the newly defined command value.
 
+Add choice for arcade or tank style control
 
 ========== Fixes ==========
 Motor doesn't start in ramping mode if direction was changed while stopped and brake enabled

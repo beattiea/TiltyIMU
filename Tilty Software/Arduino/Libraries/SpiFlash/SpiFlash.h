@@ -36,7 +36,7 @@ class SpiFlash {
 		void begin(uint8_t _SS, uint8_t sckDivisor);
 		
 	// Standard SPI flash memory write commands
-		int write(byte* _buf, long _addr, uint16_t _length);
+		int write(uint8_t* _buf, long _addr, uint16_t _length);
 		int write(int _data, long _addr);
 		int write(float _data, long _addr);
 		int write(double _data, long _addr);

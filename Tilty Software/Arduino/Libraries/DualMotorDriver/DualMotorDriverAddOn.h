@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "i2c_t3.h"
 
+#define DEBUG_MOTOR_DRIVER
+
 // Motor control modes
 #define NONE	0
 #define MAPPED	0x08
@@ -100,6 +102,10 @@ class DualMotorDriver {
 		float readMotorRPM(uint8_t motor);
 		
 		void setPID(float p, float i, float d);
+		
+#ifdef DEBUG_MOTOR_DRIVER
+		void printMotor(uint8_t motor_number);
+#endif
 		
 	private:
 		static const uint8_t DELAY = 150;		// Microsecond delay between reads and writes

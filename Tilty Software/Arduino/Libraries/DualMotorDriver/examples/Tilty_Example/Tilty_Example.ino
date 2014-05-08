@@ -6,6 +6,8 @@ void setup() {
 	pinMode(13, OUTPUT);
 	
 	while (!Serial);
+	
+	Serial.println("Starting...");
 }
 
 int old_enc=1, d_enc;
@@ -34,6 +36,7 @@ void loop() {
 	while (!Serial.available());
 	Serial.read();
 	*/
+	/*
 	if (Serial.available()) {
 		short speed = Serial.parseInt();
 		MotorDriver.setMotorSpeed(1, speed);
@@ -65,4 +68,8 @@ void loop() {
 	
 	delayMicroseconds(micros() - start < 10000 ? 10000 - (micros() - start) : 10000);
 	start = micros();
+	*/
+	MotorDriver.readMotor(1);
+	MotorDriver.printMotor(1);
+	delay(100);
 }

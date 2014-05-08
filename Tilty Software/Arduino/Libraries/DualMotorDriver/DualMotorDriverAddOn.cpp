@@ -148,6 +148,19 @@ void DualMotorDriver::setPID(float p, float i, float d)
 }
 
 
+#ifdef DEBUG_MOTOR_DRIVER
+void DualMotorDriver::printMotor(uint8_t motor_number)
+{
+	setI2Cpins();
+	MotorState *motor;
+	motor_number == 1 ? motor = &motor1 : motor = &motor2;
+	printf("Motor: %i\n", motor_number);
+	
+	revertI2Cpins();
+}
+#endif
+
+
 
 
 

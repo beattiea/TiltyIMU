@@ -42,7 +42,7 @@
 #define CHIP_SIZE 524288
 
 
-int SpiFlash::write(byte* _buf, long _addr, uint16_t _length)
+int SpiFlash::write(uint8_t* _buf, long _addr, uint16_t _length)
 {
 	// Below if statement checks that device is ready, _address is within device memory, and there won't be a page overflow writing data
 	if (!checkWriteInProgress() && _length <= PAGE_SIZE && check_address(_addr, _length) && checkPageOverflow(_addr, _length))
